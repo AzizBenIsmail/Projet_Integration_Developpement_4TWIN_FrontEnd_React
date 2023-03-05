@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "assets/vendor/nucleo/css/nucleo.css";
@@ -34,7 +34,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/Basic_Elements" exact render={(props) => <Index {...props} />} />
+      <Route path="/Composant" exact render={(props) => <Index {...props} />} />
       <Route
         path="/landing-page"
         exact
@@ -51,7 +51,7 @@ root.render(
         render={(props) => <Profile {...props} />}
       />
       <Route
-        path="/register-page"
+        path="/"
         exact
         render={(props) => <Register {...props} />}
       />
