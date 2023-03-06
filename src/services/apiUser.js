@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // axios.defaults.baseURL = "http://localhost:3001/products";
-const apiURL = "http://localhost:3001/users";
+const apiURL = "http://localhost:5000/users";
 export async function getUsers(){
     return await axios.get(apiURL);
 }
