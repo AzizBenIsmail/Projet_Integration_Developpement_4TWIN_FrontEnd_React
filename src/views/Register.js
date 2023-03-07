@@ -20,13 +20,12 @@ export default function Register() {
             "last_Name": "",
             "email": "",
             "password": "",
-            "created_at": "",
-            "updated_at": "",
             "dateOfBirth": "",
             "phoneNumber": 0,
             "gender": "",
             "userType": "",
             "address": "",
+            "image_user": "",
 
         }
     )
@@ -41,9 +40,11 @@ export default function Register() {
         setUsers({ ...user, img: e.target.files[0].name })
         console.log(user)
     }
-    const add = (e) => {
+    const add = async (e) => {
         e.preventDefault();
-        addUser(user); //.then(()=>navigate('/products/list'))
+        addUser(user)
+        .then((res)=>console.log("hello world"))
+        .catch((e)=> console.log(e))
     }
     return (
         <>
@@ -100,7 +101,7 @@ export default function Register() {
                                     <div className="text-center text-muted mb-4">
                                         <small>Or sign up with credentials</small>
                                     </div>
-                                    <Form role="form">
+                                    <Form role="form"  /*method="HTTP_METHOD" enctype="multipart/form-data"*/>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
@@ -189,10 +190,10 @@ export default function Register() {
                                                         <i className="ni ni-building" />
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Form.Control placeholder="address" type="text" name='price' onChange={(e) => handlechange(e)} />
+                                                <Form.Control placeholder="address" type="text" name='address' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
                                         </Form.Group>
-
+ 
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative">
                                                 <InputGroupAddon addonType="prepend">
@@ -201,6 +202,17 @@ export default function Register() {
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Control placeholder="image_user" name='image_user' type="file"  onChange={(e)=>handlechangeFile(e)}/>
+                                            </InputGroup>
+                                        </Form.Group> 
+                                        
+                                        <Form.Group>
+                                            <InputGroup className="input-group-alternative">
+                                                <InputGroupAddon addonType="prepend">
+                                                    <InputGroupText>
+                                                        <i className="ni ni-image" />
+                                                    </InputGroupText>
+                                                </InputGroupAddon>
+                                                <Form.Control placeholder="userType"  type="text" name='userType' onChange={(e)=>handlechange(e)}/>
                                             </InputGroup>
                                         </Form.Group>
                                         <div className="text-muted font-italic">
