@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect, useRef } from "react";
+
 // nodejs library that concatenates classes
 import classnames from "classnames";
 
@@ -25,33 +27,24 @@ import CardsFooter from "components/Footers/CardsFooter.js";
 
 // index page sections
 import Download from "../IndexSections/Download.js";
-
-class Landing extends React.Component {
-  state = {};
-  componentDidMount() {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
-  }
-  render() {
+export default function Landing () {
+    const mainRef = useRef(null);
+  
+    useEffect(() => {
+      document.documentElement.scrollTop = 0;
+      document.scrollingElement.scrollTop = 0;
+      mainRef.current.scrollTop = 0;
+    }, []);
+  
     return (
       <>
-        <DemoNavbar />
-        <main ref="main">
-          <div className="position-relative">
-            {/* shape Hero */}
-            <section className="section section-lg section-shaped pb-250">
-              <div className="shape shape-style-1 shape-default">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
+      <DemoNavbar />
+      <main ref={mainRef}>
+        <div className="position-relative">
+          {/* shape Hero */}
+          <section className="section section-lg section-shaped pb-250">
+            <div className="shape shape-style-1 shape-default">
+            </div>
               <Container className="py-lg-md d-flex">
                 <div className="col px-0">
                   <Row>
@@ -847,10 +840,7 @@ class Landing extends React.Component {
           </section>
           <Download />
         </main>
-        <CardsFooter />
+        <CardsFooter />            
       </>
-    );
-  }
+    )
 }
-
-export default Landing;

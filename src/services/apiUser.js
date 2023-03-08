@@ -7,7 +7,7 @@ export async function getUsers(){
     return await axios.get(apiURL);
 }
 export async function addUser(User){
-    return await axios.post("http://localhost:5000/users",User, {
+    return await axios.post(apiURL,User, {
         headers: {'Content-Type': 'application/json'}
       }).then(function(response) {
         console.log(response);
@@ -21,3 +21,8 @@ export async function updateUser(id,User){
 export async function deleteUser(id){
     return await axios.delete(`${apiURL}/${id}`);
 }
+export async function LoginUser(User) {
+  console.log("befor LoginUser " + User);
+  return await axios.post(`${apiURL}/login`,User)
+}
+
