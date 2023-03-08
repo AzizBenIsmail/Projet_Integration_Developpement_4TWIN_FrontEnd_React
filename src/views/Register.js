@@ -43,29 +43,29 @@ export default function Register() {
     }
     const add = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('username', user.username);
-        formData.append('first_Name', user.first_Name);
-        formData.append('last_Name', user.last_Name);
-        formData.append('email', user.email);
-        formData.append('password', user.password);
-        formData.append('dateOfBirth', user.dateOfBirth);
-        formData.append('phoneNumber', user.phoneNumber);
-        formData.append('gender', user.gender);
-        formData.append('userType', user.userType);
-        formData.append('address', user.address);
-        formData.append('image_user', user.image_user);
-        try {
-            const res = await axios.post('http://localhost:5000/users', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            console.log(res.data);
-        } catch (error) {
-            console.error(error);
-        }
-        // addUser(user)
-        // .then((res)=>console.log("hello world"))
-        // .catch((e)=> console.log(e))
+        // const formData = new FormData();
+        // formData.append('username', user.username);
+        // formData.append('first_Name', user.first_Name);
+        // formData.append('last_Name', user.last_Name);
+        // formData.append('email', user.email);
+        // formData.append('password', user.password);
+        // formData.append('dateOfBirth', user.dateOfBirth);
+        // formData.append('phoneNumber', user.phoneNumber);
+        // formData.append('gender', user.gender);
+        // formData.append('userType', user.userType);
+        // formData.append('address', user.address);
+        // formData.append('image_user', user.image_user);
+        // try {
+        //     const res = await axios.post('http://localhost:5000/users', formData, {
+        //         headers: { 'Content-Type': 'multipart/form-data' }
+        //     });
+        //     console.log(res.data);
+        // } catch (error) {
+        //     console.error(error);
+        // }
+        addUser(user)
+        .then((res)=>console.log("hello world"))
+        .catch((e)=> console.log(e))
     }
     return (
         <>
