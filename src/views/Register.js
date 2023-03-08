@@ -10,6 +10,7 @@ import { Button, Container, Form } from 'react-bootstrap'
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
+import axios from 'axios';
 
 export default function Register() {
     // const navigate = useNavigate();
@@ -37,14 +38,34 @@ export default function Register() {
     }
     const handlechangeFile = (e) => {
         console.log(e.target.value)
-        setUsers({ ...user, img: e.target.files[0].name })
+        setUsers({ ...user, image_user: e.target.files[0].name })
         console.log(user)
     }
     const add = async (e) => {
         e.preventDefault();
-        addUser(user)
-        .then((res)=>console.log("hello world"))
-        .catch((e)=> console.log(e))
+        const formData = new FormData();
+        formData.append('username', user.username);
+        formData.append('first_Name', user.first_Name);
+        formData.append('last_Name', user.last_Name);
+        formData.append('email', user.email);
+        formData.append('password', user.password);
+        formData.append('dateOfBirth', user.dateOfBirth);
+        formData.append('phoneNumber', user.phoneNumber);
+        formData.append('gender', user.gender);
+        formData.append('userType', user.userType);
+        formData.append('address', user.address);
+        formData.append('image_user', user.image_user);
+        try {
+            const res = await axios.post('http://localhost:5000/users', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            console.log(res.data);
+        } catch (error) {
+            console.error(error);
+        }
+        // addUser(user)
+        // .then((res)=>console.log("hello world"))
+        // .catch((e)=> console.log(e))
     }
     return (
         <>
@@ -193,7 +214,7 @@ export default function Register() {
                                                 <Form.Control placeholder="address" type="text" name='address' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
                                         </Form.Group>
- 
+
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative">
                                                 <InputGroupAddon addonType="prepend">
@@ -203,8 +224,8 @@ export default function Register() {
                                                 </InputGroupAddon>
                                                 <Form.Control placeholder="image_user" name='image_user' type="file"  onChange={(e)=>handlechangeFile(e)}/>
                                             </InputGroup>
-                                        </Form.Group> 
-                                        
+                                        </Form.Group>
+
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative">
                                                 <InputGroupAddon addonType="prepend">
