@@ -13,7 +13,9 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 import axios from 'axios';
 
 export default function Register() {
+    let formData = new FormData();
      const navigate = useNavigate();
+     const [image, setImage] = useState();
     const [user, setUsers] = useState(
         {
             "username": "",
@@ -31,30 +33,28 @@ export default function Register() {
         }
     )
     const handlechange = (e) => {
-        console.log(e.target.value)
         setUsers({ ...user, [e.target.name]: e.target.value })
-        console.log(user)
 
     }
     const handlechangeFile = (e) => {
-        console.log(e.target.value)
-        setUsers({ ...user, image_user: e.target.files[0].name })
-        console.log(user)
+        // setUsers({ ...user, image_user: e.target.files[0].name })
+        setImage(e.target.files[0]);
+        console.log(image)
     }
     const add = async (e) => {
         e.preventDefault();
-        // const formData = new FormData();
-        // formData.append('username', user.username);
-        // formData.append('first_Name', user.first_Name);
-        // formData.append('last_Name', user.last_Name);
-        // formData.append('email', user.email);
-        // formData.append('password', user.password);
-        // formData.append('dateOfBirth', user.dateOfBirth);
-        // formData.append('phoneNumber', user.phoneNumber);
-        // formData.append('gender', user.gender);
-        // formData.append('userType', user.userType);
-        // formData.append('address', user.address);
-        // formData.append('image_user', user.image_user);
+        formData.append('username', user.username);
+        formData.append('first_Name', user.first_Name);
+        formData.append('last_Name', user.last_Name);
+        formData.append('email', user.email);
+        formData.append('password', user.password);
+        formData.append('dateOfBirth', user.dateOfBirth);
+        formData.append('phoneNumber', user.phoneNumber);
+        formData.append('gender', user.gender);
+        formData.append('userType', user.userType);
+        formData.append('address', user.address);
+        formData.append('image_user', image);
+        console.log(formData)
         // try {
         //     const res = await axios.post('http://localhost:5000/users', formData, {
         //         headers: { 'Content-Type': 'multipart/form-data' }
@@ -63,8 +63,10 @@ export default function Register() {
         // } catch (error) {
         //     console.error(error);
         // }
-        addUser(user)
-        .then(()=>navigate('/login-page'))
+        console.log(formData);
+        addUser(formData)
+        // .then(()=>navigate('/login-page'))
+        .then(console.log("validation"))
         .catch((e)=> console.log(e))
     }
     return (
@@ -122,7 +124,7 @@ export default function Register() {
                                     <div className="text-center text-muted mb-4">
                                         <small>Or sign up with credentials</small>
                                     </div>
-                                    <Form role="form"  /*method="HTTP_METHOD" enctype="multipart/form-data"*/>
+                                    <Form role="form"  enctype="multipart/form-data" /*method="HTTP_METHOD" */>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">

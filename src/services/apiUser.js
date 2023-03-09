@@ -8,7 +8,7 @@ export async function getUsers(){
 }
 export async function addUser(User){
     return await axios.post(apiURL,User, {
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'multipart/form-data'}
       }).then(function(response) {
         console.log(response);
       }).catch(function(error) {

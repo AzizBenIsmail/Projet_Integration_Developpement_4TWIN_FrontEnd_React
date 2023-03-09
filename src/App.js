@@ -29,7 +29,7 @@ function App() {
       <Route path="/login-page"  element={<Login/>} />
       <Route path="/profile-page" element={<Profile/>} />
       <Route path="/Composant" element={<Index/>} />      
-      <Route path="/register-page" element={<Register/>} />      
+      <Route path="/" element={<Register/>} />      
     </Routes>
     </>
   );
