@@ -53,18 +53,14 @@
     "headroom.js": "0.12.0",
     "moment": "2.29.4",
     "nouislider": "14.1.1",
-    "react": ">=16.0.0",
+    "react": "^18.0.0",
     "react-bootstrap": "^2.7.2",
     "react-datetime": "3.1.1",
-    "react-dom": ">=16.0.0",
-    "react-router-dom": "5.1.2",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
     "reactstrap": "8.4.1",
     "sass": "1.53.0"
-  },
-  "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",
@@ -74,6 +70,7 @@
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9",
     "jquery": "3.6.0",
-    "typescript": "4.7.4"
+    "typescript": "4.7.4",
+    "web-vitals": "^3.1.1"
   }
 }

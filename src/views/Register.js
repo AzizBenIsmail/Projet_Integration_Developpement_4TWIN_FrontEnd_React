@@ -1,7 +1,7 @@
 // reactstrap components
 import React, { useState } from 'react'
 import { addUser } from '../services/apiUser';
-//import { useNavigate } from'react-router-dom'
+import { useNavigate } from'react-router-dom'
 
 // reactstrap components
 import { Card, CardHeader, CardBody, FormGroup, InputGroupAddon, InputGroupText, InputGroup, Row, Col } from "reactstrap";
@@ -13,7 +13,7 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 import axios from 'axios';
 
 export default function Register() {
-    // const navigate = useNavigate();
+     const navigate = useNavigate();
     const [user, setUsers] = useState(
         {
             "username": "",
@@ -64,7 +64,7 @@ export default function Register() {
         //     console.error(error);
         // }
         addUser(user)
-        .then((res)=>console.log("hello world"))
+        .then(()=>navigate('/login-page'))
         .catch((e)=> console.log(e))
     }
     return (
@@ -269,6 +269,9 @@ export default function Register() {
                                                 </div>
                                             </Col>
                                         </Row>
+                                        <div className="text-center">
+                                            <Button className="mt-4" color="primary" type="button" onClick={(e)=>add(e)} > Create account </Button>
+                                        </div>
                                         <div className="text-center">
                                             <Button className="mt-4" color="primary" type="button" onClick={(e)=>add(e)} > Create account </Button>
                                         </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from'react-router-dom'
 import {
   Card,
   CardHeader,
@@ -18,6 +19,8 @@ import { Button, Container, Form } from 'react-bootstrap'
 import flatted from 'flatted';
 
 export default function Login () {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -37,9 +40,9 @@ const handlechange = (e) => {
 
 const Login = async (e) => {
     e.preventDefault();
-    //const jsonString = flatted.stringify(user);
+    //const jsonString = flatted.stringify(user); 
     LoginUser(user)
-    .then((res)=>console.log("Login success"))
+    .then(()=>navigate('/landing-page'))
     .catch((e)=> console.log(e))
 }
   return (
