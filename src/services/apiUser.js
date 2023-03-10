@@ -6,14 +6,17 @@ const apiURL = "http://localhost:5000/users";
 export async function getUsers(){
     return await axios.get(apiURL);
 }
-export async function addUser(User){
-    return await axios.post(apiURL,User, {
+export async function addUser(formData){
+    
+      return await axios.post(apiURL,formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       }).then(function(response) {
         console.log(response);
-      }).catch(function(error) {
+    }).catch(function(error) {
         console.log(error);
       })
+        
+
 }
 export async function updateUser(id,User){
     return await axios.put(`${apiURL}/${id}`,User);

@@ -1,7 +1,7 @@
 // reactstrap components
 import React, { useState } from 'react'
 import { addUser } from '../services/apiUser';
-import { useNavigate } from'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // reactstrap components
 import { Card, CardHeader, CardBody, FormGroup, InputGroupAddon, InputGroupText, InputGroup, Row, Col } from "reactstrap";
@@ -14,20 +14,20 @@ import axios from 'axios';
 
 export default function Register() {
     let formData = new FormData();
-     const navigate = useNavigate();
-     const [image, setImage] = useState();
+    const navigate = useNavigate();
+    const [image, setImage] = useState();
     const [user, setUsers] = useState(
         {
             "username": "",
-            "first_Name": "",
-            "last_Name": "",
+            // "first_Name": "",
+            // "last_Name": "",
             "email": "",
             "password": "",
             "dateOfBirth": "",
-            "phoneNumber": 0,
+            // "phoneNumber": 0,
             "gender": "",
-            "userType": "",
-            "address": "",
+            // "userType": "",
+            // "address": "",
             "image_user": "",
 
         }
@@ -44,15 +44,15 @@ export default function Register() {
     const add = async (e) => {
         e.preventDefault();
         formData.append('username', user.username);
-        formData.append('first_Name', user.first_Name);
-        formData.append('last_Name', user.last_Name);
+        // formData.append('first_Name', user.first_Name);
+        // formData.append('last_Name', user.last_Name);
         formData.append('email', user.email);
         formData.append('password', user.password);
         formData.append('dateOfBirth', user.dateOfBirth);
-        formData.append('phoneNumber', user.phoneNumber);
+        // formData.append('phoneNumber', user.phoneNumber);
         formData.append('gender', user.gender);
-        formData.append('userType', user.userType);
-        formData.append('address', user.address);
+        // formData.append('userType', user.userType);
+        // formData.append('address', user.address);
         formData.append('image_user', image);
         console.log(formData)
         // try {
@@ -64,10 +64,41 @@ export default function Register() {
         //     console.error(error);
         // }
         console.log(formData);
-        addUser(formData)
-        // .then(()=>navigate('/login-page'))
-        .then(console.log("validation"))
-        .catch((e)=> console.log(e))
+
+
+        const res = await axios.post('http://localhost:5000/users', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+
+        console.log(res.data);
+
+        // Check if email is already taken
+        if (res.data.message === 'email is already taken') {
+            console.log('email is already taken');
+
+            alert('Email is already taken');
+        } else
+            if (res.data.message === 'username is already taken') {
+                console.log('username is already taken');
+
+                alert('username is already taken');
+            } else
+                if (res.data.message === 'password : a character string of at least 8 characters containing at least one letter and one number') {
+                    console.log('password is already taken');
+                    alert('password : a character string of at least 8 characters containing at least one letter and one number');
+                } else
+                    if (res.data.message === 'You must be at least 18 years old') {
+                        console.log('you must be at least 18 years old');
+
+                        alert('You must be at least 18 years old');
+                    } else {
+                        console.log('addUser');
+                        addUser(formData)
+                            .then(() => navigate('/login-page'))
+                            .catch((error) => {
+                                console.log(error.response.data.message);
+                            });
+                    }
     }
     return (
         <>
@@ -124,7 +155,7 @@ export default function Register() {
                                     <div className="text-center text-muted mb-4">
                                         <small>Or sign up with credentials</small>
                                     </div>
-                                    <Form role="form"  enctype="multipart/form-data" /*method="HTTP_METHOD" */>
+                                    <Form role="form" enctype="multipart/form-data" /*method="HTTP_METHOD" */>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
@@ -135,7 +166,7 @@ export default function Register() {
                                                 <Form.Control placeholder="username" type="text" name='username' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
                                         </Form.Group>
-                                        <Form.Group>
+                                        {/* <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
@@ -154,7 +185,7 @@ export default function Register() {
                                                 </InputGroupAddon>
                                                 <Form.Control placeholder="last_Name" type="text" name='last_Name' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
-                                        </FormGroup>
+                                        </FormGroup> */}
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
@@ -185,7 +216,7 @@ export default function Register() {
                                                 <Form.Control placeholder="dateOfBirth" type="date" name='dateOfBirth' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
                                         </Form.Group>
-                                        <Form.Group>
+                                        {/* <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
@@ -194,7 +225,7 @@ export default function Register() {
                                                 </InputGroupAddon>
                                                 <Form.Control placeholder="phoneNumber" type="number" name='phoneNumber' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
-                                        </Form.Group>
+                                        </Form.Group> */}
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
@@ -202,11 +233,11 @@ export default function Register() {
                                                         <i className="ni ni-gender-83" />
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Form.Check type="radio" id="male" label="Male" name="gender" value="Male" onChange={(e) => handlechange(e)}/>
-                                                <Form.Check type="radio" id="female" label="Female" name="gender" value="Female" onChange={(e) => handlechange(e)}/>
+                                                <Form.Check type="radio" id="male" label="Male" name="gender" value="Male" onChange={(e) => handlechange(e)} />
+                                                <Form.Check type="radio" id="female" label="Female" name="gender" value="Female" onChange={(e) => handlechange(e)} />
                                             </InputGroup>
                                         </Form.Group>
-                                        <Form.Group>
+                                        {/* <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
@@ -215,7 +246,7 @@ export default function Register() {
                                                 </InputGroupAddon>
                                                 <Form.Control placeholder="address" type="text" name='address' onChange={(e) => handlechange(e)} />
                                             </InputGroup>
-                                        </Form.Group>
+                                        </Form.Group> */}
 
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative">
@@ -224,11 +255,11 @@ export default function Register() {
                                                         <i className="ni ni-image" />
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Form.Control placeholder="image_user" name='image_user' type="file"  onChange={(e)=>handlechangeFile(e)}/>
+                                                <Form.Control placeholder="image_user" name='image_user' type="file" onChange={(e) => handlechangeFile(e)} />
                                             </InputGroup>
                                         </Form.Group>
 
-                                        <Form.Group>
+                                        {/* <Form.Group>
                                             <InputGroup className="input-group-alternative">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
@@ -237,7 +268,7 @@ export default function Register() {
                                                 </InputGroupAddon>
                                                 <Form.Control placeholder="userType"  type="text" name='userType' onChange={(e)=>handlechange(e)}/>
                                             </InputGroup>
-                                        </Form.Group>
+                                        </Form.Group> */}
                                         <div className="text-muted font-italic">
                                             <small>
                                                 password strength:{" "}
@@ -272,11 +303,11 @@ export default function Register() {
                                             </Col>
                                         </Row>
                                         <div className="text-center">
-                                            <Button className="mt-4" color="primary" type="button" onClick={(e)=>add(e)} > Create account </Button>
+                                            <Button className="mt-4" color="primary" type="button" onClick={(e) => add(e)} > Create account </Button>
                                         </div>
-                                        <div className="text-center">
+                                        {/* <div className="text-center">
                                             <Button className="mt-4" color="primary" type="button" onClick={(e)=>add(e)} > Create account </Button>
-                                        </div>
+                                        </div> */}
                                     </Form>
                                 </CardBody>
                             </Card>

@@ -41,6 +41,7 @@ const handlechange = (e) => {
 const Login = async (e) => {
     e.preventDefault();
     //const jsonString = flatted.stringify(user); 
+    
     LoginUser(user)
     .then(()=>navigate('/landing-page'))
     .catch((e)=> console.log(e))
