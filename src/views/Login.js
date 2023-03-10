@@ -12,8 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
+
 import { LoginUser } from '../services/apiUser';
 import { Button, Container, Form } from 'react-bootstrap'
 import flatted from 'flatted';
@@ -48,7 +47,6 @@ const Login = async (e) => {
 }
   return (
     <>
-      <DemoNavbar />
         <section className="section section-shaped section-lg">
           <div className="shape shape-style-1 bg-gradient-default"></div>
           <Container className="pt-lg-7">
@@ -158,7 +156,6 @@ const Login = async (e) => {
               </Row>
             </Container>
           </section>
-        <SimpleFooter />
       </>
     )
   }

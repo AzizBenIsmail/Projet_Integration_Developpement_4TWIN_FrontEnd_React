@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Button, Card, Container, Row, Col } from 'reactstrap';
-import DemoNavbar from 'components/Navbars/DemoNavbar.js';
-import SimpleFooter from 'components/Footers/SimpleFooter.js';
 
 export default function Profile() {
   const [friendCount, setFriendCount] = useState(22);
@@ -10,7 +8,6 @@ export default function Profile() {
 
   return (
     <>
-      <DemoNavbar />
       <main className="profile-page">
         <section className="section-profile-cover section-shaped my-0">
           <div className="shape shape-style-1 shape-default alpha-4"></div>
@@ -124,7 +121,6 @@ export default function Profile() {
             </Container>
           </section>
         </main>
-        <SimpleFooter />
       </>
   )
 }

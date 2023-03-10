@@ -20,7 +20,7 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
-const DemoNavbar = () => {
+export default function NavbarF () {
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
 
@@ -58,9 +58,9 @@ const DemoNavbar = () => {
               <UncontrolledCollapse
                 toggler="#navbar_global"
                 navbar
-                className={this.state.collapseClasses}
-                onExiting={this.onExiting}
-                onExited={this.onExited}
+                className={collapseClasses}
+                onExiting={onExiting}
+                onExited={onExited}
               >
                 <div className="navbar-collapse-header">
                   <Row>

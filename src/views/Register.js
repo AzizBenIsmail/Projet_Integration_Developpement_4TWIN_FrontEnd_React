@@ -8,8 +8,7 @@ import { Card, CardHeader, CardBody, FormGroup, InputGroupAddon, InputGroupText,
 import { Button, Container, Form } from 'react-bootstrap'
 
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
+
 import axios from 'axios';
 
 export default function Register() {
@@ -102,7 +101,6 @@ export default function Register() {
     }
     return (
         <>
-            <DemoNavbar />
             <section className="section section-shaped section-lg">
                 <div className="shape shape-style-1 bg-gradient-default">
                 </div>
@@ -315,7 +313,6 @@ export default function Register() {
                     </Row>
                 </Container>
             </section>
-            <SimpleFooter />
         </>
     )
 }
