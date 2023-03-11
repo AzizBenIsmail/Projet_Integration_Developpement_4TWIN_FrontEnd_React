@@ -8,12 +8,9 @@ export async function getUsers(){
 }
 export async function addUser(formData){
     
+  console.log("1");
       return await axios.post(apiURL,formData, {
         headers: {'Content-Type': 'multipart/form-data'}
-      }).then(function(response) {
-        console.log(response);
-    }).catch(function(error) {
-        console.log(error);
       })
         
 

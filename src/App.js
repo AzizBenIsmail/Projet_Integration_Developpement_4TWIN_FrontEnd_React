@@ -33,7 +33,7 @@ function App() {
       <Route path="/login-page"  element={<Login/>} />
       <Route path="/profile-page" element={<Profile/>} />
       <Route path="/Composant" element={<Index/>} />      
-      <Route path="/Register" element={<Register/>} />      
+      <Route path="/Register-page" element={<Register/>} />      
 
     </Routes>
     <SimpleFooter/>

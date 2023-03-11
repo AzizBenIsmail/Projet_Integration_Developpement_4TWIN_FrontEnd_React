@@ -38,7 +38,7 @@ export default function Register() {
     const handlechangeFile = (e) => {
         // setUsers({ ...user, image_user: e.target.files[0].name })
         setImage(e.target.files[0]);
-        console.log(image)
+        console.log(e.target.files[0])
     }
     const add = async (e) => {
         e.preventDefault();
@@ -53,7 +53,6 @@ export default function Register() {
         // formData.append('userType', user.userType);
         // formData.append('address', user.address);
         formData.append('image_user', image);
-        console.log(formData)
         // try {
         //     const res = await axios.post('http://localhost:5000/users', formData, {
         //         headers: { 'Content-Type': 'multipart/form-data' }
@@ -62,42 +61,51 @@ export default function Register() {
         // } catch (error) {
         //     console.error(error);
         // }
-        console.log(formData);
+        // console.log(formData);
 
-
-        const res = await axios.post('http://localhost:5000/users', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+        const res = await addUser(formData).catch((error) => {
+            console.log(error.response.data.message);
         });
 
+        // const res = await axios.post('http://localhost:5000/users', formData, {
+        //     headers: { 'Content-Type': 'multipart/form-data' }
+        // });
+
         console.log(res.data);
+        console.log(res.data.message);
 
         // Check if email is already taken
-        if (res.data.message === 'email is already taken') {
-            console.log('email is already taken');
-
-            alert('Email is already taken');
-        } else
-            if (res.data.message === 'username is already taken') {
+        switch (res.data.message) {
+            case 'email is already taken':
+                console.log('email is already taken');
+                alert('Email is already taken');
+                break;
+            case 'username is already taken':
                 console.log('username is already taken');
-
                 alert('username is already taken');
-            } else
-                if (res.data.message === 'password : a character string of at least 8 characters containing at least one letter and one number') {
-                    console.log('password is already taken');
-                    alert('password : a character string of at least 8 characters containing at least one letter and one number');
-                } else
-                    if (res.data.message === 'You must be at least 18 years old') {
-                        console.log('you must be at least 18 years old');
+                break;
+            case 'password : a character string of at least 8 characters containing at least one letter and one number':
+                console.log('password is already taken');
+                alert('password : a character string of at least 8 characters containing at least one letter and one number');
+                break;
+            case 'You must be at least 18 years old' :
+                console.log('you must be at least 18 years old');
+                alert('You must be at least 18 years old');
+                break; 
+            case 'gender must be one of the following values: Male, Female':
+                console.log('gender must be one of the following values: Male, Female');
+                alert('gender must be one of the following values: Male, Female');
+                break;
+            case undefined:
+                navigate('/login-page');               
+                alert('successful account creation Welcom : `'+res.data.username+'`');
+                break;
+            default:
+                console.log("Please fill in all the fields of the form")
+                alert('Please fill in all the fields of the form');
+                break;
+        }
 
-                        alert('You must be at least 18 years old');
-                    } else {
-                        console.log('addUser');
-                        addUser(formData)
-                            .then(() => navigate('/login-page'))
-                            .catch((error) => {
-                                console.log(error.response.data.message);
-                            });
-                    }
     }
     return (
         <>
