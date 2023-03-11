@@ -41,9 +41,35 @@ const Login = async (e) => {
     e.preventDefault();
     //const jsonString = flatted.stringify(user); 
     
-    LoginUser(user)
-    .then(()=>navigate('/landing-page'))
-    .catch((e)=> console.log(e))
+
+    
+    const res = await LoginUser(user).catch((error) => {
+      console.log(error.response.data.message);
+  });
+
+  // const res = await axios.post('http://localhost:5000/users', formData, {
+  //     headers: { 'Content-Type': 'multipart/form-data' }
+  // });
+
+  console.log(res.data);
+  console.log(res.data.message);
+
+    switch (res.data) {
+      case 'failed to authent':
+          console.log('failed to authent');
+          alert('failed to authent');
+          break;
+      case 'done':
+          console.log('User successfully authenticated');
+          alert('User: `'+res.data.username+'`'+' successfully authenticated');
+          navigate('/landing-page')
+          break;
+      default:
+          console.log("Please fill in all the fields of the form")
+          alert('Please fill in all the fields of the form');
+      break;
+  }
+
 }
   return (
     <>
