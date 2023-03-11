@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from'react-router-dom'
+import { Link } from "react-router-dom";
+
 import {
   Card,
   CardHeader,
   CardBody,
-  FormGroup,
-  Input,
+  DropdownItem,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
@@ -162,10 +163,10 @@ const Login = async (e) => {
                     <Col xs="6">
                       <a
                         className="text-light"
-                        href="#pablo"
+                        
                         onClick={(e) => e.preventDefault()}
                       >
-                        <small>Forgot password?</small>
+                        <small >Forgot password?</small>
                       </a>
                     </Col>
                     <Col className="text-right" xs="6">
@@ -176,6 +177,7 @@ const Login = async (e) => {
                       >
                         <small>Create new account</small>
                       </a>
+                     
                     </Col>
                   </Row>
                 </Col>

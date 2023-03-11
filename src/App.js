@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,Navigate } from 'react-router-dom';
 import './App.css';
 
 
@@ -12,13 +12,17 @@ import './App.css';
 // const Register = lazy(()=>import('./views/Register'));
 // const NotFound = lazy(()=>import('./views/NotFound'));
 
-import Index from "views/Index.js";
+import Indexs from "views/Index.js";
 import Landing from "views/Landing.js";
 import Login from "views/Login.js";
-import Profile from "views/Profile.js";
+import ProfileFront from "views/Profile.js";
 import Register from "views/Register.js";
 import DemoNavbar from "components/Navbars/DemoNavbar";
 import SimpleFooter from "components/Footers/SimpleFooter";
+
+import Index from "views/Backend/Index.js";
+import Profile from "views/Backend/Profile.js";
+import Tables from "views/Backend/Tables.js";
 
 
 function App() {
@@ -31,9 +35,13 @@ function App() {
       {/* <Route path="*" element={<NotFound/>}/> */}
       <Route path="/landing-page"  element={<Landing/>} />
       <Route path="/login-page"  element={<Login/>} />
-      <Route path="/profile-page" element={<Profile/>} />
-      <Route path="/Composant" element={<Index/>} />      
+      <Route path="/profile-page" element={<ProfileFront/>} />
+      <Route path="/Composant" element={<Indexs/>} />      
       <Route path="/Register-page" element={<Register/>} />      
+      <Route path="/Tables" element={<Tables/>} />     
+      <Route path="/Profile" element={<Profile/>} />     
+      <Route path="/Index" element={<Index/>} />     
+
 
     </Routes>
     <SimpleFooter/>

@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 
 function SimpleFooter() {
+  
   return (
     <>
       <footer className=" footer">

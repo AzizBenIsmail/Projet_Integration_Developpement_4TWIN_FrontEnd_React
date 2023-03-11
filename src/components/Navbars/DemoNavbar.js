@@ -162,6 +162,12 @@ export default function NavbarF () {
                       </DropdownItem>
                       <DropdownItem to="/register-page" tag={Link}>
                         Register
+                      </DropdownItem><DropdownItem to="/Tables" tag={Link}>
+                        Tables
+                      </DropdownItem><DropdownItem to="/Index" tag={Link}>
+                      Index
+                      </DropdownItem><DropdownItem to="/Profile" tag={Link}>
+                      Profile
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
