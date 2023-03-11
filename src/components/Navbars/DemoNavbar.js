@@ -1,9 +1,6 @@
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// JavaScript plugin that hides or shows a component based on your scroll
 import Headroom from "headroom.js";
-// reactstrap components
 import {
   Button,
   UncontrolledCollapse,
@@ -23,43 +20,36 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
-class DemoNavbar extends React.Component {
-  componentDidMount() {
+export default function NavbarF () {
+  const [collapseClasses, setCollapseClasses] = useState("");
+  const [collapseOpen, setCollapseOpen] = useState(false);
+
+  const onExiting = () => {
+    setCollapseClasses("collapsing-out");
+  };
+
+  const onExited = () => {
+    setCollapseClasses("");
+  };
+
+  useEffect(() => {
     let headroom = new Headroom(document.getElementById("navbar-main"));
-    // initialise
     headroom.init();
-  }
-  state = {
-    collapseClasses: "",
-    collapseOpen: false
-  };
+  }, []);
 
-  onExiting = () => {
-    this.setState({
-      collapseClasses: "collapsing-out"
-    });
-  };
-
-  onExited = () => {
-    this.setState({
-      collapseClasses: ""
-    });
-  };
-
-  render() {
-    return (
-      <>
-        <header className="header-global">
-          <Navbar
-            className="navbar-main navbar-transparent navbar-light headroom"
-            expand="lg"
-            id="navbar-main"
-          >
-            <Container>
+  return (
+    <>
+      <header className="header-global">
+        <Navbar
+          className="navbar-main navbar-transparent navbar-light headroom"
+          expand="lg"
+          id="navbar-main"
+        >
+          <Container>
               <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
                 <img
                   alt="..."
-                  src={require("assets/img/brand/argon-react-white.png")}
+                  src={require("assetsFrontOffice/img/brand/argon-react-white.png")}
                 />
               </NavbarBrand>
               <button className="navbar-toggler" id="navbar_global">
@@ -68,9 +58,9 @@ class DemoNavbar extends React.Component {
               <UncontrolledCollapse
                 toggler="#navbar_global"
                 navbar
-                className={this.state.collapseClasses}
-                onExiting={this.onExiting}
-                onExited={this.onExited}
+                className={collapseClasses}
+                onExiting={onExiting}
+                onExited={onExited}
               >
                 <div className="navbar-collapse-header">
                   <Row>
@@ -78,7 +68,7 @@ class DemoNavbar extends React.Component {
                       <Link to="/">
                         <img
                           alt="..."
-                          src={require("assets/img/brand/argon-react.png")}
+                          src={require("assetsFrontOffice/img/brand/argon-react.png")}
                         />
                       </Link>
                     </Col>
@@ -264,6 +254,4 @@ class DemoNavbar extends React.Component {
       </>
     );
   }
-}
 
-export default DemoNavbar;

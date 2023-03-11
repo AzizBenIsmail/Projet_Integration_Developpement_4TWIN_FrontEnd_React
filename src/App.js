@@ -13,11 +13,11 @@ import './App.css';
 // const NotFound = lazy(()=>import('./views/NotFound'));
 
 import Index from "views/Index.js";
-import Landing from "views/examples/Landing.js";
+import Landing from "views/Landing.js";
 import Login from "views/Login.js";
 import Profile from "views/Profile.js";
 import Register from "views/Register.js";
-import NavbarF from "components/Navbars/Navbar";
+import DemoNavbar from "components/Navbars/DemoNavbar";
 import SimpleFooter from "components/Footers/SimpleFooter";
 
 
@@ -25,7 +25,7 @@ function App() {
  
   return (
     <>
-    <NavbarF/>
+    <DemoNavbar/>
 
     <Routes>
       {/* <Route path="*" element={<NotFound/>}/> */}

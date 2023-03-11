@@ -68,7 +68,7 @@ class Menus extends React.Component {
                             <Link to="/">
                               <img
                                 alt="..."
-                                src={require("assets/img/brand/argon-react.png")}
+                                src={require("assetsFrontOffice/img/brand/argon-react.png")}
                               />
                             </Link>
                           </Col>
@@ -157,7 +157,7 @@ class Menus extends React.Component {
                             <Link to="/">
                               <img
                                 alt="..."
-                                src={require("assets/img/brand/argon-react.png")}
+                                src={require("assetsFrontOffice/img/brand/argon-react.png")}
                               />
                             </Link>
                           </Col>

@@ -15,7 +15,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import Download from "../IndexSections/Download.js";
+import Download from "./IndexSections/Download.js";
 
 export default function Landing () {
   const [nameFocused, setNameFocused] = useState(false);
@@ -228,7 +228,7 @@ export default function Landing () {
                   <img
                     alt="..."
                     className="img-fluid floating"
-                    src={require("assets/img/theme/promo-1.png")}
+                    src={require("assetsFrontOffice/img/theme/promo-1.png")}
                   />
                 </Col>
                 <Col className="order-md-1" md="6">
@@ -305,7 +305,7 @@ export default function Landing () {
                   <Card className="bg-default shadow border-0">
                     <CardImg
                       alt="..."
-                      src={require("assets/img/theme/img-1-1200x1000.jpg")}
+                      src={require("assetsFrontOffice/img/theme/img-1-1200x1000.jpg")}
                       top
                     />
                     <blockquote className="card-blockquote">
@@ -377,7 +377,7 @@ export default function Landing () {
                     <img
                       alt="..."
                       className="img-center img-fluid"
-                      src={require("assets/img/ill/ill-2.svg")}
+                      src={require("assetsFrontOffice/img/ill/ill-2.svg")}
                     />
                   </div>
                 </Col>
@@ -491,7 +491,7 @@ export default function Landing () {
                     <img
                       alt="..."
                       className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-1-800x800.jpg")}
+                      src={require("assetsFrontOffice/img/theme/team-1-800x800.jpg")}
                       style={{ width: "200px" }}
                     />
                     <div className="pt-4 text-center">
@@ -533,7 +533,7 @@ export default function Landing () {
                     <img
                       alt="..."
                       className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-2-800x800.jpg")}
+                      src={require("assetsFrontOffice/img/theme/team-2-800x800.jpg")}
                       style={{ width: "200px" }}
                     />
                     <div className="pt-4 text-center">
@@ -577,7 +577,7 @@ export default function Landing () {
                     <img
                       alt="..."
                       className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-3-800x800.jpg")}
+                      src={require("assetsFrontOffice/img/theme/team-3-800x800.jpg")}
                       style={{ width: "200px" }}
                     />
                     <div className="pt-4 text-center">
@@ -619,7 +619,7 @@ export default function Landing () {
                     <img
                       alt="..."
                       className="rounded-circle img-center img-fluid shadow shadow-lg--hover"
-                      src={require("assets/img/theme/team-4-800x800.jpg")}
+                      src={require("assetsFrontOffice/img/theme/team-4-800x800.jpg")}
                       style={{ width: "200px" }}
                     />
                     <div className="pt-4 text-center">

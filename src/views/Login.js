@@ -93,7 +93,7 @@ const Login = async (e) => {
                         <span className="btn-inner--icon mr-1">
                           <img
                             alt="..."
-                            src={require("assets/img/icons/common/github.svg").default}
+                            src={require("assetsFrontOffice/img/icons/common/github.svg").default}
                           />
                         </span>
                         <span className="btn-inner--text">Github</span>
@@ -107,7 +107,7 @@ const Login = async (e) => {
                         <span className="btn-inner--icon mr-1">
                           <img
                             alt="..."
-                            src={require("assets/img/icons/common/google.svg").default}
+                            src={require("assetsFrontOffice/img/icons/common/google.svg").default}
                           />
                         </span>
                         <span className="btn-inner--text">Google</span>

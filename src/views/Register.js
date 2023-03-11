@@ -131,7 +131,7 @@ export default function Register() {
                                                 <img
                                                     alt="..."
                                                     src={
-                                                        require("assets/img/icons/common/github.svg")
+                                                        require("assetsFrontOffice/img/icons/common/github.svg")
                                                             .default
                                                     }
                                                 />
@@ -148,7 +148,7 @@ export default function Register() {
                                                 <img
                                                     alt="..."
                                                     src={
-                                                        require("assets/img/icons/common/google.svg")
+                                                        require("assetsFrontOffice/img/icons/common/google.svg")
                                                             .default
                                                     }
                                                 />

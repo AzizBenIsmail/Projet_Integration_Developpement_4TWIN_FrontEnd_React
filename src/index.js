@@ -5,9 +5,9 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 
-import "assets/vendor/nucleo/css/nucleo.css";
-import "assets/vendor/font-awesome/css/font-awesome.min.css";
-import "assets/scss/argon-design-system-react.scss?v1.1.0";
+import "assetsFrontOffice/vendor/nucleo/css/nucleo.css";
+import "assetsFrontOffice/vendor/font-awesome/css/font-awesome.min.css";
+import "assetsFrontOffice/scss/argon-design-system-react.scss?v1.1.0";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

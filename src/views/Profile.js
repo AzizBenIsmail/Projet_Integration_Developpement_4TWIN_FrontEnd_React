@@ -35,7 +35,7 @@ export default function Profile() {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={require('assets/img/theme/team-4-800x800.jpg')}
+                          src={require('assetsFrontOffice/img/theme/team-4-800x800.jpg')}
                         />
                       </a>
                     </div>

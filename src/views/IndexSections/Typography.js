@@ -315,7 +315,7 @@ class Typography extends React.Component {
             <img
               alt="..."
               className="img-fluid rounded shadow"
-              src={require("assets/img/theme/team-1-800x800.jpg")}
+              src={require("assetsFrontOffice/img/theme/team-1-800x800.jpg")}
               style={{ width: "150px" }}
             />
           </Col>
@@ -326,7 +326,7 @@ class Typography extends React.Component {
             <img
               alt="..."
               className="img-fluid rounded-circle shadow"
-              src={require("assets/img/theme/team-2-800x800.jpg")}
+              src={require("assetsFrontOffice/img/theme/team-2-800x800.jpg")}
               style={{ width: "150px" }}
             />
           </Col>
@@ -337,7 +337,7 @@ class Typography extends React.Component {
             <img
               alt="..."
               className="img-fluid rounded shadow-lg"
-              src={require("assets/img/theme/team-3-800x800.jpg")}
+              src={require("assetsFrontOffice/img/theme/team-3-800x800.jpg")}
               style={{ width: "150px" }}
             />
           </Col>
@@ -348,7 +348,7 @@ class Typography extends React.Component {
             <img
               alt="..."
               className="img-fluid rounded-circle shadow-lg"
-              src={require("assets/img/theme/team-4-800x800.jpg")}
+              src={require("assetsFrontOffice/img/theme/team-4-800x800.jpg")}
               style={{ width: "150px" }}
             />
           </Col>
