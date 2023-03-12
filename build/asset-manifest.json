@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/argon-design-system-react/static/css/main.d0998bfb.css",
+    "main.js": "/argon-design-system-react/static/js/main.367f44c2.js",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/argon-design-system-react/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
+    "static/media/team-2-800x800.jpg": "/argon-design-system-react/static/media/team-2-800x800.3e08ef145920c93bbe32.jpg",
+    "static/media/img-1-1200x1000.jpg": "/argon-design-system-react/static/media/img-1-1200x1000.df1442cf520034feb3b0.jpg",
+    "static/media/img-2-1200x1000.jpg": "/argon-design-system-react/static/media/img-2-1200x1000.78ce5ecad91906896cd1.jpg",
+    "static/media/team-3-800x800.jpg": "/argon-design-system-react/static/media/team-3-800x800.70911cddbb86ea83b652.jpg",
+    "static/media/team-1-800x800.jpg": "/argon-design-system-react/static/media/team-1-800x800.fa5a7ac2c81a43925586.jpg",
+    "static/media/fontawesome-webfont.eot": "/argon-design-system-react/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/argon-design-system-react/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/landing.jpg": "/argon-design-system-react/static/media/landing.530e5e3e621fe49e8e46.jpg",
+    "static/media/nucleo-icons.svg": "/argon-design-system-react/static/media/nucleo-icons.01ebecaf50461162d4bc.svg",
+    "static/media/team-4-800x800.jpg": "/argon-design-system-react/static/media/team-4-800x800.99c612eb60728a5aeeb0.jpg",
+    "static/media/profile.jpg": "/argon-design-system-react/static/media/profile.991e6d2c8d229cc026b3.jpg",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/argon-design-system-react/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/ill-2.svg": "/argon-design-system-react/static/media/ill-2.b82bc41ca8f27286779053cc2a544e93.svg",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/argon-design-system-react/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/creativetim-white-slim.png": "/argon-design-system-react/static/media/creativetim-white-slim.c9b2f68e52151075edf1.png",
+    "static/media/promo-1.png": "/argon-design-system-react/static/media/promo-1.f39d32d244fa5beabbaf.png",
+    "static/media/argon-react.png": "/argon-design-system-react/static/media/argon-react.128d71d316a8e92aff4a.png",
+    "static/media/argon-react-white.png": "/argon-design-system-react/static/media/argon-react-white.e4dd3b41697ada43fdcb.png",
+    "static/media/nucleo-icons.eot": "/argon-design-system-react/static/media/nucleo-icons.19abb5402a664606b14c.eot",
+    "static/media/nucleo-icons.ttf": "/argon-design-system-react/static/media/nucleo-icons.d6a66724e7a7bf1bba65.ttf",
+    "static/media/nucleo-icons.woff": "/argon-design-system-react/static/media/nucleo-icons.c82c9b7c40130b7116d3.woff",
+    "static/media/nucleo-icons.woff2": "/argon-design-system-react/static/media/nucleo-icons.cba267483aa6a7cb6e33.woff2",
+    "static/media/google.svg": "/argon-design-system-react/static/media/google.eae9aa9354350126d1b032847835a051.svg",
+    "static/media/github.svg": "/argon-design-system-react/static/media/github.6c95555646a0ecabf549179c97bf0e7d.svg",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.d0998bfb.css",
+    "static/js/main.367f44c2.js"
+  ]
+}
