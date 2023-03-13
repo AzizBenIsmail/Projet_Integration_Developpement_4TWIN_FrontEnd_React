@@ -378,7 +378,6 @@ console.log("user",user);
                             placeholder=" New password "
                             type="text"
                             onChange={(e) => onValueChange(e)}
-
                           />
                         </FormGroup>
                       </Col>
