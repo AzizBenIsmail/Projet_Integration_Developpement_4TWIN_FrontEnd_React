@@ -6,6 +6,9 @@ const apiURL = "http://localhost:5000/users";
 export async function getUsers(){
     return await axios.get(apiURL);
 }
+export async function getUser(id){
+  return await axios.get(`${apiURL}/${id}`);
+}
 export async function addUser(formData){    
       return await axios.post(apiURL,formData, {
         headers: {'Content-Type': 'multipart/form-data'}

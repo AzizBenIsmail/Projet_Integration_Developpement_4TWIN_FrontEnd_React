@@ -1,26 +1,143 @@
-// reactstrap components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
   FormGroup,
-  Form,
   Input,
-  Container,
   Row,
   Col
 } from "reactstrap";
-// core components
-import UserHeader from "components/Headers/UserHeader.js";
+import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from "react";
+import { Button, Container, Form } from "react-bootstrap";
+import { updateUser, getUser, addUser } from "../../services/apiUser";
+import { useNavigate, useParams } from "react-router-dom";
+import { differenceInYears } from 'date-fns';
+import axios from 'axios';
+import moment from 'moment';
+
 
 const Profile = () => {
+  let formData = new FormData();
+  const navigate = useNavigate();
+  const param = useParams();
+  const [image, setImage] = useState();
+  const [user, setUser] = useState({
+    _id: param.id,
+    username: "",
+    first_Name: "",
+    last_Name: "",
+    email: "",
+    password: "",
+    dateOfBirth: "",
+    phoneNumber: 0,
+    gender: "",
+    // userType: "",
+    address: "",
+    image_user: "",
+  });
+  const { _id, username, first_Name, last_Name, email, phoneNumber, address } = user;
+
+  useEffect(() => {
+    getUserFunction();
+  }, []);
+
+  const getUserFunction = async () => {
+    const response = await getUser(param.id);
+    console.log(response.data.user);
+    setUser(response.data.user);
+  };
+  const onValueChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  const handlechangeFile = (e) => {
+    setImage(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
+  const UpdateU = async () => {
+    const res = await updateUser(param.id, user);
+    console.log(res)
+    if (res.status === 200)
+    navigate(`/Tables`);
+
+  };
+
+  const deleteAUser = async (user) => {
+    const result = window.confirm("Are you sure you want to delete " + user.username + "?");
+    if (result) {
+      //console.log(user);
+      await axios.delete(`http://localhost:5000/users/${user._id}`);
+
+      navigate("/Tables");
+    }
+  }
+  const Show_more = async (user) => {
+    const result = window.confirm("Are you sure you want to Show " + user.username + "?");
+    if (result) {
+      //console.log(user);  
+      //navigate(`/profile-page/${user._id}`);
+      navigate(`/Tables`);
+      
+    }
+  }
+  const AfficherDateDeNaissance = (dateOfBirth) => {
+    const date = moment(dateOfBirth);
+    const mois = date.format('MM');
+    const jour = date.format('DD');
+    const annee = date.format('YYYY');
+    return "" + annee + "/" + mois + "/" + jour + ""
+  }
+
+  const genderIcon = (gender) => {
+    if (gender === 'Male') {
+      return <FontAwesomeIcon icon={faMale} size="2x" color="#007bff" />;
+    } else if (gender === 'Female') {
+      return <FontAwesomeIcon icon={faFemale} size="2x" color="#f54291" />;
+    } else {
+      return null;
+    }
+  };
   return (
     <>
-      <UserHeader />
+      <div
+        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+        style={{
+          minHeight: "600px",
+          backgroundImage:
+            "url(" + `http://localhost:5000/images/${user.image_user}` + ")",
+            // "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center top"
+        }}
+      > 
+        {/* Mask */}
+        <span className="mask bg-gradient-default opacity-8" />
+        {/* Header container */}
+        <Container className="d-flex align-items-center" fluid>
+          <Row>
+            <Col lg="7" md="10">
+              <h1 className="display-2 text-white">Hello  {user.username}</h1>
+              <p className="text-white mt-0 mb-5">
+                This is your profile page. You can see the progress you've made
+                with your work and manage your projects or assigned tasks
+              </p>
+              <Button
+                color="info"
+                href="#pablo"
+                onClick={(e) => e.preventDefault()}
+              >
+                Edit profile
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </div>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
+
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <Row className="justify-content-center">
@@ -30,7 +147,7 @@ const Profile = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        src={`http://localhost:5000/images/${user.image_user}`}
                       />
                     </a>
                   </div>
@@ -51,10 +168,10 @@ const Profile = () => {
                     className="float-right"
                     color="default"
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={(e) => deleteAUser(user)}
                     size="sm"
                   >
-                    Message
+                    delete
                   </Button>
                 </div>
               </CardHeader>
@@ -62,7 +179,7 @@ const Profile = () => {
                 <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                      <div>
+                      {/* <div>
                         <span className="heading">22</span>
                         <span className="description">Friends</span>
                       </div>
@@ -73,34 +190,39 @@ const Profile = () => {
                       <div>
                         <span className="heading">89</span>
                         <span className="description">Comments</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
-                    <span className="font-weight-light">, 27</span>
+                    {user.username}
+                    <span className="font-weight-light">| {differenceInYears(new Date(), new Date(user.dateOfBirth))}</span>
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
-                    Bucharest, Romania
+                    {user.address}
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Creative Tim Officer
+                    first_Name:
+                      {user.first_Name ? (<p>{user.first_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                  - last_Name: {user.last_Name ? (<p>{user.last_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
-                    University of Computer Science
+                    email : {user.email}
                   </div>
                   <hr className="my-4" />
                   <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
+                    phoneNumber — {user.phoneNumber ? (<p>{user.phoneNumber}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    <br />
+                    dateOfBirth — {AfficherDateDeNaissance(user.dateOfBirth)}
+                    <br />
+                    gender      —  {genderIcon(user.gender)}
+
                   </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                  <a href="" onClick={(e) => Show_more(user)}>
                     Show more
                   </a>
                 </div>
@@ -118,10 +240,10 @@ const Profile = () => {
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => UpdateU()}
                       size="sm"
                     >
-                      Settings
+                      Save
                     </Button>
                   </Col>
                 </Row>
@@ -143,10 +265,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
-                            id="input-username"
-                            placeholder="Username"
+                            name="username"
                             type="text"
+                            defaultValue={user.username}
+                            onChange={(e) => onValueChange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -160,9 +282,10 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-email"
-                            placeholder="jesse@example.com"
+                            name="email"
                             type="email"
+                            defaultValue={user.email}
+                            onChange={(e) => onValueChange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -173,15 +296,17 @@ const Profile = () => {
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
+                            
                           >
                             First name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
+                            name="first_Name"
                             placeholder="First name"
+                            defaultValue={user.first_Name}
                             type="text"
+                            onChange={(e) => onValueChange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -195,10 +320,11 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
-                            id="input-last-name"
+                            name="last_Name"
                             placeholder="Last name"
                             type="text"
+                            defaultValue={user.last_Name}
+                            onChange={(e) => onValueChange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -221,10 +347,12 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                            id="input-address"
+                            name="address"
                             placeholder="Home Address"
                             type="text"
+                            defaultValue={user.address}
+
+                            onChange={(e) => onValueChange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -236,14 +364,16 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-city"
                           >
-                            City
+                            phoneNumber 
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="New York"
-                            id="input-city"
+                            defaultValue= {user.phoneNumber}
+                            name="phoneNumber"
                             placeholder="City"
                             type="text"
+                            onChange={(e) => onValueChange(e)}
+
                           />
                         </FormGroup>
                       </Col>
@@ -253,51 +383,20 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-country"
                           >
-                            Country
+                           New password
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="United States"
-                            id="input-country"
-                            placeholder="Country"
+                            name="password"
+                            placeholder=" New password "
                             type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Postal code
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-postal-code"
-                            placeholder="Postal code"
-                            type="number"
+
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                   </div>
                   <hr className="my-4" />
-                  {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">About me</h6>
-                  <div className="pl-lg-4">
-                    <FormGroup>
-                      <label>About Me</label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="A few words about you ..."
-                        rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
-                        type="textarea"
-                      />
-                    </FormGroup>
-                  </div>
                 </Form>
               </CardBody>
             </Card>

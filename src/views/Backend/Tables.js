@@ -20,6 +20,7 @@ import {
 import { differenceInYears } from 'date-fns';
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate, useParams } from "react-router-dom";
 
 // core components
 import Header from "components/Headers/Header.js";
@@ -29,7 +30,7 @@ import axios from 'axios';
 
 
 const Tables = () => {
-
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -68,8 +69,15 @@ const Tables = () => {
             getAllUser();
     }
   }
+  
+  const Modifier = async (user) => {
+    const result = window.confirm("Are you sure you want to modify "+user.username+"?");
+    if (result) {
+      //console.log(user);
+      navigate(`/profile/${user._id}`);
 
-
+    }
+  }
   const genderIcon = (gender) => {
     if (gender === 'Male') {
       return <FontAwesomeIcon icon={faMale} size="3x" color="#007bff" />;
@@ -80,6 +88,28 @@ const Tables = () => {
     }
   };
 
+
+  function calculateCompletionPercentage(user) {
+    let percentage = 100;
+    
+    if (!user.first_Name) {
+      percentage -= 15;
+    }
+    
+    if (!user.last_Name) {
+      percentage -= 15;
+    }
+    
+    if (!user.phoneNumber) {
+      percentage -=10;
+    }   
+    if (!user.address) {
+      percentage -=5;
+    }
+    console.log(percentage);
+    return percentage;
+  }
+  
   return (
     <>
       <Header />
@@ -104,7 +134,8 @@ const Tables = () => {
                     <th scope="col">Age</th>
                     <th scope="col">gender</th>
                     <th scope="col">First Name- Last Name</th>
-                    <th scope="col">Image</th>
+                    <th scope="col">address</th>
+                    <th scope="col">AccountCompletionPercentage</th>
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -154,7 +185,7 @@ const Tables = () => {
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
-                          {user.first_Name}{user.last_Name} 
+                          {user.first_Name} - {user.last_Name} 
                         </Badge>
                       </td>
                       <td>
@@ -164,11 +195,12 @@ const Tables = () => {
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
-                          <span className="mr-2">60%</span>
+                          <span className="mr-2">
+                          {calculateCompletionPercentage(user)} %</span>
                           <div>
                             <Progress
                               max="100"
-                              value="70"
+                              value={calculateCompletionPercentage(user)}
                               barClassName="bg-warning"
                             />
                           </div>
@@ -188,15 +220,15 @@ const Tables = () => {
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
-                              href="#pablo"
+                              href=""
                               onClick={(e) => deleteAUser(user)}
 
                             >
                               Supprimer
                             </DropdownItem>
                             <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
+                              href=""
+                              onClick={(e) => Modifier(user)}
                             >
                               Modifier
                             </DropdownItem>
