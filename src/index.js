@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-// import reportWebVitals from './reportWebVitals';
+
 //FrontOffice
 import "assetsFrontOffice/vendor/nucleo/css/nucleo.css";
 import "assetsFrontOffice/vendor/font-awesome/css/font-awesome.min.css";

@@ -73,15 +73,6 @@ const Profile = () => {
       navigate("/Tables");
     }
   }
-  const Show_more = async (user) => {
-    const result = window.confirm("Are you sure you want to Show " + user.username + "?");
-    if (result) {
-      //console.log(user);  
-      //navigate(`/profile-page/${user._id}`);
-      navigate(`/Tables`);
-      
-    }
-  }
   const AfficherDateDeNaissance = (dateOfBirth) => {
     const date = moment(dateOfBirth);
     const mois = date.format('MM');
@@ -222,7 +213,7 @@ const Profile = () => {
                     gender      —  {genderIcon(user.gender)}
 
                   </p>
-                  <a href="" onClick={(e) => Show_more(user)}>
+                  <a href="" onClick={(e) => navigate(`/Profile-page/${user._id}`)}>
                     Show more
                   </a>
                 </div>
