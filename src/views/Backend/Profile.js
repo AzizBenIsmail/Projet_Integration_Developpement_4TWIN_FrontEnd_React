@@ -38,8 +38,8 @@ const Profile = () => {
     address: "",
     image_user: "",
   });
-  const { _id, username, first_Name, last_Name, email, phoneNumber, address } = user;
-
+  const { _id, username, first_Name, last_Name, email, password,phoneNumber, address } = user;
+console.log("user",user);
   useEffect(() => {
     getUserFunction();
   }, []);
@@ -377,6 +377,7 @@ const Profile = () => {
                             name="password"
                             placeholder=" New password "
                             type="text"
+                            onChange={(e) => onValueChange(e)}
 
                           />
                         </FormGroup>
