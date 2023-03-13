@@ -28,6 +28,8 @@ import Tables from "views/Backend/Tables.js";
 import UserList from "views/Backend/UsersList";
 import ProfileAdd from "views/Backend/Profile-Add";
 
+import FablabJoin from "./views/FablabJoin";
+
 
 function App() {
   return (
@@ -46,6 +48,7 @@ function App() {
         <Route path="/Userlist" element={< UserList />} />
         <Route path="/reset" element={< Reset />} />
         <Route path="/Profile-Add" element={< ProfileAdd />} />
+        <Route path="/FablabJoin" element={<FablabJoin/>} />   
       </Routes>
       < SimpleFooter />
     </>
