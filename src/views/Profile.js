@@ -1,11 +1,61 @@
-import { useState } from 'react';
 import { Button, Card, Container, Row, Col } from 'reactstrap';
+import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from "react";
+import { updateUser, getUser, addUser } from "../services/apiUser";
+import { useNavigate, useParams } from "react-router-dom";
+import { differenceInYears } from 'date-fns';
+import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default function Profile() {
+  
+  const param = useParams();
   const [friendCount, setFriendCount] = useState(22);
   const [photoCount, setPhotoCount] = useState(10);
   const [commentCount, setCommentCount] = useState(89);
+  const [user, setUser] = useState({
+    _id: param.id,
+    username: "",
+    first_Name: "",
+    last_Name: "",
+    email: "",
+    password: "",
+    dateOfBirth: "",
+    phoneNumber: 0,
+    gender: "",
+    // userType: "",
+    address: "",
+    image_user: "",
+  });
+  const { _id, username, first_Name, last_Name, email, phoneNumber, address } = user;
 
+  useEffect(() => {
+    getUserFunction();
+  }, []);
+
+  const getUserFunction = async () => {
+    const response = await getUser(param.id);
+    console.log(response.data.user);
+    setUser(response.data.user);
+  };
+  const AfficherDateDeNaissance = (dateOfBirth) => {
+    const date = moment(dateOfBirth);
+    const mois = date.format('MM');
+    const jour = date.format('DD');
+    const annee = date.format('YYYY');
+    return "" + annee + "/" + mois + "/" + jour + ""
+  }
+
+  const genderIcon = (gender) => {
+    if (gender === 'Male') {
+      return <FontAwesomeIcon icon={faMale} size="2x" color="#007bff" />;
+    } else if (gender === 'Female') {
+      return <FontAwesomeIcon icon={faFemale} size="2x" color="#f54291" />;
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <main className="profile-page">
@@ -63,22 +113,6 @@ export default function Profile() {
                       >
                         Message
                       </Button>
-                    </div>
-                  </Col>
-                  <Col className="order-lg-1" lg="4">
-                    <div className="card-profile-stats d-flex justify-content-center">
-                      <div>
-                        <span className="heading">{friendCount}</span>
-                        <span className="description">Friends</span>
-                      </div>
-                      <div>
-                        <span className="heading">{photoCount}</span>
-                        <span className="description">Photos</span>
-                      </div>
-                      <div>
-                        <span className="heading">{commentCount}</span>
-                        <span className="description">Comments</span>
-                      </div>
                     </div>
                   </Col>
                 </Row>

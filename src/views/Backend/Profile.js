@@ -117,8 +117,7 @@ const Profile = () => {
               <Button
                 color="info"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
+                onClick={(e) => UpdateU()}              >
                 Edit profile
               </Button>
             </Col>
@@ -145,16 +144,7 @@ const Profile = () => {
                 </Col>
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <div className="d-flex justify-content-between">
-                  <Button
-                    className="mr-4"
-                    color="info"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                    size="sm"
-                  >
-                    Connect
-                  </Button>
+                <div className="d-flex justify-content-between">  
                   <Button
                     className="float-right"
                     color="default"
