@@ -1,4 +1,4 @@
-import { Button, Card, Container, Row, Col } from 'reactstrap';
+import { Button, Card, Container, Row, Col, Progress } from 'reactstrap';
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from "react";
 import { updateUser, getUser, addUser } from "../services/apiUser";
@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default function Profile() {
-  
+  const navigate = useNavigate();
+
   const param = useParams();
   const [friendCount, setFriendCount] = useState(22);
   const [photoCount, setPhotoCount] = useState(10);
@@ -56,6 +57,36 @@ export default function Profile() {
       return null;
     }
   };
+  
+  const Modifier = async (user) => {
+    const result = window.confirm("Are you sure you want to modify "+user.username+"?");
+    if (result) {
+      //console.log(user);
+      navigate(`/profile/${user._id}`);
+
+    }
+  }
+  function calculateCompletionPercentage(user) {
+    let percentage = 100;
+    
+    if (!user.first_Name) {
+      percentage -= 30;
+    }
+    
+    if (!user.last_Name) {
+      percentage -= 20;
+    }
+    
+    if (!user.phoneNumber) {
+      percentage -=15;
+    }   
+    if (!user.address) {
+      percentage -=10;
+    }
+    console.log(percentage);
+    return percentage;
+  }
+  
   return (
     <>
       <main className="profile-page">
@@ -93,17 +124,17 @@ export default function Profile() {
                     className="order-lg-3 text-lg-right align-self-lg-center"
                     lg="4"
                   >
-                    {/* <div className="card-profile-actions py-4 mt-lg-0">
+                    <div className="card-profile-actions py-4 mt-lg-0">
                       <Button
                         className="mr-4"
                         color="info"
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) => Modifier(user)  }
                         size="sm"
                       >
-                        Connect
+                        Modifier
                       </Button>
-                      <Button
+                      {/* <Button
                         className="float-right"
                         color="default"
                         href="#pablo"
@@ -111,8 +142,19 @@ export default function Profile() {
                         size="sm"
                       >
                         Message
-                      </Button>
-                      </div> */}
+                      </Button> */}
+                      <div className="progress-wrapper">
+          <div className="progress-info">
+            <div className="progress-label">
+              <span>Progress completed</span>
+            </div>
+            <div className="progress-percentage">
+              <span>{calculateCompletionPercentage(user)} %</span>
+            </div>
+          </div>
+          <Progress max="100"                               value={calculateCompletionPercentage(user)}/>
+        </div>
+                      </div>
                   </Col>
                 </Row>
                 

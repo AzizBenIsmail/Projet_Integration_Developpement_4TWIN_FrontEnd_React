@@ -62,8 +62,13 @@ const Profile = () => {
     if (res.status === 200)
     navigate(`/Tables`);
 
-  };
+  };  const UpdateUs = async () => {
+    const res = await updateUser(param.id, user);
+    console.log(res)
+    if (res.status === 200)
+    navigate(`/Profile-page/${user._id}`);
 
+  };
   const deleteAUser = async (user) => {
     const result = window.confirm("Are you sure you want to delete " + user.username + "?");
     if (result) {
@@ -117,7 +122,7 @@ const Profile = () => {
               <Button
                 color="info"
                 href="#pablo"
-                onClick={(e) => UpdateU()}              >
+                onClick={(e) => UpdateUs()} >
                 Edit profile
               </Button>
             </Col>

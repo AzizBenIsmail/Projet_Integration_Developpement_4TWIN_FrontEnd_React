@@ -173,7 +173,7 @@ const Login = async (e) => {
                       <a
                         className="text-light"
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={(e) =>  navigate(`/Register-page`)}
                       >
                         <small>Create new account</small>
                       </a>
