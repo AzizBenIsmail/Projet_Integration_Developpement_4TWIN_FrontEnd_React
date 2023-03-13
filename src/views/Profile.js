@@ -152,7 +152,7 @@ export default function Profile() {
               <span>{calculateCompletionPercentage(user)} %</span>
             </div>
           </div>
-          <Progress max="100"                               value={calculateCompletionPercentage(user)}/>
+          <Progress max="100" value={calculateCompletionPercentage(user)}/>
         </div>
                       </div>
                   </Col>
