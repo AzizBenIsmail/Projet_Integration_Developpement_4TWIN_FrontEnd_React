@@ -47,9 +47,9 @@ export default function NavbarF () {
         >
           <Container>
               <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
-                <img
+                <img style={{width: '210px',height:'70px'}}
                   alt="..."
-                  src={require("assetsFrontOffice/img/brand/argon-react-white.png")}
+                  src={require("assets/img/brand/logo.png")}
                 />
               </NavbarBrand>
               <button className="navbar-toggler" id="navbar_global">
@@ -68,7 +68,7 @@ export default function NavbarF () {
                       <Link to="/">
                         <img
                           alt="..."
-                          src={require("assetsFrontOffice/img/brand/argon-react.png")}
+                          src={require("assets/img/brand/argon-react.png")}
                         />
                       </Link>
                     </Col>
@@ -82,73 +82,27 @@ export default function NavbarF () {
                 </div>
                 <Nav className="navbar-nav-hover align-items-lg-center" navbar>
                   <UncontrolledDropdown nav>
-                    <DropdownToggle nav>
+                    <DropdownToggle nav to="/landing-page" tag={Link}>
                       <i className="ni ni-ui-04 d-lg-none mr-1" />
-                      <span className="nav-link-inner--text">Components</span>
+                      <span className="nav-link-inner--text" style={{color:"#ffff"}}>Home</span>
                     </DropdownToggle>
-                    <DropdownMenu className="dropdown-menu-xl">
-                      <div className="dropdown-menu-inner">
-                        <Media
-                          className="d-flex align-items-center"
-                          href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/overview?ref=adsr-navbar"
-                          target="_blank"
-                        >
-                          <div className="icon icon-shape bg-gradient-primary rounded-circle text-white">
-                            <i className="ni ni-spaceship" />
-                          </div>
-                          <Media body className="ml-3">
-                            <h6 className="heading text-primary mb-md-1">
-                              Getting started
-                            </h6>
-                            <p className="description d-none d-md-inline-block mb-0">
-                              Learn how to use Argon compiling Scss, change
-                              brand colors and more.
-                            </p>
-                          </Media>
-                        </Media>
-                        <Media
-                          className="d-flex align-items-center"
-                          href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/colors?ref=adsr-navbar"
-                          target="_blank"
-                        >
-                          <div className="icon icon-shape bg-gradient-success rounded-circle text-white">
-                            <i className="ni ni-palette" />
-                          </div>
-                          <Media body className="ml-3">
-                            <h6 className="heading text-primary mb-md-1">
-                              Foundation
-                            </h6>
-                            <p className="description d-none d-md-inline-block mb-0">
-                              Learn more about colors, typography, icons and the
-                              grid system we used for Argon.
-                            </p>
-                          </Media>
-                        </Media>
-                        <Media
-                          className="d-flex align-items-center"
-                          href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/alert?ref=adsr-navbar"
-                          target="_blank"
-                        >
-                          <div className="icon icon-shape bg-gradient-warning rounded-circle text-white">
-                            <i className="ni ni-ui-04" />
-                          </div>
-                          <Media body className="ml-3">
-                            <h5 className="heading text-warning mb-md-1">
-                              Components
-                            </h5>
-                            <p className="description d-none d-md-inline-block mb-0">
-                              Browse our 50 beautiful handcrafted components
-                              offered in the Free version.
-                            </p>
-                          </Media>
-                        </Media>
-                      </div>
-                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                  <UncontrolledDropdown nav>
+                    <DropdownToggle nav to="/landing-page" tag={Link}>
+                      <i className="ni ni-collection d-lg-none mr-1" />
+                      <span className="nav-link-inner--text" style={{color:"#ffff"}}>Projects</span>
+                    </DropdownToggle>
+                  </UncontrolledDropdown>
+                  <UncontrolledDropdown nav >
+                    <DropdownToggle nav to="/landing-page" tag={Link}>
+                      <i className="ni ni-collection d-lg-none mr-1" />
+                      <span className="nav-link-inner--text" style={{color:"#ffff"}}>Events</span>
+                    </DropdownToggle>
                   </UncontrolledDropdown>
                   <UncontrolledDropdown nav>
                     <DropdownToggle nav>
                       <i className="ni ni-collection d-lg-none mr-1" />
-                      <span className="nav-link-inner--text">Examples</span>
+                      <span className="nav-link-inner--text" style={{color:"#ffff"}}>Examples</span>
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem to="/landing-page" tag={Link}>
@@ -177,19 +131,40 @@ export default function NavbarF () {
                 </Nav>
                 <Nav className="align-items-lg-center ml-lg-auto" navbar>
                   <NavItem className="d-none d-lg-block ml-lg-4">
+                  
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
+                      //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
                       target="_blank"
-                    >
+                    > <Link to="/login-page">
                       <span className="btn-inner--icon">
-                        <i className="fa fa-cloud-download mr-2" />
+                        <i className="fa fa-sign-in mr-2" />
                       </span>
                       <span className="nav-link-inner--text ml-1">
-                        Download
+                        Login
                       </span>
+                      </Link>
                     </Button>
+                   
+                   
+                    <Button
+                      className="btn-neutral btn-icon"
+                      color="default"
+                      //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
+                      target="_blank"
+                     
+                    >
+                       <Link to="/FablabJoin">
+                      <span className="btn-inner--icon">
+                        <i className="fa fa-user-plus mr-2" />
+                      </span>
+                      <span className="nav-link-inner--text ml-1">
+                        Join Us as Fablab
+                      </span>
+                      </Link>
+                    </Button>
+                    
                   </NavItem>
                 </Nav>
               </UncontrolledCollapse>
