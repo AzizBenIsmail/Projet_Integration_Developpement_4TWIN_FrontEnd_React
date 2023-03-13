@@ -96,18 +96,18 @@ const Tables = () => {
     let percentage = 100;
     
     if (!user.first_Name) {
-      percentage -= 15;
+      percentage -= 30;
     }
     
     if (!user.last_Name) {
-      percentage -= 15;
+      percentage -= 20;
     }
     
     if (!user.phoneNumber) {
-      percentage -=10;
+      percentage -=15;
     }   
     if (!user.address) {
-      percentage -=5;
+      percentage -=10;
     }
     console.log(percentage);
     return percentage;
