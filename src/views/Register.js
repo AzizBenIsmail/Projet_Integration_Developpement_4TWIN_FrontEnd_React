@@ -235,7 +235,7 @@ export default function Register() {
                                                 </InputGroupAddon>
                                                 <Form.Control
                                                     placeholder="password"
-                                                    type="email"
+                                                    type="password"
                                                     autoComplete="off"
                                                     name="password"
                                                     onChange={(e) => handlechange(e)}
@@ -253,6 +253,7 @@ export default function Register() {
                                                     placeholder="dateOfBirth"
                                                     type="date"
                                                     name="dateOfBirth"
+                                                    max="2006-12-31"
                                                     onChange={(e) => handlechange(e)}
                                                 />
                                             </InputGroup>
