@@ -26,6 +26,7 @@ import Index from "views/Backend/Index.js";
 import Profile from "views/Backend/Profile.js";
 import Tables from "views/Backend/Tables.js";
 import UserList from "views/Backend/UsersList";
+import ProfileAdd from "views/Backend/Profile-Add";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/Index" element={< Index />} />
         <Route path="/Userlist" element={< UserList />} />
         <Route path="/reset" element={< Reset />} />
+        <Route path="/Profile-Add" element={< ProfileAdd />} />
       </Routes>
       < SimpleFooter />
     </>

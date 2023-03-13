@@ -22,10 +22,8 @@ import moment from 'moment';
 const Profile = () => {
   let formData = new FormData();
   const navigate = useNavigate();
-  const param = useParams();
   const [image, setImage] = useState();
-  const [user, setUser] = useState({
-    _id: param.id,
+  const [user, setUsers] = useState({
     username: "",
     first_Name: "",
     last_Name: "",
@@ -34,54 +32,89 @@ const Profile = () => {
     dateOfBirth: "",
     phoneNumber: 0,
     gender: "",
-    // userType: "",
+    // "userType": "",
     address: "",
     image_user: "",
   });
-  const { _id, username, first_Name, last_Name, email, phoneNumber, address } = user;
-
-  useEffect(() => {
-    getUserFunction();
-  }, []);
-
-  const getUserFunction = async () => {
-    const response = await getUser(param.id);
-    console.log(response.data.user);
-    setUser(response.data.user);
-  };
-  const onValueChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+  const handlechange = (e) => {
+    setUsers({ ...user, [e.target.name]: e.target.value });
   };
   const handlechangeFile = (e) => {
+    // setUsers({ ...user, image_user: e.target.files[0].name })
     setImage(e.target.files[0]);
     console.log(e.target.files[0]);
   };
-  const UpdateU = async () => {
-    const res = await updateUser(param.id, user);
-    console.log(res)
-    if (res.status === 200)
-    navigate(`/Tables`);
+  const add = async (e) => {
+    console.log("1");
+    formData.append("username", user.username);
+    formData.append('first_Name', user.first_Name);
+    formData.append('last_Name', user.last_Name);
+    formData.append("email", user.email);
+    formData.append("password", user.password);
+    formData.append("dateOfBirth", user.dateOfBirth);
+    formData.append('phoneNumber', user.phoneNumber);
+    formData.append("gender", user.gender);
+    // formData.append('userType', user.userType);
+    formData.append('address', user.address);
+    formData.append("image_user", image);
+    // try {
+    //     const res = await axios.post('http://localhost:5000/users', formData, {
+    //         headers: { 'Content-Type': 'multipart/form-data' }
+    //     });
+    //     console.log(res.data);
+    // } catch (error) {
+    //     console.error(error);
+    // }
+    // console.log(formData);
 
+    const res = await addUser(formData).catch((error) => {
+      console.log(error.response.data.message);
+    });
+
+    // const res = await axios.post('http://localhost:5000/users', formData, {
+    //     headers: { 'Content-Type': 'multipart/form-data' }
+    // });
+
+    console.log(res.data);
+    console.log(res.data.message);
+
+    // Check if email is already taken
+    switch (res.data.message) {
+      case "email is already taken":
+        console.log("email is already taken");
+        alert("Email is already taken");
+        break;
+      case "username is already taken":
+        console.log("username is already taken");
+        alert("username is already taken");
+        break;
+      case "password : a character string of at least 8 characters containing at least one letter and one number":
+        console.log("password is already taken");
+        alert(
+          "password : a character string of at least 8 characters containing at least one letter and one number"
+        );
+        break;
+      case "You must be at least 18 years old":
+        console.log("you must be at least 18 years old");
+        alert("You must be at least 18 years old");
+        break;
+      case "gender must be one of the following values: Male, Female":
+        console.log("gender must be one of the following values: Male, Female");
+        alert("gender must be one of the following values: Male, Female");
+        break;
+      case undefined:
+        navigate(`/Tables`);
+        alert(
+          "successful account creation Welcom : `" + res.data.username + "`"
+        );
+        break;
+      default:
+        console.log("Please fill in all the fields of the form");
+        alert("Please fill in all the fields of the form");
+        break;
+    }
   };
 
-  const deleteAUser = async (user) => {
-    const result = window.confirm("Are you sure you want to delete " + user.username + "?");
-    if (result) {
-      //console.log(user);
-      await axios.delete(`http://localhost:5000/users/${user._id}`);
-
-      navigate("/Tables");
-    }
-  }
-  const Show_more = async (user) => {
-    const result = window.confirm("Are you sure you want to Show " + user.username + "?");
-    if (result) {
-      //console.log(user);  
-      //navigate(`/profile-page/${user._id}`);
-      navigate(`/Tables`);
-      
-    }
-  }
   const AfficherDateDeNaissance = (dateOfBirth) => {
     const date = moment(dateOfBirth);
     const mois = date.format('MM');
@@ -107,11 +140,11 @@ const Profile = () => {
           minHeight: "600px",
           backgroundImage:
             "url(" + `http://localhost:5000/images/${user.image_user}` + ")",
-            // "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
+          // "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
           backgroundSize: "cover",
           backgroundPosition: "center top"
         }}
-      > 
+      >
         {/* Mask */}
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
@@ -164,15 +197,6 @@ const Profile = () => {
                   >
                     Connect
                   </Button>
-                  <Button
-                    className="float-right"
-                    color="default"
-                    href="#pablo"
-                    onClick={(e) => deleteAUser(user)}
-                    size="sm"
-                  >
-                    delete
-                  </Button>
                 </div>
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
@@ -206,8 +230,8 @@ const Profile = () => {
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
                     first_Name:
-                      {user.first_Name ? (<p>{user.first_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
-                  - last_Name: {user.last_Name ? (<p>{user.last_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    {user.first_Name ? (<p>{user.first_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    - last_Name: {user.last_Name ? (<p>{user.last_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -222,9 +246,6 @@ const Profile = () => {
                     gender      —  {genderIcon(user.gender)}
 
                   </p>
-                  <a href="" onClick={(e) => Show_more(user)}>
-                    Show more
-                  </a>
                 </div>
               </CardBody>
             </Card>
@@ -240,7 +261,7 @@ const Profile = () => {
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => UpdateU()}
+                      onClick={(e) => add()}
                       size="sm"
                     >
                       Save
@@ -249,7 +270,7 @@ const Profile = () => {
                 </Row>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form role="form" enctype="multipart/form-data" /*method="HTTP_METHOD" */>
                   <h6 className="heading-small text-muted mb-4">
                     User information
                   </h6>
@@ -264,12 +285,10 @@ const Profile = () => {
                             Username
                           </label>
                           <Input
-                            className="form-control-alternative"
-                            name="username"
+                            placeholder="username"
                             type="text"
-                            defaultValue={user.username}
-                            onChange={(e) => onValueChange(e)}
-                            //disabled="disabled"
+                            name="username"
+                            onChange={(e) => handlechange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -285,9 +304,8 @@ const Profile = () => {
                             className="form-control-alternative"
                             name="email"
                             type="email"
-                            Value={user.email}
-                            onChange={(e) => onValueChange(e)}
-                           // disabled="disabled"
+                            onChange={(e) => handlechange(e)}
+                          // disabled="disabled"
                           />
                         </FormGroup>
                       </Col>
@@ -298,17 +316,16 @@ const Profile = () => {
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
-                            
+
                           >
                             First name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            name="first_Name"
-                            placeholder="First name"
-                            defaultValue={user.first_Name}
+                            placeholder="first_Name"
                             type="text"
-                            onChange={(e) => onValueChange(e)}
+                            name="first_Name"
+                            onChange={(e) => handlechange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -326,7 +343,7 @@ const Profile = () => {
                             placeholder="Last name"
                             type="text"
                             defaultValue={user.last_Name}
-                            onChange={(e) => onValueChange(e)}
+                            onChange={(e) => handlechange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -352,8 +369,7 @@ const Profile = () => {
                             name="address"
                             placeholder="Home Address"
                             type="text"
-                            defaultValue={user.address}
-                            onChange={(e) => onValueChange(e)}
+                            onChange={(e) => handlechange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -365,16 +381,14 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-city"
                           >
-                            phoneNumber 
+                            phoneNumber
                           </label>
                           <Input
                             className="form-control-alternative"
                             name="phoneNumber"
                             placeholder="+216 .. ... ..."
                             type="Number"
-                            defaultValue={user.phoneNumber}
-                            onChange={(e) => onValueChange(e)}
-
+                            onChange={(e) => handlechange(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -384,17 +398,76 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-country"
                           >
-                           New password
+                            password
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            placeholder="password"
+                            type="password"
+                            autoComplete="off"
                             name="password"
-                            placeholder=" New password "
-                            type="text"
+                            onChange={(e) => handlechange(e)}
 
                           />
                         </FormGroup>
-                      </Col>
+                      </Col><Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            dateOfBirth
+                          </label>
+                          <Input
+                            placeholder="dateOfBirth"
+                            type="date"
+                            name="dateOfBirth"
+                            onChange={(e) => handlechange(e)}
+                          />
+                        </FormGroup>
+                      </Col><Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Male :.......
+                          </label>
+                          <Input type="radio"
+                            id="male"
+                            name="gender"
+                            value="Male"
+                            onChange={(e) => handlechange(e)} />
+                        </FormGroup>
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Female :.....
+                          </label>
+                          <Input type="radio"
+                            id="female"
+                            name="gender"
+                            value="Female"
+                            onChange={(e) => handlechange(e)} />
+
+                        </FormGroup>
+                      </Col><Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            User image
+                          </label>
+                          <Input
+                           placeholder="image_user"
+                           name="image_user"
+                           type="file"
+                           onChange={(e) => handlechangeFile(e)}
+                          />
+                        </FormGroup>
+                      </Col>  
                     </Row>
                   </div>
                   <hr className="my-4" />

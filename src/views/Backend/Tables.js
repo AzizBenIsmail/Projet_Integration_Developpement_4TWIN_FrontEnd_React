@@ -10,10 +10,13 @@ import {
   Media,
   Pagination,
   PaginationItem,
+  Button,
+  NavItem,
   PaginationLink,
   Progress,
   Table,
   Container,
+  Nav,
   Row,
   UncontrolledTooltip
 } from "reactstrap";
@@ -123,6 +126,21 @@ const Tables = () => {
               <CardHeader className="bg-transparent border-0">
                 <h3 className="text-white mb-0">Card tables</h3>
               </CardHeader>
+              <Nav className="align-items-lg-center ml-lg-auto" navbar>
+                  <NavItem className="d-none d-lg-block ml-lg-4">
+                    <Button
+                      className="btn-neutral btn-icon"
+                      color="default"
+                      href=""
+                      onClick={(e) => navigate(`/Profile-Add`)}
+                      target="_blank"
+                    >
+                      <span className="nav-link-inner--text ml-1">
+                        Create a new account
+                      </span>
+                    </Button>
+                  </NavItem>
+                </Nav>
               <Table
                 className="align-items-center table-dark table-flush"
                 responsive
