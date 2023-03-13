@@ -89,6 +89,7 @@ export default function Profile() {
   
   return (
     <>
+    
       <main className="profile-page">
         <section className="section-profile-cover section-shaped my-0">
           <div className="shape shape-style-1 shape-default alpha-4"></div>
@@ -104,6 +105,20 @@ export default function Profile() {
               <polygon className="fill-white" points="2560 0 2560 100 0 100" />
             </svg>
           </div>
+          <div
+        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+        style={{
+          minHeight: "600px",
+          backgroundImage:
+            "url(" + `http://localhost:5000/images/${user.image_user}` + ")",
+            // "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center top"
+        }}
+      > 
+        {/* Mask */}
+        <span className="mask bg-gradient-default opacity-8" />
+        </div>
         </section>
         <section className="section">
           <Container>
