@@ -42,6 +42,11 @@ const Tables = () => {
     //     console.log(err);
     //   });
     getAllUser();
+    const interval = setInterval(() => {
+      getAllUser(); // appel répété toutes les 10 secondes
+    }, 10000);
+    return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
+  
   }, []);
 
   const getAllUser=async()=>{
