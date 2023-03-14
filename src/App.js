@@ -29,6 +29,8 @@ import UserList from "views/Backend/UsersList";
 import ProfileAdd from "views/Backend/Profile-Add";
 
 import FablabJoin from "./views/FablabJoin";
+import AdminFablabJoin from "./views/Backend/AdminFablabJoin";
+import FablabRequestDetails from "./views/Backend/FablabRequestDetails";
 import ResetPwd from "views/ResetPwd";
 
 function App() {
@@ -49,6 +51,8 @@ function App() {
         <Route path="/reset" element={<Reset />} />
         <Route path="/Profile-Add" element={<ProfileAdd />} />
         <Route path="/FablabJoin" element={<FablabJoin />} />
+        <Route path="/AdminFablabJoin" element={<AdminFablabJoin/>} /> 
+        <Route path="/FablabRequestDetails/:id" element={<FablabRequestDetails/>} /> 
         <Route path="/reset" element={<Reset />} />
         <Route path="/resetpwd" element={<ResetPwd />} />
       </Routes>
