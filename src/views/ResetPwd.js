@@ -14,11 +14,11 @@ import {
   Col,
 } from "reactstrap";
 
-import { forgotpwd } from "../services/apiUser";
+import { LoginUser } from "../services/apiUser";
 import { Button, Container, Form } from "react-bootstrap";
 import flatted from "flatted";
 
-export default function Reset() {
+export default function ResetPwd() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -31,19 +31,37 @@ export default function Reset() {
   });
   const handlechange = (e) => {
     console.log(e.target.value);
-
+    setUsers({ ...user, [e.target.name]: e.target.value });
     console.log(user);
   };
 
-  const forgotpassword = async (e) => {
+  const Login = async (e) => {
     e.preventDefault();
 
-    const res = await forgotpwd(email).catch((error) => {
+    const res = await LoginUser(user).catch((error) => {
       console.log(error.response.data.message);
     });
 
     console.log(res.data);
     console.log(res.data.message);
+
+    switch (res.data) {
+      case "failed to authent":
+        console.log("failed to authent");
+        alert("failed to authent");
+        break;
+      case "done":
+        console.log("User successfully authenticated");
+        alert(
+          "User: `" + res.data.username + "`" + " successfully authenticated"
+        );
+        navigate("/landing-page");
+        break;
+      default:
+        console.log("Please fill in all the fields of the form");
+        alert("Please fill in all the fields of the form");
+        break;
+    }
   };
   return (
     <>
@@ -96,18 +114,39 @@ export default function Reset() {
                     <small>Forgot Password ?</small>
                   </div>
                   <Form role="form">
-                    <Form.Group className="mb-3">
+                    <Form.Group>
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="ni ni-email-83" />
+                            <i className="ni ni-lock-circle-open" />
                           </InputGroupText>
                         </InputGroupAddon>
                         <Form.Control
-                          placeholder="email"
-                          type="email"
-                          name="email"
-                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="password"
+                          type="password"
+                          autoComplete="off"
+                          name="password"
+                          onChange={(e) => handlechange(e)}
+                        />
+                      </InputGroup>
+                      <div style={{ opacity: "0" }}>
+                        -------------------------- --------------------------
+                        --------------------------
+                      </div>
+                    </Form.Group>
+                    <Form.Group>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-lock-circle-open" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Form.Control
+                          placeholder="Verify password"
+                          type="password"
+                          autoComplete="off"
+                          name="password2"
+                          onChange={(e) => handlechange(e)}
                         />
                       </InputGroup>
                     </Form.Group>
@@ -126,11 +165,11 @@ export default function Reset() {
                         type="button"
                         onClick={(e) => {
                           console.log(e);
-                          forgotpassword(e);
+                          Login(e);
                         }}
                       >
                         {" "}
-                        Submit{" "}
+                        Change{" "}
                       </Button>
                     </div>
                   </Form>
