@@ -7,7 +7,7 @@ export async function getUsers(){
     return await axios.get(apiURL);
 }
 export async function getUser(id){
-  return await axios.get(`${apiURL}/${id}`);
+  return await axios.get(`${apiURL}/getUser/${id}`);
 }
 export async function addUser(formData){    
       return await axios.post(apiURL,formData, {
