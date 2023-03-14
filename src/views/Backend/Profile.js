@@ -357,7 +357,7 @@ console.log("user",user);
                             className="form-control-alternative"
                             name="phoneNumber"
                             placeholder="+216 .. ... ..."
-                            type="Number"
+                            type="text"
                             defaultValue={user.phoneNumber}
                             onChange={(e) => onValueChange(e)}
 

@@ -196,11 +196,11 @@ export default function Profile() {
                     <Row className="justify-content-center">
                       <Col lg="9">
 <                  h1>
-                    phoneNumber — {user.phoneNumber ? (<p>{user.phoneNumber}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    phoneNumber : {user.phoneNumber ? (<h2>{user.phoneNumber}</h2>) : (<FontAwesomeIcon icon={faCircle} />)}
                     <br />
-                    dateOfBirth — {AfficherDateDeNaissance(user.dateOfBirth)}
+                    dateOfBirth : {AfficherDateDeNaissance(user.dateOfBirth)}
                     <br />
-                    gender      —  {genderIcon(user.gender)}
+                    gender      :  {genderIcon(user.gender)}
 
                   </h1>
                       </Col>
