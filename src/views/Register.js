@@ -1,6 +1,6 @@
 // reactstrap components
 import React, { useState } from "react";
-import { addUser } from "../services/apiUser";
+import { register } from "../services/apiUser";
 import { useNavigate } from "react-router-dom";
 
 // reactstrap components
@@ -69,7 +69,7 @@ export default function Register() {
         // }
         // console.log(formData);
 
-        const res = await addUser(formData).catch((error) => {
+        const res = await register(formData).catch((error) => {
             console.log(error.response.data.message);
         });
 

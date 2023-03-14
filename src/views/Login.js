@@ -44,8 +44,13 @@ const Login = async (e) => {
     
 
     
-    const res = await LoginUser(user).catch((error) => {
-      console.log(error.response.data.message);
+  //   const res = await LoginUser(user).catch((error) => {
+  //     console.log(error.response.data.message);
+  // });
+  const res  = await LoginUser('/users/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: user.email,password: user.password })
   });
 
   // const res = await axios.post('http://localhost:5000/users', formData, {

@@ -27,3 +27,8 @@ export async function LoginUser(User) {
   console.log("befor LoginUser " + User);
   return await axios.post(`${apiURL}/login`,User)
 }
+
+export async function register(User) {
+  console.log("befor LoginUser " + User);
+  return await axios.post(`${apiURL}/register`,User)
+}
