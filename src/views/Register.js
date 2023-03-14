@@ -19,7 +19,6 @@ import { Button, Container, Form } from "react-bootstrap";
 
 // core components
 
-import axios from "axios";
 
 export default function Register() {
     let formData = new FormData();
