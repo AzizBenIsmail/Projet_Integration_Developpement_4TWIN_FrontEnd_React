@@ -107,7 +107,7 @@ export default function Register() {
             case undefined:
                 navigate("/login-page");
                 alert(
-                    "successful account creation Welcom : `" + res.data.username + "`"
+                    "successful account creation Welcom : `" + user.username + "`"
                 );
                 break;
             default:
