@@ -17,7 +17,7 @@ import {
 import { LoginUser } from "../services/apiUser";
 import { Button, Container, Form } from "react-bootstrap";
 import flatted from "flatted";
-
+import axios from "axios";
 export default function Login() {
   const navigate = useNavigate();
 
@@ -73,6 +73,15 @@ export default function Login() {
         break;
     }
   };
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/auth/connection');
+      window.location.href = response.data.redirectUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   return (
     <>
       <section className="section section-shaped section-lg">
@@ -87,27 +96,10 @@ export default function Login() {
                   </div>
                   <div className="btn-wrapper text-center">
                     <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={
-                            require("assetsFrontOffice/img/icons/common/github.svg")
-                              .default
-                          }
-                        />
-                      </span>
-                      <span className="btn-inner--text">Github</span>
-                    </Button>
-                    <Button
                       className="btn-neutral btn-icon ml-1"
                       color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=1011336119202-68ccv8g3nnrvrbhaibacj684alcpfmss.apps.googleusercontent.com&service=lso&o2v=2&flowName=GeneralOAuthFlow"
+                       onClick={handleGoogleLogin}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
