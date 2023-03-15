@@ -19,8 +19,10 @@ import {
   Col,
   UncontrolledTooltip
 } from "reactstrap";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function NavbarF () {
+  const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
 
@@ -136,7 +138,8 @@ export default function NavbarF () {
                       className="btn-neutral btn-icon"
                       color="default"
                       //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
-                      target="_blank"
+                      onClick={(e) => navigate(`/login-page`)}   
+                                         target="_blank"
                     > <Link to="/login-page">
                       <span className="btn-inner--icon">
                         <i className="fa fa-sign-in mr-2" />

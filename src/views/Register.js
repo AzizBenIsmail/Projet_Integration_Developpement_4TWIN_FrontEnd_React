@@ -46,7 +46,6 @@ export default function Register() {
         console.log(e.target.files[0]);
     };
     const add = async (e) => {
-        console.log("1");
         e.preventDefault();
         formData.append("username", user.username);
         // formData.append('first_Name', user.first_Name);

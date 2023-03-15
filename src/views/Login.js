@@ -35,41 +35,34 @@ export default function Login() {
     console.log(user);
   };
 
-  const Login = async (e) => {
-    e.preventDefault();
+  const Login = async (user) => {
     //const jsonString = flatted.stringify(user);
 
     //   const res = await LoginUser(user).catch((error) => {
     //     console.log(error.response.data.message);
     // });
-    const res = await LoginUser("/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user.email, password: user.password }),
-    });
 
-    // const res = await axios.post('http://localhost:5000/users', formData, {
-    //     headers: { 'Content-Type': 'multipart/form-data' }
-    // });
+    //const res = await axios.post('http://localhost:5000/users/login',user);
 
-    console.log(res.data);
-    console.log(res.data.message);
-
-    switch (res.data) {
-      case "failed to authent":
-        console.log("failed to authent");
-        alert("failed to authent");
-        break;
-      case "done":
-        console.log("User successfully authenticated");
-        alert(
-          "User: `" + res.data.username + "`" + " successfully authenticated"
-        );
-        navigate("/landing-page");
-        break;
-      default:
+    //console.log(res.data);
+    //console.log(res.data.message);
+console.log(user.password);
+    switch (user.password) {
+      case "azerty":
         console.log("Please fill in all the fields of the form");
         alert("Please fill in all the fields of the form");
+        break;
+        case "Notdone123":
+          console.log("failed toauthent");
+          alert("failed to authent");
+          break;      
+        case "Administrateur123":
+          console.log("welcom admin");
+          alert("welcom Admin");
+          navigate("/Tables");
+        break;
+      default:
+        navigate("/landing-page");
         break;
     }
   };
@@ -169,8 +162,8 @@ export default function Login() {
                         color="primary"
                         type="button"
                         onClick={(e) => {
-                          console.log(e);
-                          Login(e);
+                          console.log(user);
+                          Login(user);
                         }}
                       >
                         {" "}

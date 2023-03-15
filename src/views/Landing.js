@@ -16,8 +16,11 @@ import {
   Col
 } from "reactstrap";
 import Download from "./IndexSections/Download.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Landing () {
+  const navigate = useNavigate();
+
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
@@ -62,12 +65,12 @@ export default function Landing () {
                       <Button
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
-                        href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/alerts?ref=adsr-landing-page"
+                        onClick={(e) => navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)}   
                       >
                         <span className="btn-inner--icon mr-1">
                           <i className="fa fa-code" />
                         </span>
-                        <span className="btn-inner--text">Components</span>
+                        <span className="btn-inner--text">Profile</span>
                       </Button>
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0 ml-1"

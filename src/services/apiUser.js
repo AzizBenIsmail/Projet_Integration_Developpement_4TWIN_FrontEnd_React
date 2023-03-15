@@ -24,7 +24,6 @@ export async function deleteUser(id) {
 }
 
 export async function LoginUser(User) {
-  console.log("befor LoginUser " + User);
   return await axios.post(`${apiURL}/login`, User);
 }
 
