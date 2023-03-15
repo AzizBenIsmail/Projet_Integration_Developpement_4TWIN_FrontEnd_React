@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { register } from "../services/apiUser";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 // reactstrap components
 import {
     Card,
@@ -69,13 +69,11 @@ export default function Register() {
         // }
         // console.log(formData);
 
-        const res = await register(formData).catch((error) => {
-            console.log(error.response.data.message);
-        });
+        //const res = await register(formData);
 
-        // const res = await axios.post('http://localhost:5000/users', formData, {
-        //     headers: { 'Content-Type': 'multipart/form-data' }
-        // });
+        const res = await axios.post('http://localhost:5000/users/register', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
 
         console.log(res.data);
         console.log(res.data.message);

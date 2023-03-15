@@ -29,10 +29,10 @@ export async function LoginUser(User) {
 }
 
 export async function register(User) {
-  console.log("befor LoginUser " + User);
-  return await axios.post(`${apiURL}/register`, User);
+  return await axios.post(`${apiURL}/register`, User ,{
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 }
-
 export async function forgotpwd(User) {
   return await axios.post(`${apiURL}/forgotpwd`, User.email);
 }
