@@ -129,7 +129,7 @@ import {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={require(`../../assets/img/brand/${fablab.fablbLogo}`)}
+                          src={`http://localhost:5000/images/${fablab.fablbLogo}`}
                         />
                       </a>
                     </div>

@@ -6,6 +6,7 @@ import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
 import '../assetsFrontOffice/css/fablab.css'
 
+
 // reactstrap components
 
 import { Card, CardHeader, CardBody, FormGroup, InputGroupAddon, InputGroupText, InputGroup, Row, Col } from "reactstrap";
@@ -22,6 +23,9 @@ export default function FablabJoin() {
    
     const navigate = useNavigate();
     const [image, setImage] = useState();
+    const [nameTest, setNameTest] = useState("true");
+    const [emailTest, setEmailTest] = useState("true");
+    const [classNamen, setClassNamen] = useState();
    // const[phoneNumber,setPhoneNumber]=useState();
     const [fablab, setFablab] = useState(
         {
@@ -30,84 +34,69 @@ export default function FablabJoin() {
             "description":"",
             "phoneNumber":"",
             "address":"",
-            "fablbLogo":"",
+            //"fablbLogo":"",
             "dateOfCreation":"",
 
         }
     )
-    const handlechange = (e) => {
+    const handlechange = async(e) => {
         setFablab({ ...fablab, [e.target.name]: e.target.value })
-        
-
     }
+    
     const handleDateChange = (date) => {
         setFablab({ ...fablab, dateOfCreation: date.format("YYYY-MM-DD") });
+
       };
 
     useEffect(() => {
         console.log(fablab);
-      }, [fablab]);
+        console.log(nameTest);
+        const classNamen = nameTest ? "has-success" : "has-danger";
+        setClassNamen(classNamen);
+      }, [fablab,nameTest]);
     function handlePhoneNumberChange(status, value, countryData, number, id) {
         // handle the phone number change here
         setFablab({ ...fablab,phoneNumber:number});
         
       }
     const handlechangeFile = (e) => {
-        setFablab({ ...fablab,fablbLogo:e.target.files[0].name});
+        setImage(e.target.files[0]);
     }
     const add = async (e) => {
         e.preventDefault();
-       
-        const fablabName = fablab.fablabName ;
-        const fablabEmail = fablab.fablabEmail ;
-        const description = fablab.description ; 
-        const phoneNumber = fablab.phoneNumber;
-        const address=fablab.address;
-        const fablbLogo= fablab.fablbLogo;
-        const dateOfCreation= fablab.dateOfCreation;
-
-        console.log(fablbLogo)
+        const formData = new FormData();
+        formData.append('fablabLogo', image);
+        formData.append('fablabName', fablab.fablabName);
+        formData.append('fablabEmail', fablab.fablabEmail);
+        formData.append('description', fablab.description);
+        formData.append('phoneNumber', fablab.phoneNumber);
+        formData.append('address', fablab.address);
+        formData.append('dateOfCreation', fablab.dateOfCreation);
+        console.log(formData)
          try {
-            const res = await axios.post('http://localhost:5000/users/fablab',{
-                fablabName,
-                fablabEmail,
-                description,
-                phoneNumber,
-                address,
-                fablbLogo,
-                dateOfCreation
-            });
+            const res = await axios.post('http://localhost:5000/fablabs',formData);
             console.log(res.data);
+            console.log(res.data.message)
+             // Check if email is already taken
+                if  (res.data.message === 'fablab Name is already taken'){
+                    console.log('username is already taken');
+                    setNameTest("false");
+                } else
+                    if (res.data.message === 'fablab email is already taken') {
+                        console.log('email is already taken');
+                         setEmailTest("false");
+                        
+                    } else{
+                        setNameTest("false");
+                    }
+            navigate("/AdminFablabJoin");
             } catch (error) {
              console.error(error);
          }
       
-        // Check if email is already taken
-        {/*if (res.data.message === 'email is already taken') {
-            console.log('email is already taken');
-            alert('Email is already taken');
-        } else
-            if (res.data.message === 'username is already taken') {
-                console.log('username is already taken');
-
-                alert('username is already taken');
-            } else
-                if (res.data.message === 'password : a character string of at least 8 characters containing at least one letter and one number') {
-                    console.log('password is already taken');
-                    alert('password : a character string of at least 8 characters containing at least one letter and one number');
-                } else
-                    if (res.data.message === 'You must be at least 18 years old') {
-                        console.log('you must be at least 18 years old');
-
-                        alert('You must be at least 18 years old');
-                    } else {
-                        console.log('addUser');
-                        addUser(formData)
-                            .then(() => navigate('/login-page'))
-                            .catch((error) => {
-                                console.log(error.response.data.message);
-                            });
-                    }*/}
+       
+                
+                    
     }
     return (
         <>
@@ -124,7 +113,7 @@ export default function FablabJoin() {
                                     <small>Your Request will be validated by an admin as soon as possible</small>
                                     </div>
                                     <Form role="form" enctype="multipart/form-data" /*method="HTTP_METHOD" */>
-                                        <Form.Group>
+                                        <Form.Group >
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>

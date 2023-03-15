@@ -94,7 +94,7 @@ import {
                             <img
                              className="avatar rounded-circle mr-3"
                               alt="..."
-                              src={require(`../../assets/img/brand/${fablab.fablbLogo}`)}
+                              src={`http://localhost:5000/images/${fablab.fablbLogo}`}
                             />
                         
                           <Media>
