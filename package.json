@@ -73,6 +73,7 @@
     "react-intl-tel-input": "^8.2.0",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "reactstrap": "8.4.1",
     "sass": "1.53.0"
   },

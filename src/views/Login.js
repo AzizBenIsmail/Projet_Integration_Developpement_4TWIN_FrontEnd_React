@@ -46,6 +46,12 @@ export default function Login() {
 
     //console.log(res.data);
     //console.log(res.data.message);
+    // switch (user.password ||res.data.message ) {
+    //   case "User successfully authenticated":
+    //     console.log("welcom ");
+    //       alert("welcom ");
+    //     navigate("/landing-page");
+    //     break;case "azerty":
 console.log(user.password);
     switch (user.password) {
       case "azerty":
