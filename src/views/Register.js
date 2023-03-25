@@ -50,12 +50,10 @@ export default function Register() {
             case "email is already taken":
                 console.log("email is already taken");
                 alert("Email is already taken");
-                setmessage("email is already taken");
                 break;
             case "username is already taken":
                 console.log("username is already taken");
                 alert("username is already taken");
-                setmessage("username is already taken");
 
                 break;
             case "password : a character string of at least 8 characters containing at least one letter and one number":
@@ -63,30 +61,26 @@ export default function Register() {
                 alert(
                     "password : a character string of at least 8 characters containing at least one letter and one number"
                 );
-                setmessage("password : a character string of at least 8 characters containing at least one letter and one number");
                 break;
             case "You must be at least 18 years old":
                 console.log("you must be at least 18 years old");
                 alert("You must be at least 18 years old");
-                setmessage("You must be at least 18 years old");
 
                 break;
             case "gender must be one of the following values: Male, Female":
                 console.log("gender must be one of the following values: Male, Female");
                 alert("gender must be one of the following values: Male, Female");
-                setmessage("gender must be one of the following values: Male, Female");
                 break;
             case undefined:
                 navigate("/login-page");
                 alert(
                     "successful account creation Welcom : `" + user.username + "`"
-                );
+                );  
                 break;
             default:
                 console.log("Please fill in all the fields of the form");
                 alert("Please fill in all the fields of the form");
                 setmessage("Please fill in all the fields of the form");
-
                 break;
         }   
         console.log(message);
@@ -148,22 +142,25 @@ export default function Register() {
                                         <small> Or sign up with credentials </small>
                                     </div>
                                     <Form role="form" enctype="multipart/form-data" >
-                                        <Form.Group>
+                                        <Form.Group >
                                             <InputGroup className="input-group-alternative mb-3">
-                                                <InputGroupAddon addonType="prepend">
+                                                <InputGroupAddon addonType="prepend" >
                                                     <InputGroupText>
-                                                        <i className="ni ni-hat-3" />
+                                                    {message === "username is already taken" ?<i className="ni ni-circle-08" style={{ color: "red" }}/>:
+                                                        message != "username is already taken" ?<i className="ni ni-circle-08" style={{ color: "#0000FF" }} />:
+                                                            <i className="ni ni-circle-08" />}
                                                     </InputGroupText>
                                                 </InputGroupAddon>
-                                                <Form.Control placeholder="username" type="text" name="username" onChange={(e) => handlechange(e)}/>  
+                                            <Form.Control  placeholder="username" type="text" name="username" onChange={(e) => handlechange(e)} />
                                             </InputGroup>
-                                            {message === "username is already taken"?<label>username is already taken</label>:""}
+                                            {message === "username is already taken"?<label style={{ color: "red" }} ><i className="ni ni-fat-remove" />username is already taken</label>:""}
                                         </Form.Group>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="ni ni-email-83" />
+                                                    {message === "email is already taken" ?<i className="ni ni-email-83" style={{ color: "red" }}/>:
+                                                    <i className="ni ni-email-83" style={{ color: "#0000FF" }} /> }
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Control
@@ -173,12 +170,15 @@ export default function Register() {
                                                     onChange={(e) => handlechange(e)}
                                                 />
                                             </InputGroup>
+                                            {message === "email is already taken"?<label style={{ color: "red" }} > <i className="ni ni-fat-remove" />email is already taken</label>:""}
                                         </Form.Group>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="ni ni-lock-circle-open" />
+                                                    {message === "password : a character string of at least 8 characters containing at least one letter and one number" ?<i className="ni ni-lock-circle-open" style={{ color: "red" }}/>:
+                                                        <i className="ni ni-lock-circle-open" style={{ color: "#0000FF" }}/>}
+                                                        
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Control
@@ -189,12 +189,14 @@ export default function Register() {
                                                     onChange={(e) => handlechange(e)}
                                                 />
                                             </InputGroup>
+                                            {message === "password : a character string of at least 8 characters containing at least one letter and one number"?<label style={{ color: "red" }} > <i className="ni ni-fat-remove" />password : a character string of at least 8 characters containing at least one letter and one number</label>:""}
                                         </Form.Group>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="ni ni-time-alarm" />
+                                                    {message === "You must be at least 18 years old" ?<i className="ni ni-time-alarm" style={{ color: "red" }}/>:
+                                                        <i className="ni ni-time-alarm" style={{ color: "#0000FF" }}/>}
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Control
@@ -205,12 +207,16 @@ export default function Register() {
                                                     onChange={(e) => handlechange(e)}
                                                 />
                                             </InputGroup>
+                                            {message === "You must be at least 18 years old"?<label style={{ color: "red" }} > <i className="ni ni-fat-remove" /> You must be at least 18 years old</label>:""}
+
                                         </Form.Group>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative mb-3">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="ni ni-gender-83" />
+                                                    {message === "gender must be one of the following values: Male, Female" ?<i className="ni ni-badge" style={{ color: "red" }}/>:
+                                                        <i className="ni ni-badge" style={{ color: "#0000FF" }}/>}
+                                                        
                                                     </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Check
@@ -230,13 +236,16 @@ export default function Register() {
                                                     onChange={(e) => handlechange(e)}
                                                 />
                                             </InputGroup>
+                                            {message === "gender must be one of the following values: Male, Female"?<label style={{ color: "red" }} ><i className="ni ni-fat-remove" />gender must be one of the following values: Male, Female</label>:""}
+
                                         </Form.Group>
                                         <Form.Group>
                                             <InputGroup className="input-group-alternative">
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>
-                                                        <i className="ni ni-image" />
-                                                    </InputGroupText>
+                                                    {message === "Please fill in all the fields of the form" ?<i className="ni ni-image" style={{ color: "red" }}/>:
+                                                            <i className="ni ni-image" style={{ color: "#0000FF" }}/>}
+                                                   </InputGroupText>
                                                 </InputGroupAddon>
                                                 <Form.Control
                                                     placeholder="image_user"
@@ -245,6 +254,7 @@ export default function Register() {
                                                     onChange={(e) => handlechangeFile(e)}
                                                 />
                                             </InputGroup>
+                                            {message === "Please fill in all the fields of the form"?<label style={{ color: "red" }} ><i className="ni ni-fat-remove" />Please fill in all the fields of the form</label>:""}
                                         </Form.Group>
                                         <div className="text-muted font-italic">
                                             <small>
