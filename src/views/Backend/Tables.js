@@ -13,8 +13,6 @@ import { getUsers, deleteUser } from "../../services/apiUser.js";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-
 const Tables = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -84,9 +82,12 @@ const Tables = () => {
     if (!user.address) {
       percentage -=10;
     }
-    console.log(percentage);
     return percentage;
   }
+
+  const countUsers = (users) => {
+    return users.length;
+  };
   return (
     <>
     
@@ -114,7 +115,7 @@ const Tables = () => {
                     </Button>
                   </NavItem>
                 </Nav>
-              <Table
+                <Table
                 className="align-items-center table-dark table-flush"
                 responsive
               >

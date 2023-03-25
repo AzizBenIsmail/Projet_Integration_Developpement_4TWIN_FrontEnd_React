@@ -1,8 +1,36 @@
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
+import { getUsers, deleteUser } from "../../services/apiUser.js";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getAllUser();
+    const interval = setInterval(() => {
+      getAllUser(); // appel répété toutes les 10 secondes
+    }, 10000);
+    return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
+  
+  }, []);
+
+  const getAllUser=async()=>{
+    const res = await getUsers()
+      .then(res => {
+        console.log(res.data);
+        setUsers(res.data.users);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  const countUsers = (users) => {
+    return users.length;
+  };
   return (
     <>
       <div className="header bg-gradient-info pb-2 pt-5 pt-md-2">
@@ -20,10 +48,11 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Traffic
+                          Users
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          350,897
+                          350,897    
+                          
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -52,7 +81,7 @@ const Header = () => {
                         >
                           New users
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span>
+                        <span className="h2 font-weight-bold mb-0">{countUsers(users)}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">

@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import {  DropdownMenu,  DropdownItem,  UncontrolledDropdown,  DropdownToggle,  Form,  FormGroup,  InputGroupAddon,  InputGroupText,  Input,  InputGroup,
   Navbar,  Nav,  Container,  Media} from "reactstrap";
 import Siedbar from "components/siedbar/Siedbar.js";
-
+import { useNavigate, useParams } from "react-router-dom";
 const AdminNavbar = (props) => {
+  const navigate = useNavigate();
+
   return (
     <>
     
@@ -61,7 +63,7 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="#pablo" onClick={(e) => navigate(`/login-page`)}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
