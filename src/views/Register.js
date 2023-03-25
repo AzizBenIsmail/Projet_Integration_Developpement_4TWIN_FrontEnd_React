@@ -16,50 +16,27 @@ export default function Register() {
     const [image, setImage] = useState();
     const [user, setUsers] = useState({
         username: "",
-        // "first_Name": "",
-        // "last_Name": "",
         email: "",
         password: "",
         dateOfBirth: "",
-        // "phoneNumber": 0,
         gender: "",
-        // "userType": "",
-        // "address": "",
         image_user: "",
     });
     const handlechange = (e) => {
         setUsers({ ...user, [e.target.name]: e.target.value });
     };
     const handlechangeFile = (e) => {
-        // setUsers({ ...user, image_user: e.target.files[0].name })
         setImage(e.target.files[0]);
         console.log(e.target.files[0]);
     };
     const add = async (e) => {
         e.preventDefault();
         formData.append("username", user.username);
-        // formData.append('first_Name', user.first_Name);
-        // formData.append('last_Name', user.last_Name);
         formData.append("email", user.email);
         formData.append("password", user.password);
         formData.append("dateOfBirth", user.dateOfBirth);
-        // formData.append('phoneNumber', user.phoneNumber);
         formData.append("gender", user.gender);
-        // formData.append('userType', user.userType);
-        // formData.append('address', user.address);
         formData.append("image_user", image);
-        // try {
-        //     const res = await axios.post('http://localhost:5000/users', formData, {
-        //         headers: { 'Content-Type': 'multipart/form-data' }
-        //     });
-        //     console.log(res.data);
-        // } catch (error) {
-        //     console.error(error);
-        // }
-        // console.log(formData);
-
-        //const res = await register(formData);
-
         const res = await axios.post('http://localhost:5000/users/register', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
