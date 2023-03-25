@@ -13,7 +13,6 @@ import DemoNavbar from "components/Navbars/DemoNavbar";
 export default function Register() {
     let formData = new FormData();
     const navigate = useNavigate();
-    const [error,setError]=useState(false);
     const [message,setmessage]=useState();
     const [image, setImage] = useState();
     const [user, setUsers] = useState({
@@ -51,13 +50,11 @@ export default function Register() {
             case "email is already taken":
                 console.log("email is already taken");
                 alert("Email is already taken");
-                setError(true)
                 setmessage("email is already taken");
                 break;
             case "username is already taken":
                 console.log("username is already taken");
                 alert("username is already taken");
-                setError(true)
                 setmessage("username is already taken");
 
                 break;
@@ -66,20 +63,17 @@ export default function Register() {
                 alert(
                     "password : a character string of at least 8 characters containing at least one letter and one number"
                 );
-                setError(true)
                 setmessage("password : a character string of at least 8 characters containing at least one letter and one number");
                 break;
             case "You must be at least 18 years old":
                 console.log("you must be at least 18 years old");
                 alert("You must be at least 18 years old");
-                setError(true)
                 setmessage("You must be at least 18 years old");
 
                 break;
             case "gender must be one of the following values: Male, Female":
                 console.log("gender must be one of the following values: Male, Female");
                 alert("gender must be one of the following values: Male, Female");
-                setError(true)  
                 setmessage("gender must be one of the following values: Male, Female");
                 break;
             case undefined:
@@ -91,7 +85,6 @@ export default function Register() {
             default:
                 console.log("Please fill in all the fields of the form");
                 alert("Please fill in all the fields of the form");
-                setError(true)
                 setmessage("Please fill in all the fields of the form");
 
                 break;
