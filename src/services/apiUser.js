@@ -27,11 +27,12 @@ export async function LoginUser(User) {
   return await axios.post(`${apiURL}/login`, User);
 }
 
-export async function register(User) {
-  return await axios.post(`${apiURL}/register`, User ,{
+export async function register(formData) {
+  return await axios.post(`${apiURL}/register`, formData ,{
     headers: { "Content-Type": "multipart/form-data" },
   });
 }
+
 export async function forgotpwd(User) {
   return await axios.post(`${apiURL}/forgotpwd`, User.email);
 }

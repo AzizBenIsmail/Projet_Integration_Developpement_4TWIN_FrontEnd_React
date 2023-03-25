@@ -1,21 +1,21 @@
 
-import { useState } from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
-import Chart from "chart.js";
-// react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-// reactstrap components  
-import { Button, Card, CardHeader, CardBody, NavItem, NavLink, Nav, Progress, Table, Container, Row, Col } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+  import { useState } from "react";
+  // node.js library that concatenates classes (strings)
+  import classnames from "classnames";
+  // javascipt plugin for creating charts
+  import Chart from "chart.js";
+  // react plugin used to create charts
+  import { Line, Bar } from "react-chartjs-2";
+  // reactstrap components  
+  import { Button, Card, CardHeader, CardBody, NavItem, NavLink, Nav, Progress, Table, Container, Row, Col } from "reactstrap";
+  import { useNavigate } from "react-router-dom";
 
-// core components
-import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
+  // core components
+  import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 import '../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
+import Siedbar from "components/siedbar/Siedbar.js";
 
 const Index = (props) => {
   const [sideNavWidth, setSideNavWidth] = useState(0);
@@ -44,35 +44,9 @@ const Index = (props) => {
       <Header />
 
       {/* Page content */}
-      <Container className="mt--7" fluid>
-        <span
-          style={{ fontSize: '30px', cursor: 'pointer', }}
-          onClick={openNav}
-        >
-          &#9776; open
-        </span>
-        <div>
-          <div id="mySidenav" className="sidenav" style={{ width: sideNavWidth }}>
-            <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-              &times;
-            </a>
-            <a 
-            className={classnames("py-2 px-3", {
-              active: activeNav === 1
-            })}
-            onClick={(e) => navigate(`/Tables`)}>Users</a>
-            <a 
-            className={classnames("py-2 px-3", {
-              active: activeNav === 1
-            })}
-            onClick={(e) => navigate(`/`)}>Project</a>
-            <a 
-            className={classnames("py-2 px-3", {
-              active: activeNav === 1
-            })}
-            onClick={(e) => navigate(`/Index`)}>All</a>
-          </div>
-        </div>
+      {/* <Container className="mt--7" fluid> */}
+      <Container fluid>
+
         <Row>
           <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="bg-gradient-default shadow">

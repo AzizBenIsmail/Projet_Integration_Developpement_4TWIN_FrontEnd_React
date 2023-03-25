@@ -74,6 +74,7 @@
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "react-validator": "^0.1.0",
     "reactstrap": "8.4.1",
     "sass": "1.53.0"
   },
