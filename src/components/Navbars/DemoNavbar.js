@@ -105,9 +105,9 @@ export default function NavbarF() {
                     <DropdownItem to="/register-page" tag={Link} style={{ color: "#172b4d" }}>
                       Register
                     </DropdownItem><DropdownItem to="/Tables" tag={Link} style={{ color: "#172b4d" }}>
-                      Tables
+                      Backend Users 
                     </DropdownItem><DropdownItem to="/Index" tag={Link} style={{ color: "#172b4d" }}>
-                      Index
+                      Backend
                     </DropdownItem><DropdownItem to="/Profile/641cdeee29a97f7a08bd9a42" tag={Link} style={{ color: "#172b4d" }}>
                       Profile
                     </DropdownItem>
