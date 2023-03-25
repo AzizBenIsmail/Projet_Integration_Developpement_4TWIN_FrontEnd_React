@@ -4,7 +4,6 @@ import { differenceInYears } from 'date-fns';
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useParams } from "react-router-dom";
-import classnames from "classnames";
 import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
 import Chart from "chart.js";
 
@@ -14,31 +13,13 @@ import { getUsers, deleteUser } from "../../services/apiUser.js";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import DemoNavbar from "components/Navbars/DemoNavbar";
 
 
 const Tables = () => {
-  const [sideNavWidth, setSideNavWidth] = useState(0);
-
-  function openNav() {
-    setSideNavWidth(250);
-  }
-
-  function closeNav() {
-    setSideNavWidth(0);
-  }
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // const res = getUsers()
-    //   .then(res => {
-    //     console.log(res.data);
-    //     setUsers(res.data.users);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
     getAllUser();
     const interval = setInterval(() => {
       getAllUser(); // appel répété toutes les 10 secondes
@@ -106,65 +87,25 @@ const Tables = () => {
     console.log(percentage);
     return percentage;
   }
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
-  if (window.Chart) {
-    parseOptions(Chart, chartOptions());
-  }
-
-  const toggleNavs = (e, index) => {
-    e.preventDefault();
-    setActiveNav(index);
-    setChartExample1Data("data" + index);
-  };
   return (
     <>
     
       <Header />
       {/* Page content */}
-      <Container className="mt--7" fluid>
-      <span
-          style={{ fontSize: '30px', cursor: 'pointer' }}
-          onClick={openNav}
-        >
-          &#9776; open
-        </span>
-        <div>
-          <div id="mySidenav" className="sidenav" style={{ width: sideNavWidth }}>
-            <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-              &times;
-            </a>
-            <a 
-            className={classnames("py-2 px-3", {
-              active: activeNav === 1
-            })}
-            onClick={(e) => navigate(`/Tables`)}>Users</a>
-            <a 
-            className={classnames("py-2 px-3", {
-              active: activeNav === 1
-            })}
-            onClick={(e) => navigate(`/`)}>Project</a>
-            <a 
-            className={classnames("py-2 px-3", {
-              active: activeNav === 1
-            })}
-            onClick={(e) => navigate(`/Index`)}>All</a>
-          </div>
-        </div>
+      <Container fluid>
         {/* Dark table */}
-        <Row className="mt-5">
+        <Row className="mt-0">
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Card tables</h3>
+                <h3 className="text-white mb-0">User tables</h3>
               </CardHeader>
               <Nav className="align-items-lg-center ml-lg-auto" navbar>
                   <NavItem className="d-none d-lg-block ml-lg-4">
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      href=""
-                      onClick={(e) => navigate(`/Profile-Add`)}
+                        onClick={(e) => navigate(`/Profile-Add`)}
                       target="_blank"
                     >
                       <span className="nav-link-inner--text ml-1">

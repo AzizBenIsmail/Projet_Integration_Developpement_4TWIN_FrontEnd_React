@@ -15,19 +15,8 @@
 
 import Header from "components/Headers/Header.js";
 import '../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
-import Siedbar from "components/siedbar/Siedbar.js";
 
 const Index = (props) => {
-  const [sideNavWidth, setSideNavWidth] = useState(0);
-  const navigate = useNavigate();
-
-  function openNav() {
-    setSideNavWidth(250);
-  }
-
-  function closeNav() {
-    setSideNavWidth(0);
-  }
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
   if (window.Chart) {

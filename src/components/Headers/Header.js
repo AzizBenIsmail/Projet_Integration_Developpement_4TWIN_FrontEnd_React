@@ -5,7 +5,7 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 const Header = () => {
   return (
     <>
-      <div className="header bg-gradient-info pb-7 pt-5 pt-md-2">
+      <div className="header bg-gradient-info pb-2 pt-5 pt-md-2">
         <Container fluid>
         <AdminNavbar/>
           <div className="header-body">
