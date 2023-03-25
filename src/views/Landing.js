@@ -1,22 +1,10 @@
 import { useState } from "react";
 import classnames from "classnames";
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import {  Badge,  Button,  Card,  CardBody,  CardImg,  FormGroup,  Input,  InputGroupAddon,  InputGroupText,  InputGroup,  Container,  Row,  Col} from "reactstrap";
 import Download from "./IndexSections/Download.js";
 import { useNavigate } from "react-router-dom";
+
+import DemoNavbar from "components/Navbars/DemoNavbar";
 
 export default function Landing () {
   const navigate = useNavigate();
@@ -42,6 +30,7 @@ export default function Landing () {
 
   return (
     <>
+          <DemoNavbar />
       <main >
         <div className="position-relative">
           {/* shape Hero */}

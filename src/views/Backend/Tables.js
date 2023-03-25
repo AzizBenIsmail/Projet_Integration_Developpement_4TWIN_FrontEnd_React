@@ -1,29 +1,12 @@
-import {
-  Badge,
-  Card,
-  CardHeader,
-  CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Pagination,
-  PaginationItem,
-  Button,
-  NavItem,
-  PaginationLink,
-  Progress,
-  Table,
-  Container,
-  Nav,
-  Row,
-  UncontrolledTooltip
-} from "reactstrap";
+import {  Badge,  Card,  CardHeader,  CardFooter,  DropdownMenu,  DropdownItem,  UncontrolledDropdown,  DropdownToggle,  Media,  Pagination,  PaginationItem,
+  Button,  NavItem,  PaginationLink,  Progress,  Table,  Container,  Nav,  Row,  UncontrolledTooltip} from "reactstrap";
 import { differenceInYears } from 'date-fns';
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useParams } from "react-router-dom";
+import classnames from "classnames";
+import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
+import Chart from "chart.js";
 
 // core components
 import Header from "components/Headers/Header.js";
@@ -31,8 +14,19 @@ import { getUsers, deleteUser } from "../../services/apiUser.js";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import DemoNavbar from "components/Navbars/DemoNavbar";
+
 
 const Tables = () => {
+  const [sideNavWidth, setSideNavWidth] = useState(0);
+
+  function openNav() {
+    setSideNavWidth(250);
+  }
+
+  function closeNav() {
+    setSideNavWidth(0);
+  }
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
@@ -112,13 +106,51 @@ const Tables = () => {
     console.log(percentage);
     return percentage;
   }
-  
+  const [activeNav, setActiveNav] = useState(1);
+  const [chartExample1Data, setChartExample1Data] = useState("data1");
+  if (window.Chart) {
+    parseOptions(Chart, chartOptions());
+  }
+
+  const toggleNavs = (e, index) => {
+    e.preventDefault();
+    setActiveNav(index);
+    setChartExample1Data("data" + index);
+  };
   return (
     <>
+    
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
-
+      <span
+          style={{ fontSize: '30px', cursor: 'pointer' }}
+          onClick={openNav}
+        >
+          &#9776; open
+        </span>
+        <div>
+          <div id="mySidenav" className="sidenav" style={{ width: sideNavWidth }}>
+            <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
+              &times;
+            </a>
+            <a 
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1
+            })}
+            onClick={(e) => navigate(`/Tables`)}>Users</a>
+            <a 
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1
+            })}
+            onClick={(e) => navigate(`/`)}>Project</a>
+            <a 
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1
+            })}
+            onClick={(e) => navigate(`/Index`)}>All</a>
+          </div>
+        </div>
         {/* Dark table */}
         <Row className="mt-5">
           <div className="col">

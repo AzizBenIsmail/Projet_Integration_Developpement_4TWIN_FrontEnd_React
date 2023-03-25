@@ -1,14 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Input,
-  Row,
-  Col
-} from "reactstrap";
+import {  Card,  CardHeader,  CardBody,  FormGroup,  Input,  Row,  Col} from "reactstrap";
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
@@ -17,6 +9,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { differenceInYears } from 'date-fns';
 import axios from 'axios';
 import moment from 'moment';
+
+import DemoNavbar from "components/Navbars/DemoNavbar";
 
 
 const Profile = () => {
@@ -134,6 +128,7 @@ const Profile = () => {
   };
   return (
     <>
+          <DemoNavbar />
       <div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{

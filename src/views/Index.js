@@ -4,13 +4,11 @@ import React from "react";
 import { Container, Row } from "reactstrap";
 
 // core components
-import CardsFooter from "components/Footers/CardsFooter.js";
 
 // index page sections
 import Hero from "./IndexSections/Hero.js";
 import Buttons from "./IndexSections/Buttons.js";
 import Inputs from "./IndexSections/Inputs.js";
-import CustomControls from "./IndexSections/CustomControls.js";
 import Menus from "./IndexSections/Menus.js";
 import Navbars from "./IndexSections/Navbars.js";
 import Tabs from "./IndexSections/Tabs.js";
@@ -27,6 +25,8 @@ import Carousel from "./IndexSections/Carousel.js";
 import Icons from "./IndexSections/Icons.js";
 import Login from "./IndexSections/Login.js";
 import Download from "./IndexSections/Download.js";
+import DemoNavbar from "components/Navbars/DemoNavbar";
+
 
 class Index extends React.Component {
   componentDidMount() {
@@ -36,14 +36,14 @@ class Index extends React.Component {
   }
   render() {
     return (
-      <>
+      <>    <DemoNavbar />
+
         <main ref="main">
           <Hero />
           <Buttons />
           <Inputs />
           <section className="section">
             <Container>
-              <CustomControls />
               <Menus />
             </Container>
           </section>
@@ -71,7 +71,6 @@ class Index extends React.Component {
           <Login />
           <Download />
         </main>
-        <CardsFooter />
       </>
     );
   }

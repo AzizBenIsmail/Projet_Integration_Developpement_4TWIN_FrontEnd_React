@@ -4,20 +4,10 @@ import { register } from "../services/apiUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Row,
-    Col,
-} from "reactstrap";
+import {    Card,    CardHeader,    CardBody,    FormGroup,    InputGroupAddon,    InputGroupText,    InputGroup,    Row,    Col,} from "reactstrap";
 import { Button, Container, Form } from "react-bootstrap";
 
-// core components
+import DemoNavbar from "components/Navbars/DemoNavbar";
 
 
 export default function Register() {
@@ -115,6 +105,7 @@ export default function Register() {
     };
     return (
         <>
+              <DemoNavbar />
             <section className="section section-shaped section-lg">
                 <div className="shape shape-style-1 bg-gradient-default"></div>
                 <Container className="pt-lg-7">

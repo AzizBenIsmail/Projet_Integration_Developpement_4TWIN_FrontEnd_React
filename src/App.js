@@ -12,6 +12,7 @@ import "./App.css";
 // const NotFound = lazy(()=>import('./views/NotFound'));
 
 import Indexs from "views/Index.js";
+import NotFound from "views/NotFound.js";
 import Landing from "views/Landing.js";
 
 import Login from "views/Login.js";
@@ -23,9 +24,9 @@ import DemoNavbar from "components/Navbars/DemoNavbar";
 import SimpleFooter from "components/Footers/SimpleFooter";
 
 import Index from "views/Backend/Index.js";
+import IndexDefault from "views/Index.js";
 import Profile from "views/Backend/Profile.js";
 import Tables from "views/Backend/Tables.js";
-import UserList from "views/Backend/UsersList";
 import ProfileAdd from "views/Backend/Profile-Add";
 
 import FablabJoin from "./views/FablabJoin";
@@ -33,12 +34,15 @@ import AdminFablabJoin from "./views/Backend/AdminFablabJoin";
 import FablabRequestDetails from "./views/Backend/FablabRequestDetails";
 import ResetPwd from "views/ResetPwd";
 
+import SpinnerExample from "./components/spinner.css";
+
 function App() {
   return (
     <>
-      <DemoNavbar />
+          <Suspense fallback={<SpinnerExample/>}>
+      {/* <DemoNavbar /> */}
       <Routes>
-        {/* <Route path="*" element={<NotFound/>}/> */}
+        <Route path="*" element={<NotFound/>}/>
         <Route path="/landing-page" element={<Landing />} />
         <Route path="/login-page" element={<Login />} />
         <Route path="/profile-page/:id" element={<ProfileFront />} />
@@ -47,7 +51,7 @@ function App() {
         <Route path="/Profile/:id" element={<Profile />} />
         <Route path="/Tables" element={<Tables />} />
         <Route path="/Index" element={<Index />} />
-        <Route path="/Userlist" element={<UserList />} />
+        <Route path="/IndexDefault" element={<IndexDefault />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/Profile-Add" element={<ProfileAdd />} />
         <Route path="/FablabJoin" element={<FablabJoin />} />
@@ -56,6 +60,7 @@ function App() {
         <Route path="/reset" element={<Reset />} />
         <Route path="/resetpwd" element={<ResetPwd />} />
       </Routes>
+      </Suspense>
       <SimpleFooter />
     </>
   );

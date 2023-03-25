@@ -3,6 +3,7 @@ import { Component, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
+import DemoNavbar from "./components/Navbars/DemoNavbar";
 
 function User(props) {
   const [User, setUser] = useState(props.User);

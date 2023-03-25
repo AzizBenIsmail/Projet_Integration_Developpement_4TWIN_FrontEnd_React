@@ -5,17 +5,11 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 // reactstrap components
 import AdminLayout from "layouts/Admin.js";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Container,
-  Row,
-  Col,
-  UncontrolledTooltip
-} from "reactstrap";
+import {  Card,  CardHeader,  CardBody,  Container,  Row,  Col,  UncontrolledTooltip} from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
+
+import DemoNavbar from "./components/Navbars/DemoNavbar";
 
 const Icons = () => {
   const [copiedText, setCopiedText] = useState();

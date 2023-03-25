@@ -6,36 +6,30 @@ import classnames from "classnames";
 import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
-// reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+// reactstrap components  
+import { Button, Card, CardHeader, CardBody, NavItem, NavLink, Nav, Progress, Table, Container, Row, Col } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 // core components
-import {
-  chartOptions,
-  parseOptions,
-  chartExample1,
-  chartExample2
-} from "variables/charts.js";
+import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
+import '../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
+import AdminNavbar from "components/Navbars/AdminNavbar.js";
 
 const Index = (props) => {
+  const [sideNavWidth, setSideNavWidth] = useState(0);
+  const navigate = useNavigate();
+
+  function openNav() {
+    setSideNavWidth(250);
+  }
+
+  function closeNav() {
+    setSideNavWidth(0);
+  }
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
-
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -48,8 +42,37 @@ const Index = (props) => {
   return (
     <>
       <Header />
+
       {/* Page content */}
       <Container className="mt--7" fluid>
+        <span
+          style={{ fontSize: '30px', cursor: 'pointer', }}
+          onClick={openNav}
+        >
+          &#9776; open
+        </span>
+        <div>
+          <div id="mySidenav" className="sidenav" style={{ width: sideNavWidth }}>
+            <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
+              &times;
+            </a>
+            <a 
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1
+            })}
+            onClick={(e) => navigate(`/Tables`)}>Users</a>
+            <a 
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1
+            })}
+            onClick={(e) => navigate(`/`)}>Project</a>
+            <a 
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1
+            })}
+            onClick={(e) => navigate(`/Index`)}>All</a>
+          </div>
+        </div>
         <Row>
           <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="bg-gradient-default shadow">
@@ -313,7 +336,9 @@ const Index = (props) => {
               </Table>
             </Card>
           </Col>
+
         </Row>
+
       </Container>
     </>
   );

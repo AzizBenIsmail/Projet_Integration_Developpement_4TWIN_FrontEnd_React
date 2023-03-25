@@ -5,6 +5,7 @@ import ReactDatetime from "react-datetime";
 import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
 import '../assetsFrontOffice/css/fablab.css'
+import DemoNavbar from "components/Navbars/DemoNavbar";
 
 
 // reactstrap components
@@ -100,6 +101,7 @@ export default function FablabJoin() {
     }
     return (
         <>
+              <DemoNavbar />
             <section className="section section-shaped section-lg">
                 <div className="shape shape-style-1 bg-gradient-default">
                 </div>

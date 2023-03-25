@@ -1,24 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
-import {
-  Button,
-  UncontrolledCollapse,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
-  Media,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
-  Col,
-  UncontrolledTooltip
-} from "reactstrap";
+import {  Button,  UncontrolledCollapse,  DropdownMenu,  DropdownItem,  DropdownToggle,  UncontrolledDropdown,  Media,  NavbarBrand,  Navbar,  NavItem,
+  NavLink,  Nav,  Container,  Row,  Col,  UncontrolledTooltip} from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function NavbarF () {
@@ -107,26 +91,26 @@ export default function NavbarF () {
                       <span className="nav-link-inner--text" style={{color:"#ffff"}}>Examples</span>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem to="/landing-page" tag={Link}>
+                      <DropdownItem to="/landing-page" tag={Link} style={{color:"#172b4d"}}>
                         Landing
                       </DropdownItem>
-                      <DropdownItem to="/profile-page" tag={Link}>
+                      <DropdownItem to="/profile-page/641cdeee29a97f7a08bd9a42" tag={Link} style={{color:"#172b4d"}}>
                         Profile
                       </DropdownItem>
-                      <DropdownItem to="/login-page" tag={Link}>
+                      <DropdownItem to="/login-page" tag={Link} style={{color:"#172b4d"}}>
                         Login
                       </DropdownItem>
-                      <DropdownItem to="/register-page" tag={Link}>
+                      <DropdownItem to="/register-page" tag={Link} style={{color:"#172b4d"}}>
                         Register
-                      </DropdownItem><DropdownItem to="/Tables" tag={Link}>
+                      </DropdownItem><DropdownItem to="/Tables" tag={Link} style={{color:"#172b4d"}}>
                         Tables
-                      </DropdownItem><DropdownItem to="/Index" tag={Link}>
+                      </DropdownItem><DropdownItem to="/Index" tag={Link} style={{color:"#172b4d"}}>
                       Index
-                      </DropdownItem><DropdownItem to="/Profile" tag={Link}>
+                      </DropdownItem><DropdownItem to="/Profile/641cdeee29a97f7a08bd9a42" tag={Link} style={{color:"#172b4d"}}>
                       Profile
                       </DropdownItem>
-                      <DropdownItem to="/Userlist" tag={Link}>
-                      Userlist
+                      <DropdownItem to="/IndexDefault" tag={Link} style={{color:"#172b4d"}}>
+                      IndexDefault
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>

@@ -2,21 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  DropdownItem,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Row,
-  Col,
-} from "reactstrap";
+import {  Card,  CardHeader,  CardBody,  DropdownItem,  InputGroupAddon,  InputGroupText,  InputGroup,  Row,  Col,} from "reactstrap";
 
 import { LoginUser } from "../services/apiUser";
 import { Button, Container, Form } from "react-bootstrap";
 import flatted from "flatted";
+
+import DemoNavbar from "components/Navbars/DemoNavbar";
+
 
 export default function ResetPwd() {
   const navigate = useNavigate();
@@ -65,6 +58,8 @@ export default function ResetPwd() {
   };
   return (
     <>
+          <DemoNavbar />
+
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default"></div>
         <Container className="pt-lg-7">

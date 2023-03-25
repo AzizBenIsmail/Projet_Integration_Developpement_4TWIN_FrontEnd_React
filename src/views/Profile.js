@@ -8,6 +8,8 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
+import DemoNavbar from "components/Navbars/DemoNavbar";
+
 export default function Profile() {
   const navigate = useNavigate();
 
@@ -89,7 +91,8 @@ export default function Profile() {
   
   return (
     <>
-    
+          <DemoNavbar />
+
       <main className="profile-page">
         <section className="section-profile-cover section-shaped my-0">
           <div className="shape shape-style-1 shape-default alpha-4"></div>
