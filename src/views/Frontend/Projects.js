@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classnames from "classnames";
 import {
   Badge,
@@ -19,6 +19,7 @@ import Download from "../IndexSections/Download.js";
 import { useNavigate } from "react-router-dom";
 
 import DemoNavbar from "../../components/Navbars/DemoNavbar";
+import { getProjects } from "../../services/apiProject";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -42,6 +43,26 @@ export default function Landing() {
     setEmailFocused(false);
   };
 
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    getAllProject();
+    const interval = setInterval(() => {
+      getAllProject(); // appel répété toutes les 10 secondes
+    }, 10000);
+    return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
+  }, []);
+
+  const getAllProject = async () => {
+    const res = await getProjects()
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data.users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <DemoNavbar />

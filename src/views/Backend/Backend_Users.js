@@ -1,17 +1,42 @@
-import {  Badge,  Card,  CardHeader,  CardFooter,  DropdownMenu,  DropdownItem,  UncontrolledDropdown,  DropdownToggle,  Media,  Pagination,  PaginationItem,
-  Button,  NavItem,  PaginationLink,  Progress,  Table,  Container,  Nav,  Row,  UncontrolledTooltip} from "reactstrap";
-import { differenceInYears } from 'date-fns';
-import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  Badge,
+  Card,
+  CardHeader,
+  CardFooter,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media,
+  Pagination,
+  PaginationItem,
+  Button,
+  NavItem,
+  PaginationLink,
+  Progress,
+  Table,
+  Container,
+  Nav,
+  Row,
+  UncontrolledTooltip,
+} from "reactstrap";
+import { differenceInYears } from "date-fns";
+import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate, useParams } from "react-router-dom";
-import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
+import {
+  chartOptions,
+  parseOptions,
+  chartExample1,
+  chartExample2,
+} from "variables/charts.js";
 import Chart from "chart.js";
 
 // core components
 import Header from "components/Headers/Header.js";
 import { getUsers, deleteUser } from "../../services/apiUser.js";
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Tables = () => {
   const navigate = useNavigate();
@@ -23,64 +48,65 @@ const Tables = () => {
       getAllUser(); // appel répété toutes les 10 secondes
     }, 10000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
-  
   }, []);
 
-  const getAllUser=async()=>{
+  const getAllUser = async () => {
     const res = await getUsers()
-      .then(res => {
+      .then((res) => {
         console.log(res.data);
         setUsers(res.data.users);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  };
   const deleteAUser = async (user) => {
-    const result = window.confirm("Are you sure you want to delete "+user.username+"?");
+    const result = window.confirm(
+      "Are you sure you want to delete " + user.username + "?"
+    );
     if (result) {
       //console.log(user);
       await axios.delete(`http://localhost:5000/users/${user._id}`);
 
-            getAllUser();
+      getAllUser();
     }
-  }
-  
+  };
+
   const Modifier = async (user) => {
-    const result = window.confirm("Are you sure you want to modify "+user.username+"?");
+    const result = window.confirm(
+      "Are you sure you want to modify " + user.username + "?"
+    );
     if (result) {
       //console.log(user);
       navigate(`/profile/${user._id}`);
-
     }
-  }
+  };
   const genderIcon = (gender) => {
-    if (gender === 'Male') {
+    if (gender === "Male") {
       return <FontAwesomeIcon icon={faMale} size="3x" color="#007bff" />;
-    } else if (gender === 'Female') {
+    } else if (gender === "Female") {
       return <FontAwesomeIcon icon={faFemale} size="3x" color="#f54291" />;
     } else {
       return null;
     }
   };
 
-
   function calculateCompletionPercentage(user) {
     let percentage = 100;
-    
+
     if (!user.first_Name) {
       percentage -= 30;
     }
-    
+
     if (!user.last_Name) {
       percentage -= 20;
     }
-    
+
     if (!user.phoneNumber) {
-      percentage -=15;
-    }   
+      percentage -= 15;
+    }
     if (!user.address) {
-      percentage -=10;
+      percentage -= 10;
     }
     return percentage;
   }
@@ -90,7 +116,6 @@ const Tables = () => {
   };
   return (
     <>
-    
       <Header />
       {/* Page content */}
       <Container fluid>
@@ -102,20 +127,20 @@ const Tables = () => {
                 <h3 className="text-white mb-0">User tables</h3>
               </CardHeader>
               <Nav className="align-items-lg-center ml-lg-auto" navbar>
-                  <NavItem className="d-none d-lg-block ml-lg-4">
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                        onClick={(e) => navigate(`/Profile-Add`)}
-                      target="_blank"
-                    >
-                      <span className="nav-link-inner--text ml-1">
-                        Create a new account
-                      </span>
-                    </Button>
-                  </NavItem>
-                </Nav>
-                <Table
+                <NavItem className="d-none d-lg-block ml-lg-4">
+                  <Button
+                    className="btn-neutral btn-icon"
+                    color="default"
+                    onClick={(e) => navigate(`/Profile-Add`)}
+                    target="_blank"
+                  >
+                    <span className="nav-link-inner--text ml-1">
+                      Create a new account
+                    </span>
+                  </Button>
+                </NavItem>
+              </Nav>
+              <Table
                 className="align-items-center table-dark table-flush"
                 responsive
               >
@@ -132,10 +157,7 @@ const Tables = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map(user => (
-
-
-
+                  {users.map((user) => (
                     <tr key={user._id}>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -151,44 +173,38 @@ const Tables = () => {
                           </a>
                           <Media>
                             <span className="mb-0 text-sm">
-                            {user.username}
-
+                              {user.username}
                             </span>
                           </Media>
                         </Media>
                       </th>
+                      <td>{user.email}</td>
                       <td>
-                        {user.email}
-
-                      </td><td>
-
-                        {differenceInYears(new Date(), new Date(user.dateOfBirth))}
-
+                        {differenceInYears(
+                          new Date(),
+                          new Date(user.dateOfBirth)
+                        )}
                       </td>
                       <td>
                         <span className="gender-logo">
-
                           {genderIcon(user.gender)}
-
-
                         </span>
                       </td>
 
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
-                          {user.first_Name} - {user.last_Name} 
+                          {user.first_Name} - {user.last_Name}
                         </Badge>
                       </td>
                       <td>
-                        <div className="avatar-group">
-                          {user.address } 
-                        </div>
+                        <div className="avatar-group">{user.address}</div>
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">
-                          {calculateCompletionPercentage(user)} %</span>
+                            {calculateCompletionPercentage(user)} %
+                          </span>
                           <div>
                             <Progress
                               max="100"
@@ -214,7 +230,6 @@ const Tables = () => {
                             <DropdownItem
                               href=""
                               onClick={(e) => deleteAUser(user)}
-
                             >
                               Supprimer
                             </DropdownItem>
