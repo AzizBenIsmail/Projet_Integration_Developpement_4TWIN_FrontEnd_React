@@ -14,6 +14,7 @@ import "./App.css";
 import Indexs from "views/Index.js";
 import NotFound from "views/NotFound.js";
 import Landing from "views/Landing.js";
+import Projects from "views/Projects.js";
 
 import Login from "views/Login.js";
 import ProfileFront from "views/Profile.js";
@@ -45,6 +46,7 @@ function App() {
       <Routes>
         <Route path="*" element={<NotFound/>}/>
         <Route path="/landing-page" element={<Landing />} />
+        <Route path="/Projects" element={<Projects />} />
         <Route path="/login-page" element={<Login />} />
         <Route path="/profile-page/:id" element={<ProfileFront />} />
         <Route path="/Composant" element={<Indexs />} />
