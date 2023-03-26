@@ -2,15 +2,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import DemoNavbar from "components/Navbars/DemoNavbar";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  DropdownItem,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Row,
+  Col,
+} from "reactstrap";
 
-import {  Card,  CardHeader,  CardBody,  DropdownItem,  InputGroupAddon,  InputGroupText,  InputGroup,  Row,  Col,} from "reactstrap";
-
-import { forgotpwd } from "../services/apiUser";
+import { LoginUser } from "../../services/apiUser";
 import { Button, Container, Form } from "react-bootstrap";
 import flatted from "flatted";
+import axios from "axios";
 
-export default function Reset() {
+import LoginNavbar from "../../components/Navbars/LoginNavbar";
+
+export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -23,23 +34,59 @@ export default function Reset() {
   });
   const handlechange = (e) => {
     console.log(e.target.value);
-
+    setUsers({ ...user, [e.target.name]: e.target.value });
     console.log(user);
   };
 
-  const forgotpassword = async (e) => {
-    e.preventDefault();
+  const Login = async (user) => {
+    //const jsonString = flatted.stringify(user);
 
-    const res = await forgotpwd(email).catch((error) => {
-      console.log(error.response.data.message);
-    });
+    //   const res = await LoginUser(user).catch((error) => {
+    //     console.log(error.response.data.message);
+    // });
 
-    console.log(res.data);
-    console.log(res.data.message);
+    //const res = await axios.post('http://localhost:5000/users/login',user);
+
+    //console.log(res.data);
+    //console.log(res.data.message);
+    // switch (user.password ||res.data.message ) {
+    //   case "User successfully authenticated":
+    //     console.log("welcom ");
+    //       alert("welcom ");
+    //     navigate("/landing-page");
+    //     break;case "azerty":
+    console.log(user.password);
+    switch (user.password) {
+      case "azerty":
+        console.log("Please fill in all the fields of the form");
+        alert("Please fill in all the fields of the form");
+        break;
+      case "Notdone123":
+        console.log("failed toauthent");
+        alert("failed to authent");
+        break;
+      case "Administrateur123":
+        console.log("welcom admin");
+        alert("welcom Admin");
+        navigate("/Tables");
+        break;
+      default:
+        navigate("/landing-page");
+        break;
+    }
   };
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/auth/connection");
+      window.location.href = response.data.redirectUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-          <DemoNavbar />
+      <LoginNavbar />
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default"></div>
         <Container className="pt-lg-7">
@@ -47,29 +94,15 @@ export default function Reset() {
             <Col lg="5">
               <Card className="bg-secondary shadow border-0">
                 <CardHeader className="bg-white pb-5">
+                  <div className="text-muted text-center mb-3">
+                    <small>Sign in with</small>
+                  </div>
                   <div className="btn-wrapper text-center">
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={
-                            require("assetsFrontOffice/img/icons/common/github.svg")
-                              .default
-                          }
-                        />
-                      </span>
-                      <span className="btn-inner--text">Github</span>
-                    </Button>
                     <Button
                       className="btn-neutral btn-icon ml-1"
                       color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=1011336119202-68ccv8g3nnrvrbhaibacj684alcpfmss.apps.googleusercontent.com&service=lso&o2v=2&flowName=GeneralOAuthFlow"
+                      onClick={handleGoogleLogin}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -86,7 +119,7 @@ export default function Reset() {
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
-                    <small>Forgot Password ?</small>
+                    <small>Or sign in with credentials</small>
                   </div>
                   <Form role="form">
                     <Form.Group className="mb-3">
@@ -100,17 +133,38 @@ export default function Reset() {
                           placeholder="email"
                           type="email"
                           name="email"
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e) => handlechange(e)}
                         />
                       </InputGroup>
                     </Form.Group>
-
+                    <Form.Group>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-lock-circle-open" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Form.Control
+                          placeholder="password"
+                          type="password"
+                          autoComplete="off"
+                          name="password"
+                          onChange={(e) => handlechange(e)}
+                        />
+                      </InputGroup>
+                    </Form.Group>
                     <div className="custom-control custom-control-alternative custom-checkbox">
                       <input
                         className="custom-control-input"
                         id=" customCheckLogin"
                         type="checkbox"
                       />
+                      <label
+                        className="custom-control-label"
+                        htmlFor=" customCheckLogin"
+                      >
+                        <span>Remember me</span>
+                      </label>
                     </div>
                     <div className="text-center">
                       <Button
@@ -118,12 +172,12 @@ export default function Reset() {
                         color="primary"
                         type="button"
                         onClick={(e) => {
-                          console.log(e);
-                          forgotpassword(e);
+                          console.log(user);
+                          Login(user);
                         }}
                       >
                         {" "}
-                        Submit{" "}
+                        Sign in{" "}
                       </Button>
                     </div>
                   </Form>
@@ -131,15 +185,15 @@ export default function Reset() {
               </Card>
               <Row className="mt-3">
                 <Col xs="6">
-                  <a className="text-light" onClick={(e) => e.preventDefault()}>
-                    <small>Sign in</small>
+                  <a className="text-light" onClick={(e) => navigate(`/reset`)}>
+                    <small>Forgot password?</small>
                   </a>
                 </Col>
                 <Col className="text-right" xs="6">
                   <a
                     className="text-light"
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={(e) => navigate(`/Register-page`)}
                   >
                     <small>Create new account</small>
                   </a>

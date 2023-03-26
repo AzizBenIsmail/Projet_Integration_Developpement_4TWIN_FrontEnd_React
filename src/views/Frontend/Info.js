@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../assets/jumbotron.css";
+import "../../assets/jumbotron.css";
 import DemoNavbar from "components/Navbars/DemoNavbar";
 
 export default function Info() {

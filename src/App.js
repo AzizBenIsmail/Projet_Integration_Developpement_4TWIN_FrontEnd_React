@@ -11,30 +11,30 @@ import "./App.css";
 // const Register = lazy(()=>import('./views/Register'));
 // const NotFound = lazy(()=>import('./views/NotFound'));
 
-import Indexs from "views/Index.js";
-import NotFound from "views/NotFound.js";
-import Landing from "views/Landing.js";
-import Projects from "views/Projects.js";
+import Indexs from "views/Frontend/Index.js";
+import NotFound from "views/Frontend/NotFound.js";
+import Landing from "views/Frontend/Landing.js";
+import Projects from "views/Frontend/Projects.js";
 
-import Login from "views/Login.js";
-import ProfileFront from "views/Profile.js";
-import Reset from "views/Reset.js";
+import Login from "views/Frontend/Login.js";
+import ProfileFront from "views/Frontend/Profile.js";
+import Reset from "views/Frontend/Reset.js";
 
-import Register from "views/Register.js";
+import Register from "views/Frontend/Register.js";
 import DemoNavbar from "components/Navbars/DemoNavbar";
 import SimpleFooter from "components/Footers/SimpleFooter";
 
 import Index from "views/Backend/Index.js";
-import IndexDefault from "views/Index.js";
+import IndexDefault from "views/Frontend/Index.js";
 import Profile from "views/Backend/Profile.js";
 import Tables from "views/Backend/Tables.js";
 import ProfileAdd from "views/Backend/Profile-Add";
 
-import FablabJoin from "./views/FablabJoin";
+import FablabJoin from "./views/Frontend/FablabJoin";
 import AdminFablabJoin from "./views/Backend/AdminFablabJoin";
 import FablabRequestDetails from "./views/Backend/FablabRequestDetails";
-import ResetPwd from "views/ResetPwd";
-import Info from "views/Info";
+import ResetPwd from "views/Frontend/ResetPwd";
+import Info from "views/Frontend/Info";
 
 import SpinnerExample from "components/spinner/Spinner";
 

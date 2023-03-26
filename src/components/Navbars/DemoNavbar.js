@@ -113,7 +113,7 @@ export default function NavbarF() {
                       className="nav-link-inner--text"
                       style={{ color: "#ffff" }}
                     >
-                      Events
+                      Fablab
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
