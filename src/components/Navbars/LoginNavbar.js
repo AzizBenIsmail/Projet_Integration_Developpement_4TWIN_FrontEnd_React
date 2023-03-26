@@ -120,14 +120,13 @@ export default function LoginNavbar() {
                 <NavItem className="d-none d-lg-block ml-lg-4">
 
                   <Button
-                    className="btn-neutral btn-icon"
                     color="default"
                     //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
                     onClick={(e) => navigate(`/login-page`)}
                     target="_blank"
                   > <Link to="/login-page">
                       <span className="btn-inner--icon">
-                        <i className="fa fa-sign-in mr-2" />
+                      <i class="ni ni-single-02" />
                       </span>
                       <span className="nav-link-inner--text ml-1">
                         Login
@@ -137,13 +136,12 @@ export default function LoginNavbar() {
 
 
                   <Button
-                    className="btn-neutral btn-icon"
                     color="default"
                     //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
                     target="_blank"
 
                   >
-                    <Link to="/FablabJoin">
+                    <Link to="/Register-page">
                       <span className="btn-inner--icon">
                         <i className="fa fa-user-plus mr-2" />
                       </span>

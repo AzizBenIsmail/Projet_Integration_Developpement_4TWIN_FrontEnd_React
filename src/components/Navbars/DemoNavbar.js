@@ -2,8 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
 import {
-  Button, UncontrolledCollapse, DropdownMenu, DropdownItem, DropdownToggle, UncontrolledDropdown, Media, NavbarBrand, Navbar, NavItem,
-  NavLink, Nav, Container, Row, Col, UncontrolledTooltip
+  Button,
+  UncontrolledCollapse,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
+  UncontrolledDropdown,
+  Media,
+  NavbarBrand,
+  Navbar,
+  NavItem,
+  NavLink,
+  Nav,
+  Container,
+  Row,
+  Col,
+  UncontrolledTooltip,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -35,7 +49,8 @@ export default function NavbarF() {
         >
           <Container>
             <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
-              <img style={{ width: '210px', height: '70px' }}
+              <img
+                style={{ width: "210px", height: "70px" }}
                 alt="..."
                 src={require("assets/img/brand/logo.png")}
               />
@@ -72,52 +87,112 @@ export default function NavbarF() {
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/landing-page" tag={Link}>
                     <i className="ni ni-ui-04 d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Home</span>
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Home
+                    </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/landing-page" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Projects</span>
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Projects
+                    </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown nav >
+                <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/landing-page" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Events</span>
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Events
+                    </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown nav >
-                  <DropdownToggle nav to="/landing-page" tag={Link}>
+                <UncontrolledDropdown nav>
+                  <DropdownToggle nav to="/Info" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Info</span>
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Info
+                    </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav>
                     <i className="ni ni-collection d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Example</span>
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Example
+                    </span>
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem to="/landing-page" tag={Link} style={{ color: "#172b4d" }}>
+                    <DropdownItem
+                      to="/landing-page"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       Landing
                     </DropdownItem>
-                    <DropdownItem to="/profile-page/641cdeee29a97f7a08bd9a42" tag={Link} style={{ color: "#172b4d" }}>
+                    <DropdownItem
+                      to="/profile-page/641cdeee29a97f7a08bd9a42"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       Profile
                     </DropdownItem>
-                    <DropdownItem to="/login-page" tag={Link} style={{ color: "#172b4d" }}>
+                    <DropdownItem
+                      to="/login-page"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       Login
                     </DropdownItem>
-                    <DropdownItem to="/register-page" tag={Link} style={{ color: "#172b4d" }}>
+                    <DropdownItem
+                      to="/register-page"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       Register
-                    </DropdownItem><DropdownItem to="/Tables" tag={Link} style={{ color: "#172b4d" }}>
-                      Backend Users 
-                    </DropdownItem><DropdownItem to="/Index" tag={Link} style={{ color: "#172b4d" }}>
+                    </DropdownItem>
+                    <DropdownItem
+                      to="/Tables"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
+                      Backend Users
+                    </DropdownItem>
+                    <DropdownItem
+                      to="/Index"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       Backend
-                    </DropdownItem><DropdownItem to="/Profile/641cdeee29a97f7a08bd9a42" tag={Link} style={{ color: "#172b4d" }}>
+                    </DropdownItem>
+                    <DropdownItem
+                      to="/Profile/641cdeee29a97f7a08bd9a42"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       Profile
                     </DropdownItem>
-                    <DropdownItem to="/IndexDefault" tag={Link} style={{ color: "#172b4d" }}>
+                    <DropdownItem
+                      to="/IndexDefault"
+                      tag={Link}
+                      style={{ color: "#172b4d" }}
+                    >
                       IndexDefault
                     </DropdownItem>
                   </DropdownMenu>
@@ -125,28 +200,10 @@ export default function NavbarF() {
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto " navbar>
                 <NavItem className="d-none d-lg-block ml-lg-4 ">
-
-                  <Button
-                    color="default"
-                    //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
-                    onClick={(e) => navigate(`/login-page`)}
-                    target="_blank"
-                  > <Link to="/login-page">
-                      <span className="btn-inner--icon">
-                        <i class="ni ni-single-02" />
-                      </span>
-                      <span className="nav-link-inner--text ml-1">
-                        Login
-                      </span>
-                    </Link>
-                  </Button>
-
-
                   <Button
                     color="default"
                     //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
                     target="_blank"
-
                   >
                     <Link to="/FablabJoin">
                       <span className="btn-inner--icon">
@@ -157,7 +214,6 @@ export default function NavbarF() {
                       </span>
                     </Link>
                   </Button>
-
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>
@@ -167,4 +223,3 @@ export default function NavbarF() {
     </>
   );
 }
-
