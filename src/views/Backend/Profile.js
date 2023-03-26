@@ -27,7 +27,6 @@ const Profile = () => {
     dateOfBirth: "",
     phoneNumber: 0,
     gender: "",
-    // userType: "",
     address: "",
     image_user: "",
   });
@@ -53,7 +52,7 @@ console.log("user",user);
     const res = await updateUser(param.id, user);
     console.log(res)
     if (res.status === 200)
-    navigate(`/Tables`);
+    navigate(`/Backend_Users`);
 
   };  const UpdateUs = async () => {
     const res = await updateUser(param.id, user);
@@ -68,7 +67,7 @@ console.log("user",user);
       //console.log(user);
       await axios.delete(`http://localhost:5000/users/${user._id}`);
 
-      navigate("/Tables");
+      navigate("/Backend_Users");
     }
   }
   const AfficherDateDeNaissance = (dateOfBirth) => {
@@ -98,7 +97,6 @@ console.log("user",user);
           minHeight: "600px",
           backgroundImage:
             "url(" + `http://localhost:5000/images/${user.image_user}` + ")",
-            // "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
           backgroundSize: "cover",
           backgroundPosition: "center top"
         }}

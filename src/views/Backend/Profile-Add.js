@@ -34,7 +34,6 @@ const Profile = () => {
     setUsers({ ...user, [e.target.name]: e.target.value });
   };
   const handlechangeFile = (e) => {
-    // setUsers({ ...user, image_user: e.target.files[0].name })
     setImage(e.target.files[0]);
     console.log(e.target.files[0]);
   };
@@ -48,26 +47,11 @@ const Profile = () => {
     formData.append("dateOfBirth", user.dateOfBirth);
     formData.append('phoneNumber', user.phoneNumber);
     formData.append("gender", user.gender);
-    // formData.append('userType', user.userType);
     formData.append('address', user.address);
     formData.append("image_user", image);
-    // try {
-    //     const res = await axios.post('http://localhost:5000/users', formData, {
-    //         headers: { 'Content-Type': 'multipart/form-data' }
-    //     });
-    //     console.log(res.data);
-    // } catch (error) {
-    //     console.error(error);
-    // }
-    // console.log(formData);
-
     const res = await addUser(formData).catch((error) => {
       console.log(error.response.data.message);
     });
-
-    // const res = await axios.post('http://localhost:5000/users', formData, {
-    //     headers: { 'Content-Type': 'multipart/form-data' }
-    // });
 
     console.log(res.data);
     console.log(res.data.message);
@@ -97,7 +81,7 @@ const Profile = () => {
         alert("gender must be one of the following values: Male, Female");
         break;
       case undefined:
-        navigate(`/Tables`);
+        navigate(`/Backend_Users`);
         alert(
           "successful account creation Welcom : `" + res.data.username + "`"
         );

@@ -27,7 +27,7 @@ import SimpleFooter from "components/Footers/SimpleFooter";
 import Index from "views/Backend/Index.js";
 import IndexDefault from "views/Frontend/Index.js";
 import Profile from "views/Backend/Profile.js";
-import Tables from "views/Backend/Tables.js";
+import Backend_Users from "views/Backend/Backend_Users.js";
 import ProfileAdd from "views/Backend/Profile-Add";
 
 import FablabJoin from "./views/Frontend/FablabJoin";
@@ -52,7 +52,7 @@ function App() {
         <Route path="/Composant" element={<Indexs />} />
         <Route path="/Register-page" element={<Register />} />
         <Route path="/Profile/:id" element={<Profile />} />
-        <Route path="/Tables" element={<Tables />} />
+        <Route path="/Backend_Users" element={<Backend_Users />} />
         <Route path="/Index" element={<Index />} />
         <Route path="/IndexDefault" element={<IndexDefault />} />
         <Route path="/reset" element={<Reset />} />
