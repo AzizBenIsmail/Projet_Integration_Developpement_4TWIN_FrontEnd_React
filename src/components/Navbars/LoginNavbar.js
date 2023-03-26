@@ -7,7 +7,7 @@ import {
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function UserNavbar() {
+export default function LoginNavbar() {
   const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
@@ -148,7 +148,7 @@ export default function UserNavbar() {
                         <i className="fa fa-user-plus mr-2" />
                       </span>
                       <span className="nav-link-inner--text ml-1">
-                        Join Us as Fablab
+                      Create new account
                       </span>
                     </Link>
                   </Button>

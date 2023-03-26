@@ -9,7 +9,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import flatted from "flatted";
 import axios from "axios";
 
-import DemoNavbar from "components/Navbars/UserNavbar";
+import LoginNavbar from "components/Navbars/LoginNavbar";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ console.log(user.password);
   
   return (
     <>
-          <DemoNavbar />
+          <LoginNavbar />
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default"></div>
         <Container className="pt-lg-7">

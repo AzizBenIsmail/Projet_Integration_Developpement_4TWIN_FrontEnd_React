@@ -7,7 +7,7 @@ import axios from "axios";
 import {    Card,    CardHeader,    CardBody,    FormGroup,    InputGroupAddon,    InputGroupText,    InputGroup,    Row,    Col,} from "reactstrap";
 import { Button, Container, Form } from "react-bootstrap";
 
-import DemoNavbar from "components/Navbars/DemoNavbar";
+import LoginNavbar from "components/Navbars/LoginNavbar";
 
 
 export default function Register() {
@@ -95,7 +95,7 @@ export default function Register() {
       
     return (
         <>
-              <DemoNavbar />
+              <LoginNavbar />
             <section className="section section-shaped section-lg">
                 <div className="shape shape-style-1 bg-gradient-default"></div>
                 <Container className="pt-lg-7">
