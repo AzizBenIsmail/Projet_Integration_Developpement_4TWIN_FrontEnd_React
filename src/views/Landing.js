@@ -32,7 +32,7 @@ export default function Landing () {
     <>
           <DemoNavbar />
       <main >
-        <div className="position-relative">
+        <div className="position-relative bg-primary "    >
           {/* shape Hero */}
           <section className="section section-lg section-shaped pb-250">
             <div className="shape shape-style-1 shape-default" />
@@ -40,15 +40,17 @@ export default function Landing () {
             <Container className="py-lg-md d-flex">
               <div className="col px-0">
                 <Row>
-                  <Col lg="6">
+                  <Col lg="16 ">
+                  <br></br>
+                  <br></br>
                     <h1 className="display-3 text-white">
-                      A beautiful Design System{" "}
-                      <span>completed with examples</span>
+                    Support the Ecological Project in Africa
+                      <span>"Empower Your Dreams: Join Our Crowdfunding Community Today!"</span>
                     </h1>
                     <p className="lead text-white">
-                      The design system comes with four pre-built pages to help
-                      you get started faster. You can change the text and images
-                      and you're good to go.
+                    Welcome to the crowdfunding page dedicated to the ecological 
+                    project in Africa. This project aims to improve the living conditions 
+                    of rural communities in Africa while preserving the environment..
                     </p>
                     <div className="btn-wrapper">
                       <Button
@@ -361,7 +363,7 @@ export default function Landing () {
               </Row>
             </Container>
           </section>
-          <section className="section pb-0 bg-gradient-warning">
+          <section className="section section-lg bg-gradient-default">
             <Container>
               <Row className="row-grid align-items-center">
                 <Col className="order-lg-2 ml-lg-auto" md="6">
@@ -369,7 +371,7 @@ export default function Landing () {
                     <img
                       alt="..."
                       className="img-center img-fluid"
-                      src={require("assetsFrontOffice/img/ill/ill-2.svg")}
+                      src={require("assets/img/brand/logo.png")}
                     />
                   </div>
                 </Col>
@@ -380,7 +382,7 @@ export default function Landing () {
                         <i className="ni ni-building text-primary" />
                       </div>
                     </div>
-                    <div className="pl-4">
+                    <div className="pl-4 " >
                       <h4 className="display-3 text-white">Modern Interface</h4>
                       <p className="text-white">
                         The Arctic Ocean freezes every winter and much of the

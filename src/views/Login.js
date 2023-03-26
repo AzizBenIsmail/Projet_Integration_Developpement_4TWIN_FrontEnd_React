@@ -9,8 +9,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import flatted from "flatted";
 import axios from "axios";
 
-import DemoNavbar from "components/Navbars/DemoNavbar";
-
+import DemoNavbar from "components/Navbars/UserNavbar";
 
 export default function Login() {
   const navigate = useNavigate();

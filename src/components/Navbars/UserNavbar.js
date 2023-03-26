@@ -7,7 +7,7 @@ import {
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function NavbarF() {
+export default function UserNavbar() {
   const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
@@ -24,7 +24,6 @@ export default function NavbarF() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
   }, []);
-
   return (
     <>
       <header className="header-global">
@@ -87,16 +86,10 @@ export default function NavbarF() {
                     <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Events</span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown nav >
-                  <DropdownToggle nav to="/landing-page" tag={Link}>
-                    <i className="ni ni-collection d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Info</span>
-                  </DropdownToggle>
-                </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav>
                     <i className="ni ni-collection d-lg-none mr-1" />
-                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Example</span>
+                    <span className="nav-link-inner--text" style={{ color: "#ffff" }}>Examples</span>
                   </DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem to="/landing-page" tag={Link} style={{ color: "#172b4d" }}>
@@ -123,17 +116,18 @@ export default function NavbarF() {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
-              <Nav className="align-items-lg-center ml-lg-auto " navbar>
-                <NavItem className="d-none d-lg-block ml-lg-4 ">
+              <Nav className="align-items-lg-center ml-lg-auto" navbar>
+                <NavItem className="d-none d-lg-block ml-lg-4">
 
                   <Button
+                    className="btn-neutral btn-icon"
                     color="default"
                     //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
                     onClick={(e) => navigate(`/login-page`)}
                     target="_blank"
                   > <Link to="/login-page">
                       <span className="btn-inner--icon">
-                        <i class="ni ni-single-02" />
+                        <i className="fa fa-sign-in mr-2" />
                       </span>
                       <span className="nav-link-inner--text ml-1">
                         Login
@@ -143,6 +137,7 @@ export default function NavbarF() {
 
 
                   <Button
+                    className="btn-neutral btn-icon"
                     color="default"
                     //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
                     target="_blank"
@@ -167,4 +162,3 @@ export default function NavbarF() {
     </>
   );
 }
-

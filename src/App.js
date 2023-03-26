@@ -33,8 +33,9 @@ import FablabJoin from "./views/FablabJoin";
 import AdminFablabJoin from "./views/Backend/AdminFablabJoin";
 import FablabRequestDetails from "./views/Backend/FablabRequestDetails";
 import ResetPwd from "views/ResetPwd";
+import Info from "views/Info";
 
-import SpinnerExample from "./components/spinner.css";
+import SpinnerExample from "components/spinner/Spinner";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
         <Route path="/FablabRequestDetails/:id" element={<FablabRequestDetails/>} /> 
         <Route path="/reset" element={<Reset />} />
         <Route path="/resetpwd" element={<ResetPwd />} />
+        <Route path="/Info" element={<Info />} />
       </Routes>
       </Suspense>
       <SimpleFooter />
