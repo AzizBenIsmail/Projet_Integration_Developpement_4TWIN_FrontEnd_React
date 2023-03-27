@@ -51,14 +51,13 @@ export default function Landing() {
     getAllProject();
     const interval = setInterval(() => {
       getAllProject(); // appel répété toutes les 10 secondes
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
   const getAllProject = async () => {
     const res = await getProjects()
       .then((res) => {
-        console.log(res.data);
         setProjects(res.data.projects);
       })
       .catch((err) => {
@@ -66,11 +65,10 @@ export default function Landing() {
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = ((entier1 / entier2));
+    const moyenne = entier1 / entier2;
     return moyenne;
   }
-  
-  
+
   return (
     <>
       <DemoNavbar />
@@ -102,10 +100,10 @@ export default function Landing() {
                       >
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
-                          <div className="icon icon-shape rounded-circle mb-4">
+                          <div className=" icon-shape rounded-circle mb-4">
                             {/* <i className="ni ni-check-bold" /> */}
                             <Media className="align-items-center justify-content-end">
-                              <a className="avatar icon-shape-danger rounded-circle ml-9">
+                              <a className="avatar ml-9">
                                 <img
                                   alt="..."
                                   src={`http://localhost:5000/images/${project.image_project}`}
@@ -141,13 +139,20 @@ export default function Landing() {
                           <div className="progress-wrapper">
                             <div className="progress-info">
                               <div className="progress-label">
-                                <span>Task completed {moyenne(project.montant_Final,project.montant_actuel)}% </span>
+                                <span>
+                                  Task completed{" "}
+                                  {moyenne(
+                                    project.montant_Final,
+                                    project.montant_actuel
+                                  )}
+                                  %{" "}
+                                </span>
                               </div>
                               <div className="progress-percentage">
                                 <span>
                                   {project.montant_actuel}/
                                   {project.montant_Final}
-                                  <i className="fa fa-usd mr-2" />
+                                  <i className="fa fa-usd mr-2 ml-2" />
                                 </span>
                               </div>
                             </div>
@@ -158,7 +163,7 @@ export default function Landing() {
                             />
                             {project.numberOfPeople_actuel}/
                             {project.numberOfPeople}
-                            <i className="fa fa-users mr-2" />
+                            <i className="fa fa-users mr-2 ml-2" />
                           </div>
 
                           <Button
@@ -166,7 +171,9 @@ export default function Landing() {
                             color="primary"
                             outline
                             type="button"
-                            onClick={(e) => e.preventDefault()}
+                            onClick={(e) =>
+                              navigate(`/Projects_details/${project._id}`)
+                            }
                           >
                             More Details
                           </Button>
@@ -175,7 +182,9 @@ export default function Landing() {
                             color="success"
                             outline
                             type="button"
-                            onClick={(e) => e.preventDefault()}
+                            onClick={(e) =>
+                              navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
+                            }
                           >
                             Invest
                           </Button>

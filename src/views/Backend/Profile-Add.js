@@ -26,7 +26,6 @@ const Profile = () => {
     dateOfBirth: "",
     phoneNumber: 0,
     gender: "",
-    // "userType": "",
     address: "",
     image_user: "",
   });
@@ -38,7 +37,6 @@ const Profile = () => {
     console.log(e.target.files[0]);
   };
   const add = async (e) => {
-    console.log("1");
     formData.append("username", user.username);
     formData.append('first_Name', user.first_Name);
     formData.append('last_Name', user.last_Name);

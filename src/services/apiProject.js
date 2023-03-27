@@ -5,7 +5,10 @@ const apiURL = "http://localhost:5000/project";
 export async function getProjects() {
   return await axios.get(apiURL);
 }
-export async function addProject(formData,idUser) {
+export async function getProject(id) {
+  return await axios.get(`${apiURL}/${id}`);
+}
+export async function addProject(formData, idUser) {
   return await axios.post(`${apiURL}/${idUser}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
