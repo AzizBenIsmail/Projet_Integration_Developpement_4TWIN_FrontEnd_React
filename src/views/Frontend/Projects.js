@@ -14,6 +14,8 @@ import {
   Container,
   Row,
   Col,
+  Progress,
+  Media,
 } from "reactstrap";
 import Download from "../IndexSections/Download.js";
 import { useNavigate } from "react-router-dom";
@@ -57,7 +59,7 @@ export default function Landing() {
     const res = await getProjects()
       .then((res) => {
         console.log(res.data);
-        setUsers(res.data.users);
+        setProjects(res.data.projects);
       })
       .catch((err) => {
         console.log(err);
@@ -82,46 +84,85 @@ export default function Landing() {
                 </p>
               </Col>
             </Row>
+
             <Row className="justify-content-center">
-              <Col lg="12">
+              <Col lg="15">
                 <Row className="row-grid">
-                  <Col lg="4">
-                    <Card className="card-lift--hover shadow border-0">
-                      <CardBody className="py-5">
-                        <div className="icon icon-shape icon-shape-primary rounded-circle mb-4">
-                          <i className="ni ni-check-bold" />
-                        </div>
-                        <h6 className="text-primary text-uppercase">
-                          Download Argon
-                        </h6>
-                        <p className="description mt-3">
-                          Argon is a great free UI package based on Bootstrap 4
-                          that includes the most important components and
-                          features.
-                        </p>
-                        <div>
-                          <Badge color="primary" pill className="mr-1">
-                            design
-                          </Badge>
-                          <Badge color="primary" pill className="mr-1">
-                            system
-                          </Badge>
-                          <Badge color="primary" pill className="mr-1">
-                            creative
-                          </Badge>
-                        </div>
-                        <Button
-                          className="mt-4"
-                          color="primary"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Learn more
-                        </Button>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col lg="4">
+                  {projects.map((project) => (
+                    <Col lg="4" className="py-2">
+                      <Card
+                        className="card-lift--hover shadow border-0"
+                        key={project._id}
+                      >
+                        <CardBody className="py-5">
+                          {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
+                          <div className="icon icon-shape rounded-circle mb-4">
+                            {/* <i className="ni ni-check-bold" /> */}
+                            <Media className="align-items-center justify-content-end">
+                              <a className="avatar icon-shape-danger rounded-circle ml-9">
+                                <img
+                                  alt="..."
+                                  src={`http://localhost:5000/images/${project.image_project}`}
+                                  style={{
+                                    width: "250%",
+                                    height: "auto",
+                                    display: "block",
+                                    margin: "10 auto",
+                                  }}
+                                />
+                              </a>
+                              <Media>
+                                <span className="mb-0 text-sm"></span>
+                              </Media>
+                            </Media>
+                          </div>
+                          <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
+                            {project.title}
+                          </h6>
+                          <p className="display-4 mt-2 ml-4">
+                            {project.description}
+                          </p>
+                          <div className="font-weight-bold" >
+                            Domaine :
+                            <Badge color="success" pill className="mr-5 ml-2">
+                              {project.domaine}
+                            </Badge>
+                            Goal :
+                            <Badge color="warning" pill className="ml-2">
+                              {project.goal}
+                            </Badge>
+                          </div>
+                          <div className="progress-wrapper">
+            <div className="progress-info">
+              <div className="progress-label">
+                <span>Task completed</span>
+              </div>
+              <div className="progress-percentage">
+                <span>{project.montant_actuel} $</span>
+              </div>
+            </div>
+            <Progress max={project.montant_Final} value={project.montant_actuel}  color="default" />
+            {project.numberOfPeople}
+          </div>
+                          <Button
+                            className="mt-4"
+                            color="primary"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            More Details
+                          </Button>
+                          <Button
+                            className="mt-4"
+                            color="success"
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            Invest
+                          </Button>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  ))}
+                  {/* <Col lg="4">
                     <Card className="card-lift--hover shadow border-0">
                       <CardBody className="py-5">
                         <div className="icon icon-shape icon-shape-success rounded-circle mb-4">
@@ -192,7 +233,7 @@ export default function Landing() {
                         </Button>
                       </CardBody>
                     </Card>
-                  </Col>
+                  </Col> */}
                 </Row>
               </Col>
             </Row>
