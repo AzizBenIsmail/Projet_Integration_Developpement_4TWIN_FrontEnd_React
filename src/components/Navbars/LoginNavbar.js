@@ -90,6 +90,7 @@ export default function LoginNavbar() {
                       className="nav-link-inner--text"
                       style={{ color: "#ffff" }}
                     >
+                      <i className="fa fa-info mr-2" />
                       Info
                     </span>
                   </DropdownToggle>

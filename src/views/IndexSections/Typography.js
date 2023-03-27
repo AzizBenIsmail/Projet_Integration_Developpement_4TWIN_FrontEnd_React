@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Design System React - v1.1.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 
 // reactstrap components
@@ -97,10 +80,12 @@ class Typography extends React.Component {
             <small className="text-uppercase text-muted font-weight-bold">
               Display 1
             </small>
+            
           </Col>
           <Col sm="9">
             <h1 className="display-1 mb-0">Argon Design System</h1>
           </Col>
+          
         </Row>
         <Row className="py-3 align-items-center">
           <Col sm="3">
@@ -154,7 +139,7 @@ class Typography extends React.Component {
           </Col>
           <Col sm="9">
             <h3 className="heading-title text-warning mb-0">
-              Argon Design System
+              azdda Design System
             </h3>
           </Col>
         </Row>

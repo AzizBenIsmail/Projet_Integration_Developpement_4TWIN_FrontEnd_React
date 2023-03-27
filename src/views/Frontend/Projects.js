@@ -65,6 +65,12 @@ export default function Landing() {
         console.log(err);
       });
   };
+  function moyenne(entier1, entier2) {
+    const moyenne = ((entier1 / entier2));
+    return moyenne;
+  }
+  
+  
   return (
     <>
       <DemoNavbar />
@@ -89,7 +95,7 @@ export default function Landing() {
               <Col lg="15">
                 <Row className="row-grid">
                   {projects.map((project) => (
-                    <Col lg="4" className="py-2">
+                    <Col lg="4" className="py-4">
                       <Card
                         className="card-lift--hover shadow border-0"
                         key={project._id}
@@ -119,10 +125,10 @@ export default function Landing() {
                           <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
                             {project.title}
                           </h6>
-                          <p className="display-4 mt-2 ml-4">
+                          <p className="heading mt-2 ml-4 ">
                             {project.description}
                           </p>
-                          <div className="font-weight-bold" >
+                          <div className="font-weight-bold">
                             Domaine :
                             <Badge color="success" pill className="mr-5 ml-2">
                               {project.domaine}
@@ -133,27 +139,42 @@ export default function Landing() {
                             </Badge>
                           </div>
                           <div className="progress-wrapper">
-            <div className="progress-info">
-              <div className="progress-label">
-                <span>Task completed</span>
-              </div>
-              <div className="progress-percentage">
-                <span>{project.montant_actuel} $</span>
-              </div>
-            </div>
-            <Progress max={project.montant_Final} value={project.montant_actuel}  color="default" />
-            {project.numberOfPeople}
-          </div>
+                            <div className="progress-info">
+                              <div className="progress-label">
+                                <span>Task completed {moyenne(project.montant_Final,project.montant_actuel)}% </span>
+                              </div>
+                              <div className="progress-percentage">
+                                <span>
+                                  {project.montant_actuel}/
+                                  {project.montant_Final}
+                                  <i className="fa fa-usd mr-2" />
+                                </span>
+                              </div>
+                            </div>
+                            <Progress
+                              max={project.montant_Final}
+                              value={project.montant_actuel}
+                              color="default"
+                            />
+                            {project.numberOfPeople_actuel}/
+                            {project.numberOfPeople}
+                            <i className="fa fa-users mr-2" />
+                          </div>
+
                           <Button
-                            className="mt-4"
+                            className="btn-1 mt-4"
                             color="primary"
+                            outline
+                            type="button"
                             onClick={(e) => e.preventDefault()}
                           >
                             More Details
                           </Button>
                           <Button
-                            className="mt-4"
+                            className="btn-1 ml-1 mt-4"
                             color="success"
+                            outline
+                            type="button"
                             onClick={(e) => e.preventDefault()}
                           >
                             Invest
