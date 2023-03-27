@@ -50,11 +50,11 @@ export default function Landing() {
   const [project, setProject] = useState([]);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    getoneProject(project);
-    getCreator();
-    // const interval = setInterval(() => {
-    //   getoneProject();
-    // }, 1000);
+    getoneProject();
+    getCreator(project);
+    const interval = setInterval(() => {
+      getoneProject();
+    }, 1000);
   }, []);
   const getoneProject = async () => {
     const res = await getProject(param.id)
@@ -66,6 +66,7 @@ export default function Landing() {
       });
   };
   async function getCreator(project) {
+    console.log(project.creator);
     const res = await getUser(project.creator)
       .then((res) => {
         setuser(res.data.user);
