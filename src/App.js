@@ -52,27 +52,40 @@ function App() {
       {/* <DemoNavbar /> */}
       <Routes>
         <Route path="*" element={<NotFound/>}/>
+        
+      {/* Template */}
+
         <Route path="/landing-page" element={<Landing />} />
+        <Route path="/Index" element={<Index />} />
+        <Route path="/IndexDefault" element={<IndexDefault />} />
+        <Route path="/Info" element={<Info />} />
+        <Route path="/Composant" element={<Indexs />} />
+
+      {/* User */}
+
+        <Route path="/login-page" element={<Login />} />
+        <Route path="/profile-page/:id" element={<ProfileFront />} />
+        <Route path="/Register-page" element={<Register />} />
+        <Route path="/Profile/:id" element={<Profile />} />
+        <Route path="/Backend_Users" element={<Backend_Users />} />
+        <Route path="/reset" element={<Reset />} />
+        <Route path="/resetpwd" element={<ResetPwd />} />
+        <Route path="/reset" element={<Reset />} />
+        <Route path="/Profile-Add" element={<ProfileAdd />} />
+
+      {/* Projects */}
+
         <Route path="/Projects" element={<Projects />} />
         <Route path="/ProjectsUser/:iduser" element={<ProjectsUser />} />
         <Route path="/Projects_details/:id/:iduser" element={<Projects_details />} />
-        <Route path="/login-page" element={<Login />} />
-        <Route path="/profile-page/:id" element={<ProfileFront />} />
-        <Route path="/Composant" element={<Indexs />} />
-        <Route path="/Register-page" element={<Register />} />
-        <Route path="/Profile/:id" element={<Profile />} />
         <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
-        <Route path="/Backend_Users" element={<Backend_Users />} />
-        <Route path="/Index" element={<Index />} />
-        <Route path="/IndexDefault" element={<IndexDefault />} />
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/Profile-Add" element={<ProfileAdd />} />
+
+      {/* FablabJoin */}
+
         <Route path="/FablabJoin" element={<FablabJoin />} />
         <Route path="/AdminFablabJoin" element={<AdminFablabJoin/>} /> 
         <Route path="/FablabRequestDetails/:id" element={<FablabRequestDetails/>} /> 
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/resetpwd" element={<ResetPwd />} />
-        <Route path="/Info" element={<Info />} />
+
       </Routes>
       </Suspense>
       <SimpleFooter />
