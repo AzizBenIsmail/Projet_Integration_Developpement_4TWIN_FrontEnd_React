@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import DemoNavbar from "../../components/Navbars/DemoNavbar";
-import { getProject } from "../../services/apiProject";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -18,8 +17,6 @@ export default function Profile() {
   const [friendCount, setFriendCount] = useState(22);
   const [photoCount, setPhotoCount] = useState(10);
   const [commentCount, setCommentCount] = useState(89);
-  const [project, setProject] = useState([]);
-
   const [user, setUser] = useState({
     _id: param.id,
     username: "",
@@ -93,15 +90,7 @@ export default function Profile() {
     console.log(percentage);
     return percentage;
   }
-  const getoneProject = async (id) => {
-    const res = await getProject(id)
-      .then((res) => {
-        setProject(res.data.project);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   return (
     <>
       <DemoNavbar />
@@ -198,6 +187,7 @@ export default function Profile() {
                     </div>
                   </Col>
                 </Row>
+
                 <div className="ml-8 mt-5">
                   <h3 className="text-capitalize ml-5">
                     {user.username}
@@ -238,7 +228,7 @@ export default function Profile() {
                     )}
                   </div>
                 </div>
-                more information:
+more information:
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
@@ -253,11 +243,11 @@ export default function Profile() {
                         dateOfBirth :{AfficherDateDeNaissance(user.dateOfBirth)}
                         <br />
                         gender : {genderIcon(user.gender)}
-                      </h1>
+                        </h1>
                     </Col>
                   </Row>
                 </div>
-                Project information:
+                {/* Project information:
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
@@ -272,7 +262,7 @@ export default function Profile() {
                       <h1>Invest : {user.invests.length}</h1>
                     </Col>
                   </Row>
-                </div>
+                </div> */}
               </div>
             </Card>
           </Container>
