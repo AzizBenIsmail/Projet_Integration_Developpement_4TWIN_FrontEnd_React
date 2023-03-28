@@ -199,7 +199,7 @@ export default function Landing() {
                         className="mt-2"
                         outline
                         type="button"
-                        onClick={(e) => navigate(`/profile-page/${user._id}`)}
+                        onClick={(e) => navigate(`/ProfileUserProject/${user._id}`)}
                       >
                         {user.username}
                       </a>

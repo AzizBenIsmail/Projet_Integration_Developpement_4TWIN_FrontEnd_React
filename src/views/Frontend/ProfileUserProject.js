@@ -11,7 +11,7 @@ import { getProjectuser } from "../../services/apiProject";
 
 import DemoNavbar from "../../components/Navbars/DemoNavbar";
 
-export default function Profile() {
+export default function ProfileUserProject() {
   const navigate = useNavigate();
 
   const param = useParams();
@@ -85,26 +85,6 @@ export default function Profile() {
       navigate(`/profile/${user._id}`);
     }
   };
-  function calculateCompletionPercentage(user) {
-    let percentage = 100;
-
-    if (!user.first_Name) {
-      percentage -= 30;
-    }
-
-    if (!user.last_Name) {
-      percentage -= 20;
-    }
-
-    if (!user.phoneNumber) {
-      percentage -= 15;
-    }
-    if (!user.address) {
-      percentage -= 10;
-    }
-    return percentage;
-  }
-
   function countProject(arr) {
     if (arr === undefined) {
       return 0;
@@ -118,6 +98,21 @@ export default function Profile() {
     for (let i = 0; i < arr.length; i++) {
       console.log(arr[i]);
     }
+  }
+  function calculerDureeDeVie(dateDeCreation) {
+    const dateDeCreationObjet = new Date(dateDeCreation);
+    const maintenant = new Date();
+    const differenceEnMilliseconds =
+      maintenant.getTime() - dateDeCreationObjet.getTime();
+    const differenceEnSecondes = Math.floor(differenceEnMilliseconds / 1000);
+    const differenceEnMinutes = Math.floor(differenceEnSecondes / 60);
+    const differenceEnHeures = Math.floor(differenceEnMinutes / 60);
+    const differenceEnJours = Math.floor(differenceEnHeures / 24);
+    const differenceEnMois = Math.floor(differenceEnJours / 30);
+    const differenceEnAnnees = Math.floor(differenceEnMois / 12);
+    return `${differenceEnJours % 30} jours ${differenceEnHeures % 24} Heures ${
+      differenceEnMinutes % 60
+    } Minutes et ${differenceEnSecondes % 60} Seconds `;
   }
   return (
     <>
@@ -171,52 +166,9 @@ export default function Profile() {
                       </a>
                     </div>
                   </Col>
-                  <Col
-                    className="order-lg-3 text-lg-right align-self-lg-center"
-                    lg="4"
-                  >
-                    <div className="card-profile-actions py-4 mt-lg-0">
-                      <Button
-                        className="mr-4"
-                        color="info"
-                        href="#pablo"
-                        onClick={(e) => Modifier(user)}
-                        size="sm"
-                      >
-                        <i
-                          class="fa fa-pencil-square-o mr-2"
-                          aria-hidden="true"
-                        ></i>
-                        Modify
-                      </Button>
-                      {/* <Button
-                        className="float-right"
-                        color="default"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Message
-                      </Button> */}
-                      <div className="progress-wrapper">
-                        <div className="progress-info">
-                          <div className="progress-label">
-                            <span>Progress completed</span>
-                          </div>
-                          <div className="progress-percentage">
-                            <span>{calculateCompletionPercentage(user)} %</span>
-                          </div>
-                        </div>
-                        <Progress
-                          max="100"
-                          value={calculateCompletionPercentage(user)}
-                        />
-                      </div>
-                    </div>
-                  </Col>
                 </Row>
                 <div className="ml-8 mt-5">
-                  <h3 className="text-capitalize ml-5">
+                  <h1 className="text-capitalize ml-5">
                     {user.username}
                     <span className="font-weight-light">
                       |
@@ -225,22 +177,7 @@ export default function Profile() {
                         new Date(user.dateOfBirth)
                       )}
                     </span>
-                  </h3>
-                  <div className="h6 mt-4">
-                    <i className="ni business_briefcase-24 mr-2" />
-                    <h1>first_Name:</h1>
-                    {user.first_Name ? (
-                      <p className="h3 ml-8">{user.first_Name}</p>
-                    ) : (
-                      <i class="fa fa-ban fa-3x  ml-8" aria-hidden="true"></i>
-                    )}
-                    -<h1> last_Name: </h1>
-                    {user.last_Name ? (
-                      <p className="h3 ml-8">{user.last_Name}</p>
-                    ) : (
-                      <i class="fa fa-ban fa-3x  ml-8" aria-hidden="true"></i>
-                    )}
-                  </div>
+                  </h1>
                   <div>
                     <i className="ni education_hat mr-2" />
                     <h1>email :</h1> <p className="h3 ml-8">{user.email}</p>
@@ -262,14 +199,6 @@ export default function Profile() {
                   <Row className="justify-content-center font-weight-bold">
                     <Col lg="9">
                       <h1>
-                        phoneNumber :{" "}
-                        {user.phoneNumber ? (
-                          <h2>{user.phoneNumber}</h2>
-                        ) : (
-                          <i class="fa fa-ban fa-1x" aria-hidden="true"></i>
-                        )}
-                        <br />
-                        dateOfBirth :{AfficherDateDeNaissance(user.dateOfBirth)}
                         <br />
                         gender : {genderIcon(user.gender)}
                       </h1>
@@ -288,7 +217,7 @@ export default function Profile() {
                           <table border={"2"}>
                             <thead>
                               <tr>
-                                <th colspan="2">
+                                <th colspan="3">
                                   <Button
                                     type="button"
                                     onClick={(e) =>
@@ -297,25 +226,32 @@ export default function Profile() {
                                       )
                                     }
                                   >
-                                    <i
-                                      class="fa fa-eye mr-2"
-                                      aria-hidden="true"
-                                    ></i>
+                                    <i aria-hidden="true"></i>
                                     <h6 className=" display-4 text-dark text-capitalize font-weight-bold mr-9 ml-9">
                                       {project.title}
-                                    </h6>{" "}
+                                      <img
+                                        alt="..."
+                                        className="rounded-circle"
+                                        src={`http://localhost:5000/images/${project.image_project}`}
+                                        height="90"
+                                        width="90"
+                                      />
+                                    </h6>
                                   </Button>
                                 </th>
-                              </tr>
+                                </tr>
                             </thead>
                             <tbody>
                               <tr>
                                 <td>
-                                  number Of People :{" "}
-                                  {project.numberOfPeople_actuel}{" "}
+                                  number Of People :
+                                  {project.numberOfPeople_actuel}
                                 </td>
                                 <td>
                                 current amount : {project.montant_actuel}
+                                </td>
+                                <td>
+                                Duration : {calculerDureeDeVie(project.created_at)}
                                 </td>
                               </tr>
                             </tbody>

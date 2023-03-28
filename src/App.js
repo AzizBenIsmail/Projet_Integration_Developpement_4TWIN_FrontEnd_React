@@ -20,6 +20,7 @@ import Projects_details from "views/Frontend/Projects_details";
 
 import Login from "views/Frontend/Login.js";
 import ProfileFront from "views/Frontend/Profile.js";
+import ProfileUserProject from "views/Frontend/ProfileUserProject.js";
 import Reset from "views/Frontend/Reset.js";
 
 import Register from "views/Frontend/Register.js";
@@ -56,6 +57,7 @@ function App() {
         <Route path="/Composant" element={<Indexs />} />
         <Route path="/Register-page" element={<Register />} />
         <Route path="/Profile/:id" element={<Profile />} />
+        <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
         <Route path="/Backend_Users" element={<Backend_Users />} />
         <Route path="/Index" element={<Index />} />
         <Route path="/IndexDefault" element={<IndexDefault />} />

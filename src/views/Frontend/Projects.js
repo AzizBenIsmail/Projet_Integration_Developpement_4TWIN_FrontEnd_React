@@ -204,7 +204,7 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
+                              navigate(`/ProfileUserProject/6411328aaa4a0b70d100dbf4`)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
