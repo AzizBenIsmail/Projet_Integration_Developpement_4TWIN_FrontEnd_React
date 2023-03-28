@@ -12,11 +12,11 @@ import "./App.css";
 // const NotFound = lazy(()=>import('./views/NotFound'));
 
 //Template
-import Info from "views/Frontend/Info";
-import Indexs from "views/Frontend/Index.js";
-import NotFound from "views/Frontend/NotFound.js";
-import IndexDefault from "views/Frontend/Index.js";
-import Landing from "views/Frontend/Landing.js";
+import Info from "views/Frontend/Template/Info";
+import Indexs from "views/Frontend/Template/Index.js";
+import NotFound from "views/Frontend/Template/NotFound.js";
+import IndexDefault from "views/Frontend/Template/Index.js";
+import Landing from "views/Frontend/Template/Landing.js";
 
 //user
 import Reset from "views/Frontend/User/Reset.js";
@@ -37,11 +37,12 @@ import AdminFablabJoin from "./views/Backend/Fablab/AdminFablabJoin";
 import FablabRequestDetails from "./views/Backend/Fablab/FablabRequestDetails";
 
 //Backend
-import Index from "views/Backend/Index.js";
+import Index from "views/Backend/Template/Index.js";
 import Profile from "views/Backend/User/Profile.js";
 import Backend_Users from "views/Backend/User/Backend_Users.js";
 import ProfileAdd from "views/Backend/User/Profile-Add";
 
+//Footer Spinner
 import SimpleFooter from "components/Footers/SimpleFooter";
 import SpinnerExample from "components/spinner/Spinner";
 

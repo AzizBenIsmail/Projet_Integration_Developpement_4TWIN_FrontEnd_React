@@ -17,11 +17,11 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import Download from "../IndexSections/Download.js";
+import Download from "../../IndexSections/Download.js";
 import { useNavigate } from "react-router-dom";
-import { getProjects } from "../../services/apiProject";
+import { getProjects } from "../../../services/apiProject";
 
-import DemoNavbar from "../../components/Navbars/DemoNavbar";
+import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function Landing() {
   const navigate = useNavigate();

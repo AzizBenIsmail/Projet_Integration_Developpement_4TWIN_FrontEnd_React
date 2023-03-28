@@ -1,6 +1,6 @@
 import React from 'react'
-import notfound from '../../assets/img/notfound.jfif'
-import DemoNavbar from "../../components/Navbars/DemoNavbar";
+import notfound from '../../../assets/img/notfound.jfif'
+import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 const NotFound = () => {
   return (

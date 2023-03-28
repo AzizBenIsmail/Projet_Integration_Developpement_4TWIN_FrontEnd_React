@@ -14,7 +14,7 @@
   import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import '../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
+import '../../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
