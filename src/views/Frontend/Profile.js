@@ -7,6 +7,7 @@ import { differenceInYears } from "date-fns";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { getProjectuser } from "../../services/apiProject";
 
 import DemoNavbar from "../../components/Navbars/DemoNavbar";
 
@@ -17,6 +18,8 @@ export default function Profile() {
   const [friendCount, setFriendCount] = useState(22);
   const [photoCount, setPhotoCount] = useState(10);
   const [commentCount, setCommentCount] = useState(89);
+  const [projects, setProjects] = useState([]);
+
   const [user, setUser] = useState({
     _id: param.id,
     username: "",
@@ -36,13 +39,25 @@ export default function Profile() {
 
   useEffect(() => {
     getUserFunction();
+    getoneProject();
   }, []);
 
   const getUserFunction = async () => {
     const response = await getUser(param.id);
-    console.log(response.data.user);
     setUser(response.data.user);
   };
+
+  const getoneProject = async () => {
+    const res = await getProjectuser(param.id)
+      .then((res) => {
+        setProjects(res.data.projects);
+        console.log(res.data.projects);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const AfficherDateDeNaissance = (dateOfBirth) => {
     const date = moment(dateOfBirth);
     const mois = date.format("MM");
@@ -87,10 +102,23 @@ export default function Profile() {
     if (!user.address) {
       percentage -= 10;
     }
-    console.log(percentage);
     return percentage;
   }
 
+  function countProject(arr) {
+    if (arr === undefined) {
+      return 0;
+    }
+    return arr.length;
+  }
+  function displayProjectElements(arr) {
+    if (arr === undefined) {
+      return 0;
+    }
+    for (let i = 0; i < arr.length; i++) {
+      console.log(arr[i]);
+    }
+  }
   return (
     <>
       <DemoNavbar />
@@ -187,7 +215,6 @@ export default function Profile() {
                     </div>
                   </Col>
                 </Row>
-
                 <div className="ml-8 mt-5">
                   <h3 className="text-capitalize ml-5">
                     {user.username}
@@ -228,9 +255,11 @@ export default function Profile() {
                     )}
                   </div>
                 </div>
-more information:
+                <div className="text-capitalize font-weight-bold ml-4">
+                  more information:
+                </div>
                 <div className="mt-2 border-top ">
-                  <Row className="justify-content-center">
+                  <Row className="justify-content-center font-weight-bold">
                     <Col lg="9">
                       <h1>
                         phoneNumber :{" "}
@@ -243,26 +272,69 @@ more information:
                         dateOfBirth :{AfficherDateDeNaissance(user.dateOfBirth)}
                         <br />
                         gender : {genderIcon(user.gender)}
-                        </h1>
+                      </h1>
                     </Col>
                   </Row>
                 </div>
-                {/* Project information:
+                <div className="text-capitalize font-weight-bold ml-4">
+                  Project information:
+                </div>
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
-                      <h1>Project : {user.projects.length}</h1>
+                      <h1>Project : {countProject(user.projects)}</h1>
+                      {projects.map((project) => (
+                        <Col lg="4" className="py-4" key={project._id}>
+                          <table border={"2"}>
+                            <thead>
+                              <tr>
+                                <th colspan="2">
+                                  <Button
+                                    type="button"
+                                    onClick={(e) =>
+                                      navigate(
+                                        `/Projects_details/${project._id}/${project.creator._id}`
+                                      )
+                                    }
+                                  >
+                                    <i
+                                      class="fa fa-eye mr-2"
+                                      aria-hidden="true"
+                                    ></i>
+                                    <h6 className=" display-4 text-dark text-capitalize font-weight-bold mr-9 ml-9">
+                                      {project.title}
+                                    </h6>{" "}
+                                  </Button>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  number Of People :{" "}
+                                  {project.numberOfPeople_actuel}{" "}
+                                </td>
+                                <td>
+                                  montant actuel : {project.montant_actuel}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </Col>
+                      ))}
                     </Col>
                   </Row>
                 </div>
-                Invest information:
+                <div className="text-capitalize font-weight-bold ml-4">
+                  Invest information:
+                </div>
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
-                      <h1>Invest : {user.invests.length}</h1>
+                      <h1>Invest : {countProject(user.invests)}</h1>
                     </Col>
                   </Row>
-                </div> */}
+                </div>
               </div>
             </Card>
           </Container>

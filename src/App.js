@@ -15,6 +15,7 @@ import Indexs from "views/Frontend/Index.js";
 import NotFound from "views/Frontend/NotFound.js";
 import Landing from "views/Frontend/Landing.js";
 import Projects from "views/Frontend/Projects.js";
+import ProjectsUser from "views/Frontend/ProjectsUser";
 import Projects_details from "views/Frontend/Projects_details";
 
 import Login from "views/Frontend/Login.js";
@@ -48,6 +49,7 @@ function App() {
         <Route path="*" element={<NotFound/>}/>
         <Route path="/landing-page" element={<Landing />} />
         <Route path="/Projects" element={<Projects />} />
+        <Route path="/ProjectsUser/:iduser" element={<ProjectsUser />} />
         <Route path="/Projects_details/:id/:iduser" element={<Projects_details />} />
         <Route path="/login-page" element={<Login />} />
         <Route path="/profile-page/:id" element={<ProfileFront />} />

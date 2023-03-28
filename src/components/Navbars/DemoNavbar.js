@@ -216,6 +216,56 @@ export default function NavbarF() {
                     </Link>
                   </Button>
                 </NavItem>
+                <Nav className="align-items-center d-none d-md-flex" navbar>
+                  <UncontrolledDropdown nav>
+                    <DropdownToggle className="pr-0" nav>
+                      <Media className="align-items-center ">
+                        <span className="avatar avatar-sm rounded-circle">
+                          <img
+                            alt="..."
+                            src={require("../../assets/img/theme/User.png")}
+                          />
+                        </span>
+                        <Media className="ml-2 d-none d-lg-block">
+                          <span className="mb-0 text-sm font-weight-bold text-white">
+                            User
+                          </span>
+                        </Media>
+                      </Media>
+                    </DropdownToggle>
+                    <DropdownMenu className="dropdown-menu-arrow" left>
+                      <DropdownItem className="noti-title" header tag="div">
+                        <h6 className="text-overflow m-0">Welcome!</h6>
+                      </DropdownItem>
+                      {/* <DropdownItem to="/profile-page/:iduser" tag={Link}> */}
+                      <DropdownItem to="/profile-page/641cdeee29a97f7a08bd9a42" tag={Link}>
+                        <i className="ni ni-single-02" />
+                        <span>My profile</span>
+                      </DropdownItem>
+                      {/* <DropdownItem to="/ProjectsUser/:iduser" tag={Link}> */}
+                      <DropdownItem to="/ProjectsUser/641cdeee29a97f7a08bd9a42" tag={Link}>
+                        <i className="ni ni-settings-gear-65" />
+                        <span>Manage you Project</span>
+                      </DropdownItem>
+                      <DropdownItem to="/admin/user-profile" tag={Link}>
+                        <i className="ni ni-calendar-grid-58" />
+                        <span>Activity</span>
+                      </DropdownItem>
+                      <DropdownItem to="/admin/user-profile" tag={Link}>
+                        <i className="ni ni-support-16" />
+                        <span>Support</span>
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem
+                        href="#pablo"
+                        onClick={(e) => navigate(`/login-page`)}
+                      >
+                        <i className="ni ni-user-run" />
+                        <span>Logout</span>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </Nav>
               </Nav>
             </UncontrolledCollapse>
           </Container>

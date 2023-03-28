@@ -8,6 +8,9 @@ export async function getProjects() {
 export async function getProject(id) {
   return await axios.get(`${apiURL}/${id}`);
 }
+export async function getProjectuser(id) {
+  return await axios.get(`${apiURL}/User/${id}`);
+}
 export async function addProject(formData, idUser) {
   return await axios.post(`${apiURL}/${idUser}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
