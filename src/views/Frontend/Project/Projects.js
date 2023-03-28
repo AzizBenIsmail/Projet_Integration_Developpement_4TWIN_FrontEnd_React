@@ -17,15 +17,13 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import Download from "../IndexSections/Download.js";
-import { useNavigate ,useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import DemoNavbar from "../../components/Navbars/DemoNavbar";
-import { getProjectuser } from "../../services/apiProject";
+import DemoNavbar from "../../../components/Navbars/DemoNavbar";
+import { getProjects } from "../../../services/apiProject";
 
 export default function Landing() {
   const navigate = useNavigate();
-  const param = useParams();
 
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
@@ -57,9 +55,11 @@ export default function Landing() {
   }, []);
 
   const getAllProject = async () => {
-    const res = await getProjectuser(param.iduser)
+    const res = await getProjects()
       .then((res) => {
         setProjects(res.data.projects);
+        console.log(res.data.projects);
+
       })
       .catch((err) => {
         console.log(err);
@@ -73,6 +73,7 @@ export default function Landing() {
   function getFirstTenWords(str) {
     // Supprimer les caractères de ponctuation et diviser la chaîne en mots
     const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
+
     // Retourner les 10 premiers mots
     return words.slice(0, 10).join(" ");
   }
@@ -97,7 +98,7 @@ export default function Landing() {
             </Row>
 
             <Row className="justify-content-center">
-              <Col lg="">
+              <Col lg="15">
                 <Row className="row-grid">
                   {projects.map((project) => (
                     <Col lg="4" className="py-4">
@@ -131,19 +132,16 @@ export default function Landing() {
                             {project.title}
                           </h6>
                           <p className="heading mt-2 ml-4 ">
-                            {getFirstTenWords(project.description)}
-                            {project.description.length >=11 ? ( 
-                              <botton
+                            {getFirstTenWords(project.description)} ...{" "}
+                            <botton
                               onClick={(e) =>
                                 navigate(
                                   `/Projects_details/${project._id}/${project.creator}`
                                 )
                               }
                             >
-                              ...<i class="fa fa-sort-desc" aria-hidden="true"></i>
+                              <i class="fa fa-sort-desc" aria-hidden="true"></i>
                             </botton>
-                            ) : ""} 
-                            
                           </p>
                           <div className="font-weight-bold">
                             Domain :
@@ -205,7 +203,7 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
+                              navigate(`/ProfileUserProject/6411328aaa4a0b70d100dbf4`)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>

@@ -1,6 +1,6 @@
 // reactstrap components
 import React, { useState } from "react";
-import { register } from "../../services/apiUser";
+import { register } from "../../../services/apiUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // reactstrap components
@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import { Button, Container, Form } from "react-bootstrap";
 
-import LoginNavbar from "../../components/Navbars/LoginNavbar";
+import LoginNavbar from "../../../components/Navbars/LoginNavbar";
 
 export default function Register() {
   let formData = new FormData();

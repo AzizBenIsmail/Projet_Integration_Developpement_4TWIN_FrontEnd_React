@@ -34,7 +34,7 @@ import Chart from "chart.js";
 
 // core components
 import Header from "components/Headers/Header.js";
-import { getUsers, deleteUser } from "../../services/apiUser.js";
+import { getUsers, deleteUser } from "../../../services/apiUser.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

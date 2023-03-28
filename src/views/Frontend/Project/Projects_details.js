@@ -17,13 +17,12 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import Download from "../IndexSections/Download.js";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
-import DemoNavbar from "../../components/Navbars/DemoNavbar";
-import { getProject } from "../../services/apiProject";
-import { getUser } from "../../services/apiUser";
+import DemoNavbar from "../../../components/Navbars/DemoNavbar";
+import { getProject } from "../../../services/apiProject";
+import { getUser } from "../../../services/apiUser";
 import { differenceInYears } from "date-fns";
 
 export default function Landing() {

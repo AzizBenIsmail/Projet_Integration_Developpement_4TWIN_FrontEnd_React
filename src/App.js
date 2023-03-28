@@ -11,34 +11,38 @@ import "./App.css";
 // const Register = lazy(()=>import('./views/Register'));
 // const NotFound = lazy(()=>import('./views/NotFound'));
 
+//Template
+import Info from "views/Frontend/Info";
 import Indexs from "views/Frontend/Index.js";
 import NotFound from "views/Frontend/NotFound.js";
-import Landing from "views/Frontend/Landing.js";
-import Projects from "views/Frontend/Projects.js";
-import ProjectsUser from "views/Frontend/ProjectsUser";
-import Projects_details from "views/Frontend/Projects_details";
-
-import Login from "views/Frontend/Login.js";
-import ProfileFront from "views/Frontend/Profile.js";
-import ProfileUserProject from "views/Frontend/ProfileUserProject.js";
-import Reset from "views/Frontend/Reset.js";
-
-import Register from "views/Frontend/Register.js";
-import DemoNavbar from "components/Navbars/DemoNavbar";
-import SimpleFooter from "components/Footers/SimpleFooter";
-
-import Index from "views/Backend/Index.js";
 import IndexDefault from "views/Frontend/Index.js";
-import Profile from "views/Backend/Profile.js";
-import Backend_Users from "views/Backend/Backend_Users.js";
-import ProfileAdd from "views/Backend/Profile-Add";
+import Landing from "views/Frontend/Landing.js";
 
-import FablabJoin from "./views/Frontend/FablabJoin";
+//user
+import Reset from "views/Frontend/User/Reset.js";
+import Login from "views/Frontend/User/Login.js";
+import ResetPwd from "views/Frontend/User/ResetPwd";
+import Register from "views/Frontend/User/Register.js";
+import ProfileFront from "views/Frontend/User/Profile.js";
+
+//Project
+import Projects from "views/Frontend/Project/Projects.js";
+import ProjectsUser from "views/Frontend/Project/ProjectsUser";
+import Projects_details from "views/Frontend/Project/Projects_details";
+import ProfileUserProject from "views/Frontend/Project/ProfileUserProject.js";
+
+//Fablab
+import FablabJoin from "./views/Frontend/Fablab/FablabJoin";
 import AdminFablabJoin from "./views/Backend/AdminFablabJoin";
 import FablabRequestDetails from "./views/Backend/FablabRequestDetails";
-import ResetPwd from "views/Frontend/ResetPwd";
-import Info from "views/Frontend/Info";
 
+//Backend
+import Index from "views/Backend/Index.js";
+import Profile from "views/Backend/User/Profile.js";
+import Backend_Users from "views/Backend/User/Backend_Users.js";
+import ProfileAdd from "views/Backend/User/Profile-Add";
+
+import SimpleFooter from "components/Footers/SimpleFooter";
 import SpinnerExample from "components/spinner/Spinner";
 
 function App() {

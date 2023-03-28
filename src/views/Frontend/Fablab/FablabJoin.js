@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ReactDatetime from "react-datetime";
 import IntlTelInput from "react-intl-tel-input";
 import "react-intl-tel-input/dist/main.css";
-import "../../assetsFrontOffice/css/fablab.css";
+import "../../../assetsFrontOffice/css/fablab.css";
 import DemoNavbar from "components/Navbars/DemoNavbar";
 
 // reactstrap components
