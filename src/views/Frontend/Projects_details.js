@@ -19,10 +19,12 @@ import {
 } from "reactstrap";
 import Download from "../IndexSections/Download.js";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 
 import DemoNavbar from "../../components/Navbars/DemoNavbar";
 import { getProject } from "../../services/apiProject";
 import { getUser } from "../../services/apiUser";
+import { differenceInYears } from "date-fns";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ export default function Landing() {
   const [user, setuser] = useState([]);
   useEffect(() => {
     getoneProject();
-    getCreator(project);
+    getCreator();
     const interval = setInterval(() => {
       getoneProject();
     }, 1000);
@@ -65,16 +67,17 @@ export default function Landing() {
         console.log(err);
       });
   };
-  async function getCreator(project) {
-    console.log(project.creator);
-    const res = await getUser(project.creator)
+  async function getCreator() {
+    const res = await getUser(param.iduser)
       .then((res) => {
         setuser(res.data.user);
+
+        countProject(user);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
   function moyenne(entier1, entier2) {
     const moyenne = entier1 / entier2;
     return moyenne;
@@ -94,7 +97,16 @@ export default function Landing() {
       differenceEnMinutes % 60
     } Minutes et ${differenceEnSecondes % 60} Seconds `;
   }
-
+  const countProject = (projects) => {
+    return projects.length;
+  };
+  const AfficherDateDeNaissance = (dateOfBirth) => {
+    const date = moment(dateOfBirth);
+    const mois = date.format("MM");
+    const jour = date.format("DD");
+    const annee = date.format("YYYY");
+    return "" + annee + "/" + mois + "/" + jour + "";
+  };
   return (
     <>
       <DemoNavbar />
@@ -104,19 +116,18 @@ export default function Landing() {
           <Container className="pt-lg pb-50">
             <Row className=" justify-content-right">
               <Col lg="10">
-              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
                   <div class="mr-1"></div>
                   <div class="mx-1">
-                    <h2 className="display-3 text-white ml-5 ">
+                    <h2 className="display-3 text-capitalize text-info ml-5 ">
                       {project.title}
                     </h2>
                   </div>
                   <div className=" icon-shape rounded-circle mb-4">
                     {/* <i className="ni ni-check-bold" /> */}
-                    <Media className="align-items-center justify-content-end ml-5">
+                    <Media className="align-items-center justify-content-end ml-5 ml-9">
                       <a className="avatar ml-9">
                         <img
-                          alt="..."
                           src={`http://localhost:5000/images/${project.image_project}`}
                           style={{
                             width: "200px",
@@ -129,16 +140,31 @@ export default function Landing() {
                     </Media>
                   </div>
                 </div>
-                <p className="lead text-white">{project.description}</p>
                 <div className="font-weight-bold">
-                  Domaine :
-                  <Badge color="success" pill className="text-white mr-5 ml-2">
+                  <div class="d-flex align-items-center">
+                    <div class="mr-1">Description</div>
+                    <i
+                      class="fa fa-text-height mr-2 ml-2"
+                      aria-hidden="true"
+                    ></i>
+                    :
+                    <h2 className="text-white  mr-8 ml-2 my-4">
+                      {project.description}
+                    </h2>
+                  </div>
+                </div>
+                <div className="font-weight-bold">
+                  <i class="fa fa-pie-chart mr-2 ml-2" aria-hidden="true"></i>{" "}
+                  Domain :
+                  <Badge color="success" pill className="text-white mr-5 ml-5">
                     {project.domaine}
                   </Badge>
+                  <i class="fa fa-star mr-2 ml-2" aria-hidden="true"></i>
                   Goal :
-                  <Badge color="warning" pill className="text-white  mr-5 ml-2">
+                  <Badge color="warning" pill className="text-white  mr-5 ml-5">
                     {project.goal}
                   </Badge>
+                  <i class="fa fa-map-marker mr-2 ml-2" aria-hidden="true"></i>
                   location :
                   <Badge color="info" pill className="text-white  mr-5 ml-2">
                     {project.location}
@@ -146,31 +172,59 @@ export default function Landing() {
                   <br></br>
                   <div class="d-flex align-items-center">
                     <div class="mr-1">Duration</div>
-                    <div class="mx-1">:</div>
+                    <div class="mx-1">
+                      <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>:
+                    </div>
                     <h2 className="text-white  mr-5 ml-2">
                       {calculerDureeDeVie(project.created_at)}
                     </h2>
                   </div>
                   <div class="d-flex align-items-center">
-                    <div class="mr-1">montant_actuel</div>
-                    <div class="mx-1">:</div>
+                    <div class="mr-1">current amount</div>
+                    <div class="mx-1">
+                      <i class="fa fa-money mr-2" aria-hidden="true"></i>:
+                    </div>
                     <h2 className="text-white  mr-5 ml-2">
                       {project.montant_actuel} $
                     </h2>
                   </div>
                   <div class="d-flex align-items-center">
-                    <div class="mr-1">Creator</div>
+                    <div class="mr-1">
+                    <i class="fa fa-street-view mr-2" aria-hidden="true"></i>
+                      Creator
+                    </div>
                     <div class="mx-1">:</div>
                     <h2 className="text-white  mr-5 ml-2">
-                    {user.username} <img
-                      className=" ml-8 "
+                      <a
+                        className="mt-2"
+                        outline
+                        type="button"
+                        onClick={(e) => navigate(`/profile-page/${user._id}`)}
+                      >
+                        {user.username}
+                      </a>
+                    </h2>
+                    <img
                       src={`http://localhost:5000/images/${user.image_user}`}
                       style={{
-                        width: "190px",
-                        height: "190px",
+                        width: "100px",
+                        height: "100px",
                         display: "block",
                       }}
                     />
+                    <div class="mr-1 ml-4">
+                      <i
+                        class="fa fa-calendar-o mr-2 ml-2"
+                        aria-hidden="true"
+                      ></i>
+                      Age
+                    </div>
+                    <div class="mx-1">:</div>
+                    <h2 className="text-white  mr-5 ml-2">
+                      {differenceInYears(
+                        new Date(),
+                        new Date(user.dateOfBirth)
+                      )}
                     </h2>
                   </div>
                 </div>
@@ -206,7 +260,8 @@ export default function Landing() {
                 outline
                 type="button"
                 onClick={(e) => e.preventDefault()}
-              >
+              ><i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+
                 Invest
               </Button>
             </Row>

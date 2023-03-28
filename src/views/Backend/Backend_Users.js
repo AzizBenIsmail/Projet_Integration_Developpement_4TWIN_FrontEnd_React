@@ -231,6 +231,10 @@ const Tables = () => {
                               href=""
                               onClick={(e) => deleteAUser(user)}
                             >
+                              <i
+                                class="fa fa-user-times"
+                                aria-hidden="true"
+                              ></i>
                               Supprimer
                             </DropdownItem>
                             <DropdownItem

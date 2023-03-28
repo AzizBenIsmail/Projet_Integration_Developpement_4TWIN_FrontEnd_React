@@ -48,7 +48,7 @@ function App() {
         <Route path="*" element={<NotFound/>}/>
         <Route path="/landing-page" element={<Landing />} />
         <Route path="/Projects" element={<Projects />} />
-        <Route path="/Projects_details/:id" element={<Projects_details />} />
+        <Route path="/Projects_details/:id/:iduser" element={<Projects_details />} />
         <Route path="/login-page" element={<Login />} />
         <Route path="/profile-page/:id" element={<ProfileFront />} />
         <Route path="/Composant" element={<Indexs />} />

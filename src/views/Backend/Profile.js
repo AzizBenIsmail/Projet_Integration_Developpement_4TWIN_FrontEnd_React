@@ -1,14 +1,22 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import {  Card,  CardHeader,  CardBody,  FormGroup,  Input,  Row,  Col} from "reactstrap";
-import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Input,
+  Row,
+  Col,
+} from "reactstrap";
+import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { updateUser, getUser, addUser } from "../../services/apiUser";
 import { useNavigate, useParams } from "react-router-dom";
-import { differenceInYears } from 'date-fns';
-import axios from 'axios';
-import moment from 'moment';
+import { differenceInYears } from "date-fns";
+import axios from "axios";
+import moment from "moment";
 
 import DemoNavbar from "components/Navbars/DemoNavbar";
 
@@ -30,8 +38,17 @@ const Profile = () => {
     address: "",
     image_user: "",
   });
-  const { _id, username, first_Name, last_Name, email, password,phoneNumber, address } = user;
-console.log("user",user);
+  const {
+    _id,
+    username,
+    first_Name,
+    last_Name,
+    email,
+    password,
+    phoneNumber,
+    address,
+  } = user;
+  console.log("user", user);
   useEffect(() => {
     getUserFunction();
   }, []);
@@ -50,38 +67,37 @@ console.log("user",user);
   };
   const UpdateU = async () => {
     const res = await updateUser(param.id, user);
-    console.log(res)
-    if (res.status === 200)
-    navigate(`/Backend_Users`);
-
-  };  const UpdateUs = async () => {
+    console.log(res);
+    if (res.status === 200) navigate(`/Backend_Users`);
+  };
+  const UpdateUs = async () => {
     const res = await updateUser(param.id, user);
-    console.log(res)
-    if (res.status === 200)
-    navigate(`/Profile-page/${user._id}`);
-
+    console.log(res);
+    if (res.status === 200) navigate(`/Profile-page/${user._id}`);
   };
   const deleteAUser = async (user) => {
-    const result = window.confirm("Are you sure you want to delete " + user.username + "?");
+    const result = window.confirm(
+      "Are you sure you want to delete " + user.username + "?"
+    );
     if (result) {
       //console.log(user);
       await axios.delete(`http://localhost:5000/users/${user._id}`);
 
       navigate("/Backend_Users");
     }
-  }
+  };
   const AfficherDateDeNaissance = (dateOfBirth) => {
     const date = moment(dateOfBirth);
-    const mois = date.format('MM');
-    const jour = date.format('DD');
-    const annee = date.format('YYYY');
-    return "" + annee + "/" + mois + "/" + jour + ""
-  }
+    const mois = date.format("MM");
+    const jour = date.format("DD");
+    const annee = date.format("YYYY");
+    return "" + annee + "/" + mois + "/" + jour + "";
+  };
 
   const genderIcon = (gender) => {
-    if (gender === 'Male') {
+    if (gender === "Male") {
       return <FontAwesomeIcon icon={faMale} size="2x" color="#007bff" />;
-    } else if (gender === 'Female') {
+    } else if (gender === "Female") {
       return <FontAwesomeIcon icon={faFemale} size="2x" color="#f54291" />;
     } else {
       return null;
@@ -89,7 +105,7 @@ console.log("user",user);
   };
   return (
     <>
-          <DemoNavbar />
+      <DemoNavbar />
 
       <div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
@@ -98,24 +114,22 @@ console.log("user",user);
           backgroundImage:
             "url(" + `http://localhost:5000/images/${user.image_user}` + ")",
           backgroundSize: "cover",
-          backgroundPosition: "center top"
+          backgroundPosition: "center top",
         }}
-      > 
+      >
         {/* Mask */}
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello  {user.username}</h1>
+              <h1 className="display-2 text-white">Hello {user.username}</h1>
               <p className="text-white mt-0 mb-5">
                 This is your profile page. You can see the progress you've made
                 with your work and manage your projects or assigned tasks
               </p>
-              <Button
-                color="info"
-                href="#pablo"
-                onClick={(e) => UpdateUs()} >
+              <Button color="info" href="#pablo" onClick={(e) => UpdateUs()}>
+                <i class="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>
                 Edit profile
               </Button>
             </Col>
@@ -125,7 +139,6 @@ console.log("user",user);
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
-
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <Row className="justify-content-center">
@@ -142,7 +155,7 @@ console.log("user",user);
                 </Col>
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <div className="d-flex justify-content-between">  
+                <div className="d-flex justify-content-between">
                   <Button
                     className="float-right"
                     color="default"
@@ -150,7 +163,8 @@ console.log("user",user);
                     onClick={(e) => deleteAUser(user)}
                     size="sm"
                   >
-                    delete
+                    <i class="fa fa-user-times mr-2" aria-hidden="true"></i>
+                    Delete
                   </Button>
                 </div>
               </CardHeader>
@@ -176,7 +190,13 @@ console.log("user",user);
                 <div className="text-center">
                   <h3>
                     {user.username}
-                    <span className="font-weight-light">| {differenceInYears(new Date(), new Date(user.dateOfBirth))}</span>
+                    <span className="font-weight-light">
+                      |{" "}
+                      {differenceInYears(
+                        new Date(),
+                        new Date(user.dateOfBirth)
+                      )}
+                    </span>
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
@@ -185,8 +205,17 @@ console.log("user",user);
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
                     first_Name:
-                      {user.first_Name ? (<p>{user.first_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
-                  - last_Name: {user.last_Name ? (<p>{user.last_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    {user.first_Name ? (
+                      <p>{user.first_Name}</p>
+                    ) : (
+                      <i class="fa fa-ban " aria-hidden="true"></i>
+                    )}
+                    - last_Name:{" "}
+                    {user.last_Name ? (
+                      <p>{user.last_Name}</p>
+                    ) : (
+                      <i class="fa fa-ban " aria-hidden="true"></i>
+                    )}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -194,14 +223,22 @@ console.log("user",user);
                   </div>
                   <hr className="my-4" />
                   <p>
-                    phoneNumber — {user.phoneNumber ? (<p>{user.phoneNumber}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    phoneNumber —{" "}
+                    {user.phoneNumber ? (
+                      <p>{user.phoneNumber}</p>
+                    ) : (
+                      <i class="fa fa-ban " aria-hidden="true"></i>
+                    )}
                     <br />
                     dateOfBirth — {AfficherDateDeNaissance(user.dateOfBirth)}
                     <br />
-                    gender      —  {genderIcon(user.gender)}
-
+                    gender — {genderIcon(user.gender)}
                   </p>
-                  <a href="" onClick={(e) => navigate(`/Profile-page/${user._id}`)}>
+                  <a
+                    href=""
+                    onClick={(e) => navigate(`/Profile-page/${user._id}`)}
+                  >
+                    <i class="fa fa-eye mr-2" aria-hidden="true"></i>
                     Show more
                   </a>
                 </div>
@@ -222,6 +259,7 @@ console.log("user",user);
                       onClick={(e) => UpdateU()}
                       size="sm"
                     >
+                      <i class="fa fa-floppy-o mr-2" aria-hidden="true"></i>
                       Save
                     </Button>
                   </Col>
@@ -266,7 +304,7 @@ console.log("user",user);
                             type="email"
                             Value={user.email}
                             onChange={(e) => onValueChange(e)}
-                           // disabled="disabled"
+                            // disabled="disabled"
                           />
                         </FormGroup>
                       </Col>
@@ -277,7 +315,6 @@ console.log("user",user);
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
-                            
                           >
                             First name
                           </label>
@@ -344,7 +381,7 @@ console.log("user",user);
                             className="form-control-label"
                             htmlFor="input-city"
                           >
-                            phoneNumber 
+                            phoneNumber
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -353,7 +390,6 @@ console.log("user",user);
                             type="text"
                             defaultValue={user.phoneNumber}
                             onChange={(e) => onValueChange(e)}
-
                           />
                         </FormGroup>
                       </Col>
@@ -363,7 +399,7 @@ console.log("user",user);
                             className="form-control-label"
                             htmlFor="input-country"
                           >
-                           New password
+                            New password
                           </label>
                           <Input
                             className="form-control-alternative"

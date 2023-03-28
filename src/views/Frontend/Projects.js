@@ -69,6 +69,13 @@ export default function Landing() {
     return moyenne;
   }
 
+  function getFirstTenWords(str) {
+    // Supprimer les caractères de ponctuation et diviser la chaîne en mots
+    const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
+
+    // Retourner les 10 premiers mots
+    return words.slice(0, 10).join(" ");
+  }
   return (
     <>
       <DemoNavbar />
@@ -124,10 +131,19 @@ export default function Landing() {
                             {project.title}
                           </h6>
                           <p className="heading mt-2 ml-4 ">
-                            {project.description}
+                            {getFirstTenWords(project.description)} ...{" "}
+                            <botton
+                              onClick={(e) =>
+                                navigate(
+                                  `/Projects_details/${project._id}/${project.creator}`
+                                )
+                              }
+                            >
+                              <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                            </botton>
                           </p>
                           <div className="font-weight-bold">
-                            Domaine :
+                            Domain :
                             <Badge color="success" pill className="mr-5 ml-2">
                               {project.domaine}
                             </Badge>
@@ -140,12 +156,12 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                  Task completed{" "}
+                                  Task completed
                                   {moyenne(
                                     project.montant_Final,
                                     project.montant_actuel
                                   )}
-                                  %{" "}
+                                  %
                                 </span>
                               </div>
                               <div className="progress-percentage">
@@ -172,9 +188,12 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/Projects_details/${project._id}`)
+                              navigate(
+                                `/Projects_details/${project._id}/${project.creator}`
+                              )
                             }
                           >
+                            <i class="fa fa-eye mr-2" aria-hidden="true"></i>
                             More Details
                           </Button>
                           <Button
@@ -186,6 +205,7 @@ export default function Landing() {
                               navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
                             }
                           >
+                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Invest
                           </Button>
                         </CardBody>

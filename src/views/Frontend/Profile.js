@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import DemoNavbar from "../../components/Navbars/DemoNavbar";
+import { getProject } from "../../services/apiProject";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ export default function Profile() {
   const [friendCount, setFriendCount] = useState(22);
   const [photoCount, setPhotoCount] = useState(10);
   const [commentCount, setCommentCount] = useState(89);
+  const [project, setProject] = useState([]);
+
   const [user, setUser] = useState({
     _id: param.id,
     username: "",
@@ -90,7 +93,15 @@ export default function Profile() {
     console.log(percentage);
     return percentage;
   }
-
+  const getoneProject = async (id) => {
+    const res = await getProject(id)
+      .then((res) => {
+        setProject(res.data.project);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <DemoNavbar />
@@ -155,7 +166,11 @@ export default function Profile() {
                         onClick={(e) => Modifier(user)}
                         size="sm"
                       >
-                        Modifier
+                        <i
+                          class="fa fa-pencil-square-o mr-2"
+                          aria-hidden="true"
+                        ></i>
+                        Modify
                       </Button>
                       {/* <Button
                         className="float-right"
@@ -183,43 +198,48 @@ export default function Profile() {
                     </div>
                   </Col>
                 </Row>
-
-                <div className="text-center mt-5">
-                  <h3>
+                <div className="ml-8 mt-5">
+                  <h3 className="text-capitalize ml-5">
                     {user.username}
                     <span className="font-weight-light">
-                      |{" "}
+                      |
                       {differenceInYears(
                         new Date(),
                         new Date(user.dateOfBirth)
                       )}
                     </span>
                   </h3>
-                  <div className="h6 font-weight-300">
-                    <i className="ni location_pin mr-2" />
-                    {user.address}
-                  </div>
                   <div className="h6 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    <h1>first_Name:</h1>{" "}
+                    <h1>first_Name:</h1>
                     {user.first_Name ? (
-                      <p>{user.first_Name}</p>
+                      <p className="h3 ml-8">{user.first_Name}</p>
                     ) : (
-                      <FontAwesomeIcon icon={faCircle} />
+                      <i class="fa fa-ban fa-3x  ml-8" aria-hidden="true"></i>
                     )}
                     -<h1> last_Name: </h1>
                     {user.last_Name ? (
-                      <p>{user.last_Name}</p>
+                      <p className="h3 ml-8">{user.last_Name}</p>
                     ) : (
-                      <FontAwesomeIcon icon={faCircle} />
+                      <i class="fa fa-ban fa-3x  ml-8" aria-hidden="true"></i>
                     )}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
-                    <h1>email :</h1> {user.email}
+                    <h1>email :</h1> <p className="h3 ml-8">{user.email}</p>
+                  </div>
+                  <div className="h6 font-weight-300">
+                    <i className="ni location_pin mr-2" />
+                    <h1>address:</h1>
+                    {user.address ? (
+                      <p className="h3 ml-8">{user.address}</p>
+                    ) : (
+                      <i class="fa fa-ban fa-3x  ml-8" aria-hidden="true"></i>
+                    )}
                   </div>
                 </div>
-                <div className="mt-5 py-5 border-top text-center">
+                more information:
+                <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
                       <h1>
@@ -227,14 +247,29 @@ export default function Profile() {
                         {user.phoneNumber ? (
                           <h2>{user.phoneNumber}</h2>
                         ) : (
-                          <FontAwesomeIcon icon={faCircle} />
+                          <i class="fa fa-ban fa-1x" aria-hidden="true"></i>
                         )}
                         <br />
-                        dateOfBirth :{" "}
-                        {AfficherDateDeNaissance(user.dateOfBirth)}
+                        dateOfBirth :{AfficherDateDeNaissance(user.dateOfBirth)}
                         <br />
                         gender : {genderIcon(user.gender)}
                       </h1>
+                    </Col>
+                  </Row>
+                </div>
+                Project information:
+                <div className="mt-2 border-top ">
+                  <Row className="justify-content-center">
+                    <Col lg="9">
+                      <h1>Project : {user.projects.length}</h1>
+                    </Col>
+                  </Row>
+                </div>
+                Invest information:
+                <div className="mt-2 border-top ">
+                  <Row className="justify-content-center">
+                    <Col lg="9">
+                      <h1>Invest : {user.invests.length}</h1>
                     </Col>
                   </Row>
                 </div>
