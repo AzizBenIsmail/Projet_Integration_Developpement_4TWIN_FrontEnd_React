@@ -35,7 +35,7 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
             <DemoNavbar />
         <Header />
         {/* Page content */}
-        <Container className="mt--7" fluid>
+        <Container className="mt-1" fluid>
           {/* Table */}
           <Row>
             <div className="col">

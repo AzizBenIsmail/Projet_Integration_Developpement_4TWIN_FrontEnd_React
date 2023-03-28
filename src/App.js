@@ -33,8 +33,8 @@ import ProfileUserProject from "views/Frontend/Project/ProfileUserProject.js";
 
 //Fablab
 import FablabJoin from "./views/Frontend/Fablab/FablabJoin";
-import AdminFablabJoin from "./views/Backend/AdminFablabJoin";
-import FablabRequestDetails from "./views/Backend/FablabRequestDetails";
+import AdminFablabJoin from "./views/Backend/Fablab/AdminFablabJoin";
+import FablabRequestDetails from "./views/Backend/Fablab/FablabRequestDetails";
 
 //Backend
 import Index from "views/Backend/Index.js";
