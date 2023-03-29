@@ -20,7 +20,7 @@ import {
 import { useNavigate ,useParams} from "react-router-dom";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import { getProjectuser } from "../../../services/apiProject";
+import { getProjectuser,deleteProject } from "../../../services/apiProject";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -203,12 +203,22 @@ export default function Landing() {
                             color="success"
                             outline
                             type="button"
-                            onClick={(e) =>
-                              navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
+                            onClick={(e) =>deleteProject(project._id)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
-                            Invest
+                            updateProject
+                          </Button>
+                          <Button
+                            className="btn-1 ml-1 mt-4"
+                            color="danger"
+                            outline
+                            type="button"
+                            onClick={(e) =>deleteProject(project._id)
+                            }
+                          >
+                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+                            Delete
                           </Button>
                         </CardBody>
                       </Card>

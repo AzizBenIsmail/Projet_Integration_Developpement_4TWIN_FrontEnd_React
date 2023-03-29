@@ -101,7 +101,7 @@ export default function Landing() {
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
                         onClick={(e) =>
-                          navigate(`/Profile-page/641e3cb48ff2adf41e560030`)
+                          navigate(`/AddProjects`)
                         }
                       >
                         <span className="btn-inner--icon mr-1">
