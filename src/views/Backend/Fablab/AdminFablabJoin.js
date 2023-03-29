@@ -6,14 +6,14 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
   import axios from 'axios';
   import { useEffect, useState } from 'react';
 
-  import DemoNavbar from "components/Navbars/DemoNavbar";
+import AdminFablab from "./AdminFablab";
 
 
   const AdminFablabJoin = () => {
     const navigate = useNavigate();
     const [fablabs, setFablabs] = useState([]);
     const getAllFablabs=async()=>{
-        const res = await axios.get('http://localhost:5000/fablabs')
+        const res = await axios.get('http://localhost:5000/fablabs/requests')
           .then(res => {
             console.log(res.data);
             setFablabs(res.data.fablabs);
@@ -32,7 +32,6 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
       
     return (
       <>
-            <DemoNavbar />
         <Header />
         {/* Page content */}
         <Container className="mt-1" fluid>
@@ -41,7 +40,7 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Card tables</h3>
+                  <h3 className="mb-0">Fablab Requests</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
@@ -228,6 +227,7 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
           </Row>
         
         </Container>
+        <AdminFablab />
       </>
     );
   };
