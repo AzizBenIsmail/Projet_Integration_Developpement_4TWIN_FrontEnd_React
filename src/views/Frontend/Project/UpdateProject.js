@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import classnames from "classnames";
-import { addProject } from "../../../services/apiProject";
+import { updateProject } from "../../../services/apiProject";
 import axios from "axios";
 import {
   Card,
@@ -15,16 +15,19 @@ import {
 } from "reactstrap";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
+import { getProject } from "../../../services/apiProject";
+import { differenceInYears } from "date-fns";
 
 export default function Landing() {
   const navigate = useNavigate();
   const param = useParams();
 
   let formData = new FormData();
-  const [image, setImage] = useState();
   const [Project, setProject] = useState({
+    _id: param.id,
     title: "",
     description: "",
     domaine: "",
@@ -32,40 +35,38 @@ export default function Landing() {
     numberOfPeople: "",
     montant_Final: "",
     location: "",
-    image_project: "",
-    duration: "",
+    Duration: "",
+    creator:""
   });
   const handlechange = (e) => {
     setProject({ ...Project, [e.target.name]: e.target.value });
     console.log(Project);
   };
-  const handlechangeFile = (e) => {
-    setImage(e.target.files[0]);
-    console.log(e.target.files[0]);
-  };
+
   const add = async (e) => {
-    formData.append("title", Project.title);
-    formData.append("description", Project.description);
-    formData.append("domaine", Project.domaine);
-    formData.append("goal", Project.goal);
-    formData.append("numberOfPeople", Project.numberOfPeople);
-    formData.append("montant_Final", Project.montant_Final);
-    formData.append("location", Project.location);
-    formData.append("Duration", Project.duration);
-    formData.append("image_project", image);
-    const res = await addProject(formData, "641cdeee29a97f7a08bd9a42")
-      .then(navigate("/landing-page"))
-      .catch((error) => {
-        console.log(error.response.data.message);
-      });
-    // const res = await axios.post(
-    //   "http://localhost:5000/project/641cdeee29a97f7a08bd9a42",
-    //   formData,
-    //   {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   }
-    // );
-    console.log("123", res.data);
+    const {
+      _id,
+      title,
+      description,
+      domaine,
+      goal,
+      montant_Final,
+      location,
+      Duration,
+    } = Project;
+    const res = await updateProject(Project,param.id).then(navigate(`/ProjectsUser/${Project.creator}`)).catch((error) => {
+      console.log(error.response.data.message);
+    });
+  };
+  // 
+  useEffect(() => {
+    getProjectFunction();
+  }, []);
+
+  const getProjectFunction = async () => {
+    const response = await getProject(param.id);
+    console.log(response.data.project);
+    setProject(response.data.project);
   };
   return (
     <>
@@ -75,13 +76,10 @@ export default function Landing() {
         <section className="section section-lg bg-gradient-default">
           <Container className="pt-lg-7">
             <Row className="justify-content-center">
-              <Col lg="5">
-                <div className="ml-9 text-success font-weight-bold">
-                  Create Your Project
-                </div>
+              <Col lg="5"> <div className="ml-9 text-success font-weight-bold" >Create Your Project</div>
                 <Card className="bg-secondary shadow border-0">
                   <CardBody className="px-lg-5 py-lg-5">
-                    <Form role="form" enctype="multipart/form-data">
+                    <Form >
                       <Form.Group>
                         <Form.Label>Titre du projet :</Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
@@ -94,6 +92,7 @@ export default function Landing() {
                             placeholder="Titre du projet"
                             type="text"
                             name="title"
+                            value={Project.title}
                             onChange={(e) => handlechange(e)}
                             label="Titre du projet"
                             aria-label="Titre du projet"
@@ -111,13 +110,14 @@ export default function Landing() {
                           <Form.Control
                             placeholder="description"
                             type="text"
+                            value={Project.description}
                             name="description"
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Domaine :</Form.Label>
+                        <Form.Label>Domaine : {Project.domaine} </Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -162,7 +162,7 @@ export default function Landing() {
                         </InputGroup>
                       </Form.Group>
 
-                      <Form.Label>Goal :</Form.Label>
+                      <Form.Label>Goal : {Project.goal}</Form.Label>
                       <InputGroup className="input-group-alternative mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -208,6 +208,7 @@ export default function Landing() {
                           <Form.Control
                             placeholder="numberOfPeople"
                             name="numberOfPeople"
+                            value={Project.numberOfPeople}
                             type="number"
                             onChange={(e) => handlechange(e)}
                           />
@@ -224,6 +225,7 @@ export default function Landing() {
                           <Form.Control
                             placeholder="montantFinal"
                             name="montant_Final"
+                            value={Project.montant_Final}
                             type="number"
                             onChange={(e) => handlechange(e)}
                           />
@@ -240,13 +242,14 @@ export default function Landing() {
                           <Form.Control
                             placeholder="location"
                             name="location"
+                            value={Project.location}
                             type="text"
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Durée :</Form.Label>
+                        <Form.Label>Durée : .{Project.Duration}</Form.Label>
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -256,24 +259,9 @@ export default function Landing() {
                           <Form.Control
                             placeholder="duration"
                             name="duration"
+                            value={Project.Duration}
                             type="date"
                             onChange={(e) => handlechange(e)}
-                          />
-                        </InputGroup>
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Image :</Form.Label>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-image" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Form.Control
-                            placeholder="image_project"
-                            name="image_project"
-                            type="file"
-                            onChange={(e) => handlechangeFile(e)}
                           />
                         </InputGroup>
                       </Form.Group>

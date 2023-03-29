@@ -184,7 +184,7 @@ export default function Landing() {
                             <i className="fa fa-users mr-2 ml-2" />
                           </div>
 
-                          <Button
+                          {/* <Button
                             className="btn-1 mt-4"
                             color="primary"
                             outline
@@ -197,13 +197,13 @@ export default function Landing() {
                           >
                             <i class="fa fa-eye mr-2" aria-hidden="true"></i>
                             More Details
-                          </Button>
+                          </Button> */}
                           <Button
                             className="btn-1 ml-1 mt-4"
                             color="success"
                             outline
                             type="button"
-                            onClick={(e) =>deleteProject(project._id)
+                            onClick={(e) =>navigate(`/UpdateProject/${project._id}`)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>

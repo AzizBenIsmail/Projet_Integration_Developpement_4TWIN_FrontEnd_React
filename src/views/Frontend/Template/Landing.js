@@ -67,7 +67,13 @@ export default function Landing() {
     const moyenne = entier1 / entier2;
     return moyenne;
   }
+  function getFirstTenWords(str) {
+    // Supprimer les caractères de ponctuation et diviser la chaîne en mots
+    const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
 
+    // Retourner les 10 premiers mots
+    return words.slice(0, 9).join(" ");
+  }
   return (
     <>
       <DemoNavbar />
@@ -101,7 +107,7 @@ export default function Landing() {
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
                         onClick={(e) =>
-                          navigate(`/AddProjects`)
+                          navigate(`/ProjectsUser/641cdeee29a97f7a08bd9a42`)
                         }
                       >
                         <span className="btn-inner--icon mr-1">
@@ -112,6 +118,9 @@ export default function Landing() {
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
                         color="default"
+                        onClick={(e) =>
+                          navigate(`/AddProjects`)
+                        }
                       >
                         <span className="btn-inner--icon mr-1">
                           <i className="fa fa-lightbulb-o" />
@@ -179,7 +188,19 @@ export default function Landing() {
                             {project.title}
                           </h6>
                           <p className="heading mt-2 ml-4 ">
-                            {project.description}
+                            {getFirstTenWords(project.description)}
+                            {project.description.length >=10 ? ( 
+                              <botton
+                              onClick={(e) =>
+                                navigate(
+                                  `/Projects_details/${project._id}/${project.creator}`
+                                )
+                              }
+                            >
+                              ...<i class="fa fa-sort-desc" aria-hidden="true"></i>
+                            </botton>
+                            ) : ""} 
+                            
                           </p>
                           <div className="font-weight-bold">
                             Domain :
@@ -195,12 +216,12 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                  Task completed
+                                  Task completed  : |
                                   {moyenne(
                                     project.montant_Final,
                                     project.montant_actuel
                                   )}
-                                  %
+                                   %
                                 </span>
                               </div>
                               <div className="progress-percentage">

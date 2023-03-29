@@ -132,16 +132,19 @@ export default function Landing() {
                             {project.title}
                           </h6>
                           <p className="heading mt-2 ml-4 ">
-                            {getFirstTenWords(project.description)} ...{" "}
-                            <botton
+                            {getFirstTenWords(project.description)}
+                            {project.description.length >=11 ? ( 
+                              <botton
                               onClick={(e) =>
                                 navigate(
                                   `/Projects_details/${project._id}/${project.creator}`
                                 )
                               }
                             >
-                              <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                              ...<i class="fa fa-sort-desc" aria-hidden="true"></i>
                             </botton>
+                            ) : ""} 
+                            
                           </p>
                           <div className="font-weight-bold">
                             Domain :
