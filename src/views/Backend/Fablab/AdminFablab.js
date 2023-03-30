@@ -110,7 +110,7 @@ import AdminEvent from "./AdminEvent";
                     {selectedRow === rowIndex && (
                                 <tr>
                                   <td colSpan="6">
-                                    <AdminEvent onClose={handleClose} />
+                                    <AdminEvent key={rowIndex} onClose={handleClose} creatorId={fablab._id} />
                                   </td>
                                 </tr>
                     )}
