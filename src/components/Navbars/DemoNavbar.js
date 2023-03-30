@@ -124,8 +124,18 @@ export default function NavbarF() {
                       className="nav-link-inner--text"
                       style={{ color: "#ffff" }}
                     >
-                      <i className="fa fa-info mr-2" />
                       Info
+                    </span>
+                  </DropdownToggle>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav>
+                  <DropdownToggle nav to="/Invest" tag={Link}>
+                    <i className="ni ni-collection d-lg-none mr-1" />
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Invest
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
@@ -247,7 +257,7 @@ export default function NavbarF() {
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage you Project</span>
                       </DropdownItem>
-                      <DropdownItem to="/admin/user-profile" tag={Link}>
+                      <DropdownItem to="/Invest" tag={Link}>
                         <i className="ni ni-calendar-grid-58" />
                         <span>Activity</span>
                       </DropdownItem>

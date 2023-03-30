@@ -33,6 +33,10 @@ import ProfileUserProject from "views/Frontend/Project/ProfileUserProject.js";
 import AddProjects from "views/Frontend/Project/AddProjects";
 import UpdateProject from "views/Frontend/Project/UpdateProject";
 
+//Invest
+import Invest from "views/Frontend/Invest/Invest.js";
+
+
 //Fablab
 import FablabJoin from "./views/Frontend/Fablab/FablabJoin";
 import AdminFablabJoin from "./views/Backend/Fablab/AdminFablabJoin";
@@ -84,6 +88,10 @@ function App() {
         <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
         <Route path="/AddProjects" element={<AddProjects/>} />
         <Route path="/UpdateProject/:id" element={<UpdateProject/>} />
+
+      {/* Invest */}  
+      <Route path="/Invest" element={<Invest />} />
+
 
       {/* FablabJoin */}
 
