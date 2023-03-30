@@ -78,8 +78,8 @@ export default function Landing() {
       });
   }
   function moyenne(entier1, entier2) {
-    const moyenne = entier1 / entier2;
-    return moyenne;
+    const moyenne = (entier1 / entier2 )*100;
+    return Math.floor(moyenne);
   }
   function calculerDureeDeVie(dateDeCreation) {
     const dateDeCreationObjet = new Date(dateDeCreation);

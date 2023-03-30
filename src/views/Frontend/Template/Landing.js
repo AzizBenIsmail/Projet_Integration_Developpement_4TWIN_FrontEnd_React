@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import classnames from "classnames";
 import {
   Badge,
@@ -64,8 +64,8 @@ export default function Landing() {
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = entier1 / entier2;
-    return moyenne;
+    const moyenne = (entier1 / entier2) * 100;
+    return Math.floor(moyenne);
   }
   function getFirstTenWords(str) {
     // Supprimer les caractères de ponctuation et diviser la chaîne en mots
@@ -113,19 +113,21 @@ export default function Landing() {
                         <span className="btn-inner--icon mr-1">
                           <i className="ni ni-settings" />
                         </span>
-                        <span className="btn-inner--text">Manage you Project</span>
+                        <span className="btn-inner--text">
+                          Manage you Project
+                        </span>
                       </Button>
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
                         color="default"
-                        onClick={(e) =>
-                          navigate(`/AddProjects`)
-                        }
+                        onClick={(e) => navigate(`/AddProjects`)}
                       >
                         <span className="btn-inner--icon mr-1">
                           <i className="fa fa-lightbulb-o" />
                         </span>
-                        <span className="btn-inner--text">Create Your Project</span>
+                        <span className="btn-inner--text">
+                          Create Your Project
+                        </span>
                       </Button>
                     </div>
                   </Col>
@@ -156,7 +158,7 @@ export default function Landing() {
             <Row className="justify-content-center">
               <Col lg="12">
                 <Row className="row-grid">
-                {projects.map((project) => (
+                  {projects.map((project) => (
                     <Col lg="4" className="py-4">
                       <Card
                         className="card-lift--hover shadow border-0"
@@ -189,18 +191,23 @@ export default function Landing() {
                           </h6>
                           <p className="heading mt-2 ml-4 ">
                             {getFirstTenWords(project.description)}
-                            {project.description.length >=10 ? ( 
+                            {project.description.length >= 10 ? (
                               <botton
-                              onClick={(e) =>
-                                navigate(
-                                  `/Projects_details/${project._id}/${project.creator}`
-                                )
-                              }
-                            >
-                              ...<i class="fa fa-sort-desc" aria-hidden="true"></i>
-                            </botton>
-                            ) : ""} 
-                            
+                                onClick={(e) =>
+                                  navigate(
+                                    `/Projects_details/${project._id}/${project.creator}`
+                                  )
+                                }
+                              >
+                                ...
+                                <i
+                                  class="fa fa-sort-desc"
+                                  aria-hidden="true"
+                                ></i>
+                              </botton>
+                            ) : (
+                              ""
+                            )}
                           </p>
                           <div className="font-weight-bold">
                             Domain :
@@ -216,12 +223,12 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                  Task completed  : |
+                                  Task completed : |
                                   {moyenne(
-                                    project.montant_Final,
-                                    project.montant_actuel
+                                    project.montant_actuel,
+                                    project.montant_Final
                                   )}
-                                   %
+                                  %
                                 </span>
                               </div>
                               <div className="progress-percentage">
@@ -248,10 +255,13 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/Projects_details/${project._id}/${project.creator}`)
+                              navigate(
+                                `/Projects_details/${project._id}/${project.creator}`
+                              )
                             }
-                          >                    <i class="fa fa-eye mr-2" aria-hidden="true"></i>
-
+                          >
+                            {" "}
+                            <i class="fa fa-eye mr-2" aria-hidden="true"></i>
                             More Details
                           </Button>
                           <Button
@@ -262,7 +272,8 @@ export default function Landing() {
                             onClick={(e) =>
                               navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
                             }
-                            ><i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+                          >
+                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Invest
                           </Button>
                         </CardBody>

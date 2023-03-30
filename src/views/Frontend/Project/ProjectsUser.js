@@ -17,10 +17,10 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import { useNavigate ,useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import { getProjectuser,deleteProject } from "../../../services/apiProject";
+import { getProjectuser, deleteProject } from "../../../services/apiProject";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -65,8 +65,8 @@ export default function Landing() {
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = entier1 / entier2;
-    return moyenne;
+    const moyenne = (entier1 / entier2) * 100;
+    return Math.floor(moyenne);
   }
 
   function getFirstTenWords(str) {
@@ -131,18 +131,23 @@ export default function Landing() {
                           </h6>
                           <p className="heading mt-2 ml-4 ">
                             {getFirstTenWords(project.description)}
-                            {project.description.length >=11 ? ( 
+                            {project.description.length >= 11 ? (
                               <botton
-                              onClick={(e) =>
-                                navigate(
-                                  `/Projects_details/${project._id}/${project.creator}`
-                                )
-                              }
-                            >
-                              ...<i class="fa fa-sort-desc" aria-hidden="true"></i>
-                            </botton>
-                            ) : ""} 
-                            
+                                onClick={(e) =>
+                                  navigate(
+                                    `/Projects_details/${project._id}/${project.creator}`
+                                  )
+                                }
+                              >
+                                ...
+                                <i
+                                  class="fa fa-sort-desc"
+                                  aria-hidden="true"
+                                ></i>
+                              </botton>
+                            ) : (
+                              ""
+                            )}
                           </p>
                           <div className="font-weight-bold">
                             Domain :
@@ -158,10 +163,10 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                  Task completed
+                                  Task completed : .
                                   {moyenne(
-                                    project.montant_Final,
-                                    project.montant_actuel
+                                    project.montant_actuel,
+                                    project.montant_Final
                                   )}
                                   %
                                 </span>
@@ -203,7 +208,8 @@ export default function Landing() {
                             color="success"
                             outline
                             type="button"
-                            onClick={(e) =>navigate(`/UpdateProject/${project._id}`)
+                            onClick={(e) =>
+                              navigate(`/UpdateProject/${project._id}`)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
@@ -214,8 +220,7 @@ export default function Landing() {
                             color="danger"
                             outline
                             type="button"
-                            onClick={(e) =>deleteProject(project._id)
-                            }
+                            onClick={(e) => deleteProject(project._id)}
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Delete

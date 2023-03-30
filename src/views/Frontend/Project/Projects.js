@@ -59,16 +59,17 @@ export default function Landing() {
       .then((res) => {
         setProjects(res.data.projects);
         console.log(res.data.projects);
-
       })
       .catch((err) => {
         console.log(err);
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = entier1 / entier2;
-    return moyenne;
+    const moyenne = (entier1 / entier2 )*100;
+    return Math.floor(moyenne);
   }
+  
+  
 
   function getFirstTenWords(str) {
     // Supprimer les caractères de ponctuation et diviser la chaîne en mots
@@ -133,18 +134,23 @@ export default function Landing() {
                           </h6>
                           <p className="heading mt-2 ml-4 ">
                             {getFirstTenWords(project.description)}
-                            {project.description.length >=11 ? ( 
+                            {project.description.length >= 11 ? (
                               <botton
-                              onClick={(e) =>
-                                navigate(
-                                  `/Projects_details/${project._id}/${project.creator}`
-                                )
-                              }
-                            >
-                              ...<i class="fa fa-sort-desc" aria-hidden="true"></i>
-                            </botton>
-                            ) : ""} 
-                            
+                                onClick={(e) =>
+                                  navigate(
+                                    `/Projects_details/${project._id}/${project.creator}`
+                                  )
+                                }
+                              >
+                                ...
+                                <i
+                                  class="fa fa-sort-desc"
+                                  aria-hidden="true"
+                                ></i>
+                              </botton>
+                            ) : (
+                              ""
+                            )}
                           </p>
                           <div className="font-weight-bold">
                             Domain :
@@ -160,10 +166,10 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                  Task completed
+                                Task completed : .
                                   {moyenne(
-                                    project.montant_Final,
-                                    project.montant_actuel
+                                    project.montant_actuel,
+                                    project.montant_Final
                                   )}
                                   %
                                 </span>
@@ -206,7 +212,9 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/ProfileUserProject/6411328aaa4a0b70d100dbf4`)
+                              navigate(
+                                `/ProfileUserProject/6411328aaa4a0b70d100dbf4`
+                              )
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
