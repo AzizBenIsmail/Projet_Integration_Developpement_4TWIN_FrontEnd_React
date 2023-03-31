@@ -17,13 +17,14 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import { getInvests } from "../../../services/apiInvest";
+import { getInvestUser } from "../../../services/apiInvest";
 
-export default function Invest() {
+export default function InvestUser() {
   const navigate = useNavigate();
+  const param = useParams();
 
   const [invests, setInvests] = useState([]);
 
@@ -36,7 +37,7 @@ export default function Invest() {
   }, []);
 
   const getAllInvest = async () => {
-    const res = await getInvests()
+    const res = await getInvestUser(param.idUser)
       .then((res) => {
         setInvests(res.data.invests);
         console.log(res.data.invests);
@@ -117,7 +118,7 @@ export default function Invest() {
                             <Badge color="warning" pill className="ml-2">
                               {Invest.project.title}
                             </Badge>
-                          </div>
+                          </div>{" "}
                           {/* <div className="progress-wrapper">
                             <div className="progress-info">
                               <div className="progress-label">

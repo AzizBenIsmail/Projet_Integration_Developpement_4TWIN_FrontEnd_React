@@ -35,6 +35,7 @@ import UpdateProject from "views/Frontend/Project/UpdateProject";
 
 //Invest
 import Invest from "views/Frontend/Invest/Invest.js";
+import InvestUser from "views/Frontend/Invest/InvestUser";
 
 
 //Fablab
@@ -91,6 +92,7 @@ function App() {
 
       {/* Invest */}  
       <Route path="/Invest" element={<Invest />} />
+      <Route path="/InvestUser/:idUser" element={<InvestUser />} />
 
 
       {/* FablabJoin */}
