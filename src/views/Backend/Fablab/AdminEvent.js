@@ -18,8 +18,27 @@ function AdminEvent(props) {
         setShowEvent(true);
       };
 
+      function calculateDurationInDays(startDate, endDate) {
+        const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const startUTC = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+        const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+        let durationInMs = endUTC - startUTC;
+
+        // If end time is later in the day than start time, add an extra day to the duration
+        if (end.getHours() > start.getHours() || (end.getHours() === start.getHours() && end.getMinutes() > start.getMinutes())) {
+          durationInMs += oneDay;
+        }
+
+        const durationInDays = Math.ceil(durationInMs / oneDay);
+        if (durationInDays === 1){
+          return `${durationInDays} day`;
+        }
+        return `${durationInDays} days`;
+      }
     const getEvents=async()=>{
-        const res = await axios.get(`http://localhost:5000/events/creator/${props.creatorId}`)
+        const res = await axios.get(props.url)
           .then(res => {
             console.log(res.data);
             setEvents(res.data.events);
@@ -40,23 +59,22 @@ function AdminEvent(props) {
     <>
      
       {/* Page content */}
-      <Container className="mt-2" fluid>
+      <Container className="mt-1" fluid>
         {/* Table */}
         <Row>
           <div className="col">
-            <Card className="bg-default" >
-              <CardHeader className="bg-transparent border-0" >
-                <h3 style={{display:'inline-block'}} className="text-white mb-0">Recent Events</h3>
-                <i style={{display:'inline-block',float:'right',color:'white',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i>
+            <Card className="shadow" >
+              <CardHeader style={{padding: '0.5rem', fontSize: '0.8rem'}} className="border-0">
+                <h4 style={{display:'inline-block'}}  className="mb-0" >Recent Events</h4>
+                <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i>
               </CardHeader>
-              <Table className="align-items-center table-dark table-flush" responsive>
-                <thead className="thead-dark">
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
                   <tr>
-                    <th scope="col">Fablab</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Fondation Date</th>
-                    <th scope="col">Address</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Duration</th>
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -80,14 +98,12 @@ function AdminEvent(props) {
                     </th>
                     <td>{event.description}</td>
                     <td>
-                      { new Date(event.start_date).toISOString().slice(0, 10)}
+                    {new Date(event.start_date).getFullYear()}-{new Date(event.start_date).getMonth() + 1}-{new Date(event.start_date).getDate()} at {new Date(event.start_date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
+                     
                     </td>
                     <td>
-                      { new Date(event.end_date).toISOString().slice(0, 10)}
-                    </td>
-                    
-                   
-                    
+                    {calculateDurationInDays(event.start_date, event.end_date)}      
+                    </td> 
                   </tr>
                    
                  ))}
