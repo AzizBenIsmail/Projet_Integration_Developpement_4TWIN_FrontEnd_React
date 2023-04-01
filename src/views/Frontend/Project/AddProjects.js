@@ -53,7 +53,7 @@ export default function Landing() {
     formData.append("location", Project.location);
     formData.append("Duration", Project.duration);
     formData.append("image_project", image);
-    const res = await addProject(formData, "641cdeee29a97f7a08bd9a42")
+    const res = await addProject(formData, "64284b480d387cfe2b1f2696")
       .then(navigate("/landing-page"))
       .catch((error) => {
         console.log(error.response.data.message);

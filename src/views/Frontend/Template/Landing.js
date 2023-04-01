@@ -107,7 +107,7 @@ export default function Landing() {
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
                         onClick={(e) =>
-                          navigate(`/ProjectsUser/641cdeee29a97f7a08bd9a42`)
+                          navigate(`/ProjectsUser/64284b480d387cfe2b1f2696`)
                         }
                       >
                         <span className="btn-inner--icon mr-1">
@@ -271,7 +271,7 @@ export default function Landing() {
                             type="button"
                             onClick={(e) =>
                               navigate(
-                                `/AddInvest/641cdeee29a97f7a08bd9a42/${project._id}`
+                                `/AddInvest/64284b480d387cfe2b1f2696/${project._id}`
                               )
                             }
                           >

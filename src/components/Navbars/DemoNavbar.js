@@ -25,7 +25,7 @@ export default function NavbarF() {
   const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
-  const [user, setuser] = useState("641cdeee29a97f7a08bd9a42");
+  const [user, setuser] = useState("64284b480d387cfe2b1f2696");
 
   const onExiting = () => {
     setCollapseClasses("collapsing-out");
@@ -158,7 +158,7 @@ export default function NavbarF() {
                       Landing
                     </DropdownItem>
                     <DropdownItem
-                      to="/profile-page/641cdeee29a97f7a08bd9a42"
+                      to="/profile-page/64284b480d387cfe2b1f2696"
                       tag={Link}
                       style={{ color: "#172b4d" }}
                     >
@@ -193,7 +193,7 @@ export default function NavbarF() {
                       Backend
                     </DropdownItem>
                     <DropdownItem
-                      to="/Profile/641cdeee29a97f7a08bd9a42"
+                      to="/Profile/64284b480d387cfe2b1f2696"
                       tag={Link}
                       style={{ color: "#172b4d" }}
                     >
@@ -249,7 +249,7 @@ export default function NavbarF() {
                       </DropdownItem>
                       {/* <DropdownItem to="/profile-page/:iduser" tag={Link}> */}
                       <DropdownItem
-                        to="/profile-page/641cdeee29a97f7a08bd9a42"
+                        to="/profile-page/64284b480d387cfe2b1f2696"
                         tag={Link}
                       >
                         <i className="ni ni-single-02" />
@@ -257,7 +257,7 @@ export default function NavbarF() {
                       </DropdownItem>
                       {/* <DropdownItem to="/ProjectsUser/:iduser" tag={Link}> */}
                       <DropdownItem
-                        to="/ProjectsUser/641cdeee29a97f7a08bd9a42"
+                        to="/ProjectsUser/64284b480d387cfe2b1f2696"
                         tag={Link}
                       >
                         <i className="ni ni-settings-gear-65" />
@@ -265,7 +265,7 @@ export default function NavbarF() {
                       </DropdownItem>
                       <DropdownItem
                         onClick={(e) =>
-                          navigate(`/InvestUser/641cdeee29a97f7a08bd9a42`)
+                          navigate(`/InvestUser/64284b480d387cfe2b1f2696`)
                         }
                       >
                         <i className="ni ni-calendar-grid-58" />

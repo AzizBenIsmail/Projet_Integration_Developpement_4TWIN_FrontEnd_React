@@ -58,6 +58,14 @@ export default function InvestUser() {
     // Retourner les 10 premiers mots
     return words.slice(0, 10).join(" ");
   }
+  const Delete = async (id) => {
+    const res = await deleteInvest(id)
+      .then((res) => { getAllInvest();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <DemoNavbar />
@@ -171,7 +179,7 @@ export default function InvestUser() {
                             color="success"
                             outline
                             type="button"
-                            onClick={(e) => deleteInvest(Invest._id)}
+                            onClick={(e) => Delete(Invest._id) }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                              Delete
