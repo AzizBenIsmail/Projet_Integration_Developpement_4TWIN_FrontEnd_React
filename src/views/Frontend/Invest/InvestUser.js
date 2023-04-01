@@ -20,7 +20,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import { getInvestUser } from "../../../services/apiInvest";
+import { getInvestUser,deleteInvest } from "../../../services/apiInvest";
 
 export default function InvestUser() {
   const navigate = useNavigate();
@@ -102,23 +102,27 @@ export default function InvestUser() {
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
-                            {Invest.message}
+                            {Invest.titre}
                           </h6>
                           <p className="heading mt-2 ml-4 ">{Invest.message}</p>
                           <div className="font-weight-bold">
-                            created_at :
-                            <Badge color="success" pill className="mr-5 ml-2">
-                              {Invest.created_at}
-                            </Badge>
                             montant :
                             <Badge color="warning" pill className="ml-2">
                               {Invest.montant}
+                            </Badge> <br></br>
+                            project :
+                            <Badge color="success" pill className="ml-2">
+                            {Invest.project.title}
+                            <img
+                                  alt="..."
+                                  src={`http://localhost:5000/images/${Invest.project.image_project}
+                                  `}
+                                  style={{
+                                    width: "50px",
+                                    height: "50px",
+                                  }}/>
                             </Badge>
-                            montant :
-                            <Badge color="warning" pill className="ml-2">
-                              {Invest.project.title}
-                            </Badge>
-                          </div>{" "}
+                          </div>
                           {/* <div className="progress-wrapper">
                             <div className="progress-info">
                               <div className="progress-label">
@@ -161,6 +165,16 @@ export default function InvestUser() {
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Show Project
+                          </Button>
+                          <Button
+                            className="btn-1 ml-1 mt-4"
+                            color="success"
+                            outline
+                            type="button"
+                            onClick={(e) => deleteInvest(Invest._id)}
+                          >
+                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+                             Delete
                           </Button>
                         </CardBody>
                       </Card>

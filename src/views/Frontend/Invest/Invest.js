@@ -101,21 +101,25 @@ export default function Invest() {
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
-                            {Invest.message}
+                            {Invest.titre}
                           </h6>
                           <p className="heading mt-2 ml-4 ">{Invest.message}</p>
                           <div className="font-weight-bold">
-                            created_at :
-                            <Badge color="success" pill className="mr-5 ml-2">
-                              {Invest.created_at}
-                            </Badge>
                             montant :
                             <Badge color="warning" pill className="ml-2">
                               {Invest.montant}
-                            </Badge>
-                            montant :
-                            <Badge color="warning" pill className="ml-2">
-                              {Invest.project.title}
+                            </Badge> <br></br>
+                            project :
+                            <Badge color="success" pill className="ml-2">
+                            {Invest.project.title}
+                            <img
+                                  alt="..."
+                                  src={`http://localhost:5000/images/${Invest.project.image_project}
+                                  `}
+                                  style={{
+                                    width: "50px",
+                                    height: "50px",
+                                  }}/>
                             </Badge>
                           </div>
                           {/* <div className="progress-wrapper">

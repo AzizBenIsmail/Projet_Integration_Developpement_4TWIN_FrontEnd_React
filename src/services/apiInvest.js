@@ -21,6 +21,6 @@ export async function getInvestUser(id) {
 //   return await axios.put(`${apiURL}/${id}`, Projects);
 // }
 
-// export async function deleteProject(id) {
-//   return await axios.delete(`${apiURL}/${id}`);
-// }
+export async function deleteInvest(id) {
+  return await axios.delete(`${apiURL}/${id}`);
+}
