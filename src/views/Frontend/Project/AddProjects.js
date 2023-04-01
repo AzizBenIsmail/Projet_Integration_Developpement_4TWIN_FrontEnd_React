@@ -83,7 +83,7 @@ export default function Landing() {
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form role="form" enctype="multipart/form-data">
                       <Form.Group>
-                        <Form.Label>Titre du projet :</Form.Label>
+                        <Form.Label>title projet :</Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -91,7 +91,7 @@ export default function Landing() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
-                            placeholder="Titre du projet"
+                            placeholder="title projet"
                             type="text"
                             name="title"
                             onChange={(e) => handlechange(e)}
@@ -198,7 +198,7 @@ export default function Landing() {
                         </div>
                       </InputGroup>
                       <Form.Group>
-                        <Form.Label>Nombre de personnes :</Form.Label>
+                        <Form.Label>number Of People :</Form.Label>
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -214,7 +214,7 @@ export default function Landing() {
                         </InputGroup>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Montant final :</Form.Label>
+                        <Form.Label>final amount :</Form.Label>
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -222,7 +222,7 @@ export default function Landing() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
-                            placeholder="montantFinal"
+                            placeholder="final amount"
                             name="montant_Final"
                             type="number"
                             onChange={(e) => handlechange(e)}
@@ -246,7 +246,7 @@ export default function Landing() {
                         </InputGroup>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Durée :</Form.Label>
+                        <Form.Label>Duration :</Form.Label>
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -262,7 +262,7 @@ export default function Landing() {
                         </InputGroup>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Image :</Form.Label>
+                        <Form.Label>picture :</Form.Label>
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>

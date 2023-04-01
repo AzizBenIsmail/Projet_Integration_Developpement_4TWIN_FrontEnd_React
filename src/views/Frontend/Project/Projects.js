@@ -99,7 +99,7 @@ export default function Landing() {
             </Row>
 
             <Row className="justify-content-center">
-              <Col lg="15">
+              <Col>
                 <Row className="row-grid">
                   {projects.map((project) => (
                     <Col lg="4" className="py-4">
@@ -213,7 +213,7 @@ export default function Landing() {
                             type="button"
                             onClick={(e) =>
                               navigate(
-                                `/ProfileUserProject/6411328aaa4a0b70d100dbf4`
+                                `/AddInvest/641cdeee29a97f7a08bd9a42/${project._id}`
                               )
                             }
                           >

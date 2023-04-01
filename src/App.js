@@ -35,6 +35,7 @@ import UpdateProject from "views/Frontend/Project/UpdateProject";
 
 //Invest
 import Invest from "views/Frontend/Invest/Invest.js";
+import AddInvest from "views/Frontend/Invest/AddInvest";
 import InvestUser from "views/Frontend/Invest/InvestUser";
 
 
@@ -92,6 +93,7 @@ function App() {
 
       {/* Invest */}  
       <Route path="/Invest" element={<Invest />} />
+      <Route path="/AddInvest/:idUser/:idProject" element={<AddInvest />} />
       <Route path="/InvestUser/:idUser" element={<InvestUser />} />
 
 

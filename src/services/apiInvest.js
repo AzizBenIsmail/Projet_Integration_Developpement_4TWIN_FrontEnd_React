@@ -8,14 +8,9 @@ export async function getInvests() {
 export async function getInvestUser(id) {
   return await axios.get(`${apiURL}/${id}`);
 }
-// export async function getProjectuser(id) {
-//   return await axios.get(`${apiURL}/User/${id}`);
-// }
-// export async function addProject(formData, idUser) {
-//   return await axios.post(`${apiURL}/${idUser}`, formData, {
-//     headers: { "Content-Type": "multipart/form-data" },
-//   });
-// }
+export async function addInvest(Invest, idUser,idProject) {
+  return await axios.post(`${apiURL}/${idUser}/${idProject}`, Invest);
+}
 
 // export async function updateProject(Projects,id) {
 //   return await axios.put(`${apiURL}/${id}`, Projects);
