@@ -95,6 +95,8 @@ export default function Landing() {
               </Col>
             </Row>
 
+
+
             <Row className="justify-content-center">
               <Col lg="">
                 <Row className="row-grid">

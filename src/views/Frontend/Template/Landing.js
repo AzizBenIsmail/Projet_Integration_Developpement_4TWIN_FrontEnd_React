@@ -359,7 +359,7 @@ export default function Landing() {
             </Row>
           </Container>
         </section>
-        <section className="section section-lg">
+        {/* <section className="section section-lg">
           <Container>
             <Row className="row-grid align-items-center">
               <Col className="order-md-2" md="6">
@@ -422,8 +422,8 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-        </section>
-        <section className="section bg-secondary">
+        </section> */}
+        {/* <section className="section bg-secondary">
           <Container>
             <Row className="row-grid align-items-center">
               <Col md="6">
@@ -493,7 +493,7 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> */}
         <section className="section section-lg bg-gradient-default">
           <Container>
             <Row className="row-grid align-items-center">
@@ -593,7 +593,7 @@ export default function Landing() {
             </svg>
           </div>
         </section>
-        <section className="section section-lg">
+        {/* <section className="section section-lg">
           <Container>
             <Row className="justify-content-center text-center mb-lg">
               <Col lg="8">
@@ -856,7 +856,6 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-          {/* SVG separator */}
           <div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -944,8 +943,7 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-        </section>
-        <Download />
+        </section> */}
       </main>
     </>
   );
