@@ -50,7 +50,7 @@ export default function Landing() {
     getAllProject();
     const interval = setInterval(() => {
       getAllProject(); // appel répété toutes les 10 secondes
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
