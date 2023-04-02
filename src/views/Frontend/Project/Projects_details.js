@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProject } from "../../../services/apiProject";
@@ -28,7 +29,18 @@ import { differenceInYears } from "date-fns";
 export default function Landing() {
   const navigate = useNavigate();
   const param = useParams();
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
 
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  ////////
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
@@ -51,14 +63,14 @@ export default function Landing() {
   const [project, setProject] = useState([]);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    getoneProject();
-    getCreator();
+    getoneProject(config);
+    getCreator(config);
     const interval = setInterval(() => {
       getoneProject();
     }, 1000);
   }, []);
-  const getoneProject = async () => {
-    const res = await getProject(param.id)
+  const getoneProject = async (config) => {
+    const res = await getProject(param.id, config)
       .then((res) => {
         setProject(res.data.project);
       })
@@ -66,8 +78,8 @@ export default function Landing() {
         console.log(err);
       });
   };
-  async function getCreator() {
-    const res = await getUser(param.iduser)
+  async function getCreator(config) {
+    const res = await getUser(param.iduser, config)
       .then((res) => {
         setuser(res.data.user);
 
@@ -78,7 +90,7 @@ export default function Landing() {
       });
   }
   function moyenne(entier1, entier2) {
-    const moyenne = (entier1 / entier2 )*100;
+    const moyenne = (entier1 / entier2) * 100;
     return Math.floor(moyenne);
   }
   function calculerDureeDeVie(dateDeCreation) {
@@ -189,7 +201,7 @@ export default function Landing() {
                   </div>
                   <div class="d-flex align-items-center">
                     <div class="mr-1">
-                    <i class="fa fa-street-view mr-2" aria-hidden="true"></i>
+                      <i class="fa fa-street-view mr-2" aria-hidden="true"></i>
                       Creator
                     </div>
                     <div class="mx-1">:</div>
@@ -198,7 +210,9 @@ export default function Landing() {
                         className="mt-2"
                         outline
                         type="button"
-                        onClick={(e) => navigate(`/ProfileUserProject/${user._id}`)}
+                        onClick={(e) =>
+                          navigate(`/ProfileUserProject/${user._id}`)
+                        }
                       >
                         {user.username}
                       </a>
@@ -254,19 +268,15 @@ export default function Landing() {
                 </div>
               </Col>
               <Button
-                            className="btn-1 ml-1 mt-4"
-                            color="success"
-                            outline
-                            type="button"
-                            onClick={(e) =>
-                              navigate(
-                                `/AddInvest/641cdeee29a97f7a08bd9a42/${project._id}`
-                              )
-                            }
-                          >
-                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
-                            Invest
-                          </Button>
+                className="btn-1 ml-1 mt-4"
+                color="success"
+                outline
+                type="button"
+                onClick={(e) => navigate(`/AddInvest/${project._id}`)}
+              >
+                <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+                Invest
+              </Button>
             </Row>
           </Container>
         </section>

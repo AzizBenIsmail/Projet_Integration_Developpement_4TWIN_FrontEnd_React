@@ -15,10 +15,23 @@ import {
 } from "reactstrap";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function Landing() {
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const navigate = useNavigate();
   const param = useParams();
 
@@ -53,18 +66,12 @@ export default function Landing() {
     formData.append("location", Project.location);
     formData.append("Duration", Project.duration);
     formData.append("image_project", image);
-    const res = await addProject(formData, "64284b480d387cfe2b1f2696")
+    const res = await addProject(formData,config)
       .then(navigate("/landing-page"))
       .catch((error) => {
         console.log(error.response.data.message);
       });
-    // const res = await axios.post(
-    //   "http://localhost:5000/project/641cdeee29a97f7a08bd9a42",
-    //   formData,
-    //   {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   }
-    // );
+    // 64284b480d387cfe2b1f2696
     console.log("123", res.data);
   };
   return (

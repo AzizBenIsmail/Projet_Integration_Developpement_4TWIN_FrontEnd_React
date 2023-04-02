@@ -18,13 +18,25 @@ import {
   Media,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProjects } from "../../../services/apiProject";
 
 export default function Landing() {
   const navigate = useNavigate();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
@@ -47,15 +59,15 @@ export default function Landing() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    getAllProject();
+    getAllProject(config);
     const interval = setInterval(() => {
-      getAllProject(); // appel répété toutes les 10 secondes
+      getAllProject(config); // appel répété toutes les 10 secondes
     }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllProject = async () => {
-    const res = await getProjects()
+  const getAllProject = async (config) => {
+    const res = await getProjects(config)
       .then((res) => {
         setProjects(res.data.projects);
         console.log(res.data.projects);
@@ -213,7 +225,7 @@ export default function Landing() {
                             type="button"
                             onClick={(e) =>
                               navigate(
-                                `/AddInvest/641cdeee29a97f7a08bd9a42/${project._id}`
+                                `/AddInvest/${project._id}`
                               )
                             }
                           >

@@ -18,6 +18,7 @@ import {
   Media,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProjectuser, deleteProject } from "../../../services/apiProject";
@@ -25,7 +26,18 @@ import { getProjectuser, deleteProject } from "../../../services/apiProject";
 export default function Landing() {
   const navigate = useNavigate();
   const param = useParams();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
@@ -48,15 +60,15 @@ export default function Landing() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    getAllProject();
+    getAllProject(config);
     const interval = setInterval(() => {
-      getAllProject(); // appel répété toutes les 10 secondes
-    }, 5000);
+      getAllProject(config); // appel répété toutes les 10 secondes
+    }, 2000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllProject = async () => {
-    const res = await getProjectuser(param.iduser)
+  const getAllProject = async (config) => {
+    const res = await getProjectuser(param.iduser,config)
       .then((res) => {
         setProjects(res.data.projects);
       })
@@ -222,7 +234,7 @@ export default function Landing() {
                             color="danger"
                             outline
                             type="button"
-                            onClick={(e) => deleteProject(project._id)}
+                            onClick={(e) => deleteProject(project._id,config)}
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Delete

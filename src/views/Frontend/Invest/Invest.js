@@ -18,25 +18,37 @@ import {
   Media,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getInvests } from "../../../services/apiInvest";
 
 export default function Invest() {
   const navigate = useNavigate();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const [invests, setInvests] = useState([]);
 
   useEffect(() => {
-    getAllInvest();
+    getAllInvest(config);
     const interval = setInterval(() => {
-      getAllInvest(); // appel répété toutes les 10 secondes
+      getAllInvest(config); // appel répété toutes les 10 secondes
     }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllInvest = async () => {
-    const res = await getInvests()
+  const getAllInvest = async (config) => {
+    const res = await getInvests(config)
       .then((res) => {
         setInvests(res.data.invests);
         console.log(res.data.invests);

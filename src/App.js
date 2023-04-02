@@ -86,7 +86,7 @@ function App() {
       {/* Projects */}
 
         <Route path="/Projects" element={<Projects />} />
-        <Route path="/ProjectsUser/:iduser" element={<ProjectsUser />} />
+        <Route path="/ProjectsUser" element={<ProjectsUser />} />
         <Route path="/Projects_details/:id/:iduser" element={<Projects_details />} />
         <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
         <Route path="/AddProjects" element={<AddProjects/>} />
@@ -94,8 +94,8 @@ function App() {
 
       {/* Invest */}  
       <Route path="/Invest" element={<Invest />} />
-      <Route path="/AddInvest/:idUser/:idProject" element={<AddInvest />} />
-      <Route path="/InvestUser/:idUser" element={<InvestUser />} />
+      <Route path="/AddInvest/:idProject" element={<AddInvest />} />
+      <Route path="/InvestUser/" element={<InvestUser />} />
 
 
       {/* FablabJoin */}

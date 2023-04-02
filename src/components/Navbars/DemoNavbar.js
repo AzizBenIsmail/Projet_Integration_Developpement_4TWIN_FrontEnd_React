@@ -265,7 +265,7 @@ export default function NavbarF() {
                       </DropdownItem>
                       <DropdownItem
                         onClick={(e) =>
-                          navigate(`/InvestUser/64284b480d387cfe2b1f2696`)
+                          navigate(`/InvestUser`)
                         }
                       >
                         <i className="ni ni-calendar-grid-58" />
