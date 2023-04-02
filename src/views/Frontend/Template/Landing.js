@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import classnames from "classnames";
 import {
   Badge,
@@ -50,7 +50,7 @@ export default function Landing() {
     getAllProject();
     const interval = setInterval(() => {
       getAllProject(); // appel répété toutes les 10 secondes
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
@@ -64,10 +64,16 @@ export default function Landing() {
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = entier1 / entier2;
-    return moyenne;
+    const moyenne = (entier1 / entier2) * 100;
+    return Math.floor(moyenne);
   }
+  function getFirstTenWords(str) {
+    // Supprimer les caractères de ponctuation et diviser la chaîne en mots
+    const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
 
+    // Retourner les 10 premiers mots
+    return words.slice(0, 9).join(" ");
+  }
   return (
     <>
       <DemoNavbar />
@@ -101,22 +107,27 @@ export default function Landing() {
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
                         onClick={(e) =>
-                          navigate(`/AddProjects`)
+                          navigate(`/ProjectsUser/64284b480d387cfe2b1f2696`)
                         }
                       >
                         <span className="btn-inner--icon mr-1">
                           <i className="ni ni-settings" />
                         </span>
-                        <span className="btn-inner--text">Manage you Project</span>
+                        <span className="btn-inner--text">
+                          Manage you Project
+                        </span>
                       </Button>
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
                         color="default"
+                        onClick={(e) => navigate(`/AddProjects`)}
                       >
                         <span className="btn-inner--icon mr-1">
                           <i className="fa fa-lightbulb-o" />
                         </span>
-                        <span className="btn-inner--text">Create Your Project</span>
+                        <span className="btn-inner--text">
+                          Create Your Project
+                        </span>
                       </Button>
                     </div>
                   </Col>
@@ -147,7 +158,7 @@ export default function Landing() {
             <Row className="justify-content-center">
               <Col lg="12">
                 <Row className="row-grid">
-                {projects.map((project) => (
+                  {projects.map((project) => (
                     <Col lg="4" className="py-4">
                       <Card
                         className="card-lift--hover shadow border-0"
@@ -179,7 +190,24 @@ export default function Landing() {
                             {project.title}
                           </h6>
                           <p className="heading mt-2 ml-4 ">
-                            {project.description}
+                            {getFirstTenWords(project.description)}
+                            {project.description.length >= 10 ? (
+                              <botton
+                                onClick={(e) =>
+                                  navigate(
+                                    `/Projects_details/${project._id}/${project.creator}`
+                                  )
+                                }
+                              >
+                                ...
+                                <i
+                                  class="fa fa-sort-desc"
+                                  aria-hidden="true"
+                                ></i>
+                              </botton>
+                            ) : (
+                              ""
+                            )}
                           </p>
                           <div className="font-weight-bold">
                             Domain :
@@ -195,10 +223,10 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                  Task completed
+                                  Task completed : |
                                   {moyenne(
-                                    project.montant_Final,
-                                    project.montant_actuel
+                                    project.montant_actuel,
+                                    project.montant_Final
                                   )}
                                   %
                                 </span>
@@ -227,10 +255,13 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/Projects_details/${project._id}/${project.creator}`)
+                              navigate(
+                                `/Projects_details/${project._id}/${project.creator}`
+                              )
                             }
-                          >                    <i class="fa fa-eye mr-2" aria-hidden="true"></i>
-
+                          >
+                            {" "}
+                            <i class="fa fa-eye mr-2" aria-hidden="true"></i>
                             More Details
                           </Button>
                           <Button
@@ -239,9 +270,12 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(`/Profile-page/6411328aaa4a0b70d100dbf4`)
+                              navigate(
+                                `/AddInvest/64284b480d387cfe2b1f2696/${project._id}`
+                              )
                             }
-                            ><i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+                          >
+                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Invest
                           </Button>
                         </CardBody>
@@ -325,7 +359,7 @@ export default function Landing() {
             </Row>
           </Container>
         </section>
-        <section className="section section-lg">
+        {/* <section className="section section-lg">
           <Container>
             <Row className="row-grid align-items-center">
               <Col className="order-md-2" md="6">
@@ -388,8 +422,8 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-        </section>
-        <section className="section bg-secondary">
+        </section> */}
+        {/* <section className="section bg-secondary">
           <Container>
             <Row className="row-grid align-items-center">
               <Col md="6">
@@ -459,7 +493,7 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> */}
         <section className="section section-lg bg-gradient-default">
           <Container>
             <Row className="row-grid align-items-center">
@@ -559,7 +593,7 @@ export default function Landing() {
             </svg>
           </div>
         </section>
-        <section className="section section-lg">
+        {/* <section className="section section-lg">
           <Container>
             <Row className="justify-content-center text-center mb-lg">
               <Col lg="8">
@@ -822,7 +856,6 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-          {/* SVG separator */}
           <div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -910,8 +943,7 @@ export default function Landing() {
               </Col>
             </Row>
           </Container>
-        </section>
-        <Download />
+        </section> */}
       </main>
     </>
   );

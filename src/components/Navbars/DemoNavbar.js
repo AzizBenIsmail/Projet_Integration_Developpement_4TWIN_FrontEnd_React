@@ -25,6 +25,7 @@ export default function NavbarF() {
   const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
+  const [user, setuser] = useState("64284b480d387cfe2b1f2696");
 
   const onExiting = () => {
     setCollapseClasses("collapsing-out");
@@ -38,7 +39,6 @@ export default function NavbarF() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
   }, []);
-
   return (
     <>
       <header className="header-global">
@@ -124,8 +124,18 @@ export default function NavbarF() {
                       className="nav-link-inner--text"
                       style={{ color: "#ffff" }}
                     >
-                      <i className="fa fa-info mr-2" />
                       Info
+                    </span>
+                  </DropdownToggle>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav>
+                  <DropdownToggle nav to="/Invest" tag={Link}>
+                    <i className="ni ni-collection d-lg-none mr-1" />
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Invest
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
@@ -148,7 +158,7 @@ export default function NavbarF() {
                       Landing
                     </DropdownItem>
                     <DropdownItem
-                      to="/profile-page/641cdeee29a97f7a08bd9a42"
+                      to="/profile-page/64284b480d387cfe2b1f2696"
                       tag={Link}
                       style={{ color: "#172b4d" }}
                     >
@@ -183,7 +193,7 @@ export default function NavbarF() {
                       Backend
                     </DropdownItem>
                     <DropdownItem
-                      to="/Profile/641cdeee29a97f7a08bd9a42"
+                      to="/Profile/64284b480d387cfe2b1f2696"
                       tag={Link}
                       style={{ color: "#172b4d" }}
                     >
@@ -238,28 +248,35 @@ export default function NavbarF() {
                         <h6 className="text-overflow m-0">Welcome!</h6>
                       </DropdownItem>
                       {/* <DropdownItem to="/profile-page/:iduser" tag={Link}> */}
-                      <DropdownItem to="/profile-page/641cdeee29a97f7a08bd9a42" tag={Link}>
+                      <DropdownItem
+                        to="/profile-page/64284b480d387cfe2b1f2696"
+                        tag={Link}
+                      >
                         <i className="ni ni-single-02" />
                         <span>My profile</span>
                       </DropdownItem>
                       {/* <DropdownItem to="/ProjectsUser/:iduser" tag={Link}> */}
-                      <DropdownItem to="/ProjectsUser/641cdeee29a97f7a08bd9a42" tag={Link}>
+                      <DropdownItem
+                        to="/ProjectsUser/64284b480d387cfe2b1f2696"
+                        tag={Link}
+                      >
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage you Project</span>
                       </DropdownItem>
-                      <DropdownItem to="/admin/user-profile" tag={Link}>
+                      <DropdownItem
+                        onClick={(e) =>
+                          navigate(`/InvestUser/64284b480d387cfe2b1f2696`)
+                        }
+                      >
                         <i className="ni ni-calendar-grid-58" />
-                        <span>Activity</span>
+                        <span>Activity Invest</span>
                       </DropdownItem>
                       <DropdownItem to="/admin/user-profile" tag={Link}>
                         <i className="ni ni-support-16" />
                         <span>Support</span>
                       </DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem
-                        href="#pablo"
-                        onClick={(e) => navigate(`/login-page`)}
-                      >
+                      <DropdownItem onClick={(e) => navigate(`/login-page`)}>
                         <i className="ni ni-user-run" />
                         <span>Logout</span>
                       </DropdownItem>

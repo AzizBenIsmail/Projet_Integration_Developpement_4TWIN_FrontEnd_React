@@ -6,33 +6,54 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
   import axios from 'axios';
   import { useEffect, useState } from 'react';
 
-  import DemoNavbar from "components/Navbars/DemoNavbar";
+import AdminFablab from "./AdminFablab";
 
 
   const AdminFablabJoin = () => {
     const navigate = useNavigate();
     const [fablabs, setFablabs] = useState([]);
-    const getAllFablabs=async()=>{
-        const res = await axios.get('http://localhost:5000/fablabs')
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const getAllFablabs=async(page)=>{
+        const res = await axios.get(`http://localhost:5000/fablabs/requests?page=${page}`)
           .then(res => {
             console.log(res.data);
             setFablabs(res.data.fablabs);
+            setTotalPages(res.data.totalPages);
           })
           .catch(err => {
             console.log(err);
           });
       }
       useEffect(() => {
-        getAllFablabs(); 
+        getAllFablabs(currentPage); 
         const interval = setInterval(() => {
-            getAllFablabs(); // appel répété toutes les 10 secondes
+            getAllFablabs(currentPage); // appel répété toutes les 10 secondes
           }, 10000);
           return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant   
-      }, []);
+      }, [currentPage]);
+
+      const handlePageClick = (e, page) => {
+        e.preventDefault();
+        setCurrentPage(page);
+      };
+    
+      const renderPaginationItems = () => {
+        const items = [];
+        for (let i = 1; i <= totalPages; i++) {
+          items.push(
+            <PaginationItem key={i} className={currentPage === i ? 'active' : ''}>
+              <PaginationLink href="#pablo" onClick={(e) => handlePageClick(e, i)}>
+                {i}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        }
+        return items;
+      };
       
     return (
       <>
-            <DemoNavbar />
         <Header />
         {/* Page content */}
         <Container className="mt-1" fluid>
@@ -41,7 +62,7 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Card tables</h3>
+                  <h3 className="mb-0">Fablab Requests</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
@@ -56,7 +77,7 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
                   </thead>
                   <tbody>
                   {fablabs.map(fablab => (
-                    <tr>
+                    <tr key={fablab._id}>
                       <th scope="row">
                         <Media className="align-items-center">
                             <img
@@ -173,49 +194,16 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
                 </Table>
                 <CardFooter className="py-4">
                   <nav aria-label="...">
-                    <Pagination
-                      className="pagination justify-content-end mb-0"
-                      listClassName="justify-content-end mb-0"
-                    >
-                      <PaginationItem className="disabled">
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                          tabIndex="-1"
-                        >
+                    <Pagination className="pagination justify-content-end mb-0" listClassName="justify-content-end mb-0">
+                      <PaginationItem className={currentPage === 1 ? 'disabled' : ''}>
+                        <PaginationLink href="#pablo" onClick={(e) => handlePageClick(e, currentPage - 1)} tabIndex="-1">
                           <i className="fas fa-angle-left" />
                           <span className="sr-only">Previous</span>
                         </PaginationLink>
                       </PaginationItem>
-                      <PaginationItem className="active">
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          1
-                        </PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          2 <span className="sr-only">(current)</span>
-                        </PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          3
-                        </PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
+                      {renderPaginationItems()}
+                      <PaginationItem className={currentPage === totalPages ? 'disabled' : ''}>
+                        <PaginationLink href="#pablo" onClick={(e) => handlePageClick(e, currentPage + 1)}>
                           <i className="fas fa-angle-right" />
                           <span className="sr-only">Next</span>
                         </PaginationLink>
@@ -228,6 +216,7 @@ import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  Drop
           </Row>
         
         </Container>
+        <AdminFablab />
       </>
     );
   };

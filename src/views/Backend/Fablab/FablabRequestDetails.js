@@ -1,11 +1,11 @@
 import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form,    Input,    Container,    Row,    Col  } from "reactstrap";
   // core components
-  //import UserHeader from "components/Headers/UserHeader.js";
+  
   import { useNavigate, useParams } from "react-router-dom";
   import axios from 'axios';
   import { useEffect, useState } from 'react';
+  import Header from "components/Headers/Header";
 
-  import DemoNavbar from "components/Navbars/DemoNavbar";
 
   const FablabRequestDetails = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
     const [is_treated, setIs_treated] = useState(null);
     const [is_accepted, setIs_accepted] = useState(null);
     const getFablab=async()=>{
-        const res = await axios.get(`http://localhost:5000/fablabs/${param.id}`)
+        const res = await axios.get(`http://localhost:5000/fablabs/requests/${param.id}`)
           .then(res => {
             console.log(res.data);
             setFablab(res.data.fablab);
@@ -73,7 +73,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
       }, [fablab,is_treated,is_accepted]);
     return (  
       <>
-            <DemoNavbar />
+            <Header />
       {fablab && (
         <>
         <div

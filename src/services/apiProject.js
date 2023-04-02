@@ -17,7 +17,7 @@ export async function addProject(formData, idUser) {
   });
 }
 
-export async function updateProject(id, Projects) {
+export async function updateProject(Projects,id) {
   return await axios.put(`${apiURL}/${id}`, Projects);
 }
 

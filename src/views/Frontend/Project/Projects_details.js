@@ -78,8 +78,8 @@ export default function Landing() {
       });
   }
   function moyenne(entier1, entier2) {
-    const moyenne = entier1 / entier2;
-    return moyenne;
+    const moyenne = (entier1 / entier2 )*100;
+    return Math.floor(moyenne);
   }
   function calculerDureeDeVie(dateDeCreation) {
     const dateDeCreationObjet = new Date(dateDeCreation);
@@ -254,15 +254,19 @@ export default function Landing() {
                 </div>
               </Col>
               <Button
-                className="btn-1 ml-1 mt-4"
-                color="success"
-                outline
-                type="button"
-                onClick={(e) => e.preventDefault()}
-              ><i class="fa fa-cubes mr-2" aria-hidden="true"></i>
-
-                Invest
-              </Button>
+                            className="btn-1 ml-1 mt-4"
+                            color="success"
+                            outline
+                            type="button"
+                            onClick={(e) =>
+                              navigate(
+                                `/AddInvest/641cdeee29a97f7a08bd9a42/${project._id}`
+                              )
+                            }
+                          >
+                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
+                            Invest
+                          </Button>
             </Row>
           </Container>
         </section>

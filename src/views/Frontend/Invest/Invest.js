@@ -20,56 +20,35 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import { getProjects } from "../../../services/apiProject";
+import { getInvests } from "../../../services/apiInvest";
 
-export default function Landing() {
+export default function Invest() {
   const navigate = useNavigate();
 
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
-
-  const handleNameFocus = () => {
-    setNameFocused(true);
-  };
-
-  const handleNameBlur = () => {
-    setNameFocused(false);
-  };
-
-  const handleEmailFocus = () => {
-    setEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setEmailFocused(false);
-  };
-
-  const [projects, setProjects] = useState([]);
+  const [invests, setInvests] = useState([]);
 
   useEffect(() => {
-    getAllProject();
+    getAllInvest();
     const interval = setInterval(() => {
-      getAllProject(); // appel répété toutes les 10 secondes
+      getAllInvest(); // appel répété toutes les 10 secondes
     }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllProject = async () => {
-    const res = await getProjects()
+  const getAllInvest = async () => {
+    const res = await getInvests()
       .then((res) => {
-        setProjects(res.data.projects);
-        console.log(res.data.projects);
+        setInvests(res.data.invests);
+        console.log(res.data.invests);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = (entier1 / entier2 )*100;
-    return Math.floor(moyenne);
+    const moyenne = entier1 / entier2;
+    return moyenne;
   }
-  
-  
 
   function getFirstTenWords(str) {
     // Supprimer les caractères de ponctuation et diviser la chaîne en mots
@@ -88,12 +67,24 @@ export default function Landing() {
           <Container className="pt-lg pb-300">
             <Row className="text-center justify-content-center">
               <Col lg="10">
-                <h2 className="display-3 text-white">Build something</h2>
+                <h2 className="display-3 text-white">Your Invest</h2>
                 <p className="lead text-white">
-                  According to the National Oceanic and Atmospheric
-                  Administration, Ted, Scambos, NSIDClead scentist, puts the
-                  potentially record low maximum sea ice extent tihs year down
-                  to low ice.
+                  <p class="font-italic">
+                    Here are a few pieces of advice to keep in mind when
+                    investing:
+                  </p>
+
+                  <p class="font-weight-bold">
+                    Start early | Diversify your portfolio |Invest for the
+                    long-term | Keep your emotions in check |Invest in what you
+                    know | Stay informed
+                  </p>
+
+                  <p class="font-italic">
+                    Remember, investing involves risk and there is no guarantee
+                    of returns. Always consult with a financial advisor before
+                    making any investment decisions.
+                  </p>
                 </p>
               </Col>
             </Row>
@@ -101,75 +92,44 @@ export default function Landing() {
             <Row className="justify-content-center">
               <Col>
                 <Row className="row-grid">
-                  {projects.map((project) => (
+                  {invests.map((Invest) => (
                     <Col lg="4" className="py-4">
                       <Card
                         className="card-lift--hover shadow border-0"
-                        key={project._id}
+                        key={Invest._id}
                       >
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
-                          <div className=" icon-shape rounded-circle mb-4">
-                            {/* <i className="ni ni-check-bold" /> */}
-                            <Media className="align-items-center justify-content-end">
-                              <a className="avatar ml-9">
-                                <img
-                                  alt="..."
-                                  src={`http://localhost:5000/images/${project.image_project}`}
-                                  style={{
-                                    width: "250%",
-                                    height: "auto",
-                                    display: "block",
-                                    margin: "10 auto",
-                                  }}
-                                />
-                              </a>
-                              <Media>
-                                <span className="mb-0 text-sm"></span>
-                              </Media>
-                            </Media>
-                          </div>
                           <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
-                            {project.title}
+                            {Invest.titre}
                           </h6>
-                          <p className="heading mt-2 ml-4 ">
-                            {getFirstTenWords(project.description)}
-                            {project.description.length >= 11 ? (
-                              <botton
-                                onClick={(e) =>
-                                  navigate(
-                                    `/Projects_details/${project._id}/${project.creator}`
-                                  )
-                                }
-                              >
-                                ...
-                                <i
-                                  class="fa fa-sort-desc"
-                                  aria-hidden="true"
-                                ></i>
-                              </botton>
-                            ) : (
-                              ""
-                            )}
-                          </p>
+                          <p className="heading mt-2 ml-4 ">{Invest.message}</p>
                           <div className="font-weight-bold">
-                            Domain :
-                            <Badge color="success" pill className="mr-5 ml-2">
-                              {project.domaine}
-                            </Badge>
-                            Goal :
+                            montant :
                             <Badge color="warning" pill className="ml-2">
-                              {project.goal}
+                              {Invest.montant}
+                            </Badge> <br></br>
+                            project :
+                            <Badge color="success" pill className="ml-2">
+                            {Invest.project.title}
+                            <img
+                                  alt="..."
+                                  src={`http://localhost:5000/images/${Invest.project.image_project}
+                                  `}
+                                  style={{
+                                    width: "50px",
+                                    height: "50px",
+                                  }}/>
                             </Badge>
                           </div>
-                          <div className="progress-wrapper">
+                          {/* <div className="progress-wrapper">
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                Task completed : .
+                                  Task completed
                                   {moyenne(
-                                    project.montant_actuel,
-                                    project.montant_Final
+                                    project.montant_Final,
+                                    project.montant_actuel
                                   )}
                                   %
                                 </span>
@@ -190,22 +150,7 @@ export default function Landing() {
                             {project.numberOfPeople_actuel}/
                             {project.numberOfPeople}
                             <i className="fa fa-users mr-2 ml-2" />
-                          </div>
-
-                          <Button
-                            className="btn-1 mt-4"
-                            color="primary"
-                            outline
-                            type="button"
-                            onClick={(e) =>
-                              navigate(
-                                `/Projects_details/${project._id}/${project.creator}`
-                              )
-                            }
-                          >
-                            <i class="fa fa-eye mr-2" aria-hidden="true"></i>
-                            More Details
-                          </Button>
+                          </div> */}
                           <Button
                             className="btn-1 ml-1 mt-4"
                             color="success"
@@ -213,12 +158,12 @@ export default function Landing() {
                             type="button"
                             onClick={(e) =>
                               navigate(
-                                `/AddInvest/641cdeee29a97f7a08bd9a42/${project._id}`
+                                `/Projects_details/${Invest.project._id}/${Invest.project.creator}`
                               )
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
-                            Invest
+                            Show Project
                           </Button>
                         </CardBody>
                       </Card>
