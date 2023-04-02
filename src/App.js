@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
+import "./style.css";
 
 // const Landing = lazy(()=>import('./views/examples/Landing'));
 // const Login = lazy(()=>import('./views/Login'));

@@ -1,19 +1,37 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import {  Card,  CardHeader,  CardBody,  FormGroup,  Input,  Row,  Col} from "reactstrap";
-import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Input,
+  Row,
+  Col,
+} from "reactstrap";
+import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { updateUser, getUser, addUser } from "../../../services/apiUser";
 import { useNavigate, useParams } from "react-router-dom";
-import { differenceInYears } from 'date-fns';
-import axios from 'axios';
-import moment from 'moment';
+import { differenceInYears } from "date-fns";
+import axios from "axios";
+import moment from "moment";
+import Cookies from "js-cookie";
 
 import DemoNavbar from "components/Navbars/DemoNavbar";
 
-
 const Profile = () => {
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
+
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
   let formData = new FormData();
   const navigate = useNavigate();
   const [image, setImage] = useState();
@@ -38,16 +56,16 @@ const Profile = () => {
   };
   const add = async (e) => {
     formData.append("username", user.username);
-    formData.append('first_Name', user.first_Name);
-    formData.append('last_Name', user.last_Name);
+    formData.append("first_Name", user.first_Name);
+    formData.append("last_Name", user.last_Name);
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("dateOfBirth", user.dateOfBirth);
-    formData.append('phoneNumber', user.phoneNumber);
+    formData.append("phoneNumber", user.phoneNumber);
     formData.append("gender", user.gender);
-    formData.append('address', user.address);
+    formData.append("address", user.address);
     formData.append("image_user", image);
-    const res = await addUser(formData).catch((error) => {
+    const res = await addUser(formData, config).catch((error) => {
       console.log(error.response.data.message);
     });
 
@@ -93,16 +111,16 @@ const Profile = () => {
 
   const AfficherDateDeNaissance = (dateOfBirth) => {
     const date = moment(dateOfBirth);
-    const mois = date.format('MM');
-    const jour = date.format('DD');
-    const annee = date.format('YYYY');
-    return "" + annee + "/" + mois + "/" + jour + ""
-  }
+    const mois = date.format("MM");
+    const jour = date.format("DD");
+    const annee = date.format("YYYY");
+    return "" + annee + "/" + mois + "/" + jour + "";
+  };
 
   const genderIcon = (gender) => {
-    if (gender === 'Male') {
+    if (gender === "Male") {
       return <FontAwesomeIcon icon={faMale} size="2x" color="#007bff" />;
-    } else if (gender === 'Female') {
+    } else if (gender === "Female") {
       return <FontAwesomeIcon icon={faFemale} size="2x" color="#f54291" />;
     } else {
       return null;
@@ -110,7 +128,7 @@ const Profile = () => {
   };
   return (
     <>
-          <DemoNavbar />
+      <DemoNavbar />
       <div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
@@ -119,7 +137,7 @@ const Profile = () => {
             "url(" + `http://localhost:5000/images/${user.image_user}` + ")",
           // "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
           backgroundSize: "cover",
-          backgroundPosition: "center top"
+          backgroundPosition: "center top",
         }}
       >
         {/* Mask */}
@@ -128,7 +146,7 @@ const Profile = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello  {user.username}</h1>
+              <h1 className="display-2 text-white">Hello {user.username}</h1>
               <p className="text-white mt-0 mb-5">
                 This is your profile page. You can see the progress you've made
                 with your work and manage your projects or assigned tasks
@@ -140,7 +158,6 @@ const Profile = () => {
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
-
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <Row className="justify-content-center">
@@ -178,7 +195,13 @@ const Profile = () => {
                 <div className="text-center">
                   <h3>
                     {user.username}
-                    <span className="font-weight-light">| {differenceInYears(new Date(), new Date(user.dateOfBirth))}</span>
+                    <span className="font-weight-light">
+                      |{" "}
+                      {differenceInYears(
+                        new Date(),
+                        new Date(user.dateOfBirth)
+                      )}
+                    </span>
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
@@ -187,8 +210,17 @@ const Profile = () => {
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
                     first_Name:
-                    {user.first_Name ? (<p>{user.first_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
-                    - last_Name: {user.last_Name ? (<p>{user.last_Name}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    {user.first_Name ? (
+                      <p>{user.first_Name}</p>
+                    ) : (
+                      <FontAwesomeIcon icon={faCircle} />
+                    )}
+                    - last_Name:{" "}
+                    {user.last_Name ? (
+                      <p>{user.last_Name}</p>
+                    ) : (
+                      <FontAwesomeIcon icon={faCircle} />
+                    )}
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -196,12 +228,16 @@ const Profile = () => {
                   </div>
                   <hr className="my-4" />
                   <p>
-                    phoneNumber — {user.phoneNumber ? (<p>{user.phoneNumber}</p>) : (<FontAwesomeIcon icon={faCircle} />)}
+                    phoneNumber —{" "}
+                    {user.phoneNumber ? (
+                      <p>{user.phoneNumber}</p>
+                    ) : (
+                      <FontAwesomeIcon icon={faCircle} />
+                    )}
                     <br />
                     dateOfBirth — {AfficherDateDeNaissance(user.dateOfBirth)}
                     <br />
-                    gender      —  {genderIcon(user.gender)}
-
+                    gender — {genderIcon(user.gender)}
                   </p>
                 </div>
               </CardBody>
@@ -227,7 +263,10 @@ const Profile = () => {
                 </Row>
               </CardHeader>
               <CardBody>
-                <Form role="form" enctype="multipart/form-data" /*method="HTTP_METHOD" */>
+                <Form
+                  role="form"
+                  enctype="multipart/form-data" /*method="HTTP_METHOD" */
+                >
                   <h6 className="heading-small text-muted mb-4">
                     User information
                   </h6>
@@ -262,7 +301,7 @@ const Profile = () => {
                             name="email"
                             type="email"
                             onChange={(e) => handlechange(e)}
-                          // disabled="disabled"
+                            // disabled="disabled"
                           />
                         </FormGroup>
                       </Col>
@@ -273,7 +312,6 @@ const Profile = () => {
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
-
                           >
                             First name
                           </label>
@@ -363,10 +401,10 @@ const Profile = () => {
                             autoComplete="off"
                             name="password"
                             onChange={(e) => handlechange(e)}
-
                           />
                         </FormGroup>
-                      </Col><Col lg="4">
+                      </Col>
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -381,7 +419,8 @@ const Profile = () => {
                             onChange={(e) => handlechange(e)}
                           />
                         </FormGroup>
-                      </Col><Col lg="4">
+                      </Col>
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -389,11 +428,13 @@ const Profile = () => {
                           >
                             Male :.......
                           </label>
-                          <Input type="radio"
+                          <Input
+                            type="radio"
                             id="male"
                             name="gender"
                             value="Male"
-                            onChange={(e) => handlechange(e)} />
+                            onChange={(e) => handlechange(e)}
+                          />
                         </FormGroup>
                         <FormGroup>
                           <label
@@ -402,14 +443,16 @@ const Profile = () => {
                           >
                             Female :.....
                           </label>
-                          <Input type="radio"
+                          <Input
+                            type="radio"
                             id="female"
                             name="gender"
                             value="Female"
-                            onChange={(e) => handlechange(e)} />
-
+                            onChange={(e) => handlechange(e)}
+                          />
                         </FormGroup>
-                      </Col><Col lg="4">
+                      </Col>
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -418,13 +461,13 @@ const Profile = () => {
                             User image
                           </label>
                           <Input
-                           placeholder="image_user"
-                           name="image_user"
-                           type="file"
-                           onChange={(e) => handlechangeFile(e)}
+                            placeholder="image_user"
+                            name="image_user"
+                            type="file"
+                            onChange={(e) => handlechangeFile(e)}
                           />
                         </FormGroup>
-                      </Col>  
+                      </Col>
                     </Row>
                   </div>
                   <hr className="my-4" />

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { register } from "../../../services/apiUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from 'js-cookie';
+import ConnectVia from "./ConnectVia";
 // reactstrap components
 import {
   Card,
@@ -20,6 +22,8 @@ import { Button, Container, Form } from "react-bootstrap";
 import LoginNavbar from "../../../components/Navbars/LoginNavbar";
 
 export default function Register() {
+
+
   let formData = new FormData();
   const navigate = useNavigate();
   const [message, setmessage] = useState();
@@ -32,20 +36,29 @@ export default function Register() {
     gender: "",
     image_user: "",
   });
-  const handlechange = (e) => {
+  const handleChange = (e) => {
+  //  const userFromCookie = JSON.parse(Cookies.get('user'));
+   // console.log(userFromCookie)
+   // console.log(userFromCookie._id)
     setUsers({ ...user, [e.target.name]: e.target.value });
   };
-  const handlechangeFile = (e) => {
+  const handleChangeFile = (e) => {
     setImage(e.target.files[0]);
     console.log(e.target.files[0]);
   };
   const add = async (e) => {
     e.preventDefault();
-    formData.append("username", user.username);
+   formData.append("username", user.username);
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("dateOfBirth", user.dateOfBirth);
     formData.append("gender", user.gender);
+
+
+    console.log(user.username)
+    console.log(user.password)
+    console.log(user.gender)
+
     formData.append("image_user", image);
     const res = await axios.post(
       "http://localhost:5000/users/register",
@@ -59,41 +72,6 @@ export default function Register() {
     console.log(res.data.message);
     setmessage(res.data.message);
     // Check if email is already taken
-    switch (res.data.message) {
-      case "email is already taken":
-        console.log("email is already taken");
-        alert("Email is already taken");
-        break;
-      case "username is already taken":
-        console.log("username is already taken");
-        alert("username is already taken");
-
-        break;
-      case "password : a character string of at least 8 characters containing at least one letter and one number":
-        console.log("password is already taken");
-        alert(
-          "password : a character string of at least 8 characters containing at least one letter and one number"
-        );
-        break;
-      case "You must be at least 18 years old":
-        console.log("you must be at least 18 years old");
-        alert("You must be at least 18 years old");
-
-        break;
-      case "gender must be one of the following values: Male, Female":
-        console.log("gender must be one of the following values: Male, Female");
-        alert("gender must be one of the following values: Male, Female");
-        break;
-      case undefined:
-        navigate("/login-page");
-        alert("successful account creation Welcom : `" + user.username + "`");
-        break;
-      default:
-        console.log("Please fill in all the fields of the form");
-        alert("Please fill in all the fields of the form");
-        setmessage("Please fill in all the fields of the form");
-        break;
-    }
   };
   const handleGoogleLogin = async () => {
     try {
@@ -114,30 +92,7 @@ export default function Register() {
             <Col lg="5">
               {/*largeur du login */}
               <Card className="bg-secondary shadow border-0">
-                <CardHeader className="bg-white pb-5">
-                  <div className="text-muted text-center mb-3">
-                    <small> Sign up with </small>
-                  </div>
-                  <div className="text-center">
-                    <Button
-                      className="btn-neutral btn-icon ml-1"
-                      color="default"
-                      href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=1011336119202-68ccv8g3nnrvrbhaibacj684alcpfmss.apps.googleusercontent.com&service=lso&o2v=2&flowName=GeneralOAuthFlow"
-                      onClick={handleGoogleLogin}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={
-                            require("assetsFrontOffice/img/icons/common/google.svg")
-                              .default
-                          }
-                        />
-                      </span>
-                      <span className="btn-inner--text">Google</span>
-                    </Button>
-                  </div>
-                </CardHeader>
+              <ConnectVia />
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
                     <small> Or sign up with credentials </small>
@@ -166,7 +121,7 @@ export default function Register() {
                           placeholder="username"
                           type="text"
                           name="username"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                       {message === "username is already taken" ? (
@@ -199,7 +154,7 @@ export default function Register() {
                           placeholder="email"
                           type="email"
                           name="email"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                       {message === "email is already taken" ? (
@@ -235,7 +190,7 @@ export default function Register() {
                           type="password"
                           autoComplete="off"
                           name="password"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                       {message ===
@@ -272,7 +227,7 @@ export default function Register() {
                           type="date"
                           name="dateOfBirth"
                           max="2006-12-31"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                       {message === "You must be at least 18 years old" ? (
@@ -309,7 +264,7 @@ export default function Register() {
                           label="Male"
                           name="gender"
                           value="Male"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                         <Form.Check
                           type="radio"
@@ -317,7 +272,7 @@ export default function Register() {
                           label="Female"
                           name="gender"
                           value="Female"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                       {message ===
@@ -353,7 +308,7 @@ export default function Register() {
                           placeholder="image_user"
                           name="image_user"
                           type="file"
-                          onChange={(e) => handlechangeFile(e)}
+                          onChange={(e) => handleChangeFile(e)}
                         />
                       </InputGroup>
                       {message ===

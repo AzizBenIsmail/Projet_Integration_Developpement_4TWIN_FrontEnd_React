@@ -16,10 +16,13 @@ import {
 
 import { LoginUser } from "../../../services/apiUser";
 import { Button, Container, Form } from "react-bootstrap";
-import flatted from "flatted";
+import { stringify } from 'flatted';
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 import LoginNavbar from "../../../components/Navbars/LoginNavbar";
+
+import ConnectVia from "./ConnectVia";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,58 +35,72 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const handlechange = (e) => {
-    console.log(e.target.value);
-    setUsers({ ...user, [e.target.name]: e.target.value });
-    console.log(user);
+  const handleChange = (e) => {
+  setUsers({ ...user, [e.target.name]: e.target.value });
   };
 
   const Login = async (user) => {
-    //const jsonString = flatted.stringify(user);
-
-    //   const res = await LoginUser(user).catch((error) => {
-    //     console.log(error.response.data.message);
-    // });
-
-    //const res = await axios.post('http://localhost:5000/users/login',user);
-
-    //console.log(res.data);
-    //console.log(res.data.message);
-    // switch (user.password ||res.data.message ) {
-    //   case "User successfully authenticated":
-    //     console.log("welcom ");
-    //       alert("welcom ");
-    //     navigate("/landing-page");
-    //     break;case "azerty":
-    console.log(user.password);
-    switch (user.password) {
-      case "azerty":
-        console.log("Please fill in all the fields of the form");
-        alert("Please fill in all the fields of the form");
-        break;
-      case "Notdone123":
-        console.log("failed toauthent");
-        alert("failed to authent");
-        break;
-      case "Administrateur123":
-        console.log("welcom admin");
-        alert("welcom Admin");
-        navigate("/Tables");
-        break;
-      default:
-        navigate("/landing-page");
-        break;
-    }
-  };
-  const handleGoogleLogin = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/auth/connection");
-      window.location.href = response.data.redirectUrl;
+      const res = await axios.post('http://localhost:5000/users/login', user, {
+        credentials: "include"
+      });
+    
+      // console.log(res.data.user._id);
+      // console.log(res.data.user);
+      console.log(res.data);
+      console.log(res.status);
+      const token = res.data;
+      // Set cookie
+      Cookies.set('user', JSON.stringify(token), { expires: 24/24 }); 
+      // expires in 2 hours
+      const userCookie = Cookies.get('user');
+      console.log('Cookie set:', userCookie);
+      const u = JSON.parse(Cookies.get('user')).token;
+    //const result = u.token;
+      console.log(u);
+      window.location.replace(`/profile-page/${res.data.user._id}`);
     } catch (error) {
-      console.error(error);
+  //    console.log(error.response.data.message);
     }
   };
 
+  function sendRequest() {
+    const token = JSON.parse(Cookies.get('user')).token;
+////get
+
+
+
+axios.get('http://localhost:5000/users/test', {
+  // Add request payload here
+}, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+.then(response => {
+  console.log(response.data);
+})
+.catch(error => {
+  console.error(error);
+});
+
+   //////post
+
+    axios.post('http://localhost:5000/users/test', {
+      foo: 'bar'
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+  
   return (
     <>
       <LoginNavbar />
@@ -93,30 +110,7 @@ export default function Login() {
           <Row className="justify-content-center">
             <Col lg="5">
               <Card className="bg-secondary shadow border-0">
-                <CardHeader className="bg-white pb-5">
-                  <div className="text-muted text-center mb-3">
-                    <small>Sign in with</small>
-                  </div>
-                  <div className="btn-wrapper text-center">
-                    <Button
-                      className="btn-neutral btn-icon ml-1"
-                      color="default"
-                      href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Fgoogle%2Fcallback&scope=profile%20email&client_id=1011336119202-68ccv8g3nnrvrbhaibacj684alcpfmss.apps.googleusercontent.com&service=lso&o2v=2&flowName=GeneralOAuthFlow"
-                      onClick={handleGoogleLogin}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={
-                            require("assetsFrontOffice/img/icons/common/google.svg")
-                              .default
-                          }
-                        />
-                      </span>
-                      <span className="btn-inner--text">Google</span>
-                    </Button>
-                  </div>
-                </CardHeader>
+              <ConnectVia />
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
                     <small>Or sign in with credentials</small>
@@ -133,7 +127,7 @@ export default function Login() {
                           placeholder="email"
                           type="email"
                           name="email"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                     </Form.Group>
@@ -149,7 +143,7 @@ export default function Login() {
                           type="password"
                           autoComplete="off"
                           name="password"
-                          onChange={(e) => handlechange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </InputGroup>
                     </Form.Group>
@@ -173,7 +167,8 @@ export default function Login() {
                         type="button"
                         onClick={(e) => {
                           console.log(user);
-                          Login(user);
+                       // sendRequest();
+                        Login(user);
                         }}
                       >
                         {" "}
