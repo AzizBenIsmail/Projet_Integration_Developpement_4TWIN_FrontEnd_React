@@ -64,6 +64,8 @@ function AdminEvent(props) {
         <Row>
           <div className="col">
             <Card className="shadow" >
+              {events.length ? (
+              <>
               <CardHeader style={{padding: '0.5rem', fontSize: '0.8rem'}} className="border-0">
                 <h4 style={{display:'inline-block'}}  className="mb-0" >Recent Events</h4>
                 <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i>
@@ -79,7 +81,7 @@ function AdminEvent(props) {
                   </tr>
                 </thead>
                 <tbody>
-                {events && events.map(event => (
+                {events.map(event => (
                   <tr>
                     <th scope="row">
                       <Media className="align-items-center">
@@ -109,6 +111,13 @@ function AdminEvent(props) {
                  ))}
                 </tbody>
               </Table>
+              </>) : (
+                <CardHeader style={{padding: '0.5rem', fontSize: '0.8rem'}} className="border-0">
+                <h4 style={{display:'inline-block'}}  className="mb-0" > No Recent Events</h4>
+                <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i>
+                </CardHeader>
+              )}
+              
               
             </Card>
           </div>
