@@ -74,13 +74,41 @@
     color: #bfbfbf;
   }
   .chatFlow {
+    width: 380px !important;
+  height: 671px !important;
+    display: block;
     position: fixed;
-    margin-bottom: -80px;
-    margin-right: -1000px;
-    padding-bottom: 100px;
-    padding-right: -100px;
-
-    bottom: 0;
-    right: 0;
-    z-index: 9999; 
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    bottom: 10px;
+    right: 70px;
+    z-index: 99; 
 }
+
+.chatSize{
+    position: relative; /* or relative or fixed depending on your layout */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100% !important;
+}
+.full-size {
+    width: 380px !important;
+    height: 671px !important;
+    position: absolute;
+    right: 150px !important;
+    top: -50px !important;
+ 
+
+  }
+
+  .chat-container {
+    height: 400px; /* set the height of the container */
+    overflow-y: auto; /* add vertical scrollbar when content overflows */
+  }
+  
+  .chatbox {
+    width: 100%; /* set the width to fill container */
+  }

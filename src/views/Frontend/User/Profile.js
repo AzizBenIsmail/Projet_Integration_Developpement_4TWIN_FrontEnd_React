@@ -1,7 +1,7 @@
 import { Button, Card, Container, Row, Col, Progress } from "reactstrap";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
-import { updateUser, getUser, addUser } from "../../../services/apiUser";
+import { updateUser, getUser, addUser, getUserAuth } from "../../../services/apiUser";
 import { useNavigate, useParams } from "react-router-dom";
 import { differenceInYears } from "date-fns";
 import moment from "moment";
@@ -64,7 +64,7 @@ export default function Profile() {
     try {
 
       /////cookies
-      const response = await getUser(param.id, config);
+      const response = await getUserAuth(param.id, config);
       ////////
       setUser(response.data.user);
  
@@ -148,6 +148,7 @@ export default function Profile() {
   }
   return (
     <>
+     <ChatBox user={user}/>
       <DemoNavbar />
       <ProfileHeader user={user} />
       <main className="profile-page">

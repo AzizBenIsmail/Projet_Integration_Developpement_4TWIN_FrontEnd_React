@@ -10,6 +10,10 @@ export async function getUser(id,config) {
   return await axios.get(`${apiURL}/getUser/${id}`,config);
 }
 
+export async function getUserAuth(id,config) {
+  return await axios.get(`${apiURL}/getUser`,config);
+}
+
 export async function addUser(formData, config) {
   return await axios.post(apiURL, formData, {
     headers: {
@@ -24,8 +28,8 @@ export async function updateUser(id, User) {
   return await axios.put(`${apiURL}/${id}`, User);
 }
 
-export async function deleteUser(id) {
-  return await axios.delete(`${apiURL}/${id}`);
+export async function deleteUser(id,config) {
+  return await axios.delete(`${apiURL}/${id}`,config);
 }
 
 export async function LoginUser(User) {

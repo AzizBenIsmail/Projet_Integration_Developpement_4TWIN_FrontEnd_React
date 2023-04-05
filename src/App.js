@@ -74,7 +74,7 @@ function App() {
       {/* User */}
 
         <Route path="/login-page" element={<Login />} />
-        <Route path="/profile-page/:id" element={<ProfileFront />} />
+        <Route path="/profile-page" element={<ProfileFront />} />
         <Route path="/Register-page" element={<Register />} />
         <Route path="/Profile/:id" element={<Profile />} />
         <Route path="/Backend_Users" element={<Backend_Users />} />
