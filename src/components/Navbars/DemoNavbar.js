@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
+import Cookies from 'js-cookie';
+
 import {
   Button,
   UncontrolledCollapse,
@@ -26,7 +28,18 @@ export default function NavbarF() {
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
   const [user, setuser] = useState("64284b480d387cfe2b1f2696");
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
 
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+////////
   const onExiting = () => {
     setCollapseClasses("collapsing-out");
   };

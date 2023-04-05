@@ -33,6 +33,7 @@ import Projects_details from "views/Frontend/Project/Projects_details";
 import ProfileUserProject from "views/Frontend/Project/ProfileUserProject.js";
 import AddProjects from "views/Frontend/Project/AddProjects";
 import UpdateProject from "views/Frontend/Project/UpdateProject";
+import Backend_Projects from "views/Backend/Project/Backend_Projects";
 
 //Invest
 import Invest from "views/Frontend/Invest/Invest.js";
@@ -91,6 +92,8 @@ function App() {
         <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
         <Route path="/AddProjects" element={<AddProjects/>} />
         <Route path="/UpdateProject/:id" element={<UpdateProject/>} />
+        <Route path="/Backend_Projects" element={<Backend_Projects />} />
+
 
       {/* Invest */}  
       <Route path="/Invest" element={<Invest />} />

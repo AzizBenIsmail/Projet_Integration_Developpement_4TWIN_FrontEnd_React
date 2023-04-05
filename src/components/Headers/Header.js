@@ -2,17 +2,38 @@
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import { getUsers, deleteUser } from "../../services/apiUser.js";
+import { getProjects } from "../../services/apiProject.js";
+import { getInvests } from "../../services/apiInvest.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 const Header = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [invests, setInvests] = useState([]);
 
+/////cookies
+if (!Cookies.get("user")) {
+  window.location.replace("/login-page");
+}
+
+const token = JSON.parse(Cookies.get("user")).token;
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+////////
   useEffect(() => {
-    getAllUser();
+    getAllUser(config);
+    getAllProject(config);
+    getAllInvest()
     const interval = setInterval(() => {
       getAllUser(); // appel répété toutes les 10 secondes
+      getAllProject(config);
+      getAllInvest(config);
     }, 10000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   
@@ -31,6 +52,32 @@ const Header = () => {
   const countUsers = (users) => {
     return users.length;
   };
+  const getAllProject = async (config) => {
+    const res = await getProjects(config)
+      .then((res) => {
+        setProjects(res.data.projects);
+        console.log(res.data.projects);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const countProject = (projects) => {
+    return projects.length;
+  };
+  const getAllInvest = async (config) => {
+    const res = await getInvests(config)
+      .then((res) => {
+        setInvests(res.data.invests);
+        console.log(res.data.invests);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const countInvest = (invests) => {
+    return invests.length;
+  };
   return (
     <>
       <div className="header bg-gradient-info pb-2 pt-5 pt-md-2">
@@ -48,11 +95,10 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Users
+                          Projects
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          350,897    
-                          
+                        {countProject(projects)}                          
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -79,9 +125,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          New users
+                          Invest
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">{countUsers(users)}</span>
+                        <span className="h2 font-weight-bold mb-0">{countInvest(invests)}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -107,9 +153,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Sales
+                          Users
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span>
+                        <span className="h2 font-weight-bold mb-0">{countUsers(users)}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">

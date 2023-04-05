@@ -40,7 +40,7 @@ function Siedbar() {
             className={classnames("py-2 px-3", {
               active: activeNav === 1
             })}
-            onClick={(e) => navigate(`/`)}>Project</a>
+            onClick={(e) => navigate(`/Backend_Projects`)}>Project</a>
             <a 
             className={classnames("py-2 px-3", {
               active: activeNav === 1
