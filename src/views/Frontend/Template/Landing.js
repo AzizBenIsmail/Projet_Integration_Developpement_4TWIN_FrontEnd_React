@@ -20,10 +20,23 @@ import {
 import Download from "../../IndexSections/Download.js";
 import { useNavigate } from "react-router-dom";
 import { getProjects } from "../../../services/apiProject";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function Landing() {
+    /////cookies
+    if (!Cookies.get("user")) {
+      window.location.replace("/login-page");
+    }
+  
+    const token = JSON.parse(Cookies.get("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  ////////
   const navigate = useNavigate();
 
   const [nameFocused, setNameFocused] = useState(false);
@@ -47,15 +60,15 @@ export default function Landing() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    getAllProject();
+    getAllProject(config);
     const interval = setInterval(() => {
-      getAllProject(); // appel répété toutes les 10 secondes
-    }, 3000);
+      getAllProject(config); // appel répété toutes les 10 secondes
+    }, 2000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllProject = async () => {
-    const res = await getProjects()
+  const getAllProject = async (config) => {
+    const res = await getProjects(config)
       .then((res) => {
         setProjects(res.data.projects);
       })
@@ -107,7 +120,7 @@ export default function Landing() {
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
                         onClick={(e) =>
-                          navigate(`/ProjectsUser/64284b480d387cfe2b1f2696`)
+                          navigate(`/ProjectsUser`)
                         }
                       >
                         <span className="btn-inner--icon mr-1">
@@ -271,7 +284,7 @@ export default function Landing() {
                             type="button"
                             onClick={(e) =>
                               navigate(
-                                `/AddInvest/64284b480d387cfe2b1f2696/${project._id}`
+                                `/AddInvest/${project._id}`
                               )
                             }
                           >

@@ -16,6 +16,7 @@ import {
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProject } from "../../../services/apiProject";
@@ -24,7 +25,18 @@ import { differenceInYears } from "date-fns";
 export default function Landing() {
   const navigate = useNavigate();
   const param = useParams();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   let formData = new FormData();
   const [Project, setProject] = useState({
     _id: param.id,
@@ -54,17 +66,17 @@ export default function Landing() {
       location,
       Duration,
     } = Project;
-    const res = await updateProject(Project,param.id).then(navigate(`/ProjectsUser/${Project.creator}`)).catch((error) => {
+    const res = await updateProject(Project,param.id,config).then(navigate(`/ProjectsUser`)).catch((error) => {
       console.log(error.response.data.message);
     });
   };
   // 
   useEffect(() => {
-    getProjectFunction();
+    getProjectFunction(config);
   }, []);
 
-  const getProjectFunction = async () => {
-    const response = await getProject(param.id);
+  const getProjectFunction = async (config) => {
+    const response = await getProject(param.id,config);
     console.log(response.data.project);
     setProject(response.data.project);
   };
@@ -76,7 +88,7 @@ export default function Landing() {
         <section className="section section-lg bg-gradient-default">
           <Container className="pt-lg-7">
             <Row className="justify-content-center">
-              <Col lg="5"> <div className="ml-9 text-success font-weight-bold" >Create Your Project</div>
+              <Col lg="5"> <div className="ml-9 text-success font-weight-bold" >Manage Your Project</div>
                 <Card className="bg-secondary shadow border-0">
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form >
@@ -297,7 +309,7 @@ export default function Landing() {
                           type="button"
                           onClick={(e) => add(e)}
                         >
-                          Create account
+                          Valider
                         </Button>
                       </div>
                     </Form>

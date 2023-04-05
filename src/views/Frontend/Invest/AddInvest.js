@@ -16,6 +16,7 @@ import {
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProject } from "../../../services/apiProject";
@@ -24,7 +25,18 @@ import { differenceInYears } from "date-fns";
 export default function AddInvest() {
   const navigate = useNavigate();
   const param = useParams();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const [Invest, setInvest] = useState({
     title: "",
     message: "",
@@ -42,7 +54,7 @@ export default function AddInvest() {
     message, 
     montant, 
     } = Invest;
-    const res = await addInvest(Invest, param.idUser,param.idProject)
+    const res = await addInvest(Invest, param.idUser,param.idProject,config)
       .then(navigate(`/landing-page`))
       .catch((error) => {
         console.log(error.response.data.message);
@@ -59,7 +71,7 @@ export default function AddInvest() {
               <Col lg="5">
                 {" "}
                 <div className="ml-9 text-success font-weight-bold">
-                  Create Your Project
+                  Invest
                 </div>
                 <Card className="bg-secondary shadow border-0">
                   <CardBody className="px-lg-5 py-lg-5">

@@ -18,6 +18,7 @@ import {
   Media,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getInvestUser,deleteInvest } from "../../../services/apiInvest";
@@ -25,19 +26,30 @@ import { getInvestUser,deleteInvest } from "../../../services/apiInvest";
 export default function InvestUser() {
   const navigate = useNavigate();
   const param = useParams();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const [invests, setInvests] = useState([]);
 
   useEffect(() => {
-    getAllInvest();
+    getAllInvest(config);
     const interval = setInterval(() => {
-      getAllInvest(); // appel répété toutes les 10 secondes
+      getAllInvest(config); // appel répété toutes les 10 secondes
     }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllInvest = async () => {
-    const res = await getInvestUser(param.idUser)
+  const getAllInvest = async (config) => {
+    const res = await getInvestUser(param.idUser,config)
       .then((res) => {
         setInvests(res.data.invests);
         console.log(res.data.invests);
@@ -58,9 +70,9 @@ export default function InvestUser() {
     // Retourner les 10 premiers mots
     return words.slice(0, 10).join(" ");
   }
-  const Delete = async (id) => {
-    const res = await deleteInvest(id)
-      .then((res) => { getAllInvest();
+  const Delete = async (id,config) => {
+    const res = await deleteInvest(id,config)
+      .then((res) => { getAllInvest(config);
       })
       .catch((err) => {
         console.log(err);
@@ -179,7 +191,7 @@ export default function InvestUser() {
                             color="success"
                             outline
                             type="button"
-                            onClick={(e) => Delete(Invest._id) }
+                            onClick={(e) => Delete(Invest._id,config) }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                              Delete

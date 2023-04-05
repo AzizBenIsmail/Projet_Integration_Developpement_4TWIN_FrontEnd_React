@@ -47,6 +47,8 @@ import AdminEvent from "./AdminEvent";
       const handlePageClick = (e, page) => {
         e.preventDefault();
         setCurrentPage(page);
+        setShowEvent(false);
+        setSelectedRow(null);
       };
     
       const renderPaginationItems = () => {

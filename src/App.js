@@ -33,6 +33,7 @@ import Projects_details from "views/Frontend/Project/Projects_details";
 import ProfileUserProject from "views/Frontend/Project/ProfileUserProject.js";
 import AddProjects from "views/Frontend/Project/AddProjects";
 import UpdateProject from "views/Frontend/Project/UpdateProject";
+import Backend_Projects from "views/Backend/Project/Backend_Projects";
 
 //Invest
 import Invest from "views/Frontend/Invest/Invest.js";
@@ -86,16 +87,18 @@ function App() {
       {/* Projects */}
 
         <Route path="/Projects" element={<Projects />} />
-        <Route path="/ProjectsUser/:iduser" element={<ProjectsUser />} />
+        <Route path="/ProjectsUser" element={<ProjectsUser />} />
         <Route path="/Projects_details/:id/:iduser" element={<Projects_details />} />
         <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
         <Route path="/AddProjects" element={<AddProjects/>} />
         <Route path="/UpdateProject/:id" element={<UpdateProject/>} />
+        <Route path="/Backend_Projects" element={<Backend_Projects />} />
+
 
       {/* Invest */}  
       <Route path="/Invest" element={<Invest />} />
-      <Route path="/AddInvest/:idUser/:idProject" element={<AddInvest />} />
-      <Route path="/InvestUser/:idUser" element={<InvestUser />} />
+      <Route path="/AddInvest/:idProject" element={<AddInvest />} />
+      <Route path="/InvestUser/" element={<InvestUser />} />
 
 
       {/* FablabJoin */}

@@ -7,12 +7,24 @@ import { differenceInYears } from "date-fns";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getProjectuser } from "../../../services/apiProject";
+import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function ProfileUserProject() {
   const navigate = useNavigate();
-
+      /////cookies
+      if (!Cookies.get("user")) {
+        window.location.replace("/login-page");
+      }
+    
+      const token = JSON.parse(Cookies.get("user")).token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    ////////
   const param = useParams();
   const [friendCount, setFriendCount] = useState(22);
   const [photoCount, setPhotoCount] = useState(10);
@@ -37,17 +49,17 @@ export default function ProfileUserProject() {
     user;
 
   useEffect(() => {
-    getUserFunction();
-    getoneProject();
+    getUserFunction(config);
+    getoneProject(config);
   }, []);
 
-  const getUserFunction = async () => {
-    const response = await getUser(param.id);
+  const getUserFunction = async (config) => {
+    const response = await getUser(param.id,config);
     setUser(response.data.user);
   };
 
-  const getoneProject = async () => {
-    const res = await getProjectuser(param.id)
+  const getoneProject = async (config) => {
+    const res = await getProjectuser(param.id,config)
       .then((res) => {
         setProjects(res.data.projects);
         console.log(res.data.projects);
@@ -72,16 +84,6 @@ export default function ProfileUserProject() {
       return <FontAwesomeIcon icon={faFemale} size="2x" color="#f54291" />;
     } else {
       return null;
-    }
-  };
-
-  const Modifier = async (user) => {
-    const result = window.confirm(
-      "Are you sure you want to modify " + user.username + "?"
-    );
-    if (result) {
-      //console.log(user);
-      navigate(`/profile/${user._id}`);
     }
   };
   function countProject(arr) {

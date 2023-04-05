@@ -1,5 +1,5 @@
 import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  DropdownItem,    UncontrolledDropdown,    DropdownToggle,    Media,
-    Pagination,    PaginationItem,    PaginationLink,    Progress,   Table,    Container,    Row,    UncontrolledTooltip,    Button  } from "reactstrap";
+    Pagination,    PaginationItem,    PaginationLink,    Progress,   Table,    Container,    Row,    UncontrolledTooltip,    Button, CardBody  } from "reactstrap";
   // core components
   import Header from "components/Headers/Header";
   import { useNavigate, useParams } from "react-router-dom";
@@ -14,6 +14,10 @@ import AdminFablab from "./AdminFablab";
     const [fablabs, setFablabs] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [disable, setDisable] = useState(true);
+    const [accepted, setAccepted] = useState(false);
+    const [nonAccepted, setNonAccepted] = useState(false);
+
     const getAllFablabs=async(page)=>{
         const res = await axios.get(`http://localhost:5000/fablabs/requests?page=${page}`)
           .then(res => {
@@ -51,7 +55,28 @@ import AdminFablab from "./AdminFablab";
         }
         return items;
       };
+
+      const treatedFunction=()=>{
+        setDisable(false);
+        
+       
+      };
+
+      const nonTreatedFunction=()=>{
+        setDisable(true);
+        setAccepted(false);
+        setNonAccepted(false);
+      };
       
+      const handleAcceptedChange = (e) => {
+        setAccepted(e.target.checked);
+        setNonAccepted(false);
+      };
+      
+      const handleNonAcceptedChange = (e) => {
+        setNonAccepted(e.target.checked);
+        setAccepted(false);
+      };
     return (
       <>
         <Header />
@@ -59,6 +84,93 @@ import AdminFablab from "./AdminFablab";
         <Container className="mt-1" fluid>
           {/* Table */}
           <Row>
+            <div className="col-2">
+              <Card className="shadow" style={{ width: "240px" }}> 
+                <Table className="align-items-center table-flush mt-2" responsive>
+                <thead className="thead-light "  style={{ height: "58px" }}>
+                  <tr>
+                    <th scope="col"  style={{ fontSize : "20px"}}>Filter</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                        <div className="custom-control custom-radio mb-3">
+                          <input
+                            className="custom-control-input"
+                            id="NonTreated"
+                            type="radio"
+                            name="custom-radio-2"
+                            onClick={nonTreatedFunction}
+                          />
+                          <label className="custom-control-label" htmlFor="NonTreated">
+                              Non Treated
+                          </label>
+                        </div>
+                    </th>
+                    
+                  </tr>
+                  <tr>
+                    <th >
+                        <div className="custom-control custom-radio mb-3">
+                          <input
+                            className="custom-control-input"
+                            id="Treated"
+                            type="radio"
+                            name="custom-radio-2"
+                            onClick={treatedFunction}
+                          />
+                          <label className="custom-control-label" htmlFor="Treated">
+                             Treated
+                          </label>
+                        </div>
+                    </th>
+                    
+                  </tr>
+                  <tr>
+                    <th >
+                        <div className="custom-control custom-radio mb-3">
+                          <input
+                            className="custom-control-input"
+                            id="Accepted"
+                            type="radio"
+                            name="custom-radio-3"
+                            disabled={disable}
+                            checked={accepted}
+                            onClick={handleAcceptedChange}
+
+                          />
+                          <label className="custom-control-label" htmlFor="Accepted">
+                              Accepted
+                          </label>
+                        </div>
+                    </th>
+                    
+                  </tr>
+                  <tr>
+                    <th >
+                        <div className="custom-control custom-radio mb-3">
+                          <input
+                            className="custom-control-input"
+                            id="NonAccepted"
+                            type="radio"
+                            name="custom-radio-3"
+                            disabled={disable}
+                            checked={nonAccepted}
+                            onClick={handleNonAcceptedChange}
+                          />
+                          <label className="custom-control-label" htmlFor="NonAccepted">
+                          Non Accepted
+                          </label>
+                        </div>
+                    </th>
+                    
+                  </tr>
+                
+                </tbody>
+              </Table>
+              </Card>
+            </div>
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
@@ -111,7 +223,7 @@ import AdminFablab from "./AdminFablab";
                             style={{backgroundColor: '#2DCE89' , cursor: "help"}}
                           >
                              <span className="rounded-circle"  >
-                                <i class="fa fa-check " style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}></i>
+                                <i class="fa fa-eye" style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}></i>
                               </span>
 
                           </a>
@@ -162,7 +274,7 @@ import AdminFablab from "./AdminFablab";
                                       style={{backgroundColor: '#f5365c' , cursor: "help"}}
                                     >
                                       <span className="rounded-circle"  >
-                                          <i class="fa fa-times" style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}></i>
+                                          <i class="fa fa-eye-slash" style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}></i>
                                         </span>
                                     </a>
                                     <UncontrolledTooltip
