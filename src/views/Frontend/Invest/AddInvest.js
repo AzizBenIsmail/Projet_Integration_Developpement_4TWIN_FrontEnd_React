@@ -76,24 +76,7 @@ export default function AddInvest() {
                 <Card className="bg-secondary shadow border-0">
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form>
-                      <Form.Group>
-                        <Form.Label>title Invest :</Form.Label>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-circle-08" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Form.Control
-                            placeholder="name of Invest"
-                            type="text"
-                            name="title"
-                            onChange={(e) => handlechange(e)}
-                            label="Titre du projet"
-                            aria-label="Titre du projet"
-                          />
-                        </InputGroup>
-                      </Form.Group>
+                      
                       <Form.Group>
                         <Form.Label>message :</Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
