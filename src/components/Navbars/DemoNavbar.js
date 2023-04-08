@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
-import Cookies from 'js-cookie';
-import { updateUser, getUser, addUser, getUserAuth } from "../../services/apiUser";
+import Cookies from "js-cookie";
+import {
+  updateUser,
+  getUser,
+  addUser,
+  getUserAuth,
+} from "../../services/apiUser";
 
 import {
   Button,
@@ -29,7 +34,7 @@ export default function NavbarF() {
   const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
-  const [user, setuser] = useState([]); 
+  const [user, setuser] = useState([]);
   /////cookies
   if (!Cookies.get("user")) {
     window.location.replace("/login-page");
@@ -41,7 +46,7 @@ export default function NavbarF() {
       Authorization: `Bearer ${token}`,
     },
   };
-////////
+  ////////
   const onExiting = () => {
     setCollapseClasses("collapsing-out");
   };
@@ -60,8 +65,7 @@ export default function NavbarF() {
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
   const getUserFunction = async (config) => {
-
-   const res = await getUserAuth(param.id, config)
+    const res = await getUserAuth(param.id, config)
       .then((res) => {
         setuser(res.data.user);
         console.log(user);
@@ -97,14 +101,15 @@ export default function NavbarF() {
               onExiting={onExiting}
               onExited={onExited}
             >
-              <div className="navbar-collapse-header" user={user}>
+              <div className="navbar-collapse-header " user={user}>
                 <Row>
                   <Col className="collapse-brand" xs="6" user={user}>
                     <Link to="/">
-                      <img user={user}
+                      <img
+                        user={user}
                         alt="..."
                         src={`http://localhost:5000/images/${user.image_user}`}
-                        />
+                      />
                     </Link>
                   </Col>
                   <Col className="collapse-close" xs="6">
@@ -115,7 +120,7 @@ export default function NavbarF() {
                   </Col>
                 </Row>
               </div>
-              <Nav className="navbar-nav-hover align-items-lg-center" navbar>
+              <Nav className="navbar-nav-hover align-items-lg-center  bg-gradient-default" navbar>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/landing-page" tag={Link}>
                     <i className="ni ni-ui-04 d-lg-none mr-1" />
@@ -150,17 +155,6 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
-                  <DropdownToggle nav to="/Info" tag={Link}>
-                    <i className="ni ni-collection d-lg-none mr-1" />
-                    <span
-                      className="nav-link-inner--text"
-                      style={{ color: "#ffff" }}
-                    >
-                      Info
-                    </span>
-                  </DropdownToggle>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/Invest" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
                     <span
@@ -190,7 +184,7 @@ export default function NavbarF() {
                       Landing
                     </DropdownItem>
                     <DropdownItem
-                      to="/profile-page/64284b480d387cfe2b1f2696"
+                      to="/profile-page/"
                       tag={Link}
                       style={{ color: "#172b4d" }}
                     >
@@ -225,7 +219,7 @@ export default function NavbarF() {
                       Backend
                     </DropdownItem>
                     <DropdownItem
-                      to="/Profile/64284b480d387cfe2b1f2696"
+                      to="/Profile"
                       tag={Link}
                       style={{ color: "#172b4d" }}
                     >
@@ -266,11 +260,11 @@ export default function NavbarF() {
                           <img
                             alt="..."
                             src={`http://localhost:5000/images/${user.image_user}`}
-                            />
+                          />
                         </span>
-                        <Media className="ml-2 d-none d-lg-block">
-                          <span className="mb-0 text-sm font-weight-bold text-white">
-                            User
+                        <Media className="ml-3 d-none d-lg-block">
+                          <span className="text-sm font-weight-bold text-white ml-2">
+                            {user.username}
                           </span>
                         </Media>
                       </Media>
@@ -280,26 +274,16 @@ export default function NavbarF() {
                         <h6 className="text-overflow m-0">Welcome!</h6>
                       </DropdownItem>
                       {/* <DropdownItem to="/profile-page/:iduser" tag={Link}> */}
-                      <DropdownItem
-                        to="/profile-page/64284b480d387cfe2b1f2696"
-                        tag={Link}
-                      >
+                      <DropdownItem to="/profile-page" tag={Link}>
                         <i className="ni ni-single-02" />
                         <span>My profile</span>
                       </DropdownItem>
                       {/* <DropdownItem to="/ProjectsUser/:iduser" tag={Link}> */}
-                      <DropdownItem
-                        to="/ProjectsUser/64284b480d387cfe2b1f2696"
-                        tag={Link}
-                      >
+                      <DropdownItem to="/ProjectsUser" tag={Link}>
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage you Project</span>
                       </DropdownItem>
-                      <DropdownItem
-                        onClick={(e) =>
-                          navigate(`/InvestUser`)
-                        }
-                      >
+                      <DropdownItem onClick={(e) => navigate(`/InvestUser`)}>
                         <i className="ni ni-calendar-grid-58" />
                         <span>Activity Invest</span>
                       </DropdownItem>

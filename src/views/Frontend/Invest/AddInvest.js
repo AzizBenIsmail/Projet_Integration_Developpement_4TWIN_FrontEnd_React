@@ -85,7 +85,7 @@ export default function AddInvest() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
-                            placeholder="Titre du projet"
+                            placeholder="name of Invest"
                             type="text"
                             name="title"
                             onChange={(e) => handlechange(e)}
