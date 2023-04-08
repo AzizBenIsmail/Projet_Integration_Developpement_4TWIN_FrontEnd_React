@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
 import Cookies from 'js-cookie';
+import { updateUser, getUser, addUser, getUserAuth } from "../../services/apiUser";
 
 import {
   Button,
@@ -24,10 +25,11 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function NavbarF() {
+  const param = useParams();
   const navigate = useNavigate();
   const [collapseClasses, setCollapseClasses] = useState("");
   const [collapseOpen, setCollapseOpen] = useState(false);
-  const [user, setuser] = useState("64284b480d387cfe2b1f2696");
+  const [user, setuser] = useState([]); 
   /////cookies
   if (!Cookies.get("user")) {
     window.location.replace("/login-page");
@@ -49,9 +51,26 @@ export default function NavbarF() {
   };
 
   useEffect(() => {
+    getUserFunction(config);
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
+    const interval = setInterval(() => {
+      getUserFunction(config);
+    }, 1000);
+    return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
+  const getUserFunction = async (config) => {
+
+   const res = await getUserAuth(param.id, config)
+      .then((res) => {
+        setuser(res.data.user);
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <header className="header-global">
@@ -78,14 +97,14 @@ export default function NavbarF() {
               onExiting={onExiting}
               onExited={onExited}
             >
-              <div className="navbar-collapse-header">
+              <div className="navbar-collapse-header" user={user}>
                 <Row>
-                  <Col className="collapse-brand" xs="6">
+                  <Col className="collapse-brand" xs="6" user={user}>
                     <Link to="/">
-                      <img
+                      <img user={user}
                         alt="..."
-                        src={require("assets/img/brand/argon-react.png")}
-                      />
+                        src={`http://localhost:5000/images/${user.image_user}`}
+                        />
                     </Link>
                   </Col>
                   <Col className="collapse-close" xs="6">
@@ -246,8 +265,8 @@ export default function NavbarF() {
                         <span className="avatar avatar-sm rounded-circle">
                           <img
                             alt="..."
-                            src={require("../../assets/img/theme/User.png")}
-                          />
+                            src={`http://localhost:5000/images/${user.image_user}`}
+                            />
                         </span>
                         <Media className="ml-2 d-none d-lg-block">
                           <span className="mb-0 text-sm font-weight-bold text-white">
