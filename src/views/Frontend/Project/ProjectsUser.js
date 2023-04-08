@@ -18,7 +18,7 @@ import {
   Media,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProjectuser, deleteProject } from "../../../services/apiProject";
@@ -26,18 +26,18 @@ import { getProjectuser, deleteProject } from "../../../services/apiProject";
 export default function Landing() {
   const navigate = useNavigate();
   const param = useParams();
-      /////cookies
-      if (!Cookies.get("user")) {
-        window.location.replace("/login-page");
-      }
-    
-      const token = JSON.parse(Cookies.get("user")).token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    ////////
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
+
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  ////////
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
@@ -68,7 +68,7 @@ export default function Landing() {
   }, []);
 
   const getAllProject = async (config) => {
-    const res = await getProjectuser(param.iduser,config)
+    const res = await getProjectuser(param.iduser, config)
       .then((res) => {
         setProjects(res.data.projects);
       })
@@ -106,9 +106,18 @@ export default function Landing() {
                 </p>
               </Col>
             </Row>
-
-
-
+            <div className="btn-wrapper">
+              <Button
+                className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
+                color="default"
+                onClick={(e) => navigate(`/AddProjects`)}
+              >
+                <span className="btn-inner--icon mr-1">
+                  <i className="fa fa-lightbulb-o" />
+                </span>
+                <span className="btn-inner--text">Create Your Project</span>
+              </Button>
+            </div>
             <Row className="justify-content-center">
               <Col lg="">
                 <Row className="row-grid">
@@ -234,7 +243,7 @@ export default function Landing() {
                             color="danger"
                             outline
                             type="button"
-                            onClick={(e) => deleteProject(project._id,config)}
+                            onClick={(e) => deleteProject(project._id, config)}
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
                             Delete

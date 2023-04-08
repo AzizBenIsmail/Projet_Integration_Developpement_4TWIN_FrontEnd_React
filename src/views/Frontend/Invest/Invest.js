@@ -100,7 +100,34 @@ export default function Invest() {
                 </p>
               </Col>
             </Row>
-
+            <div className="btn-wrapper">
+                      <Button
+                        className="btn-icon mb-3 mb-sm-0"
+                        color="info"
+                        onClick={(e) =>
+                          navigate(`/ProjectsUser`)
+                        }
+                      >
+                        <span className="btn-inner--icon mr-1">
+                          <i className="ni ni-settings" />
+                        </span>
+                        <span className="btn-inner--text">
+                          Manage you Project
+                        </span>
+                      </Button>
+                      <Button
+                        className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
+                        color="default"
+                        onClick={(e) => navigate(`/AddProjects`)}
+                      >
+                        <span className="btn-inner--icon mr-1">
+                          <i className="fa fa-lightbulb-o" />
+                        </span>
+                        <span className="btn-inner--text">
+                          Create Your Project
+                        </span>
+                      </Button>
+                    </div>
             <Row className="justify-content-center">
               <Col>
                 <Row className="row-grid">

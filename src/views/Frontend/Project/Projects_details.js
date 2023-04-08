@@ -24,6 +24,7 @@ import Cookies from "js-cookie";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProject } from "../../../services/apiProject";
 import { getUser } from "../../../services/apiUser";
+import { getlisteInverstors } from "../../../services/apiInvest";
 import { differenceInYears } from "date-fns";
 
 export default function Landing() {
@@ -44,30 +45,17 @@ export default function Landing() {
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
-  const handleNameFocus = () => {
-    setNameFocused(true);
-  };
-
-  const handleNameBlur = () => {
-    setNameFocused(false);
-  };
-
-  const handleEmailFocus = () => {
-    setEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setEmailFocused(false);
-  };
-
   const [project, setProject] = useState([]);
+  const [invests, setInvests] = useState([]);
+
   const [user, setuser] = useState([]);
   useEffect(() => {
     getoneProject(config);
     getCreator(config);
+    getAllInvest(config);
     const interval = setInterval(() => {
       getoneProject();
-    }, 1000);
+    }, 5000);
   }, []);
   const getoneProject = async (config) => {
     const res = await getProject(param.id, config)
@@ -78,11 +66,20 @@ export default function Landing() {
         console.log(err);
       });
   };
+  const getAllInvest = async ( config) => {
+    const res = await getlisteInverstors(param.id, config)
+      .then((res) => {
+        setInvests(res.data.invests);
+        console.log(res.data.invests);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   async function getCreator(config) {
     const res = await getUser(param.iduser, config)
       .then((res) => {
         setuser(res.data.user);
-
         countProject(user);
       })
       .catch((err) => {
@@ -240,15 +237,37 @@ export default function Landing() {
                       )}
                     </h2>
                   </div>
-                </div>
+                </div>{" "}
+                <div class="d-flex align-items-center">
+                  
+                    <div class="mr-1">investor</div>
+                    <div class="mx-1">
+                      <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>:
+                    </div>
+                    {invests.map((Invest) => (
+                  <Media className="align-items-center ">
+                    <span
+                      className="avatar avatar-sm rounded-circle "
+                      key={Invest._id}
+                    >
+                      <img
+                        alt="..."
+                        src={`http://localhost:5000/images/${Invest.investor.image_user}`}
+                      />
+                    </span>
+                  </Media>
 
+                ))}
+                  </div>
                 <div className="progress-wrapper">
                   <div className="progress-info">
                     <div className="progress-label">
                       <span>
                         Task completed : .
-                        {moyenne(project.montant_Final, project.montant_actuel)}
-                        %
+                                  {moyenne(
+                                    project.montant_actuel,
+                                    project.montant_Final
+                                  )}                        %
                       </span>
                     </div>
                     <div className="progress-percentage">

@@ -243,18 +243,6 @@ export default function ProfileUserProject() {
                                 </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>
-                                  number Of People :
-                                  {project.numberOfPeople_actuel}
-                                </td>
-                                <td>
-                                current amount : {project.montant_actuel}
-                                </td>
-                                <td>
-                                Duration : {calculerDureeDeVie(project.created_at)}
-                                </td>
-                              </tr>
                             </tbody>
                           </table>
                         </Col>

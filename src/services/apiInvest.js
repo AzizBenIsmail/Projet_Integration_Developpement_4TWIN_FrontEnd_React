@@ -8,6 +8,9 @@ export async function getInvests(config) {
 export async function getInvestUser(id,config) {
   return await axios.get(`${apiURL}/${id}`,config);
 }
+export async function getlisteInverstors(id,config) {
+  return await axios.get(`${apiURL}/listeInverstors/${id}`,config);
+}
 export async function addInvest(Invest, idUser,idProject,config) {
   return await axios.post(`${apiURL}/${idUser}/${idProject}`, Invest, {
     headers: {

@@ -261,7 +261,6 @@ export default function Landing() {
                             {project.numberOfPeople}
                             <i className="fa fa-users mr-2 ml-2" />
                           </div>
-
                           <Button
                             className="btn-1 mt-4"
                             color="primary"
