@@ -55,6 +55,7 @@ import ProfileAdd from "views/Backend/User/Profile-Add";
 //Footer Spinner
 import SimpleFooter from "components/Footers/SimpleFooter";
 import SpinnerExample from "components/spinner/Spinner";
+import MapPage from "MapPage/MapPage";
 
 function App() {
   return (
@@ -74,7 +75,7 @@ function App() {
 
       {/* User */}
 
-        <Route path="/login-page" element={<Login />} />
+        <Route path="/login-page"  element={<Login />} />
         <Route path="/profile-page" element={<ProfileFront />} />
         <Route path="/Register-page" element={<Register />} />
         <Route path="/Profile/:id" element={<Profile />} />
@@ -106,6 +107,10 @@ function App() {
         <Route path="/FablabJoin" element={<FablabJoin />} />
         <Route path="/AdminFablabJoin" element={<AdminFablabJoin/>} /> 
         <Route path="/FablabRequestDetails/:id" element={<FablabRequestDetails/>} /> 
+
+      {/* chat and map*/}
+      <Route path="/map" element={<MapPage/>}/>
+
 
       </Routes>
       </Suspense>

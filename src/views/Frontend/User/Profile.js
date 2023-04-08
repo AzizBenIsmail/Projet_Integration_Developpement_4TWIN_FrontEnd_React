@@ -75,7 +75,7 @@ export default function Profile() {
   };
 
   const getoneProject = async () => {
-    const res = await getProjectuser(param.id)
+    const res = await getProjectuser('',config)
       .then((res) => {
         setProjects(res.data.projects);
         console.log(res.data.projects);
