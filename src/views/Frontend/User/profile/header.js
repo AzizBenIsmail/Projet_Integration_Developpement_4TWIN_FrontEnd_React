@@ -49,10 +49,7 @@ const ProfileHeader = (props) => {
             x="0"
             y="0"
           >
-            <polygon
-              className="fill-white"
-              points="2560 0 2560 100 0 100"
-            />
+            <polygon className="fill-white" points="2560 0 2560 100 0 100" />
           </svg>
         </div>
         <div
@@ -73,36 +70,30 @@ const ProfileHeader = (props) => {
       </section>
 
       <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={`http://localhost:5000/images/${props.user.image_user}`}
-                        />
-                      </a>
-                    </div>
-                  </Col>
-                  <Col
-                    className="order-lg-3 text-lg-right align-self-lg-center"
-                    lg="4"
-                  >
-                    <div className="card-profile-actions py-4 mt-lg-0">
-                      <Button
-                        className="mr-4"
-                        color="info"
-                        href="#pablo"
-                        onClick={(e) => Modifier(props.user)}
-                        size="sm"
-                      >
-                        <i
-                          class="fa fa-pencil-square-o mr-2"
-                          aria-hidden="true"
-                        ></i>
-                        Modify
-                      </Button>
-                      {/* <Button
+        <Col className="order-lg-2" lg="3">
+          <div className="card-profile-image">
+            <a href="#pablo" onClick={(e) => e.preventDefault()}>
+              <img
+                alt="..."
+                className="rounded-circle"
+                src={`http://localhost:5000/images/${props.user.image_user}`}
+              />
+            </a>
+          </div>
+        </Col>
+        <Col className="order-lg-3 text-lg-right align-self-lg-center" lg="4">
+          <div className="card-profile-actions py-4 mt-lg-0">
+            <Button
+              className="mr-4"
+              color="info"
+              href="#pablo"
+              onClick={(e) => Modifier(props.user)}
+              size="sm"
+            >
+              <i class="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>
+              Modify
+            </Button>
+            {/* <Button
                         className="float-right"
                         color="default"
                         href="#pablo"
@@ -111,25 +102,38 @@ const ProfileHeader = (props) => {
                       >
                         Message
                       </Button> */}
-                      <div className="progress-wrapper">
-                        <div className="progress-info">
-                          <div className="progress-label">
-                            <span>Progress completed</span>
-                          </div>
-                          <div className="progress-percentage">
-                            <span>{calculateCompletionPercentage(props.user)} %</span>
-                          </div>
-                        </div>
-                        <Progress
-                          max="100"
-                          value={calculateCompletionPercentage(props.user)}
-                        />
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
+            <div className="progress-wrapper">
+              <div className="progress-info">
+                <div className="progress-label">
+                  <h1>
+                    <span>LEVEL: 1 </span>
+                  </h1>
+                </div>
+                <div className="progress-percentage">
+                  <span>XP {20} %</span>
+                </div>
+              </div>
+              <Progress max="100" value={20} />
+            </div>
 
-</>
+            <div className="progress-wrapper">
+              <div className="progress-info">
+                <div className="progress-label">
+                  <span>Progress completed</span>
+                </div>
+                <div className="progress-percentage">
+                  <span>{calculateCompletionPercentage(props.user)} %</span>
+                </div>
+              </div>
+              <Progress
+                max="100"
+                value={calculateCompletionPercentage(props.user)}
+              />
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </>
   );
 };
 export default ProfileHeader;

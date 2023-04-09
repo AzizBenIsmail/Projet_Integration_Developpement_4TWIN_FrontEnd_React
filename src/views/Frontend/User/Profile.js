@@ -1,21 +1,24 @@
 import { Button, Card, Container, Row, Col, Progress } from "reactstrap";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
-import { updateUser, getUser, addUser, getUserAuth } from "../../../services/apiUser";
+import {
+  updateUser,
+  getUser,
+  addUser,
+  getUserAuth,
+} from "../../../services/apiUser";
 import { useNavigate, useParams } from "react-router-dom";
 import { differenceInYears } from "date-fns";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { getProjectuser } from "../../../services/apiProject";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-
+//import badgeImg from "./src/new.png";
 import ProfileHeader from "./profile/header";
 import ChatBox from "./profile/chat";
 export default function Profile() {
-
-
   /////cookies
   if (!Cookies.get("user")) {
     window.location.replace("/login-page");
@@ -27,7 +30,7 @@ export default function Profile() {
       Authorization: `Bearer ${token}`,
     },
   };
-////////
+  ////////
   const navigate = useNavigate();
 
   const param = useParams();
@@ -59,23 +62,18 @@ export default function Profile() {
   }, []);
 
   const getUserFunction = async () => {
-
-
     try {
-
       /////cookies
       const response = await getUserAuth(param.id, config);
       ////////
       setUser(response.data.user);
- 
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   };
 
   const getoneProject = async () => {
-    const res = await getProjectuser('',config)
+    const res = await getProjectuser("", config)
       .then((res) => {
         setProjects(res.data.projects);
         console.log(res.data.projects);
@@ -148,7 +146,7 @@ export default function Profile() {
   }
   return (
     <>
-     <ChatBox user={user}/>
+      <ChatBox user={user} />
       <DemoNavbar />
       <ProfileHeader user={user} />
       <main className="profile-page">
@@ -195,6 +193,7 @@ export default function Profile() {
                       >
                         Message
                       </Button> */}
+
                       <div className="progress-wrapper">
                         <div className="progress-info">
                           <div className="progress-label">
@@ -330,6 +329,17 @@ export default function Profile() {
                     <Col lg="9">
                       <h1>Invest : {countProject(user.invests)}</h1>
                     </Col>
+                  </Row>
+                </div>
+                <div className="text-capitalize font-weight-bold ml-4">
+                  Badges:
+                </div>
+                <div className="mt-2 border-top ">
+                  <Row className="justify-content-center">
+                    <Col lg="9">
+                      <h1>Badges : {countProject(user.invests)}</h1>
+                    </Col>
+                    <img alt="image_" className="rounded-circle" src={"dd"} />
                   </Row>
                 </div>
               </div>
