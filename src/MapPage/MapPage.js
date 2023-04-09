@@ -5,6 +5,7 @@ import Marker from "./Marker";
 
 import "./MapPage.css";
 import UserInfoCard from "./UserInfoCard/UserInfoCard";
+import Messenger from "Messenger/Messenger";
 
 const MapPage = () => {
   const myLocation = useSelector((state) => state.map.myLocation);
@@ -39,6 +40,7 @@ const MapPage = () => {
           );
         })}
       </GoogleMapReact>
+      <Messenger />
       {cardChosenOption && (
         <UserInfoCard
           socketId={cardChosenOption.socketId}
