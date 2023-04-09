@@ -26,7 +26,7 @@ ReactDOM.render(
     <App />
     </Provider>
   </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>,  
   document.getElementById('root')
 );
 //code for login page react
