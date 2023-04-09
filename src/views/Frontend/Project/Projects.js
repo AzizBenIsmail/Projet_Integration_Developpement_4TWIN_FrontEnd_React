@@ -40,22 +40,7 @@ export default function Landing() {
   const [nameFocused, setNameFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
 
-  const handleNameFocus = () => {
-    setNameFocused(true);
-  };
-
-  const handleNameBlur = () => {
-    setNameFocused(false);
-  };
-
-  const handleEmailFocus = () => {
-    setEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setEmailFocused(false);
-  };
-
+  
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
