@@ -40,7 +40,6 @@ import Invest from "views/Frontend/Invest/Invest.js";
 import AddInvest from "views/Frontend/Invest/AddInvest";
 import InvestUser from "views/Frontend/Invest/InvestUser";
 
-
 //Fablab
 import FablabJoin from "./views/Frontend/Fablab/FablabJoin";
 import AdminFablabJoin from "./views/Backend/Fablab/AdminFablabJoin";
@@ -60,59 +59,64 @@ import MapPage from "MapPage/MapPage";
 function App() {
   return (
     <>
-          <Suspense fallback={<SpinnerExample/>}>
-      {/* <DemoNavbar /> */}
-      <Routes>
-        <Route path="*" element={<NotFound/>}/>
-        
-      {/* Template */}
+      <Suspense fallback={<SpinnerExample />}>
+        {/* <DemoNavbar /> */}
+        <Routes>
+          <Route path="*" element={<NotFound />} />
 
-        <Route path="/landing-page" element={<Landing />} />
-        <Route path="/Index" element={<Index />} />
-        <Route path="/IndexDefault" element={<IndexDefault />} />
-        <Route path="/Info" element={<Info />} />
-        <Route path="/Composant" element={<Indexs />} />
+          {/* Template */}
 
-      {/* User */}
+          <Route path="/landing-page" element={<Landing />} />
+          <Route path="/Index" element={<Index />} />
+          <Route path="/IndexDefault" element={<IndexDefault />} />
+          <Route path="/Info" element={<Info />} />
+          <Route path="/Composant" element={<Indexs />} />
 
-        <Route path="/login-page"  element={<Login />} />
-        <Route path="/profile-page" element={<ProfileFront />} />
-        <Route path="/Register-page" element={<Register />} />
-        <Route path="/Profile/:id" element={<Profile />} />
-        <Route path="/Backend_Users" element={<Backend_Users />} />
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/resetpwd" element={<ResetPwd />} />
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/Profile-Add" element={<ProfileAdd />} />
+          {/* User */}
 
-      {/* Projects */}
+          <Route path="/login-page" element={<Login />} />
+          <Route path="/profile-page" element={<ProfileFront />} />
+          <Route path="/Register-page" element={<Register />} />
+          <Route path="/Profile/:id" element={<Profile />} />
+          <Route path="/Backend_Users" element={<Backend_Users />} />
+          <Route path="/reset" element={<Reset />} />
+          <Route path="/resetpwd" element={<ResetPwd />} />
+          <Route path="/reset" element={<Reset />} />
+          <Route path="/Profile-Add" element={<ProfileAdd />} />
 
-        <Route path="/Projects" element={<Projects />} />
-        <Route path="/ProjectsUser" element={<ProjectsUser />} />
-        <Route path="/Projects_details/:id/:iduser" element={<Projects_details />} />
-        <Route path="/ProfileUserProject/:id" element={<ProfileUserProject />} />
-        <Route path="/AddProjects" element={<AddProjects/>} />
-        <Route path="/UpdateProject/:id" element={<UpdateProject/>} />
-        <Route path="/Backend_Projects" element={<Backend_Projects />} />
+          {/* Projects */}
 
+          <Route path="/Projects" element={<Projects />} />
+          <Route path="/ProjectsUser" element={<ProjectsUser />} />
+          <Route
+            path="/Projects_details/:id/:iduser"
+            element={<Projects_details />}
+          />
+          <Route
+            path="/ProfileUserProject/:id"
+            element={<ProfileUserProject />}
+          />
+          <Route path="/AddProjects" element={<AddProjects />} />
+          <Route path="/UpdateProject/:id" element={<UpdateProject />} />
+          <Route path="/Backend_Projects" element={<Backend_Projects />} />
 
-      {/* Invest */}  
-      <Route path="/Invest" element={<Invest />} />
-      <Route path="/AddInvest/:idProject" element={<AddInvest />} />
-      <Route path="/InvestUser/" element={<InvestUser />} />
+          {/* Invest */}
+          <Route path="/Invest" element={<Invest />} />
+          <Route path="/AddInvest/:idProject" element={<AddInvest />} />
+          <Route path="/InvestUser/" element={<InvestUser />} />
 
+          {/* FablabJoin */}
 
-      {/* FablabJoin */}
+          <Route path="/FablabJoin" element={<FablabJoin />} />
+          <Route path="/AdminFablabJoin" element={<AdminFablabJoin />} />
+          <Route
+            path="/FablabRequestDetails/:id"
+            element={<FablabRequestDetails />}
+          />
 
-        <Route path="/FablabJoin" element={<FablabJoin />} />
-        <Route path="/AdminFablabJoin" element={<AdminFablabJoin/>} /> 
-        <Route path="/FablabRequestDetails/:id" element={<FablabRequestDetails/>} /> 
-
-      {/* chat and map*/}
-      <Route path="/map" element={<MapPage/>}/>
-
-
-      </Routes>
+          {/* chat and map*/}
+          <Route path="/map" element={<MapPage />} />
+        </Routes>
       </Suspense>
       <SimpleFooter />
     </>

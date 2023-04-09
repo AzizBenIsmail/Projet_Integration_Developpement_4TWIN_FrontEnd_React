@@ -105,6 +105,20 @@ const ProfileHeader = (props) => {
             <div className="progress-wrapper">
               <div className="progress-info">
                 <div className="progress-label">
+                  <h1>
+                    <span>LEVEL: 1 </span>
+                  </h1>
+                </div>
+                <div className="progress-percentage">
+                  <span>XP {20} %</span>
+                </div>
+              </div>
+              <Progress max="100" value={20} />
+            </div>
+
+            <div className="progress-wrapper">
+              <div className="progress-info">
+                <div className="progress-label">
                   <span>Progress completed</span>
                 </div>
                 <div className="progress-percentage">
