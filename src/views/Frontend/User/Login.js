@@ -58,7 +58,7 @@ export default function Login() {
       const u = JSON.parse(Cookies.get('user')).token;
     //const result = u.token;
       console.log(u);
-      window.location.replace(`/profile-page/`);
+      window.location.replace(`/landing-page/`);
     } catch (error) {
   //    console.log(error.response.data.message);
     }

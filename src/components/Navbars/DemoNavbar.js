@@ -292,7 +292,9 @@ export default function NavbarF() {
                         <span>Support</span>
                       </DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem onClick={(e) => navigate(`/login-page`)}>
+                      <DropdownItem onClick={(e) => {navigate(`/login-page`)
+                      Cookies.remove('user')
+                      }}>
                         <i className="ni ni-user-run" />
                         <span>Logout</span>
                       </DropdownItem>
