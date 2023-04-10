@@ -37,7 +37,6 @@ import { getProjects, deleteProject } from "../../../services/apiProject";
 import Header from "components/Headers/Header.js";
 import { getUsers, deleteUser } from "../../../services/apiUser.js";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 const Tables = () => {

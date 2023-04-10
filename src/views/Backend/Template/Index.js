@@ -1,5 +1,5 @@
 
-  import { useState } from "react";
+import { useEffect, useState } from "react";
   // node.js library that concatenates classes (strings)
   import classnames from "classnames";
   // javascipt plugin for creating charts
@@ -15,6 +15,8 @@
 
 import Header from "components/Headers/Header.js";
 import '../../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
+import { getProjects} from "../../../services/apiProject";
+import Cookies from "js-cookie";
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -22,12 +24,42 @@ const Index = (props) => {
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
+  const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
 
-  const toggleNavs = (e, index) => {
-    e.preventDefault();
-    setActiveNav(index);
-    setChartExample1Data("data" + index);
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
+
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
+  useEffect(() => {
+    getAllProject(config);
+    const interval = setInterval(() => {
+      getAllProject(config); // appel répété toutes les 10 secondes
+    }, 10000);
+    return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
+  }, []);
+
+  const getAllProject = async (config) => {
+    const res = await getProjects(config)
+      .then((res) => {
+        setProjects(res.data.projects);
+        console.log(res.data.projects);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  function moyenne(entier1, entier2) {
+    const moyenne = (entier1 / entier2) * 100;
+    return Math.floor(moyenne);
+  }
   return (
     <>
       <Header />
@@ -48,7 +80,7 @@ const Index = (props) => {
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) =>   navigate(`/Backend_Projects/`)}
                       size="sm"
                     >
                       See all
