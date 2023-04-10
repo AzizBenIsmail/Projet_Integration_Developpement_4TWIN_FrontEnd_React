@@ -68,9 +68,34 @@ export default function Register() {
       }
     );
 
-    console.log(res.data);
-    console.log(res.data.message);
-    setmessage(res.data.message);
+
+    if(res.data.message){
+      console.log("there's an error");
+      console.log(res);
+      console.log(res.data.message);
+      setmessage(res.data.message);
+  
+    }
+    else{
+      console.log(res);
+      console.log(res.data.message);
+      setmessage(res.data.message);
+      const token = res.data;
+      // Set cookie
+      Cookies.set('user', JSON.stringify(token), { expires: 24/24 }); 
+      // expires in 2 hours
+      const userCookie = Cookies.get('user');
+      console.log('Cookie set:', userCookie);
+      const u = JSON.parse(Cookies.get('user')).token;
+    //const result = u.token;
+      console.log(u);
+      window.location.replace(`/landing-page/`);
+  
+    }
+
+
+    
+
     // Check if email is already taken
   };
   const handleGoogleLogin = async () => {
