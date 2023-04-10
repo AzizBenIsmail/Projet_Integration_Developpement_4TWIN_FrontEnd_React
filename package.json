@@ -68,6 +68,7 @@
     "mdb-react-ui-kit": "^6.0.0",
     "moment": "2.29.4",
     "nouislider": "14.1.1",
+    "peerjs": "^1.4.7",
     "react": ">=16.0.0",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "2.11.1",
@@ -83,7 +84,8 @@
     "reactstrap": "8.4.1",
     "redux": "^4.2.1",
     "sass": "1.53.0",
-    "socket.io-client": "^4.6.1"
+    "socket.io-client": "^4.6.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",
