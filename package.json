@@ -68,6 +68,7 @@
     "mdb-react-ui-kit": "^6.0.0",
     "moment": "2.29.4",
     "nouislider": "14.1.1",
+    "peerjs": "^1.4.7",
     "react": ">=16.0.0",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "2.11.1",

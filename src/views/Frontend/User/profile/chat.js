@@ -20,6 +20,7 @@ import { error } from "jquery";
 import { getFakeLocation } from "./FAKE_LOCATION";
 import { connectionWithSocketIOServer } from "socketConnection/socketConn";
 import { login } from "socketConnection/socketConn";
+import { connectWithPeerServer } from "realtimeCommunication/webRTCHandler";
 
 const locationOptions = {
   enableHightAccuracy: true,
@@ -69,6 +70,8 @@ const [isVisible, setIsVisible] = useState(true);
 useEffect(()=>{
 if(myLocation){
   connectionWithSocketIOServer();
+  connectWithPeerServer();
+
 }
 },[
   myLocation
