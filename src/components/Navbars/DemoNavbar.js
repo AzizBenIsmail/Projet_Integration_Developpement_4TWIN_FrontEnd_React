@@ -166,6 +166,17 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
+                  <DropdownToggle nav to="/eventsFablab" tag={Link}>
+                    <i className="ni ni-collection d-lg-none mr-1" />
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Events
+                    </span>
+                  </DropdownToggle>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav>
                   <DropdownToggle nav>
                     <i className="ni ni-collection d-lg-none mr-1" />
                     <span
@@ -282,6 +293,10 @@ export default function NavbarF() {
                       <DropdownItem to="/ProjectsUser" tag={Link}>
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage you Project</span>
+                      </DropdownItem>
+                      <DropdownItem to="/eventsFablab?id=643216cd888293912452e8eb" tag={Link}>
+                        <i className="ni ni-settings-gear-65" />
+                        <span>Manage your Event</span>
                       </DropdownItem>
                       <DropdownItem onClick={(e) => navigate(`/InvestUser`)}>
                         <i className="ni ni-calendar-grid-58" />
