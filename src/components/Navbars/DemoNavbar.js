@@ -294,7 +294,7 @@ export default function NavbarF() {
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage you Project</span>
                       </DropdownItem>
-                      <DropdownItem to="/eventsFablab?id=643216cd888293912452e8eb" tag={Link}>
+                      <DropdownItem to="/eventsFablab/643216cd888293912452e8eb" tag={Link}>
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage your Event</span>
                       </DropdownItem>

@@ -126,7 +126,9 @@ function App() {
           />
 
           {/* Events */}
-          <Route path="/eventsFablab" element={<EventsFablab />} />
+          <Route path="/eventsFablab/" element={<EventsFablab />} />
+          <Route path="/eventsFablab/:id" element={<EventsFablab fablabEvent={true}/>} />
+
           <Route path="/addEvent" element={<AddEvent />} />
 
           {/* chat and map*/}

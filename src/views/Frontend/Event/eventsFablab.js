@@ -21,7 +21,7 @@ import {
   CardText,
   CardTitle
 } from "reactstrap";
-import { useNavigate , useLocation} from "react-router-dom";
+import { useNavigate , useParams} from "react-router-dom";
 import Cookies from 'js-cookie';
 import "assetsFrontOffice/vendor/nucleo/css/nucleo.css";
 import "assetsFrontOffice/vendor/font-awesome/css/font-awesome.min.css";
@@ -29,13 +29,13 @@ import "assetsFrontOffice/vendor/font-awesome/css/font-awesome.min.css";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import axios from 'axios';
 
-export default function EventsFablab() {
+export default function EventsFablab(props) {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
-
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  console.log(searchParams.get('id')); // output: 'value1'
+  const [goingEvents, setGoingEvents] = useState([]);
+  const [interestedEvents, setInterestedEvents] = useState([]);
+  
+  const { id } = useParams();
 
       /////cookies
       if (!Cookies.get("user")) {
@@ -68,10 +68,7 @@ export default function EventsFablab() {
       }
       return `${durationInDays} days`;
     }
-    const getAllEventsFablab=async()=>{
-      const url = searchParams.get('id')
-      ? `http://localhost:5000/events/creator?id=${searchParams.get('id')}`
-      : 'http://localhost:5000/events/';
+    const getAllEventsFablab =async(url)=>{
       const res = await axios.get(url)
         .then(res => {
           console.log(res.data);
@@ -82,13 +79,45 @@ export default function EventsFablab() {
           console.log(err);
         });
     }
+
+    const update = async (reaction,eventId) => {
+     
+      const formData = new FormData();
+      formData.append("userId", "643216cd888293912452e8eb");
+      formData.append("reaction", reaction);
+      console.log(formData);
+      try {
+        const res = await axios.put(`http://localhost:5000/events/${eventId}`, formData);
+        console.log(res.data);
+        console.log(res.data.message);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const interested=(e)=>{
+      update("interested",e)
+      setInterestedEvents(prevInterestedEvents => [...prevInterestedEvents, e]);
+      getAllEventsFablab('http://localhost:5000/events/')
+    };
+
+    const going = (e) =>{
+      //console.log(e)
+      update("going",e)
+      setGoingEvents(prevGoingEvents => [...prevGoingEvents, e]);
+      getAllEventsFablab('http://localhost:5000/events/')
+      
+    };
     useEffect(() => {
-      getAllEventsFablab(); 
+      const url =  (props.fablabEvent && id)
+      ? `http://localhost:5000/events/creator?id=${id}`
+      : 'http://localhost:5000/events/'; 
+      getAllEventsFablab(url); 
       const interval = setInterval(() => {
-          getAllEventsFablab(); // appel répété toutes les 10 secondes
+          getAllEventsFablab(url); // appel répété toutes les 10 secondes
         }, 10000);
-        return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant   
-    }, [events]);
+        return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
+    }, [id, props.fablabEvent]);
+    
   return (
     <>
       <DemoNavbar />
@@ -139,12 +168,12 @@ export default function EventsFablab() {
             <Row className="justify-content-center">
               <Col>
                 <Row className="row-grid">
-                {events.map((e) => (
+                {events.map((event) => (
                   <Col lg="4" className="py-4">
                   <Card style={{ width: "21rem" }}>
                     <CardImg
                         alt="..."
-                        src={`http://localhost:5000/images/${e.event_img}`}
+                        src={`http://localhost:5000/images/${event.event_img}`}
                         top
                         style={{ height: '200px', objectFit: 'cover' }}
                     />
@@ -153,25 +182,26 @@ export default function EventsFablab() {
                             
                             <Badge className="badge-default" pill>
                             <i className="ni ni-calendar-grid-58" style={{marginRight:"5px"}}> </i> 
-                            {calculateDurationInDays(e.start_date, e.end_date)}      
+                            {calculateDurationInDays(event.start_date, event.end_date)}      
                             </Badge>
                            
                             <Badge color="primary" pill className="ml-2" >
                             <i className="ni ni-square-pin" style={{marginRight:"5px"}}> </i> 
-                             {e.location}
+                             {event.location}
                              
                             </Badge>
                             <Badge color="info" pill className="ml-1" >
                             <i className="ni ni-single-02" style={{marginRight:"5px"}}> </i> 
-                             {e.participants.length} participants
+                             {event.participants.length} participants
                              
                             </Badge>
                             
                           </div>
 
-                        <CardTitle>{e.title}</CardTitle>
+                        <CardTitle>{event.title}</CardTitle>
                         <CardText>
-                         {e.description}
+                         {event.description}
+                      
                         </CardText>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <Button
@@ -182,13 +212,17 @@ export default function EventsFablab() {
                             >
                             Show More
                             </Button>
-                            {!(searchParams.get('id')) && <div style={{ display: 'flex', alignItems: 'center', marginLeft: '55px',marginTop:"20px" }}>
+                            {!id && <div style={{ display: 'flex', alignItems: 'center', marginLeft: '55px',marginTop:"20px" }}>
                               <div style={{ display: 'flex', alignItems: 'center' ,flexDirection: "column"}}>
-                                  <i className="ni circle ni-favourite-28" style={{backgroundColor:"#f5365c",color:"#f4f5f7",cursor:"pointer"}}> </i> 
+                                  <i className={`ni circle ni-favourite-28 ${
+                                         interestedEvents.includes(event._id) ? 'bg-danger text-white' : 'bg-Secondary text-Default'
+                                           }`} style={{cursor:"pointer"}} onClick={() => interested(event._id)}> </i> 
                                   <p>Interested </p>
                               </div>
                               <div style={{ display: 'flex', alignItems: 'center' ,flexDirection: "column",marginLeft: '20px'}}>
-                                  <i className="ni circle ni-check-bold" style={{backgroundColor:"#2dce89",color:"#f4f5f7",cursor:"pointer"}}> </i>
+                                  <i className={`ni circle ni-check-bold ${
+                                         goingEvents.includes(event._id) ? 'bg-green text-white' : 'bg-Secondary text-Default'
+                                           }`} style={{cursor:"pointer"}} onClick={() => going(event._id)}> </i>
                                   <p>Going</p>
                               </div>
                               </div>
