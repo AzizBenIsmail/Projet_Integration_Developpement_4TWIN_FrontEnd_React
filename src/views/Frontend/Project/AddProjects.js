@@ -109,7 +109,7 @@ export default function Landing() {
                             aria-label="Titre du projet"
                           />
                         </InputGroup>
-                        {message === "title is already taken" ? (
+                        {message === "title is already taken" ||message === "title is a required field"? (
                           <label style={{ color: "red" }}>
                             <i className="ni ni-fat-remove" />
                             title is already taken

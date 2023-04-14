@@ -18,51 +18,37 @@ import {
   Media,
 } from "reactstrap";
 import Download from "../../IndexSections/Download.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getProjects } from "../../../services/apiProject";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
+import { getUserAuth } from "../../../services/apiUser.js";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function Landing() {
-    /////cookies
-    if (!Cookies.get("user")) {
-      window.location.replace("/login-page");
-    }
-  
-    const token = JSON.parse(Cookies.get("user")).token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
+
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
   ////////
   const navigate = useNavigate();
+  const [user, setuser] = useState([]);
+  const param = useParams();
 
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
-
-  const handleNameFocus = () => {
-    setNameFocused(true);
-  };
-
-  const handleNameBlur = () => {
-    setNameFocused(false);
-  };
-
-  const handleEmailFocus = () => {
-    setEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setEmailFocused(false);
-  };
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     getAllProject(config);
+    getUserFunction(config);
     const interval = setInterval(() => {
       getAllProject(config); // appel répété toutes les 10 secondes
+      getUserFunction(config);
     }, 2000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
@@ -88,16 +74,28 @@ export default function Landing() {
     return words.slice(0, 9).join(" ");
   }
   function isMontantActuelGreaterOrEqual(project) {
-    return project.montant_actuel >= project.montant_Final;
+    return (
+      project.montant_actuel >= project.montant_Final ||
+      project.numberOfPeople <= project.numberOfPeople_actuel ||
+      project.creator == user._id
+    );
   }
 
   function isGreaterOrEqual(project) {
     if (project.montant_actuel >= project.montant_Final)
-    return "py-5 icon-shape-success";
-    else
-    return "py-5 ";
+      return "py-5 icon-shape-success";
+    else return "py-5 ";
   }
-  
+  const getUserFunction = async (config) => {
+    const res = await getUserAuth(param.id, config)
+      .then((res) => {
+        setuser(res.data.user);
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <DemoNavbar />
@@ -130,9 +128,7 @@ export default function Landing() {
                       <Button
                         className="btn-icon mb-3 mb-sm-0"
                         color="info"
-                        onClick={(e) =>
-                          navigate(`/ProjectsUser`)
-                        }
+                        onClick={(e) => navigate(`/ProjectsUser`)}
                       >
                         <span className="btn-inner--icon mr-1">
                           <i className="ni ni-settings" />
@@ -294,9 +290,7 @@ export default function Landing() {
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(
-                                `/AddInvest/${project._id}`
-                              )
+                              navigate(`/AddInvest/${project._id}`)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>

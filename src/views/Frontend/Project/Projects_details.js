@@ -65,7 +65,7 @@ export default function Landing() {
         console.log(err);
       });
   };
-  const getAllInvest = async ( config) => {
+  const getAllInvest = async (config) => {
     const res = await getlisteInverstors(param.id, config)
       .then((res) => {
         setInvests(res.data.invests);
@@ -114,6 +114,12 @@ export default function Landing() {
     const annee = date.format("YYYY");
     return "" + annee + "/" + mois + "/" + jour + "";
   };
+  function isMontantActuelGreaterOrEqual(project) {
+    return (
+      project.montant_actuel >= project.montant_Final ||
+      project.numberOfPeople <= project.numberOfPeople_actuel
+    );
+  }
   return (
     <>
       <DemoNavbar />
@@ -238,35 +244,31 @@ export default function Landing() {
                   </div>
                 </div>{" "}
                 <div class="d-flex align-items-center">
-                  
-                    <div class="mr-1">investor</div>
-                    <div class="mx-1">
-                      <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>:
-                    </div>
-                    {invests.map((Invest) => (
-                  <Media className="align-items-center ">
-                    <span
-                      className="avatar avatar-sm rounded-circle "
-                      key={Invest._id}
-                    >
-                      <img
-                        alt="..."
-                        src={`http://localhost:5000/images/${Invest.image_user}`}
-                      />
-                    </span>
-                  </Media>
-
-                ))}
+                  <div class="mr-1">investor</div>
+                  <div class="mx-1">
+                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>:
                   </div>
+                  {invests.map((Invest) => (
+                    <Media className="align-items-center ">
+                      <span
+                        className="avatar avatar-sm rounded-circle "
+                        key={Invest._id}
+                      >
+                        <img
+                          alt="..."
+                          src={`http://localhost:5000/images/${Invest.image_user}`}
+                        />
+                      </span>
+                    </Media>
+                  ))}
+                </div>
                 <div className="progress-wrapper">
                   <div className="progress-info">
                     <div className="progress-label">
                       <span>
                         Task completed : .
-                                  {moyenne(
-                                    project.montant_actuel,
-                                    project.montant_Final
-                                  )}                        %
+                        {moyenne(project.montant_actuel, project.montant_Final)}{" "}
+                        %
                       </span>
                     </div>
                     <div className="progress-percentage">
@@ -286,6 +288,7 @@ export default function Landing() {
                 </div>
               </Col>
               <Button
+                disabled={isMontantActuelGreaterOrEqual(project)}
                 className="btn-1 ml-1 mt-4"
                 color="success"
                 outline

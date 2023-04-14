@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
 import Cookies from "js-cookie";
 import {
-  updateUser,
-  getUser,
-  addUser,
   getUserAuth,
 } from "../../services/apiUser";
 
