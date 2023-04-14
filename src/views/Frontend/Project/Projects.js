@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import classnames from "classnames";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserAuth } from "../../../services/apiUser.js";
 import {
   Badge,
   Button,
@@ -17,7 +18,6 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
@@ -37,15 +37,18 @@ export default function Landing() {
     },
   };
   ////////
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
 
+  const [user, setuser] = useState([]);
+  const param = useParams();
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     getAllProject(config);
+    getUserFunction(config);
+
     const interval = setInterval(() => {
       getAllProject(config); // appel répété toutes les 10 secondes
+      getUserFunction(config);
     }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
@@ -64,14 +67,23 @@ export default function Landing() {
     const moyenne = (entier1 / entier2) * 100;
     return Math.floor(moyenne);
   }
-
+  const getUserFunction = async (config) => {
+    const res = await getUserAuth(param.id, config)
+      .then((res) => {
+        setuser(res.data.user);
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   function isMontantActuelGreaterOrEqual(project) {
     return (
       project.montant_actuel >= project.montant_Final ||
-      project.numberOfPeople <= project.numberOfPeople_actuel
+      project.numberOfPeople <= project.numberOfPeople_actuel ||
+      project.creator == user._id
     );
   }
-
   function getFirstTenWords(str) {
     // Supprimer les caractères de ponctuation et diviser la chaîne en mots
     const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);

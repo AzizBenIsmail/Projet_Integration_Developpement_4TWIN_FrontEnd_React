@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import classnames from "classnames";
+import { getUserAuth } from "../../../services/apiUser.js";
 import {
   Badge,
   Button,
@@ -47,12 +47,17 @@ export default function Landing() {
   const [invests, setInvests] = useState([]);
 
   const [user, setuser] = useState([]);
+  const [userAuth, setuserAuth] = useState([]);
+
   useEffect(() => {
     getoneProject(config);
     getCreator(config);
     getAllInvest(config);
+    getUserFunction(config);
+
     const interval = setInterval(() => {
       getoneProject(config);
+      getUserFunction(config);
     }, 1000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
@@ -85,6 +90,15 @@ export default function Landing() {
         console.log(err);
       });
   }
+  const getUserFunction = async (config) => {
+    const res = await getUserAuth(param.id, config)
+      .then((res) => {
+        setuserAuth(res.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   function moyenne(entier1, entier2) {
     const moyenne = (entier1 / entier2) * 100;
     return Math.floor(moyenne);
@@ -115,9 +129,11 @@ export default function Landing() {
     return "" + annee + "/" + mois + "/" + jour + "";
   };
   function isMontantActuelGreaterOrEqual(project) {
+    console.log(project.creator, userAuth._id);
     return (
       project.montant_actuel >= project.montant_Final ||
-      project.numberOfPeople <= project.numberOfPeople_actuel
+      project.numberOfPeople <= project.numberOfPeople_actuel ||
+      project.creator == userAuth._id
     );
   }
   return (
