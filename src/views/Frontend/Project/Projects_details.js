@@ -54,8 +54,9 @@ export default function Landing() {
     getCreator(config);
     getAllInvest(config);
     const interval = setInterval(() => {
-      getoneProject();
-    }, 5000);
+      getoneProject(config);
+    }, 1000);
+    return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
   const getoneProject = async (config) => {
     const res = await getProject(param.id, config)
