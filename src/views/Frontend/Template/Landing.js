@@ -87,6 +87,17 @@ export default function Landing() {
     // Retourner les 10 premiers mots
     return words.slice(0, 9).join(" ");
   }
+  function isMontantActuelGreaterOrEqual(project) {
+    return project.montant_actuel >= project.montant_Final;
+  }
+
+  function isMontantActuelGreaterOrEqual(project) {
+    if (project.montant_actuel >= project.montant_Final)
+    return "py-5 icon-shape-success";
+    else
+    return "py-5 ";
+  }
+  
   return (
     <>
       <DemoNavbar />
@@ -177,7 +188,7 @@ export default function Landing() {
                         className="card-lift--hover shadow border-0"
                         key={project._id}
                       >
-                        <CardBody className="py-5">
+                        <CardBody className={isMontantActuelGreaterOrEqual(project)}>
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <div className=" icon-shape rounded-circle mb-4">
                             {/* <i className="ni ni-check-bold" /> */}
@@ -277,6 +288,7 @@ export default function Landing() {
                             More Details
                           </Button>
                           <Button
+                            disabled={isMontantActuelGreaterOrEqual(project)}
                             className="btn-1 ml-1 mt-4"
                             color="success"
                             outline

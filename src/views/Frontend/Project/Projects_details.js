@@ -42,8 +42,6 @@ export default function Landing() {
     },
   };
   ////////
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
 
   const [project, setProject] = useState([]);
   const [invests, setInvests] = useState([]);
@@ -253,7 +251,7 @@ export default function Landing() {
                     >
                       <img
                         alt="..."
-                        src={`http://localhost:5000/images/${Invest.investor.image_user}`}
+                        src={`http://localhost:5000/images/${Invest.image_user}`}
                       />
                     </span>
                   </Media>
