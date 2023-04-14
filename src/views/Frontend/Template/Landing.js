@@ -91,7 +91,7 @@ export default function Landing() {
     return project.montant_actuel >= project.montant_Final;
   }
 
-  function isMontantActuelGreaterOrEqual(project) {
+  function isGreaterOrEqual(project) {
     if (project.montant_actuel >= project.montant_Final)
     return "py-5 icon-shape-success";
     else
@@ -188,7 +188,7 @@ export default function Landing() {
                         className="card-lift--hover shadow border-0"
                         key={project._id}
                       >
-                        <CardBody className={isMontantActuelGreaterOrEqual(project)}>
+                        <CardBody className={isGreaterOrEqual(project)}>
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <div className=" icon-shape rounded-circle mb-4">
                             {/* <i className="ni ni-check-bold" /> */}
