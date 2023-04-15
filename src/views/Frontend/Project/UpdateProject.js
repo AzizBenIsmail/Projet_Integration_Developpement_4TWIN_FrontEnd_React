@@ -13,10 +13,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProject } from "../../../services/apiProject";
@@ -25,19 +27,20 @@ import { differenceInYears } from "date-fns";
 export default function Landing() {
   const navigate = useNavigate();
   const param = useParams();
-      /////cookies
-      if (!Cookies.get("user")) {
-        window.location.replace("/login-page");
-      }
-    
-      const token = JSON.parse(Cookies.get("user")).token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    ////////
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
+
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  ////////
   let formData = new FormData();
+  const [message, setmessage] = useState();
   const [Project, setProject] = useState({
     _id: param.id,
     title: "",
@@ -48,7 +51,7 @@ export default function Landing() {
     montant_Final: "",
     location: "",
     Duration: "",
-    creator:""
+    creator: "",
   });
   const handlechange = (e) => {
     setProject({ ...Project, [e.target.name]: e.target.value });
@@ -56,6 +59,10 @@ export default function Landing() {
   };
 
   const add = async (e) => {
+    toast.success(
+      "Votre modification est en cours de traitement. Veuillez ne pas paniquer si cette procédure prend un peu de temps. Votre description passe par une validation automatique par l\'IA.",
+      { autoClose: 35000, position: "top-center" }
+    );
     const {
       _id,
       title,
@@ -66,32 +73,44 @@ export default function Landing() {
       location,
       Duration,
     } = Project;
-    const res = await updateProject(Project,param.id,config).then(navigate(`/ProjectsUser`)).catch((error) => {
-      console.log(error.response.data.message);
-    });
+    const res = await updateProject(Project, param.id, config)
+      .then()
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+      console.log(res.data);
+      console.log(res.data.message);
+      setmessage(res.data.message);
+      if (res.data.message == undefined) {
+        navigate("/landing-page");
+      }
   };
-  // 
+  //
   useEffect(() => {
     getProjectFunction(config);
   }, []);
 
   const getProjectFunction = async (config) => {
-    const response = await getProject(param.id,config);
+    const response = await getProject(param.id, config);
     console.log(response.data.project);
     setProject(response.data.project);
   };
   return (
     <>
-      <DemoNavbar />
+      <DemoNavbar /> <ToastContainer />
       <main>
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
           <Container className="pt-lg-7">
             <Row className="justify-content-center">
-              <Col lg="5"> <div className="ml-9 text-success font-weight-bold" >Manage Your Project</div>
+              <Col lg="5">
+                {" "}
+                <div className="ml-9 text-success font-weight-bold">
+                  Manage Your Project
+                </div>
                 <Card className="bg-secondary shadow border-0">
                   <CardBody className="px-lg-5 py-lg-5">
-                    <Form >
+                    <Form>
                       <Form.Group>
                         <Form.Label>Titre du projet :</Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
@@ -111,6 +130,15 @@ export default function Landing() {
                           />
                         </InputGroup>
                       </Form.Group>
+                      {message === "title is already taken" ||
+                        message === "title is a required field" ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            title is already taken
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       <Form.Group>
                         <Form.Label>Description :</Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
@@ -127,6 +155,16 @@ export default function Landing() {
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
+                        {message ===
+                        "description must contain min 4 characters max 50 characters" ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            description must contain min 4 characters max 50
+                            characters
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Domaine : {Project.domaine} </Form.Label>
@@ -225,6 +263,16 @@ export default function Landing() {
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
+                        {message ===
+                        "The numberOfPeople must be a positive number max 100 min 10" ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            The numberOfPeople must be a positive number min 10
+                            max 100
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Montant final :</Form.Label>
@@ -242,6 +290,17 @@ export default function Landing() {
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
+                        {message ===
+                          "The montant_Final must be a positive number min 1000 dt" ||
+                        'montant_Final must be a `number` type, but the final value was: `NaN` (cast from the value `""`).' ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            "The montant_Final must be a positive number min
+                            1000 dt"
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Location :</Form.Label>

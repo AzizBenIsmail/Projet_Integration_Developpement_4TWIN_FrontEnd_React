@@ -16,7 +16,8 @@ import {
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function Landing() {
@@ -34,6 +35,7 @@ export default function Landing() {
   ////////
   const navigate = useNavigate();
   const param = useParams();
+  const [InvestNotif, setInvestNotif] = useState(false);
 
   let formData = new FormData();
   const [image, setImage] = useState();
@@ -57,6 +59,10 @@ export default function Landing() {
     console.log(e.target.files[0]);
   };
   const add = async (e) => {
+    toast.success(
+      "Successfully applied for this job, you will receive an e-mail sooner !",
+      { autoClose: 10000, position: "top-center" }
+    );
     formData.append("title", Project.title);
     formData.append("description", Project.description);
     formData.append("domaine", Project.domaine);
@@ -79,7 +85,7 @@ export default function Landing() {
   };
   return (
     <>
-      <DemoNavbar />
+      <DemoNavbar /> <ToastContainer />
       <main>
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
@@ -109,7 +115,8 @@ export default function Landing() {
                             aria-label="Titre du projet"
                           />
                         </InputGroup>
-                        {message === "title is already taken" ||message === "title is a required field"? (
+                        {message === "title is already taken" ||
+                        message === "title is a required field" ? (
                           <label style={{ color: "red" }}>
                             <i className="ni ni-fat-remove" />
                             title is already taken
@@ -244,8 +251,8 @@ export default function Landing() {
                         "The numberOfPeople must be a positive number max 100 min 10" ? (
                           <label style={{ color: "red" }}>
                             <i className="ni ni-fat-remove" />
-                            The numberOfPeople must be a positive number 
-                            min 10 max 100
+                            The numberOfPeople must be a positive number min 10
+                            max 100
                           </label>
                         ) : (
                           ""
@@ -260,6 +267,7 @@ export default function Landing() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
+                            min={1000}
                             placeholder="final amount"
                             name="montant_Final"
                             type="number"
@@ -267,7 +275,8 @@ export default function Landing() {
                           />
                         </InputGroup>
                         {message ===
-                        "The montant_Final must be a positive number min 1000 dt" ? (
+                          "The montant_Final must be a positive number min 1000 dt" ||
+                        'montant_Final must be a `number` type, but the final value was: `NaN` (cast from the value `""`).' ? (
                           <label style={{ color: "red" }}>
                             <i className="ni ni-fat-remove" />
                             "The montant_Final must be a positive number min

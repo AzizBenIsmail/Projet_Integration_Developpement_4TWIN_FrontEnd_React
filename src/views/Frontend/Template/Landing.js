@@ -504,7 +504,24 @@ export default function Landing() {
                           <h5 className="display-4 text-success">
                             {ProjectValider.title}
                           </h5>
-                          <p>{ProjectValider.description}</p>
+                          <p>{getFirstTenWords(ProjectValider.description)}
+                            {ProjectValider.description.length >= 10 ? (
+                              <botton
+                                onClick={(e) =>
+                                  navigate(
+                                    `/Projects_details/${ProjectValider._id}/${ProjectValider.creator}`
+                                  )
+                                }
+                              >
+                                ...
+                                <i
+                                  class="fa fa-sort-desc"
+                                  aria-hidden="true"
+                                ></i>
+                              </botton>
+                            ) : (
+                              ""
+                            )}</p>
                           <div className="font-weight-bold">
                             Domain :
                             <Badge color="success" pill className="mr-5 ml-2">
