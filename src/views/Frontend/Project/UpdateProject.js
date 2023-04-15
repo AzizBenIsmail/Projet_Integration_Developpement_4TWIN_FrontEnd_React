@@ -260,23 +260,6 @@ export default function Landing() {
                           />
                         </InputGroup>
                       </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Durée : .{Project.Duration}</Form.Label>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-image" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Form.Control
-                            placeholder="duration"
-                            name="duration"
-                            value={Project.Duration}
-                            type="date"
-                            onChange={(e) => handlechange(e)}
-                          />
-                        </InputGroup>
-                      </Form.Group>
                       <Row className="my-4">
                         <Col xs="12">
                           <div className="custom-control custom-control-alternative custom-checkbox">

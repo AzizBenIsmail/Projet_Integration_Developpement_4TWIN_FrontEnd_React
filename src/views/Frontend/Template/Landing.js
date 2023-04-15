@@ -21,6 +21,7 @@ import { getProjects, getProjectsValider } from "../../../services/apiProject";
 import Cookies from "js-cookie";
 import { getUserAuth } from "../../../services/apiUser.js";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
+import "../../../assets/css.css";
 
 export default function Landing() {
   /////cookies
@@ -116,56 +117,58 @@ export default function Landing() {
           {/* shape Hero */}
           <section className="section section-lg section-shaped pb-250">
             <div className="shape shape-style-1 shape-default" />
+            <div class="car">
+              <Container className="py-lg-md d-flex">
+                <div className="col px-0">
+                  <Row>
+                    <Col lg="16 ">
+                      <br></br>
+                      <br></br>
+                      <h1 className="display-3 text-white">
+                        Support the Ecological Project in Africa
+                        <span>
+                          "Empower Your Dreams: Join Our Crowdfunding Community
+                          Today!"
+                        </span>
+                      </h1>
+                      <p className="lead text-white">
+                        Welcome to the crowdfunding page dedicated to the
+                        ecological project in Africa. This project aims to
+                        improve the living conditions of rural communities in
+                        Africa while preserving the environment..
+                      </p>
+                      <div className="btn-wrapper">
+                        <Button
+                          className="btn-icon mb-3 mb-sm-0"
+                          color="info"
+                          onClick={(e) => navigate(`/ProjectsUser`)}
+                        >
+                          <span className="btn-inner--icon mr-1">
+                            <i className="ni ni-settings" />
+                          </span>
+                          <span className="btn-inner--text">
+                            Manage you Project
+                          </span>
+                        </Button>
+                        <Button
+                          className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
+                          color="default"
+                          onClick={(e) => navigate(`/AddProjects`)}
+                        >
+                          <span className="btn-inner--icon mr-1">
+                            <i className="fa fa-lightbulb-o" />
+                          </span>
+                          <span className="btn-inner--text">
+                            Create Your Project
+                          </span>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Container>
+            </div>
 
-            <Container className="py-lg-md d-flex">
-              <div className="col px-0">
-                <Row>
-                  <Col lg="16 ">
-                    <br></br>
-                    <br></br>
-                    <h1 className="display-3 text-white">
-                      Support the Ecological Project in Africa
-                      <span>
-                        "Empower Your Dreams: Join Our Crowdfunding Community
-                        Today!"
-                      </span>
-                    </h1>
-                    <p className="lead text-white">
-                      Welcome to the crowdfunding page dedicated to the
-                      ecological project in Africa. This project aims to improve
-                      the living conditions of rural communities in Africa while
-                      preserving the environment..
-                    </p>
-                    <div className="btn-wrapper">
-                      <Button
-                        className="btn-icon mb-3 mb-sm-0"
-                        color="info"
-                        onClick={(e) => navigate(`/ProjectsUser`)}
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="ni ni-settings" />
-                        </span>
-                        <span className="btn-inner--text">
-                          Manage you Project
-                        </span>
-                      </Button>
-                      <Button
-                        className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
-                        color="default"
-                        onClick={(e) => navigate(`/AddProjects`)}
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="fa fa-lightbulb-o" />
-                        </span>
-                        <span className="btn-inner--text">
-                          Create Your Project
-                        </span>
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            </Container>
             {/* SVG separator */}
             <div className="separator separator-bottom separator-skew">
               <svg
