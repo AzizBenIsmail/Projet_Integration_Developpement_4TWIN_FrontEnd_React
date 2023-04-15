@@ -161,35 +161,6 @@ export default function Invest() {
                                   }}/>
                             </Badge>
                           </div>
-                          {/* <div className="progress-wrapper">
-                            <div className="progress-info">
-                              <div className="progress-label">
-                                <span>
-                                  Task completed
-                                  {moyenne(
-                                    project.montant_Final,
-                                    project.montant_actuel
-                                  )}
-                                  %
-                                </span>
-                              </div>
-                              <div className="progress-percentage">
-                                <span>
-                                  {project.montant_actuel}/
-                                  {project.montant_Final}
-                                  <i className="fa fa-usd mr-2 ml-2" />
-                                </span>
-                              </div>
-                            </div>
-                            <Progress
-                              max={project.montant_Final}
-                              value={project.montant_actuel}
-                              color="default"
-                            />
-                            {project.numberOfPeople_actuel}/
-                            {project.numberOfPeople}
-                            <i className="fa fa-users mr-2 ml-2" />
-                          </div> */}
                           <Button
                             className="btn-1 ml-1 mt-4"
                             color="success"
@@ -208,78 +179,6 @@ export default function Invest() {
                       </Card>
                     </Col>
                   ))}
-                  {/* <Col lg="4">
-                    <Card className="card-lift--hover shadow border-0">
-                      <CardBody className="py-5">
-                        <div className="icon icon-shape icon-shape-success rounded-circle mb-4">
-                          <i className="ni ni-istanbul" />
-                        </div>
-                        <h6 className="text-success text-uppercase">
-                          Build Something
-                        </h6>
-                        <p className="description mt-3">
-                          Argon is a great free UI package based on Bootstrap 4
-                          that includes the most important components and
-                          features.
-                        </p>
-                        <div>
-                          <Badge color="success" pill className="mr-1">
-                            business
-                          </Badge>
-                          <Badge color="success" pill className="mr-1">
-                            vision
-                          </Badge>
-                          <Badge color="success" pill className="mr-1">
-                            success
-                          </Badge>
-                        </div>
-                        <Button
-                          className="mt-4"
-                          color="success"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Learn more
-                        </Button>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col lg="4">
-                    <Card className="card-lift--hover shadow border-0">
-                      <CardBody className="py-5">
-                        <div className="icon icon-shape icon-shape-warning rounded-circle mb-4">
-                          <i className="ni ni-planet" />
-                        </div>
-                        <h6 className="text-warning text-uppercase">
-                          Prepare Launch
-                        </h6>
-                        <p className="description mt-3">
-                          Argon is a great free UI package based on Bootstrap 4
-                          that includes the most important components and
-                          features.
-                        </p>
-                        <div>
-                          <Badge color="warning" pill className="mr-1">
-                            marketing
-                          </Badge>
-                          <Badge color="warning" pill className="mr-1">
-                            product
-                          </Badge>
-                          <Badge color="warning" pill className="mr-1">
-                            launch
-                          </Badge>
-                        </div>
-                        <Button
-                          className="mt-4"
-                          color="warning"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Learn more
-                        </Button>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
                 </Row>
               </Col>
             </Row>

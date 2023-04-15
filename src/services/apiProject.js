@@ -5,12 +5,18 @@ const apiURL = "http://localhost:5000/project";
 export async function getProjects(config) {
   return await axios.get(apiURL,config);
 }
+
+export async function getProjectsValider(config) {
+  return await axios.get(`${apiURL}/getProjectsValider`,config);
+}
+
 export async function getProject(id,config) {
   return await axios.get(`${apiURL}/${id}`,config);
 }
 export async function getProjectuser(id,config) {
   return await axios.get(`${apiURL}/User/${id}`,config);
 }
+
 export async function addProject(formData,config) {
   return await axios.post(`${apiURL}`, formData, {
     headers: {

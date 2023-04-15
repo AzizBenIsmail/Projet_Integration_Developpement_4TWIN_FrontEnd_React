@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import classnames from "classnames";
 import {
   Badge,
   Button,
@@ -17,9 +16,8 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import Download from "../../IndexSections/Download.js";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProjects } from "../../../services/apiProject";
+import { getProjects, getProjectsValider } from "../../../services/apiProject";
 import Cookies from "js-cookie";
 import { getUserAuth } from "../../../services/apiUser.js";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
@@ -39,6 +37,7 @@ export default function Landing() {
   ////////
   const navigate = useNavigate();
   const [user, setuser] = useState([]);
+  const [ProjectValiders, setProjectValider] = useState([]);
   const param = useParams();
 
   const [projects, setProjects] = useState([]);
@@ -46,9 +45,12 @@ export default function Landing() {
   useEffect(() => {
     getAllProject(config);
     getUserFunction(config);
+    getAllProjectValider(config);
+
     const interval = setInterval(() => {
       getAllProject(config); // appel répété toutes les 10 secondes
       getUserFunction(config);
+      getAllProjectValider(config);
     }, 2000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
@@ -57,6 +59,16 @@ export default function Landing() {
     const res = await getProjects(config)
       .then((res) => {
         setProjects(res.data.projects);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getAllProjectValider = async (config) => {
+    const res = await getProjectsValider(config)
+      .then((res) => {
+        setProjectValider(res.data.projects);
       })
       .catch((err) => {
         console.log(err);
@@ -279,7 +291,6 @@ export default function Landing() {
                               )
                             }
                           >
-                            {" "}
                             <i class="fa fa-eye mr-2" aria-hidden="true"></i>
                             More Details
                           </Button>
@@ -300,78 +311,6 @@ export default function Landing() {
                       </Card>
                     </Col>
                   ))}
-                  {/* <Col lg="4">
-                    <Card className="card-lift--hover shadow border-0">
-                      <CardBody className="py-5">
-                        <div className="icon icon-shape icon-shape-success rounded-circle mb-4">
-                          <i className="ni ni-istanbul" />
-                        </div>
-                        <h6 className="text-success text-uppercase">
-                          Build Something
-                        </h6>
-                        <p className="description mt-3">
-                          Argon is a great free UI package based on Bootstrap 4
-                          that includes the most important components and
-                          features.
-                        </p>
-                        <div>
-                          <Badge color="success" pill className="mr-1">
-                            business
-                          </Badge>
-                          <Badge color="success" pill className="mr-1">
-                            vision
-                          </Badge>
-                          <Badge color="success" pill className="mr-1">
-                            success
-                          </Badge>
-                        </div>
-                        <Button
-                          className="mt-4"
-                          color="success"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Learn more
-                        </Button>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col lg="4">
-                    <Card className="card-lift--hover shadow border-0">
-                      <CardBody className="py-5">
-                        <div className="icon icon-shape icon-shape-warning rounded-circle mb-4">
-                          <i className="ni ni-planet" />
-                        </div>
-                        <h6 className="text-warning text-uppercase">
-                          Prepare Launch
-                        </h6>
-                        <p className="description mt-3">
-                          Argon is a great free UI package based on Bootstrap 4
-                          that includes the most important components and
-                          features.
-                        </p>
-                        <div>
-                          <Badge color="warning" pill className="mr-1">
-                            marketing
-                          </Badge>
-                          <Badge color="warning" pill className="mr-1">
-                            product
-                          </Badge>
-                          <Badge color="warning" pill className="mr-1">
-                            launch
-                          </Badge>
-                        </div>
-                        <Button
-                          className="mt-4"
-                          color="warning"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Learn more
-                        </Button>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
                 </Row>
               </Col>
             </Row>
@@ -532,7 +471,7 @@ export default function Landing() {
                     </div>
                   </div>
                   <div className="pl-4 ">
-                    <h4 className="display-3 text-white">Modern Interface</h4>
+                    <h4 className="display-3 text-white">Project Valider</h4>
                     <p className="text-white">
                       The Arctic Ocean freezes every winter and much of the
                       sea-ice then thaws every summer, and that process will
@@ -540,33 +479,60 @@ export default function Landing() {
                     </p>
                   </div>
                 </div>
-                <Card className="shadow shadow-lg--hover mt-5">
-                  <CardBody>
-                    <div className="d-flex px-3">
-                      <div>
-                        <div className="icon icon-shape bg-gradient-success rounded-circle text-white">
-                          <i className="ni ni-satisfied" />
+                {ProjectValiders.map((ProjectValider) => (
+                  <Card className="shadow shadow-lg--hover mt-3 ">
+                    <CardBody key={ProjectValider._id}>
+                      <div className="d-flex px-3 ">
+                        <div>
+                          <div className="icon icon-shape bg-gradient-success rounded-circle text-white">
+                            <img
+                              alt="..."
+                              src={`http://localhost:5000/images/${ProjectValider.image_project}`}
+                              style={{
+                                width: "300%",
+                                height: "auto",
+                                display: "block",
+                                margin: "10 auto",
+                              }}
+                            />{" "}
+                          </div>
+                        </div>
+                        <div className="pl-4">
+                          <h5 className="display-4 text-success">
+                            {ProjectValider.title}
+                          </h5>
+                          <p>{ProjectValider.description}</p>
+                          <div className="font-weight-bold">
+                            Domain :
+                            <Badge color="success" pill className="mr-5 ml-2">
+                              {ProjectValider.domaine}
+                            </Badge>
+                            Goal :
+                            <Badge color="warning" pill className="ml-2">
+                              {ProjectValider.goal}
+                            </Badge>
+                          </div>
+                          <Button
+                            className="btn-1 mt-4"
+                            color="primary"
+                            outline
+                            type="button"
+                            onClick={(e) =>
+                              navigate(
+                                `/Projects_details/${ProjectValider._id}/${ProjectValider.creator}`
+                              )
+                            }
+                          >
+                            <i class="fa fa-eye mr-2" aria-hidden="true"></i>
+                            More Details
+                          </Button>
                         </div>
                       </div>
-                      <div className="pl-4">
-                        <h5 className="title text-success">Awesome Support</h5>
-                        <p>
-                          The Arctic Ocean freezes every winter and much of the
-                          sea-ice then thaws every summer, and that process will
-                          continue whatever.
-                        </p>
-                        <a
-                          className="text-success"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Learn more
-                        </a>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-                <Card className="shadow shadow-lg--hover mt-5">
+                    </CardBody>
+                  </Card>
+                ))}
+
+                {/* <Card className="shadow shadow-lg--hover mt-5">
                   <CardBody>
                     <div className="d-flex px-3">
                       <div>
@@ -593,7 +559,7 @@ export default function Landing() {
                       </div>
                     </div>
                   </CardBody>
-                </Card>
+                </Card> */}
               </Col>
             </Row>
           </Container>
