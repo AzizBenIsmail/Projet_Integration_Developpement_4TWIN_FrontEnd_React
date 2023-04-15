@@ -57,8 +57,8 @@ const FablabRequestDetails = lazy(() =>
 
 //event Lazy Loading
 const EventsFablab = lazy(() => import("./views/Frontend/Event/eventsFablab"));
-// const AddEvent = lazy(() => import("./views/Frontend/Event/addEvent"));
-
+const AddEvent = lazy(() => import("./views/Frontend/Event/addEvent"));
+const EventDetails = lazy(() => import("./views/Frontend/Event/eventDetails"));
 //Backend Lazy Loading
 const Index = lazy(() => import("./views/Backend/Template/Index.js"));
 const Profile = lazy(() => import("./views/Backend/User/Profile.js"));
@@ -128,8 +128,8 @@ function App() {
           {/* Events */}
           <Route path="/eventsFablab/" element={<EventsFablab />} />
           <Route path="/eventsFablab/:id" element={<EventsFablab fablabEvent={true}/>} />
-
-          {/* <Route path="/addEvent" element={<AddEvent />} /> */}
+          <Route path="/eventDetails/:id" element={<EventDetails />} ></Route>
+          <Route path="/addEvent" element={<AddEvent />} />
 
           {/* chat and map*/}
           <Route path="/map" element={<MapPage />} />
