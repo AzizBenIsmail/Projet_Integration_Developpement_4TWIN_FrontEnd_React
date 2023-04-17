@@ -98,10 +98,15 @@ export default function Landing() {
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
           <Container></Container>
-          <Container className="pt-lg pb-300">
+          <Container className="pt-lg pb-10">
             <Row className="text-center justify-content-center">
               <Col lg="10">
-                <h2 className="display-3 text-white">Build something</h2>
+             
+                <h2 className="display-3 text-white">  <img
+                style={{ width: "150px", height: "100px" }}
+                alt="..."
+                src={require("assets/project-management.png")}
+              />Build something</h2>
                 <p className="lead text-white">
                   According to the National Oceanic and Atmospheric
                   Administration, Ted, Scambos, NSIDClead scentist, puts the
@@ -141,6 +146,7 @@ export default function Landing() {
                         className="card-lift--hover shadow border-0"
                         key={project._id}
                       >
+
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <div className=" icon-shape rounded-circle mb-4">

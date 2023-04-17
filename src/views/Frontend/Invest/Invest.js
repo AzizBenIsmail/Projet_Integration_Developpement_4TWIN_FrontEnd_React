@@ -76,10 +76,14 @@ export default function Invest() {
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
           <Container></Container>
-          <Container className="pt-lg pb-300">
+          <Container className="pt-lg pb-10">
             <Row className="text-center justify-content-center">
               <Col lg="10">
-                <h2 className="display-3 text-white">Your Invest</h2>
+                <h2 className="display-3 text-white"> <img
+                style={{ width: "100px", height: "100px" }}
+                alt="..."
+                src={require("assets/investissement.png")}
+              />Your Invest</h2>
                 <p className="lead text-white">
                   <p class="font-italic">
                     Here are a few pieces of advice to keep in mind when

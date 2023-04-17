@@ -61,7 +61,7 @@ export default function AddInvest() {
     const res = await addInvest(Invest, param.idUser,param.idProject,config)
       if(res.status === 200)
       {
-        toast.success("Successfully applied for this job, you will receive an e-mail sooner !", { position: "top-center" });      }
+        toast.success("Successfully applied for this job, you will receive an e-mail sooner !", { autoClose: 2000, position: "top-center" });      }
         delayFunction() 
 
       }
@@ -72,7 +72,7 @@ export default function AddInvest() {
   function delayFunction() {
     setTimeout(function() {
       navigate(`/landing-page`)
-        }, 4000); // 3000 ms = 3 secondes
+        }, 2000); // 3000 ms = 3 secondes
   }
   return (
     <>
