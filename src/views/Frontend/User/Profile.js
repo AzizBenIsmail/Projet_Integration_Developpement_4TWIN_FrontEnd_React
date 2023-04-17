@@ -18,6 +18,10 @@ import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 //import badgeImg from "./src/new.png";
 import ProfileHeader from "./profile/header";
 import ChatBox from "./profile/chat";
+
+import { getEvaluation } from "../../../services/apiEvaluation";
+
+
 export default function Profile() {
   /////cookies
   if (!Cookies.get("user")) {
@@ -39,6 +43,11 @@ export default function Profile() {
   const [commentCount, setCommentCount] = useState(89);
   const [projects, setProjects] = useState([]);
 
+  const [evaluation, setEvaluation] = useState((10) );
+  
+
+
+
   const [user, setUser] = useState({
     _id: param.id,
     username: "",
@@ -53,16 +62,26 @@ export default function Profile() {
     address: "",
     image_user: "",
   });
-  const { _id, username, first_Name, last_Name, email, phoneNumber, address } =
-    user;
+  const { _id, username, first_Name, last_Name, email, phoneNumber, address } =user;
+
+
+
+
+
+
+
+
 
   useEffect(() => {
+    fetchEvaluation();
     getUserFunction();
     getoneProject();
+    
   }, []);
 
   const getUserFunction = async () => {
     try {
+      
       /////cookies
       const response = await getUserAuth(param.id, config);
       ////////
@@ -144,6 +163,23 @@ export default function Profile() {
       console.log(arr[i]);
     }
   }
+
+  //evaluation
+
+  const fetchEvaluation = async () => {
+    try {
+      const response = await getEvaluation(username, config);
+      // Supposons que la réponse contient un champ 'evaluations' avec un tableau d'évaluations
+      const firstEvaluation = response.data.evaluations[0]; // Accéder à la première évaluation
+      setEvaluation(firstEvaluation);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
   return (
     <>
       <ChatBox user={user} />
@@ -337,16 +373,28 @@ export default function Profile() {
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
-                      <h1>Badges : {countProject(user.invests)}</h1>
+                      <h1>XP : test</h1>
                     </Col>
-                    <img alt="image_" className="rounded-circle" src={"dd"} />
+                    <img alt="image_" className="rounded-circle"  src={`http://localhost:5000/images/${user.image_user}`} />
                   </Row>
                 </div>
               </div>
             </Card>
           </Container>
+          
+
+     
+
         </section>
+
       </main>
+      <div>
+      <h1>Expérience s (XP) des évaluations</h1>
+    
+          <p>Nom : {evaluation.usernameE}</p>
+          <p>XP : {evaluation.xp}</p>
+        </div>
+   
     </>
   );
 }

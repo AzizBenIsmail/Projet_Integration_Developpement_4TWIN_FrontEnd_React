@@ -6,7 +6,7 @@ export async function getEvaluations(config) {
   return await axios.get(apiURL,config);
 }
 export async function getEvaluation(username,config) {
-  return await axios.get(`${apiURL}/getEvaluation/${username}`,config);
+  return await axios.get(`${apiURL}/${username}`,config);
 }
 /*
 export async function getUserAuth(id,config) {
