@@ -21,6 +21,7 @@ import ChatBox from "./profile/chat";
 
 import { getEvaluation } from "../../../services/apiEvaluation";
 
+import { getBadge } from "../../../services/apiBadges";
 
 export default function Profile() {
   /////cookies
@@ -42,20 +43,21 @@ export default function Profile() {
   const [photoCount, setPhotoCount] = useState(10);
   const [commentCount, setCommentCount] = useState(89);
   const [projects, setProjects] = useState([]);
-
-  const [evaluation, setEvaluation] = useState(
-    {
-      username: '', // Utiliser le même nom de propriété que dans localStorage
-      xp: 0,
-      lvl: 0
-    }
-  );
-  
-  // Utiliser les noms de propriétés cohérents pour éviter les conflits
+  const [evaluation, setEvaluation] = useState({
+    usernameE: "", // Utiliser le même nom de propriété que dans localStorage
+    xp: 0,
+    lvl: 0,
+  });
   const { usernameE, xp, lvl } = evaluation;
-  
 
-
+  const [badge, setBadge] = useState({
+    usernameB: "", // Utiliser le même nom de propriété que dans localStorage
+    badgeName: "",
+    badgeDescription: "",
+    date: "",
+    badgeImg: "",
+  });
+  const { usernameB, badgeName, badgeDescription, date, badgeImg } = badge;
 
   const [user, setUser] = useState({
     _id: param.id,
@@ -71,45 +73,37 @@ export default function Profile() {
     address: "",
     image_user: "",
   });
-  const { _id, username, first_Name, last_Name, email, phoneNumber, address } =user;
-
-
-
-
-
-
-
-
+  const { _id, username, first_Name, last_Name, email, phoneNumber, address } =
+    user;
 
   useEffect(() => {
     //fetchEvaluation();
+    //fetchBadges();
     getUserFunction();
     getoneProject();
-    
   }, []);
 
   const getUserFunction = async () => {
     try {
-      
-      
       /////cookies
       const response = await getUserAuth(param.id, config);
       ////////
       setUser(response.data.user);
-      
-      //evaluation
-      const userL=response.data.user.username;
+
+      //evaluation---------
+      const userL = response.data.user.username;
       const response1 = await getEvaluation(userL, config);
       // Supposons que la réponse contient un champ 'evaluations' avec un tableau d'évaluations
       const firstEvaluation = response1.data.evaluations[0]; // Accéder à la première évaluation
       setEvaluation(firstEvaluation);
 
+      const response2 = await getBadge(userL); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+
+      //------------
     } catch (error) {
       console.log(error);
     }
-    
-
-    
   };
 
   const getoneProject = async () => {
@@ -186,7 +180,7 @@ export default function Profile() {
   }
 
   //evaluation
-/*
+  /*
   const fetchEvaluation = async () => {
     try {
       const response = await getEvaluation(username, config);
@@ -198,8 +192,14 @@ export default function Profile() {
     }
   };*/
 
-
-
+  const fetchBadges = async () => {
+    try {
+      const response = await getBadge(username); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      setBadge(response.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -394,7 +394,21 @@ export default function Profile() {
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
-                      <h1>XP : test</h1>
+                      <div>
+                        <h1>{username} Badges</h1>
+                        {badge.length > 0 ? (
+                          badge.map((badge) => (
+                            <div key={badge._id}>
+                              <h3>Name: {badge.badgeName}</h3>
+                              <p>Description: {badge.badgeDescription}</p>
+                              <p>Date: {badge.date}</p>
+                              <p>img: {badge.badgeImg}</p>
+                            </div>
+                          ))
+                        ) : (
+                          <p>Aucun badge trouvé pour {username}</p>
+                        )}
+                      </div>
                     </Col>
                     <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
@@ -406,25 +420,16 @@ export default function Profile() {
                         />
                       </a>
                     </div>
-                  </Col>                  </Row>
+                  </Col>
+                  </Row>
                 </div>
               </div>
             </Card>
           </Container>
-          
-
-     
-
         </section>
-
       </main>
-      <div>
-      <h1>Expérience s (XP) des évaluations</h1>
-    
-          <p>XP : {evaluation.usernameE}</p>
-          <p>XP : {evaluation.lvl}</p>
-        </div>
-   
+ 
+     
     </>
   );
 }
