@@ -43,7 +43,7 @@ export default function Profile() {
   const [commentCount, setCommentCount] = useState(89);
   const [projects, setProjects] = useState([]);
 
-  const [evaluation, setEvaluation] = useState((10) );
+  const [evaluation, setEvaluation] = useState([] );
   
 
 
@@ -73,7 +73,7 @@ export default function Profile() {
 
 
   useEffect(() => {
-    fetchEvaluation();
+    //fetchEvaluation();
     getUserFunction();
     getoneProject();
     
@@ -82,13 +82,23 @@ export default function Profile() {
   const getUserFunction = async () => {
     try {
       
+      
       /////cookies
       const response = await getUserAuth(param.id, config);
       ////////
       setUser(response.data.user);
+      const userloc ="charrada";
+      const response1 = await getEvaluation(userloc, config);
+      // Supposons que la réponse contient un champ 'evaluations' avec un tableau d'évaluations
+      const firstEvaluation = response1.data.evaluations[0]; // Accéder à la première évaluation
+      setEvaluation(firstEvaluation);
+
     } catch (error) {
       console.log(error);
     }
+    
+
+    
   };
 
   const getoneProject = async () => {
@@ -400,8 +410,8 @@ export default function Profile() {
       <div>
       <h1>Expérience s (XP) des évaluations</h1>
     
-          <p>Nom : {evaluation.usernameE}</p>
           <p>XP : {evaluation.xp}</p>
+          <p>XP : {evaluation.lvl}</p>
         </div>
    
     </>
