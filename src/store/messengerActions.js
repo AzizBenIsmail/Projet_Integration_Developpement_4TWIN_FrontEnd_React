@@ -3,8 +3,13 @@ import store from "./store";
 import { addChatMessage } from "Messenger/messengerSlice";
 import * as socketConn from "../socketConnection/socketConn";
 import { addChatbox } from "Messenger/messengerSlice";
-export const sendChatMessage = (receiverSocketId, content) => {
+import Cookies from "js-cookie";
+
+export const sendChatMessage = (receiverSocketId, content ,username) => {
+  const userid = JSON.parse(Cookies.get("user")).user._id;
   const message = {
+    userid,
+    username,
     content,
     receiverSocketId,
     id: uuid(),

@@ -9,6 +9,8 @@ const LeftMessage = ({ content }) => {
 };
 
 const SingleMessage = ({ content, myMessage }) => {
+
+
   return (
     <div
       className="chatbox_message_wrapper"

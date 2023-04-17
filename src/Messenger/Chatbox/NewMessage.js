@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { sendChatMessage } from "../../store/messengerActions";
 
-const NewMessage = ({ socketId }) => {
+const NewMessage = ({ socketId,username }) => {
   const [message, setMessage] = useState("");
   const [inputDisabled, setInputDisabled] = useState(false);
 
@@ -21,10 +21,10 @@ const NewMessage = ({ socketId }) => {
 
   const proceedChatMessage = () => {
     if (onlineUsers.find((user) => user.socketId === socketId)) {
-      sendChatMessage(socketId, message);
+      sendChatMessage(socketId, message,username);
     } else {
       setInputDisabled(true);
-      sendChatMessage(socketId, message);
+      sendChatMessage(socketId, message,username);
     }
   };
 
