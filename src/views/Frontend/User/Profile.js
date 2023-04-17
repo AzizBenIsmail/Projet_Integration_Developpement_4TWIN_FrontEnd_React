@@ -375,8 +375,17 @@ export default function Profile() {
                     <Col lg="9">
                       <h1>XP : test</h1>
                     </Col>
-                    <img alt="image_" className="rounded-circle"  src={`http://localhost:5000/images/${user.image_user}`} />
-                  </Row>
+                    <Col className="order-lg-2" lg="3">
+                    <div className="card-profile-image">
+                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                        <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={`http://localhost:5000/images/${user.image_user}`}
+                        />
+                      </a>
+                    </div>
+                  </Col>                  </Row>
                 </div>
               </div>
             </Card>
