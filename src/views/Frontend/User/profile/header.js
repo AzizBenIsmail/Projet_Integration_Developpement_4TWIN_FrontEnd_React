@@ -106,14 +106,14 @@ const ProfileHeader = (props) => {
               <div className="progress-info">
                 <div className="progress-label">
                   <h1>
-                    <span>LEVEL: 1 </span>
+                    <span>LEVEL: {props.evaluation.lvl} </span>
                   </h1>
                 </div>
                 <div className="progress-percentage">
-                  <span>XP {20} %</span>
+                  <span>XP {props.evaluation.xp} %</span>
                 </div>
               </div>
-              <Progress max="100" value={20} />
+              <Progress max="100" value={props.evaluation.xp} />
             </div>
 
             <div className="progress-wrapper">
