@@ -15,28 +15,31 @@ import {
 } from "reactstrap";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
 export default function Landing() {
-      /////cookies
-      if (!Cookies.get("user")) {
-        window.location.replace("/login-page");
-      }
-    
-      const token = JSON.parse(Cookies.get("user")).token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    ////////
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
+
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  ////////
   const navigate = useNavigate();
   const param = useParams();
+  const [InvestNotif, setInvestNotif] = useState(false);
 
   let formData = new FormData();
   const [image, setImage] = useState();
+  const [message, setmessage] = useState();
   const [Project, setProject] = useState({
     title: "",
     description: "",
@@ -46,7 +49,6 @@ export default function Landing() {
     montant_Final: "",
     location: "",
     image_project: "",
-    duration: "",
   });
   const handlechange = (e) => {
     setProject({ ...Project, [e.target.name]: e.target.value });
@@ -57,6 +59,10 @@ export default function Landing() {
     console.log(e.target.files[0]);
   };
   const add = async (e) => {
+    toast.success(
+      "Successfully applied for this job, you will receive an e-mail sooner !",
+      { autoClose: 10000, position: "top-center" }
+    );
     formData.append("title", Project.title);
     formData.append("description", Project.description);
     formData.append("domaine", Project.domaine);
@@ -64,19 +70,22 @@ export default function Landing() {
     formData.append("numberOfPeople", Project.numberOfPeople);
     formData.append("montant_Final", Project.montant_Final);
     formData.append("location", Project.location);
-    formData.append("Duration", Project.duration);
     formData.append("image_project", image);
-    const res = await addProject(formData,config)
-      .then(navigate("/landing-page"))
+    const res = await addProject(formData, config)
+      .then(console.log("ajout passe"))
       .catch((error) => {
         console.log(error.response.data.message);
       });
-    // 64284b480d387cfe2b1f2696
-    console.log("123", res.data);
+    console.log(res.data);
+    console.log(res.data.message);
+    setmessage(res.data.message);
+    if (res.data.message == undefined) {
+      navigate("/landing-page");
+    }
   };
   return (
     <>
-      <DemoNavbar />
+      <DemoNavbar /> <ToastContainer />
       <main>
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
@@ -106,6 +115,15 @@ export default function Landing() {
                             aria-label="Titre du projet"
                           />
                         </InputGroup>
+                        {message === "title is already taken" ||
+                        message === "title is a required field" ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            title is already taken
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Description :</Form.Label>
@@ -122,6 +140,16 @@ export default function Landing() {
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
+                        {message ===
+                        "description must contain min 4 characters max 50 characters" ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            description must contain min 4 characters max 50
+                            characters
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Domaine :</Form.Label>
@@ -219,6 +247,16 @@ export default function Landing() {
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
+                        {message ===
+                        "The numberOfPeople must be a positive number max 100 min 10" ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            The numberOfPeople must be a positive number min 10
+                            max 100
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>final amount :</Form.Label>
@@ -229,12 +267,24 @@ export default function Landing() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
+                            min={1000}
                             placeholder="final amount"
                             name="montant_Final"
                             type="number"
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>
+                        {message ===
+                          "The montant_Final must be a positive number min 1000 dt" ||
+                        'montant_Final must be a `number` type, but the final value was: `NaN` (cast from the value `""`).' ? (
+                          <label style={{ color: "red" }}>
+                            <i className="ni ni-fat-remove" />
+                            "The montant_Final must be a positive number min
+                            1000 dt"
+                          </label>
+                        ) : (
+                          ""
+                        )}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Location :</Form.Label>
@@ -248,22 +298,6 @@ export default function Landing() {
                             placeholder="location"
                             name="location"
                             type="text"
-                            onChange={(e) => handlechange(e)}
-                          />
-                        </InputGroup>
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Duration :</Form.Label>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-image" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Form.Control
-                            placeholder="duration"
-                            name="duration"
-                            type="date"
                             onChange={(e) => handlechange(e)}
                           />
                         </InputGroup>

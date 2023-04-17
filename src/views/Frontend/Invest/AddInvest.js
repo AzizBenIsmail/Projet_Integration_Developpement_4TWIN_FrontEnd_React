@@ -19,8 +19,9 @@ import moment from "moment";
 import Cookies from 'js-cookie';
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import { getProject } from "../../../services/apiProject";
-import { differenceInYears } from "date-fns";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddInvest() {
   const navigate = useNavigate();
@@ -37,6 +38,8 @@ export default function AddInvest() {
         },
       };
     ////////
+    const [InvestNotif, setInvestNotif] = useState(false);
+
   const [Invest, setInvest] = useState({
     title: "",
     message: "",
@@ -54,15 +57,27 @@ export default function AddInvest() {
     message, 
     montant, 
     } = Invest;
+    try{
     const res = await addInvest(Invest, param.idUser,param.idProject,config)
-      .then(navigate(`/landing-page`))
-      .catch((error) => {
+      if(res.status === 200)
+      {
+        toast.success("Successfully applied for this job, you will receive an e-mail sooner !", { autoClose: 2000, position: "top-center" });      }
+        delayFunction() 
+
+      }
+      catch(error){
         console.log(error.response.data.message);
-      });
+      };
   };
+  function delayFunction() {
+    setTimeout(function() {
+      navigate(`/landing-page`)
+        }, 2000); // 3000 ms = 3 secondes
+  }
   return (
     <>
       <DemoNavbar />
+      <ToastContainer />
       <main>
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
@@ -103,6 +118,7 @@ export default function AddInvest() {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
+                          min={0}
                             placeholder="amount to invest"
                             name="montant"
                             type="number"

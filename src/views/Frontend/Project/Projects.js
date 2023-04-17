@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import classnames from "classnames";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserAuth } from "../../../services/apiUser.js";
 import {
   Badge,
   Button,
@@ -17,36 +18,37 @@ import {
   Progress,
   Media,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProjects } from "../../../services/apiProject";
 
 export default function Landing() {
   const navigate = useNavigate();
-      /////cookies
-      if (!Cookies.get("user")) {
-        window.location.replace("/login-page");
-      }
-    
-      const token = JSON.parse(Cookies.get("user")).token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    ////////
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
+  /////cookies
+  if (!Cookies.get("user")) {
+    window.location.replace("/login-page");
+  }
 
-  
+  const token = JSON.parse(Cookies.get("user")).token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  ////////
+
+  const [user, setuser] = useState([]);
+  const param = useParams();
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     getAllProject(config);
+    getUserFunction(config);
+
     const interval = setInterval(() => {
       getAllProject(config); // appel répété toutes les 10 secondes
+      getUserFunction(config);
     }, 5000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
@@ -62,12 +64,26 @@ export default function Landing() {
       });
   };
   function moyenne(entier1, entier2) {
-    const moyenne = (entier1 / entier2 )*100;
+    const moyenne = (entier1 / entier2) * 100;
     return Math.floor(moyenne);
   }
-  
-  
-
+  const getUserFunction = async (config) => {
+    const res = await getUserAuth(param.id, config)
+      .then((res) => {
+        setuser(res.data.user);
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  function isMontantActuelGreaterOrEqual(project) {
+    return (
+      project.montant_actuel >= project.montant_Final ||
+      project.numberOfPeople <= project.numberOfPeople_actuel ||
+      project.creator == user._id
+    );
+  }
   function getFirstTenWords(str) {
     // Supprimer les caractères de ponctuation et diviser la chaîne en mots
     const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
@@ -82,10 +98,15 @@ export default function Landing() {
         <div className="position-relative bg-primary ">{/* shape Hero */}</div>
         <section className="section section-lg bg-gradient-default">
           <Container></Container>
-          <Container className="pt-lg pb-300">
+          <Container className="pt-lg pb-10">
             <Row className="text-center justify-content-center">
               <Col lg="10">
-                <h2 className="display-3 text-white">Build something</h2>
+             
+                <h2 className="display-3 text-white">  <img
+                style={{ width: "150px", height: "100px" }}
+                alt="..."
+                src={require("assets/project-management.png")}
+              />Build something</h2>
                 <p className="lead text-white">
                   According to the National Oceanic and Atmospheric
                   Administration, Ted, Scambos, NSIDClead scentist, puts the
@@ -95,33 +116,27 @@ export default function Landing() {
               </Col>
             </Row>
             <div className="btn-wrapper">
-                      <Button
-                        className="btn-icon mb-3 mb-sm-0"
-                        color="info"
-                        onClick={(e) =>
-                          navigate(`/ProjectsUser`)
-                        }
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="ni ni-settings" />
-                        </span>
-                        <span className="btn-inner--text">
-                          Manage you Project
-                        </span>
-                      </Button>
-                      <Button
-                        className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
-                        color="default"
-                        onClick={(e) => navigate(`/AddProjects`)}
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="fa fa-lightbulb-o" />
-                        </span>
-                        <span className="btn-inner--text">
-                          Create Your Project
-                        </span>
-                      </Button>
-                    </div>
+              <Button
+                className="btn-icon mb-3 mb-sm-0"
+                color="info"
+                onClick={(e) => navigate(`/ProjectsUser`)}
+              >
+                <span className="btn-inner--icon mr-1">
+                  <i className="ni ni-settings" />
+                </span>
+                <span className="btn-inner--text">Manage you Project</span>
+              </Button>
+              <Button
+                className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
+                color="default"
+                onClick={(e) => navigate(`/AddProjects`)}
+              >
+                <span className="btn-inner--icon mr-1">
+                  <i className="fa fa-lightbulb-o" />
+                </span>
+                <span className="btn-inner--text">Create Your Project</span>
+              </Button>
+            </div>
             <Row className="justify-content-center">
               <Col>
                 <Row className="row-grid">
@@ -131,6 +146,7 @@ export default function Landing() {
                         className="card-lift--hover shadow border-0"
                         key={project._id}
                       >
+
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <div className=" icon-shape rounded-circle mb-4">
@@ -190,7 +206,7 @@ export default function Landing() {
                             <div className="progress-info">
                               <div className="progress-label">
                                 <span>
-                                Task completed : .
+                                  Task completed : .
                                   {moyenne(
                                     project.montant_actuel,
                                     project.montant_Final
@@ -231,14 +247,13 @@ export default function Landing() {
                             More Details
                           </Button>
                           <Button
+                            disabled={isMontantActuelGreaterOrEqual(project)}
                             className="btn-1 ml-1 mt-4"
                             color="success"
                             outline
                             type="button"
                             onClick={(e) =>
-                              navigate(
-                                `/AddInvest/${project._id}`
-                              )
+                              navigate(`/AddInvest/${project._id}`)
                             }
                           >
                             <i class="fa fa-cubes mr-2" aria-hidden="true"></i>

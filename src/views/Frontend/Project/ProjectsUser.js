@@ -38,24 +38,6 @@ export default function Landing() {
     },
   };
   ////////
-  const [nameFocused, setNameFocused] = useState(false);
-  const [emailFocused, setEmailFocused] = useState(false);
-
-  const handleNameFocus = () => {
-    setNameFocused(true);
-  };
-
-  const handleNameBlur = () => {
-    setNameFocused(false);
-  };
-
-  const handleEmailFocus = () => {
-    setEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setEmailFocused(false);
-  };
 
   const [projects, setProjects] = useState([]);
 
@@ -127,6 +109,76 @@ export default function Landing() {
                         className="card-lift--hover shadow border-0"
                         key={project._id}
                       >
+                        {!project.ecological ? (
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: "5%",
+                              left: "86%",
+                              transform: "translate(-50%, -50%) ",
+                              fontSize: "16px",
+                              color: "white",
+                              background: "red",
+                              padding: "8px 8px",
+                              borderRadius: "8px",
+                            }}
+                          >
+                            Not_Ecological
+                          </span>
+                        ) : (
+                          <span
+                          style={{
+                            position: "absolute",
+                            top: "5%",
+                            left: "86%",
+                            transform: "translate(-50%, -50%)",
+                            fontSize: "16px",
+                            color: "white",
+                            background: "green",
+                            padding: "8px 8px",
+                            borderRadius: "8px",
+                          }}
+                        >
+                          ecological
+                        </span>
+                        )}
+                        {project.verified ? (
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: "5%",
+                              left: "10%",
+                              transform: "translate(-50%, -50%) ",
+                              fontSize: "16px",
+                              color: "white",
+                              background: "grey",
+                              padding: "8px 8px",
+                              borderRadius: "8px",
+                            }}
+                          >
+                            finish
+                          </span>
+                        ) : (
+                          <span
+                          style={{
+                            position: "absolute",
+                            top: "5%",
+                            left: "10%",
+                            transform: "translate(-50%, -50%)",
+                            fontSize: "16px",
+                            color: "white",
+                            background: "green",
+                            padding: "8px 8px",
+                            borderRadius: "8px",
+                          }}
+                        >
+                           {moyenne(
+                                    project.montant_actuel,
+                                    project.montant_Final
+                                  )}
+                                  %
+                        </span>
+                        )}
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
                           <div className=" icon-shape rounded-circle mb-4">
@@ -158,7 +210,7 @@ export default function Landing() {
                               <botton
                                 onClick={(e) =>
                                   navigate(
-                                    `/Projects_details/${project._id}/${project.creator}`
+                                    `/Projects_details/${project._id}/${project.creator._id}`
                                   )
                                 }
                               >

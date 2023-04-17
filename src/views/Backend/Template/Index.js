@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
   import { Button, Card, CardHeader, CardBody, NavItem, NavLink, Nav, Progress, Table, Container, Row, Col } from "reactstrap";
   import { useNavigate } from "react-router-dom";
 
+
   // core components
   import { chartOptions, parseOptions, chartExample1, chartExample2 } from "variables/charts.js";
 
@@ -19,8 +20,7 @@ import { getProjects} from "../../../services/apiProject";
 import Cookies from "js-cookie";
 
 const Index = (props) => {
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -45,7 +45,39 @@ const Index = (props) => {
     }, 10000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
-
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'right',
+        size: '20'
+      }
+    }
+  };
+  const data = {
+    labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai'],
+    datasets: [
+      {
+        data: [12, 19, 3, 5, 2],
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF'
+        ],
+        hoverBackgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF'
+        ]
+      }
+    ]
+  };
+  
   const getAllProject = async (config) => {
     const res = await getProjects(config)
       .then((res) => {
@@ -56,10 +88,6 @@ const Index = (props) => {
         console.log(err);
       });
   };
-  function moyenne(entier1, entier2) {
-    const moyenne = (entier1 / entier2) * 100;
-    return Math.floor(moyenne);
-  }
   return (
     <>
       <Header />

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import '../../assets/styles.css'; // Assurez-vous d'importer votre feuille de style CSS
+import React, { useState } from "react";
+import "../../assets/styles.css"; // Assurez-vous d'importer votre feuille de style CSS
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
-
 
 function Siedbar() {
   const [sideNavWidth, setSideNavWidth] = useState(0);
@@ -20,39 +19,56 @@ function Siedbar() {
 
   return (
     <div>
-      <span
-          style={{ fontSize: '30px', cursor: 'pointer', }}
-          onClick={openNav}
-        >
-          &#9776; open
-        </span>
-        <div>
-          <div id="mySidenav" className="sidenav" style={{ width: sideNavWidth }}>
-            <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-              &times;
-            </a>
-            <a 
+      <span style={{ fontSize: "30px", cursor: "pointer" }} onClick={openNav}>
+        &#9776; open
+      </span>
+      <div>
+        <div id="mySidenav" className="sidenav" style={{ width: sideNavWidth }}>
+          <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
+            &times;
+          </a>
+          <a
             className={classnames("py-2 px-3", {
-              active: activeNav === 1
+              active: activeNav === 1,
             })}
-            onClick={(e) => navigate(`/Backend_Users`)}>Users</a>
-            <a 
+            onClick={(e) => navigate(`/Backend_Users`)}
+          >
+            Users
+          </a>
+          <a
             className={classnames("py-2 px-3", {
-              active: activeNav === 1
+              active: activeNav === 1,
             })}
-            onClick={(e) => navigate(`/Backend_Projects`)}>Project</a>
-            <a 
+            onClick={(e) => navigate(`/Backend_Projects`)}
+          >
+            Project
+          </a>{" "}
+          <a
             className={classnames("py-2 px-3", {
-              active: activeNav === 1
+              active: activeNav === 1,
             })}
-            onClick={(e) => navigate(`/AdminFablabJoin`)}>Fablabs</a>
-            <a 
+            onClick={(e) => navigate(`/Backend_invests`)}
+          >
+            Invest
+          </a>
+          <a
             className={classnames("py-2 px-3", {
-              active: activeNav === 1
+              active: activeNav === 1,
             })}
-            onClick={(e) => navigate(`/Index`)}>All</a>
-          </div>
+            onClick={(e) => navigate(`/AdminFablabJoin`)}
+          >
+            Fablabs
+          </a>
+          <a
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1,
+            })}
+            onClick={(e) => navigate(`/Index`)}
+          >
+            All
+          </a>
         </div>
+      </div>
     </div>
   );
 }

@@ -18,6 +18,12 @@ import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 //import badgeImg from "./src/new.png";
 import ProfileHeader from "./profile/header";
 import ChatBox from "./profile/chat";
+
+import { getEvaluation } from "../../../services/apiEvaluation";
+
+import { getBadge } from "../../../services/apiBadges";
+import b from '../../../assets/img/badges/new.png';
+
 export default function Profile() {
   /////cookies
   if (!Cookies.get("user")) {
@@ -38,6 +44,21 @@ export default function Profile() {
   const [photoCount, setPhotoCount] = useState(10);
   const [commentCount, setCommentCount] = useState(89);
   const [projects, setProjects] = useState([]);
+  const [evaluation, setEvaluation] = useState({
+    usernameE: "", // Utiliser le même nom de propriété que dans localStorage
+    xp: 0,
+    lvl: 0,
+  });
+  const { usernameE, xp, lvl } = evaluation;
+
+  const [badge, setBadge] = useState({
+    usernameB: "", // Utiliser le même nom de propriété que dans localStorage
+    badgeName: "",
+    badgeDescription: "",
+    date: "",
+    badgeImg: "",
+  });
+  const { usernameB, badgeName, badgeDescription, date, badgeImg } = badge;
 
   const [user, setUser] = useState({
     _id: param.id,
@@ -57,6 +78,8 @@ export default function Profile() {
     user;
 
   useEffect(() => {
+    //fetchEvaluation();
+    //fetchBadges();
     getUserFunction();
     getoneProject();
   }, []);
@@ -67,6 +90,18 @@ export default function Profile() {
       const response = await getUserAuth(param.id, config);
       ////////
       setUser(response.data.user);
+
+      //evaluation---------
+      const userL = response.data.user.username;
+      const response1 = await getEvaluation(userL, config);
+      // Supposons que la réponse contient un champ 'evaluations' avec un tableau d'évaluations
+      const firstEvaluation = response1.data.evaluations[0]; // Accéder à la première évaluation
+      setEvaluation(firstEvaluation);
+
+      const response2 = await getBadge(userL); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+
+      //------------
     } catch (error) {
       console.log(error);
     }
@@ -144,11 +179,27 @@ export default function Profile() {
       console.log(arr[i]);
     }
   }
+
+  //evaluation
+  /*
+  const fetchEvaluation = async () => {
+    try {
+      const response = await getEvaluation(username, config);
+      // Supposons que la réponse contient un champ 'evaluations' avec un tableau d'évaluations
+      const firstEvaluation = response.data.evaluations[0]; // Accéder à la première évaluation
+      setEvaluation(firstEvaluation);
+    } catch (error) {
+      console.log(error);
+    }
+  };*/
+
+
+
   return (
     <>
       <ChatBox user={user} />
       <DemoNavbar />
-      <ProfileHeader user={user} />
+      <ProfileHeader user={user} evaluation={evaluation} />
       <main className="profile-page">
         <section className="section">
           <Container>
@@ -337,9 +388,39 @@ export default function Profile() {
                 <div className="mt-2 border-top ">
                   <Row className="justify-content-center">
                     <Col lg="9">
-                      <h1>Badges : {countProject(user.invests)}</h1>
+                      <div>
+                        <h1>{username} Badges</h1>
+                        {badge.length > 0 ? (
+                          badge.map((badge) => (
+                            <div key={badge._id}>
+                              <h3>Name: {badge.badgeName}</h3>
+                              
+                              <p>Description: {badge.badgeDescription}</p>
+                              <p>Date: {badge.date}</p>
+                              <p>img: {badge.badgeImg}</p>
+                              
+                              <Col className="order-lg-2" >
+                    <div className="card-profile-image">
+                      <a  >
+                        <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={require(`../../../assets/img/badges/${badge.badgeImg}`)}
+                        />
+                      </a>
+                    </div>
+                    <br /><br />
+                  </Col>
+
+
+                            </div>
+                          ))
+                        ) : (
+                          <p>Aucun badge trouvé pour {username}</p>
+                        )}
+                      </div>
                     </Col>
-                    <img alt="image_" className="rounded-circle" src={"dd"} />
+                  
                   </Row>
                 </div>
               </div>
@@ -347,6 +428,9 @@ export default function Profile() {
           </Container>
         </section>
       </main>
+     
+     
+
     </>
   );
 }

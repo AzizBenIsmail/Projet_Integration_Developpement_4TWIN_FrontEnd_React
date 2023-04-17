@@ -3,58 +3,70 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import "./style.css";
 
-// const Landing = lazy(()=>import('./views/examples/Landing'));
-// const Login = lazy(()=>import('./views/Login'));
-
-// const Profile = lazy(()=>import('./views/Profile'));
-// const Index = lazy(()=>import('./views/Index'));
-
-// const Register = lazy(()=>import('./views/Register'));
-// const NotFound = lazy(()=>import('./views/NotFound'));
-
-//Template
-import Info from "views/Frontend/Template/Info";
-import Indexs from "views/Frontend/Template/Index.js";
-import NotFound from "views/Frontend/Template/NotFound.js";
-import IndexDefault from "views/Frontend/Template/Index.js";
-import Landing from "views/Frontend/Template/Landing.js";
-
-//user
-import Reset from "views/Frontend/User/Reset.js";
-import Login from "views/Frontend/User/Login.js";
-import ResetPwd from "views/Frontend/User/ResetPwd";
-import Register from "views/Frontend/User/Register.js";
-import ProfileFront from "views/Frontend/User/Profile.js";
-
-//Project
-import Projects from "views/Frontend/Project/Projects.js";
-import ProjectsUser from "views/Frontend/Project/ProjectsUser";
-import Projects_details from "views/Frontend/Project/Projects_details";
-import ProfileUserProject from "views/Frontend/Project/ProfileUserProject.js";
-import AddProjects from "views/Frontend/Project/AddProjects";
-import UpdateProject from "views/Frontend/Project/UpdateProject";
-import Backend_Projects from "views/Backend/Project/Backend_Projects";
-
-//Invest
-import Invest from "views/Frontend/Invest/Invest.js";
-import AddInvest from "views/Frontend/Invest/AddInvest";
-import InvestUser from "views/Frontend/Invest/InvestUser";
-
-//Fablab
-import FablabJoin from "./views/Frontend/Fablab/FablabJoin";
-import AdminFablabJoin from "./views/Backend/Fablab/AdminFablabJoin";
-import FablabRequestDetails from "./views/Backend/Fablab/FablabRequestDetails";
-
-//Backend
-import Index from "views/Backend/Template/Index.js";
-import Profile from "views/Backend/User/Profile.js";
-import Backend_Users from "views/Backend/User/Backend_Users.js";
-import ProfileAdd from "views/Backend/User/Profile-Add";
-
 //Footer Spinner
-import SimpleFooter from "components/Footers/SimpleFooter";
 import SpinnerExample from "components/spinner/Spinner";
 import MapPage from "MapPage/MapPage";
+import SimpleFooter from "components/Footers/SimpleFooter";
+
+//Template Lazy Loading
+const Info = lazy(() => import("./views/Frontend/Template/Info"));
+const Indexs = lazy(() => import("./views/Frontend/Template/Index.js"));
+const NotFound = lazy(() => import("./views/Frontend/Template/NotFound.js"));
+const IndexDefault = lazy(() => import("./views/Frontend/Template/Index.js"));
+const Landing = lazy(() => import("./views/Frontend/Template/Landing.js"));
+
+//user Lazy Loading
+const Reset = lazy(() => import("./views/Frontend/User/Reset.js"));
+const Login = lazy(() => import("./views/Frontend/User/Login.js"));
+const ResetPwd = lazy(() => import("./views/Frontend/User/ResetPwd"));
+const Register = lazy(() => import("./views/Frontend/User/Register.js"));
+const ProfileFront = lazy(() => import("./views/Frontend/User/Profile.js"));
+
+//Project Lazy Loading
+const Projects = lazy(() => import("./views/Frontend/Project/Projects.js"));
+const ProjectsUser = lazy(() =>
+  import("./views/Frontend/Project/ProjectsUser")
+);
+const Projects_details = lazy(() =>
+  import("./views/Frontend/Project/Projects_details")
+);
+const ProfileUserProject = lazy(() =>
+  import("./views/Frontend/Project/ProfileUserProject.js")
+);
+const AddProjects = lazy(() => import("./views/Frontend/Project/AddProjects"));
+const UpdateProject = lazy(() =>
+  import("./views/Frontend/Project/UpdateProject")
+);
+const Backend_Projects = lazy(() =>
+  import("./views/Backend/Project/Backend_Projects")
+);
+
+//Invest Lazy Loading
+const Invest = lazy(() => import("./views/Frontend/Invest/Invest.js"));
+const AddInvest = lazy(() => import("./views/Frontend/Invest/AddInvest"));
+const InvestUser = lazy(() => import("./views/Frontend/Invest/InvestUser"));
+const Backend_invests = lazy(() => import("./views/Backend/Invest/Backend_invests"));
+
+//Fablab Lazy Loading
+const FablabJoin = lazy(() => import("./views/Frontend/Fablab/FablabJoin"));
+const AdminFablabJoin = lazy(() =>
+  import("./views/Backend/Fablab/AdminFablabJoin")
+);
+const FablabRequestDetails = lazy(() =>
+  import("./views/Backend/Fablab/FablabRequestDetails")
+);
+
+//event Lazy Loading
+const EventsFablab = lazy(() => import("./views/Frontend/Event/eventsFablab"));
+const AddEvent = lazy(() => import("./views/Frontend/Event/addEvent"));
+const EventDetails = lazy(() => import("./views/Frontend/Event/eventDetails"));
+//Backend Lazy Loading
+const Index = lazy(() => import("./views/Backend/Template/Index.js"));
+const Profile = lazy(() => import("./views/Backend/User/Profile.js"));
+const Backend_Users = lazy(() =>
+  import("./views/Backend/User/Backend_Users.js")
+);
+const ProfileAdd = lazy(() => import("./views/Backend/User/Profile-Add"));
 
 function App() {
   return (
@@ -104,6 +116,8 @@ function App() {
           <Route path="/Invest" element={<Invest />} />
           <Route path="/AddInvest/:idProject" element={<AddInvest />} />
           <Route path="/InvestUser/" element={<InvestUser />} />
+          <Route path="/Backend_invests/" element={<Backend_invests />} />
+
 
           {/* FablabJoin */}
 
@@ -113,6 +127,12 @@ function App() {
             path="/FablabRequestDetails/:id"
             element={<FablabRequestDetails />}
           />
+
+          {/* Events */}
+          <Route path="/eventsFablab/" element={<EventsFablab />} />
+          <Route path="/eventsFablab/:id" element={<EventsFablab fablabEvent={true}/>} />
+          <Route path="/eventDetails/:id" element={<EventDetails />} ></Route>
+          <Route path="/addEvent" element={<AddEvent />} />
 
           {/* chat and map*/}
           <Route path="/map" element={<MapPage />} />
