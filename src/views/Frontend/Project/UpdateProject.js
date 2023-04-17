@@ -61,7 +61,7 @@ export default function Landing() {
   const add = async (e) => {
     toast.success(
       "Votre modification est en cours de traitement. Veuillez ne pas paniquer si cette procédure prend un peu de temps. Votre description passe par une validation automatique par l\'IA.",
-      { autoClose: 35000, position: "top-center" }
+      { autoClose: 45000, position: "top-center" }
     );
     const {
       _id,

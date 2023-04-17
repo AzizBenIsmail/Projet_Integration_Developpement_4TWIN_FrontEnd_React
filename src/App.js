@@ -45,6 +45,7 @@ const Backend_Projects = lazy(() =>
 const Invest = lazy(() => import("./views/Frontend/Invest/Invest.js"));
 const AddInvest = lazy(() => import("./views/Frontend/Invest/AddInvest"));
 const InvestUser = lazy(() => import("./views/Frontend/Invest/InvestUser"));
+const Backend_invests = lazy(() => import("./views/Backend/Invest/Backend_invests"));
 
 //Fablab Lazy Loading
 const FablabJoin = lazy(() => import("./views/Frontend/Fablab/FablabJoin"));
@@ -115,6 +116,8 @@ function App() {
           <Route path="/Invest" element={<Invest />} />
           <Route path="/AddInvest/:idProject" element={<AddInvest />} />
           <Route path="/InvestUser/" element={<InvestUser />} />
+          <Route path="/Backend_invests/" element={<Backend_invests />} />
+
 
           {/* FablabJoin */}
 

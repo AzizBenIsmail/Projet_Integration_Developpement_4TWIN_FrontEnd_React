@@ -31,17 +31,16 @@ import {
   chartExample2,
 } from "variables/charts.js";
 import Chart from "chart.js";
-import { getProjects, deleteProject } from "../../../services/apiProject";
+import { getInvests, deleteInvest } from "../../../services/apiInvest";
 
 // core components
 import Header from "components/Headers/Header.js";
-import { getUsers, deleteUser } from "../../../services/apiUser.js";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const Tables = () => {
   const navigate = useNavigate();
-  const [projects, setProjects] = useState([]);
+  const [invests, setinvests] = useState([]);
 
   /////cookies
   if (!Cookies.get("user")) {
@@ -55,45 +54,31 @@ const Tables = () => {
     },
   };
   useEffect(() => {
-    getAllProject(config);
+    getAllInvest(config);
     const interval = setInterval(() => {
-      getAllProject(config); // appel répété toutes les 10 secondes
-    }, 10000);
+      getAllInvest(config); // appel répété toutes les 10 secondes
+    }, 1000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 
-  const getAllProject = async (config) => {
-    const res = await getProjects(config)
+  const getAllInvest = async (config) => {
+    const res = await getInvests(config)
       .then((res) => {
-        setProjects(res.data.projects);
-        console.log(res.data.projects);
+        setinvests(res.data.invests);
+        console.log(res.data.invests);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  function moyenne(entier1, entier2) {
-    const moyenne = (entier1 / entier2) * 100;
-    return Math.floor(moyenne);
-  }
-  const deleteAProject = async (project, config) => {
+  const deleteAinvest = async (invest, config) => {
     const result = window.confirm(
-      "Are you sure you want to delete " + projects.title + "?"
+      "Are you sure you want to delete " + invest.message + "?"
     );
     if (result) {
       //console.log(user);
-      deleteProject(project._id, config);
-      getAllProject(config);
-    }
-  };
-
-  const Modifier = async (user) => {
-    const result = window.confirm(
-      "Are you sure you want to modify " + user.username + "?"
-    );
-    if (result) {
-      //console.log(user);
-      navigate(`/profile/${user._id}`);
+      deleteInvest(invest._id, config);
+      getAllInvest(config);
     }
   };
 
@@ -107,7 +92,7 @@ const Tables = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Project tables</h3>
+                <h3 className="text-white mb-0">Invest tables</h3>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -115,21 +100,18 @@ const Tables = () => {
               >
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Domain </th>
-                    <th scope="col">Goal </th>
-                    <th scope="col">location</th>
-                    <th scope="col">Final amount </th>
+                    <th scope="col">message</th>
                     <th scope="col">current amount</th>
-                    <th scope="col">Finaml amount</th>
+                    <th scope="col">Project</th>
                     <th scope="col" />
                   </tr>
                 </thead>
                 <tbody>
-                  {projects.map((project) => (
-                    <tr key={project._id}>
-                      <th scope="row">
+                  {invests.map((invest) => (
+                    <tr key={invest._id}>
+                      <td>{invest.message}</td>
+                      <td>{invest.montant}</td>
+                      <td>
                         <Media className="align-items-center">
                           <a
                             className="avatar rounded-circle mr-2 "
@@ -138,57 +120,17 @@ const Tables = () => {
                           >
                             <img
                               alt="..."
-                              src={`http://localhost:5000/images/${project.image_project}`}
+                              src={`http://localhost:5000/images/${invest.project.image_project}`}
                             />
                           </a>
                           <Media>
                             <span className="mb-0 text-sm">
-                              {project.title}{" "}
+                              {invest.project.title}{" "}
                             </span>
                           </Media>
                         </Media>
-                      </th>
-                      <td>{project.description}</td>
-                      <td>{project.domaine}</td>
-                      <td>
-                        <span className="gender-logo">{project.goal} </span>
                       </td>
-                      <td>
-                        <Badge color="" className="badge-dot mr-4">
-                          {project.location}{" "}
-                        </Badge>
-                      </td>
-                      <td>
-                        <div className="avatar-group">
-                          {project.montant_Final} dt
-                        </div>
-                      </td>
-                      <td>
-                        <div className="avatar-group">
-                          {project.montant_actuel} dt
-                        </div>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">
-                            {moyenne(
-                              project.montant_actuel,
-                              project.montant_Final
-                            )}
-                            %
-                          </span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value={moyenne(
-                                project.montant_actuel,
-                                project.montant_Final
-                              )}
-                              barClassName="bg-warning"
-                            />
-                          </div>
-                        </div>
-                      </td>
+
                       <td className="text-right">
                         <UncontrolledDropdown>
                           <DropdownToggle
@@ -204,7 +146,7 @@ const Tables = () => {
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
                               href=""
-                              onClick={(e) => deleteAProject(project, config)}
+                              onClick={(e) => deleteAinvest(invest, config)}
                             >
                               Supprimer
                             </DropdownItem>
