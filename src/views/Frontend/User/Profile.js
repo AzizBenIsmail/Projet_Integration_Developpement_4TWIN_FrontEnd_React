@@ -22,6 +22,7 @@ import ChatBox from "./profile/chat";
 import { getEvaluation } from "../../../services/apiEvaluation";
 
 import { getBadge } from "../../../services/apiBadges";
+import b from '../../../assets/img/badges/new.png';
 
 export default function Profile() {
   /////cookies
@@ -192,14 +193,7 @@ export default function Profile() {
     }
   };*/
 
-  const fetchBadges = async () => {
-    try {
-      const response = await getBadge(username); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
-      setBadge(response.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 
   return (
     <>
@@ -400,9 +394,25 @@ export default function Profile() {
                           badge.map((badge) => (
                             <div key={badge._id}>
                               <h3>Name: {badge.badgeName}</h3>
+                              
                               <p>Description: {badge.badgeDescription}</p>
                               <p>Date: {badge.date}</p>
                               <p>img: {badge.badgeImg}</p>
+                              
+                              <Col className="order-lg-2" >
+                    <div className="card-profile-image">
+                      <a  >
+                        <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={require(`../../../assets/img/badges/${badge.badgeImg}`)}
+                        />
+                      </a>
+                    </div>
+                    <br /><br />
+                  </Col>
+
+
                             </div>
                           ))
                         ) : (
@@ -410,17 +420,7 @@ export default function Profile() {
                         )}
                       </div>
                     </Col>
-                    <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={`http://localhost:5000/images/${user.image_user}`}
-                        />
-                      </a>
-                    </div>
-                  </Col>
+                  
                   </Row>
                 </div>
               </div>
@@ -428,8 +428,9 @@ export default function Profile() {
           </Container>
         </section>
       </main>
- 
      
+     
+
     </>
   );
 }

@@ -133,6 +133,7 @@ const ProfileHeader = (props) => {
           </div>
         </Col>
       </Row>
+      
     </>
   );
 };
