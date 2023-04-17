@@ -43,7 +43,16 @@ export default function Profile() {
   const [commentCount, setCommentCount] = useState(89);
   const [projects, setProjects] = useState([]);
 
-  const [evaluation, setEvaluation] = useState([] );
+  const [evaluation, setEvaluation] = useState(
+    {
+      username: '', // Utiliser le même nom de propriété que dans localStorage
+      xp: 0,
+      lvl: 0
+    }
+  );
+  
+  // Utiliser les noms de propriétés cohérents pour éviter les conflits
+  const { usernameE, xp, lvl } = evaluation;
   
 
 
@@ -87,8 +96,10 @@ export default function Profile() {
       const response = await getUserAuth(param.id, config);
       ////////
       setUser(response.data.user);
-      const userloc ="charrada";
-      const response1 = await getEvaluation(userloc, config);
+      
+      //evaluation
+      const userL=response.data.user.username;
+      const response1 = await getEvaluation(userL, config);
       // Supposons que la réponse contient un champ 'evaluations' avec un tableau d'évaluations
       const firstEvaluation = response1.data.evaluations[0]; // Accéder à la première évaluation
       setEvaluation(firstEvaluation);
@@ -175,7 +186,7 @@ export default function Profile() {
   }
 
   //evaluation
-
+/*
   const fetchEvaluation = async () => {
     try {
       const response = await getEvaluation(username, config);
@@ -185,7 +196,7 @@ export default function Profile() {
     } catch (error) {
       console.log(error);
     }
-  };
+  };*/
 
 
 
@@ -194,7 +205,7 @@ export default function Profile() {
     <>
       <ChatBox user={user} />
       <DemoNavbar />
-      <ProfileHeader user={user} />
+      <ProfileHeader user={user} evaluation={evaluation} />
       <main className="profile-page">
         <section className="section">
           <Container>
@@ -410,7 +421,7 @@ export default function Profile() {
       <div>
       <h1>Expérience s (XP) des évaluations</h1>
     
-          <p>XP : {evaluation.xp}</p>
+          <p>XP : {evaluation.usernameE}</p>
           <p>XP : {evaluation.lvl}</p>
         </div>
    
