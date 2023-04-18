@@ -95,14 +95,12 @@
     width: 100% !important;
 }
 .full-size {
-    width: 380px !important;
-    height: 671px !important;
-    position: absolute;
-    right: 150px !important;
-    top: -50px !important;
- 
-
-  }
+  width: 200px !important;
+  height: 100px !important;
+  position: absolute;
+  right: -100px !important;
+  top: 500px !important;
+}
 
   .chat-container {
     height: 400px; /* set the height of the container */
