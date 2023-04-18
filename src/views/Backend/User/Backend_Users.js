@@ -152,6 +152,7 @@ const Tables = () => {
                     <th scope="col">gender</th>
                     <th scope="col">First Name- Last Name</th>
                     <th scope="col">address</th>
+                    <th scope="col">charada haybby</th>
                     <th scope="col">AccountCompletionPercentage</th>
                     <th scope="col" />
                   </tr>
@@ -190,11 +191,16 @@ const Tables = () => {
                           {genderIcon(user.gender)}
                         </span>
                       </td>
-
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           {user.first_Name} - {user.last_Name}
+                        </Badge>
+                      </td>{" "}
+                      <td>
+                        <Badge color="" className="badge-dot mr-4">
+                          <i className="bg-warning" />
+                         harada habyby
                         </Badge>
                       </td>
                       <td>
