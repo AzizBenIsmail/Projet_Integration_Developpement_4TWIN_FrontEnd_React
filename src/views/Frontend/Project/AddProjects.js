@@ -60,8 +60,8 @@ export default function Landing() {
   };
   const add = async (e) => {
     toast.success(
-      "Successfully applied for this job, you will receive an e-mail sooner !",
-      { autoClose: 10000, position: "top-center" }
+      "Votre ajout est en cours de traitement. Veuillez ne pas paniquer si cette procédure prend un peu de temps. Votre description passe par une validation automatique par l\'IA.",
+      { autoClose: 5000, position: "top-center" }
     );
     formData.append("title", Project.title);
     formData.append("description", Project.description);
@@ -80,9 +80,14 @@ export default function Landing() {
     console.log(res.data.message);
     setmessage(res.data.message);
     if (res.data.message == undefined) {
-      navigate("/landing-page");
+      delayFunction();
     }
   };
+  function delayFunction() {
+    setTimeout(function() {
+      navigate(`/landing-page`)
+        }, 5000); // 3000 ms = 3 secondes
+  }
   return (
     <>
       <DemoNavbar /> <ToastContainer />
@@ -350,7 +355,7 @@ export default function Landing() {
                           type="button"
                           onClick={(e) => add(e)}
                         >
-                          Create account
+                          Create Project
                         </Button>
                       </div>
                     </Form>

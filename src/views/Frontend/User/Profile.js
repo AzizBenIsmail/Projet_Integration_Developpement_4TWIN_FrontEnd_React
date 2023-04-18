@@ -22,7 +22,6 @@ import ChatBox from "./profile/chat";
 import { getEvaluation } from "../../../services/apiEvaluation";
 
 import { getBadge } from "../../../services/apiBadges";
-import b from '../../../assets/img/badges/new.png';
 
 export default function Profile() {
   /////cookies
@@ -401,6 +400,9 @@ export default function Profile() {
                               
                               <Col className="order-lg-2" >
                     <div className="card-profile-image">
+                    <br/><br/>
+                    <div className="mt-2 border-top ">
+
                       <a  >
                         <img
                           alt="..."
@@ -408,6 +410,7 @@ export default function Profile() {
                           src={require(`../../../assets/img/badges/${badge.badgeImg}`)}
                         />
                       </a>
+                      </div>
                     </div>
                     <br /><br />
                   </Col>

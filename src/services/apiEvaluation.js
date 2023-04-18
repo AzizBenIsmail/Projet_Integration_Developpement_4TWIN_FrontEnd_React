@@ -8,6 +8,16 @@ export async function getEvaluations(config) {
 export async function getEvaluation(username,config) {
   return await axios.get(`${apiURL}/${username}`,config);
 }
+
+// Ajoute de l'expérience pour un utilisateur spécifié
+export async function addXP(username, xp, config) {
+  return await axios.post(`${apiURL}/${username}/addxp/${xp}`,config);
+}
+
+// Réduit l'expérience pour un utilisateur spécifié
+export async function reduceXP(username, xp, config) {
+  return await axios.post(`${apiURL}/${username}/reducexp/${xp}`, config);
+}
 /*
 export async function getUserAuth(id,config) {
   return await axios.get(`${apiURL}/getUser`,config);
