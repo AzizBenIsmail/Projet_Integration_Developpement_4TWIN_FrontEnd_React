@@ -41,7 +41,6 @@ import axios from "axios";
 const Tables = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [evaluation, setEvaluation] = useState([]);
 
   useEffect(() => {
     getAllUser();
@@ -52,15 +51,15 @@ const Tables = () => {
   }, []);
 
   const getAllUser = async () => {
-    try {
-      const res = await getUsers();
-      console.log(res.data);
-      setUsers(res.data.users);
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await getUsers()
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data.users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
   const deleteAUser = async (user) => {
     const result = window.confirm(
       "Are you sure you want to delete " + user.username + "?"
@@ -115,7 +114,6 @@ const Tables = () => {
   const countUsers = (users) => {
     return users.length;
   };
-
   return (
     <>
       <Header />
@@ -154,9 +152,7 @@ const Tables = () => {
                     <th scope="col">gender</th>
                     <th scope="col">First Name- Last Name</th>
                     <th scope="col">address</th>
-              
                     <th scope="col">AccountCompletionPercentage</th>
-
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -194,6 +190,7 @@ const Tables = () => {
                           {genderIcon(user.gender)}
                         </span>
                       </td>
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
@@ -202,8 +199,7 @@ const Tables = () => {
                       </td>
                       <td>
                         <div className="avatar-group">{user.address}</div>
-                      </td>{" "}
-                 
+                      </td>
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">
