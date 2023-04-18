@@ -1,8 +1,8 @@
-import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  DropdownItem,    UncontrolledDropdown,    DropdownToggle,    Media,
-    Pagination,    PaginationItem,    PaginationLink,    Progress,   Table,    Container,    Row,    UncontrolledTooltip,    Button, CardBody  } from "reactstrap";
+import {      Card,    CardHeader,    CardFooter,      Media,
+    Pagination,    PaginationItem,    PaginationLink,     Table,    Container,    Row,    UncontrolledTooltip,    Button } from "reactstrap";
   // core components
   import Header from "components/Headers/Header";
-  import { useNavigate, useParams } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
   import axios from 'axios';
   import { useEffect, useState } from 'react';
 
@@ -17,18 +17,36 @@ import AdminFablab from "./AdminFablab";
     const [disable, setDisable] = useState(true);
     const [accepted, setAccepted] = useState(false);
     const [nonAccepted, setNonAccepted] = useState(false);
+    const[is_accepted , setIsAccepted]= useState(null);
+    const[is_treated,setIsTreated]=useState(null);
 
     const getAllFablabs=async(page)=>{
-        const res = await axios.get(`http://localhost:5000/fablabs/requests?page=${page}`)
-          .then(res => {
+
+      let url = `http://localhost:5000/fablabs/requests?page=${page}`;
+     
+        if (is_treated !== null) {
+          url += `&is_treated=${is_treated}`;
+          
+          if (is_treated === "false") {
+            if (is_accepted !== null) {
+              url += `&is_accepted=${is_accepted}`;
+            }
+          }
+        }
+
+        console.log(url);
+        
+       const res = await axios.get(url).then(res => {
             console.log(res.data);
             setFablabs(res.data.fablabs);
             setTotalPages(res.data.totalPages);
+            
           })
           .catch(err => {
             console.log(err);
           });
       }
+
       useEffect(() => {
         getAllFablabs(currentPage); 
         const interval = setInterval(() => {
@@ -58,12 +76,14 @@ import AdminFablab from "./AdminFablab";
 
       const treatedFunction=()=>{
         setDisable(false);
+        setIsTreated(true);
         
-       
+        
       };
 
       const nonTreatedFunction=()=>{
         setDisable(true);
+        setIsTreated(false);
         setAccepted(false);
         setNonAccepted(false);
       };
@@ -71,11 +91,14 @@ import AdminFablab from "./AdminFablab";
       const handleAcceptedChange = (e) => {
         setAccepted(e.target.checked);
         setNonAccepted(false);
+        setIsAccepted(true);
+        
       };
       
       const handleNonAcceptedChange = (e) => {
         setNonAccepted(e.target.checked);
         setAccepted(false);
+        setIsAccepted(false);
       };
     return (
       <>

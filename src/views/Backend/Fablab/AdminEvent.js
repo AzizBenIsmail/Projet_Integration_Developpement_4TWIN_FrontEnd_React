@@ -1,22 +1,25 @@
-import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  DropdownItem,    UncontrolledDropdown,    DropdownToggle,    Media,
-    Pagination,    PaginationItem,    PaginationLink,    Progress,   Table,    Container,    Row,    UncontrolledTooltip,    Button  } from "reactstrap";
+import {      Card,    CardHeader,      Media,
+     Table,    Container,    Row } from "reactstrap";
   // core components
-  import { useNavigate, useParams } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
   import axios from 'axios';
   import { useEffect, useState } from 'react';
   //import "assets/vendor/nucleo/css/nucleo.css";
   import "../../../assets/plugins/nucleo/css/nucleo.css"
+import Header from "components/Headers/Header";
 
 
 function AdminEvent(props) {
     const navigate = useNavigate();
     const [events, setEvents] = useState([]);
     const [showEvent, setShowEvent] = useState(false);
+    const [creator, setCreator] = useState(null);
 
     
       const handleButtonClick = () => {
         setShowEvent(true);
       };
+
 
       function calculateDurationInDays(startDate, endDate) {
         const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
@@ -40,13 +43,26 @@ function AdminEvent(props) {
     const getEvents=async()=>{
         const res = await axios.get(props.url)
           .then(res => {
-            console.log(res.data);
+           // console.log(res.data.user);
             setEvents(res.data.events);
+           // setCreator(res.data.events.creator);
           })
           .catch(err => {
             console.log(err);
           });
-      }
+      } 
+      function getuser (id){
+      let user = [];
+      const res = axios.get(`http://localhost:5000/events/creator/${id}`)
+      .then(res => {
+        user = res.data.user;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      console.log(user);
+      return user ;
+    }
       useEffect(() => {
         getEvents(); 
         const interval = setInterval(() => {
@@ -57,7 +73,8 @@ function AdminEvent(props) {
 
   return (
     <>
-     
+
+     {!props.fablab && <Header />} 
       {/* Page content */}
       <Container className="mt-1" fluid>
         {/* Table */}
@@ -67,8 +84,10 @@ function AdminEvent(props) {
               {events.length ? (
               <>
               <CardHeader style={{padding: '0.5rem', fontSize: '0.8rem'}} className="border-0">
-                <h4 style={{display:'inline-block'}}  className="mb-0" >Recent Events</h4>
-                <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i>
+                {props.fablab ? (<><h4 style={{display:'inline-block'}}  className="mb-0" >Recent Events</h4>
+                <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i></>):(<h4 style={{display:'inline-block'}}  className="mb-0" >Events</h4>
+                )}
+                
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
@@ -77,6 +96,7 @@ function AdminEvent(props) {
                     <th scope="col">Description</th>
                     <th scope="col">Date</th>
                     <th scope="col">Duration</th>
+                    {!props.fablab && <th scope="col">Created By </th>}
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -86,7 +106,8 @@ function AdminEvent(props) {
                     <th scope="row">
                       <Media className="align-items-center">
                           <img
-                           className="avatar rounded-circle mr-3"
+                           className="img-fluid rounded shadow-lg"
+                           style={{height:"100%",width:"80px",marginRight:"8px"}}
                             alt="..."
                             src={`http://localhost:5000/images/${event.event_img}`}
                           />
@@ -106,6 +127,7 @@ function AdminEvent(props) {
                     <td>
                     {calculateDurationInDays(event.start_date, event.end_date)}      
                     </td> 
+                   {!props.fablab && <td>{getuser(event._id)._id}</td>}
                   </tr>
                    
                  ))}

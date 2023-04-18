@@ -13,6 +13,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
     const [fablab, setFablab] = useState(null);
     const [is_treated, setIs_treated] = useState(null);
     const [is_accepted, setIs_accepted] = useState(null);
+
     const getFablab=async()=>{
         const res = await axios.get(`http://localhost:5000/fablabs/requests/${param.id}`)
           .then(res => {
@@ -73,7 +74,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
       }, [fablab,is_treated,is_accepted]);
     return (  
       <>
-            <Header />
+      <Header />
       {fablab && (
         <>
         <div

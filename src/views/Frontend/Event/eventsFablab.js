@@ -1,23 +1,20 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
-import classnames from "classnames";
+import {
+  getUserAuth,
+} from "../../../services/apiUser";
+
 import {
   Badge,
   Button,
   Card,
   CardBody,
   CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
+ 
   Container,
   Row,
-  Col,
-  Progress,
-  Media,
+  Col, 
+  
   CardText,
   CardTitle
 } from "reactstrap";
@@ -29,6 +26,7 @@ import "assetsFrontOffice/vendor/font-awesome/css/font-awesome.min.css";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import axios from 'axios';
 import Countdown from "./countDown";
+import WarningModal from "../Models/warningModel";
 
 export default function EventsFablab(props) {
   const navigate = useNavigate();
@@ -37,6 +35,29 @@ export default function EventsFablab(props) {
   const [interestedEvents, setInterestedEvents] = useState([]);
   const [comingEvent, setComingEvent] = useState(null);
   const [bestEvent,setBestEvent]=useState(null)
+  const [currentUser, setCurrentUser] = useState([]);
+  const [warningModal, setWarningModal] = useState(false);
+  const [selectedE, setSelectedE] = useState(false);
+
+  const selectedEvent = (event_id) => {
+    setSelectedE(event_id)
+  };
+  const { id } = useParams();
+  const toggleModal = () => {
+    setWarningModal(!warningModal);
+  };
+
+  const handleAction = async (eventId) => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/events/${eventId}`);
+      getAllEventsFablab(`http://localhost:5000/events/creator?id=${id}`);
+      //console.log(res.data);
+      //console.log(res.data.message);
+      setWarningModal(false)
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const style = `
   .countdown {
     margin-top: 10px;
@@ -79,8 +100,7 @@ export default function EventsFablab(props) {
     padding: 10px;
   }
   `;
-  const { id } = useParams();
- 
+     
       /////cookies
       if (!Cookies.get("user")) {
         window.location.replace("/login-page");
@@ -118,17 +138,28 @@ export default function EventsFablab(props) {
          // console.log(res.data.events);
           setEvents(res.data.events);
           setComingEvent(res.data.nearestEvent);
-          setBestEvent(res.data.bestevent)
+          setBestEvent(res.data.bestevent);
+          
         })
         .catch(err => {
           console.log(err);
         });
     }
-
+    const getUserFunction = async (config) => {
+      const res = await getUserAuth("", config)
+        .then((res) => {
+          setCurrentUser(res.data.user);
+          console.log(currentUser);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+  
     const update = async (reaction,eventId) => {
      
       const formData = new FormData();
-      formData.append("userId", "643216cd888293912452e8eb");
+      formData.append("userId", currentUser._id);
       formData.append("reaction", reaction);
       //console.log(formData);
       try {
@@ -140,16 +171,16 @@ export default function EventsFablab(props) {
       }
     };
     const isInterested = (event) => {
-      return interestedEvents.includes(event._id) || event.interestedUsers.includes("643216cd888293912452e8eb");
+      return interestedEvents.includes(event._id) || event.interestedUsers.includes(currentUser._id);
     };
 
     const isGoing = (event) => {
-      return goingEvents.includes(event._id) || event.participants.includes("643216cd888293912452e8eb");
+      return goingEvents.includes(event._id) || event.participants.includes(currentUser._id);
     };
     
     const interested = (event) => {
       update("interested", event._id);
-      if (event.interestedUsers.includes("643216cd888293912452e8eb")) {
+      if (event.interestedUsers.includes(currentUser._id)) {
         setInterestedEvents((prevInterestedEvents) => prevInterestedEvents.filter((item) => item !== event._id));
       } else {
         setInterestedEvents((prevInterestedEvents) => [...prevInterestedEvents, event._id]);
@@ -160,7 +191,7 @@ export default function EventsFablab(props) {
     const going = (e) =>{
       //console.log(e)
       update("going",e._id)
-      if (e.participants.includes("643216cd888293912452e8eb")) {
+      if (e.participants.includes(currentUser._id)) {
         setGoingEvents((prevInterestedEvents) => prevInterestedEvents.filter((item) => item !== e._id));
       } else {
         setGoingEvents((prevInterestedEvents) => [...prevInterestedEvents, e._id]);
@@ -169,6 +200,12 @@ export default function EventsFablab(props) {
       getAllEventsFablab('http://localhost:5000/events/')
       
     };
+    function compare(start_date) {
+      const currentDate = new Date();
+      const sDate = new Date(start_date);
+      return sDate > currentDate;
+    }
+
     function getFirstTwentyWords(str) {
       // Supprimer les caractères de ponctuation et diviser la chaîne en mots
       const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
@@ -177,15 +214,16 @@ export default function EventsFablab(props) {
       return words.slice(0, 20).join(" ");
     }
     useEffect(() => {
-      
+      getUserFunction(config);
       const url =  (props.fablabEvent && id)
       ? `http://localhost:5000/events/creator?id=${id}`
       : 'http://localhost:5000/events/'; 
       getAllEventsFablab(url); 
       
-     /* const interval = setInterval(() => {
-          getAllEventsFablab(url); // appel répété toutes les 10 secondes
-        }, 10000);
+      const interval = setInterval(() => {
+          getAllEventsFablab(url);
+          //getUserFunction(config); // appel répété toutes les 10 secondes
+        }, 1000);
         return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant*/
     }, [id, props.fablabEvent,interestedEvents,goingEvents]);
     
@@ -301,11 +339,34 @@ export default function EventsFablab(props) {
                           <img src= {require("../../../assets/img/soon.gif")} />
                         </div>
                     </CardBody>
-                  </Card>)}<div>
-             
-            
-            
-            </div></>):(<>
+                  </Card>)}{currentUser.userType === "fablab" &&( <div className="btn-wrapper" style={{marginTop:"20px"}}>
+                      <Button
+                        className="btn-icon mb-3 mb-sm-0"
+                        color="info"
+                        onClick={(e) =>
+                          navigate(`/eventsFablab/${currentUser._id}`)
+                        }
+                      >
+                        <span className="btn-inner--icon mr-1">
+                          <i className="ni ni-settings" />
+                        </span>
+                        <span className="btn-inner--text">
+                          Manage your Events
+                        </span>
+                      </Button>
+                      <Button
+                        className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
+                        color="default"
+                        onClick={(e) => navigate(`/addEvent`)}
+                      >
+                        <span className="btn-inner--icon mr-1">
+                          <i className="fa fa-lightbulb-o" />
+                        </span>
+                        <span className="btn-inner--text">
+                          Create an Event
+                        </span>
+                      </Button>
+                  </div>)}</>):(<>
                   
                     
                     {bestEvent && (<Card style={{width: "99%",
@@ -354,24 +415,24 @@ export default function EventsFablab(props) {
                         <b>{getFirstTwentyWords(bestEvent.description)} ...</b>
                         
                         </CardText>
-                        <div class="event-info d-flex align-items-center">
-                          <div class="event-info-single d-flex align-items-center" style={{backgroundColor: '#EEEEEE', borderRadius: '5px',marginLeft:"5px",width:"20%"}}>
-                                      <div class="thumb">
+                        <div className="event-info d-flex align-items-center">
+                          <div className="event-info-single d-flex align-items-center" style={{backgroundColor: '#EEEEEE', borderRadius: '5px',marginLeft:"5px",width:"20%"}}>
+                                      <div className="thumb">
                                           <i className="ni circle ni-time-alarm " style={{fontSize: "35px"}}></i>
                                         
                                       </div>
-                                      <div class="content" style={{marginTop:"15px"}}>
+                                      <div className="content" style={{marginTop:"15px"}}>
                                           <h5 style={{marginBottom:"0px"}}>Start Date</h5>
                                           <p>{new Date(bestEvent.start_date).getFullYear()}-{new Date(bestEvent.start_date).getMonth() + 1}-{new Date(bestEvent.start_date).getDate()} at {new Date(bestEvent.start_date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</p>
                                       </div>
                             
                           </div>
-                          <div class="event-info-single d-flex align-items-center" style={{backgroundColor: '#EEEEEE', borderRadius: '5px',marginLeft:"5px",width:"20%"}}>
-                                      <div class="thumb">
+                          <div className="event-info-single d-flex align-items-center" style={{backgroundColor: '#EEEEEE', borderRadius: '5px',marginLeft:"5px",width:"20%"}}>
+                                      <div className="thumb">
                                           <i className="ni circle ni-square-pin " style={{fontSize: "35px"}}></i>
                                         
                                       </div>
-                                      <div class="content" style={{marginTop:"15px"}}>
+                                      <div className="content" style={{marginTop:"15px"}}>
                                           <h5 style={{marginBottom:"0px"}}>Location</h5>
                                           <p>Ariana</p>
                                       </div>
@@ -403,23 +464,8 @@ export default function EventsFablab(props) {
                         </div>
                     </CardBody>
                     </Card>)}
-                    
-                
-                  <div className="btn-wrapper" style={{marginTop:"20px"}}>
-                      <Button
-                        className="btn-icon mb-3 mb-sm-0"
-                        color="info"
-                        onClick={(e) =>
-                          navigate(`/ProjectsUser`)
-                        }
-                      >
-                        <span className="btn-inner--icon mr-1">
-                          <i className="ni ni-settings" />
-                        </span>
-                        <span className="btn-inner--text">
-                          Manage your Events
-                        </span>
-                      </Button>
+                    <div className="btn-wrapper" style={{marginTop:"20px"}}>
+                     
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
                         color="default"
@@ -433,8 +479,10 @@ export default function EventsFablab(props) {
                         </span>
                       </Button>
                   </div>
+                    
+                  
                   </>)}
-            
+                 
             <Row className="justify-content-center">
               <Col>
                 <Row className="row-grid">
@@ -455,16 +503,18 @@ export default function EventsFablab(props) {
                             {calculateDurationInDays(event.start_date, event.end_date)}      
                             </Badge>
                            
-                            <Badge color="primary" pill className="ml-2" >
-                            <i className="ni ni-square-pin" style={{marginRight:"5px"}}> </i> 
-                             {event.location}
-                             
-                            </Badge>
                             <Badge color="info" pill className="ml-1" >
                             <i className="ni ni-single-02" style={{marginRight:"5px"}}> </i> 
                              {event.participants.length} participants
                              
                             </Badge>
+
+                            {!compare(event.start_date) &&
+                              <Badge color="danger" pill className="ml-1" >
+                              <i className="ni ni-single-02" style={{marginRight:"5px"}}> </i> 
+                                Passed
+                              
+                              </Badge>}
                             
                           </div>
 
@@ -491,7 +541,7 @@ export default function EventsFablab(props) {
                            
                             </a>
                             
-                            {!id && <div style={{ display: 'flex', alignItems: 'center',position: 'absolute', bottom: 0, right: '10px' }}>
+                            {!id ? (<><div style={{ display: 'flex', alignItems: 'center',position: 'absolute', bottom: 0, right: '10px' }}>
                               <div style={{ display: 'flex', alignItems: 'center' ,flexDirection: "column"}}>
                                   <i className={`ni circle ni-favourite-28 ${
                                          isInterested(event)  ? 'bg-danger text-white' : 'bg-Secondary text-Default'
@@ -504,7 +554,39 @@ export default function EventsFablab(props) {
                                            }`} style={{cursor:"pointer"}} onClick={() => going(event)}> </i>
                                   <p>Going</p>
                               </div>
+                              </div></>):(<><div style={{ display: 'flex', alignItems: 'center',position: 'absolute', bottom: 0, right: '10px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center' ,flexDirection: "column"}}>
+                              <WarningModal isOpen={warningModal}
+                                      event={selectedE}
+                                      toggle={toggleModal}
+                                      title={"Event Delete"}
+                                      body={"You will delete this event permanently, and you cannot get it back. "}
+                                      button={"Delete"}
+                                      onDelete={(id) => {
+                                        const updatedEvents = events.filter(event => event._id !== id);
+                                        setEvents(updatedEvents);
+                                      }} />
+                                  <i className="fa fa-trash text-danger"  style={{cursor:"pointer"}}  onClick={()=>{toggleModal();selectedEvent(event._id)}}> </i> 
+                                  <p>Delete</p>
+                               
+                                
+                                  
                               </div>
+                              
+                              <a
+                                
+                                    onClick={(e) => navigate("/addEvent",{ state: { e : event } })}
+                            
+                                    style={{ display: 'flex', alignItems: 'center' ,flexDirection: "column",marginLeft: '20px'}}
+                                  
+
+                                    >
+                                  <i className="fa fa-pencil-square text-green" style={{cursor:"pointer"}} ></i>
+                                  <p>Update</p>
+                                </a>
+                             
+
+                              </div></>)
                             }
                             
                         </div>
