@@ -67,6 +67,14 @@ function Siedbar() {
           >
             All
           </a>
+          <a
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1,
+            })}
+            onClick={(e) => navigate(`/AdminEvaluation`)}
+          >
+            Evaluation
+          </a>
         </div>
       </div>
     </div>
