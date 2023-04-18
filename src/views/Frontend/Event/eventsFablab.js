@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 
 import {
   getUserAuth,
@@ -27,6 +28,8 @@ import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import axios from 'axios';
 import Countdown from "./countDown";
 import WarningModal from "../Models/warningModel";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function EventsFablab(props) {
   const navigate = useNavigate();
@@ -139,12 +142,74 @@ export default function EventsFablab(props) {
           setEvents(res.data.events);
           setComingEvent(res.data.nearestEvent);
           setBestEvent(res.data.bestevent);
-          
+         
         })
         .catch(err => {
           console.log(err);
         });
     }
+
+    const [myOptions, setMyOptions] = useState([])
+ 
+    const useStyles = makeStyles({
+      inputRoot: {
+        backgroundColor: 'white',
+        '&:hover': {
+          backgroundColor: 'white',
+        },
+        '&.Mui-focused': {
+          backgroundColor: 'white',
+        },
+        borderRadius: 25,
+      },
+      inputInput: {
+        color: 'green',
+        '&::placeholder': {
+          color: 'green',
+          opacity: 1,
+        },
+      },
+      inputLabel: {
+        color: 'green',
+        backgroundColor:'white',
+        '&.Mui-focused': {
+          color: 'green',
+        },
+      },
+    });
+
+    const classes = useStyles();
+
+    async function getFilteredResults(query) {
+      setMyOptions([]);
+      
+      const url =  (props.fablabEvent && id)
+      ? `http://localhost:5000/events/creator?id=${id}`
+      : 'http://localhost:5000/events/'; 
+      const res = await axios.get(url)
+        .then(res => {
+          const filter = res.data.events.filter(result => result.title.toLowerCase().includes(query.toLowerCase()))
+          setEvents(filter);
+          let options = [];
+          for (var i = 0; i < filter.length; i++) {
+            options.push(filter[i].title)
+          }
+          setMyOptions(options)
+          console.log(myOptions)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      
+    }
+    
+    const [query, setQuery] = useState('');
+
+    function handleInputChange(event) {
+      setQuery(event.target.value);
+      getFilteredResults(event.target.value);
+    }
+  
     const getUserFunction = async (config) => {
       const res = await getUserAuth("", config)
         .then((res) => {
@@ -219,12 +284,7 @@ export default function EventsFablab(props) {
       ? `http://localhost:5000/events/creator?id=${id}`
       : 'http://localhost:5000/events/'; 
       getAllEventsFablab(url); 
-      
-      const interval = setInterval(() => {
-          getAllEventsFablab(url);
-          //getUserFunction(config); // appel répété toutes les 10 secondes
-        }, 1000);
-        return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant*/
+
     }, [id, props.fablabEvent,interestedEvents,goingEvents]);
     
   return (
@@ -366,9 +426,7 @@ export default function EventsFablab(props) {
                           Create an Event
                         </span>
                       </Button>
-                  </div>)}</>):(<>
-                  
-                    
+                  </div>)}</>):(<> 
                     {bestEvent && (<Card style={{width: "99%",
                               height: "400px",
                               padding: "63px 0 62px",
@@ -464,7 +522,7 @@ export default function EventsFablab(props) {
                         </div>
                     </CardBody>
                     </Card>)}
-                    <div className="btn-wrapper" style={{marginTop:"20px"}}>
+                    <div className="btn-wrapper" style={{marginTop:"30px"}}>
                      
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0 ml-1"
@@ -478,10 +536,41 @@ export default function EventsFablab(props) {
                           Create an Event
                         </span>
                       </Button>
-                  </div>
+                    </div>
                     
                   
                   </>)}
+                  <div className="btn-wrapper" style={{ marginLeft: '63%' ,marginTop:"-45px",marginBottom:15}}>
+                    <Autocomplete
+                      style={{ width: 400,height: 30 }}
+                      freeSolo
+                      autoComplete
+                      autoHighlight
+                      options={myOptions}
+                      value={query}
+                      renderInput={(params) => (
+                        <TextField {...params}
+                
+                          onChange={handleInputChange}
+                          variant="outlined"
+                          label="Search Box"
+                          InputProps={{
+                            ...params.InputProps,
+                            classes: {
+                              root: classes.inputRoot,
+                              input: classes.inputInput,
+                            },
+                            style: { height: 50 } // Set the height to 20px
+                          }}
+                          InputLabelProps={{
+                            classes: {
+                              root: classes.inputLabel,
+                            },
+                          }}
+                        />
+                      )}
+                    />
+                  </div>
                  
             <Row className="justify-content-center">
               <Col>
