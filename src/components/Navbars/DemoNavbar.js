@@ -173,75 +173,7 @@ export default function NavbarF() {
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown nav>
-                  <DropdownToggle nav>
-                    <i className="ni ni-collection d-lg-none mr-1" />
-                    <span
-                      className="nav-link-inner--text"
-                      style={{ color: "#ffff" }}
-                    >
-                      Example
-                    </span>
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem
-                      to="/landing-page"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Landing
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/profile-page/"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/login-page"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Login
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/register-page"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Register
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/Backend_Users"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Backend Users
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/Index"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Backend
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/Profile"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/IndexDefault"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      IndexDefault
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto " navbar>
                 <NavItem className="d-none d-lg-block ml-lg-4 ">

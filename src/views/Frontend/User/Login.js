@@ -48,7 +48,7 @@ export default function Login() {
       // console.log(res.data.user._id);
       // console.log(res.data.user);
       console.log(res.data);
-      console.log(res.status);
+      console.log(res.status);    
       const token = res.data;
       // Set cookie
       Cookies.set('user', JSON.stringify(token), { expires: 24/24 }); 
@@ -58,7 +58,11 @@ export default function Login() {
       const u = JSON.parse(Cookies.get('user')).token;
     //const result = u.token;
       console.log(u);
-      window.location.replace(`/landing-page/`);
+      if(user.email === "Admin@esprit.tn")
+      {
+        window.location.replace(`/Backend_Users/`);
+      }else{
+      window.location.replace(`/landing-page/`);}
     } catch (error) {
   //    console.log(error.response.data.message);
     }
