@@ -60,12 +60,12 @@ export default function Landing() {
   function delayFunction() {
     setTimeout(function() {
       navigate(`/landing-page`)
-        }, 5000); // 3000 ms = 3 secondes
+        }, 2000); // 3000 ms = 3 secondes
   }
   const add = async (e) => {
     toast.success(
       "Votre modification est en cours de traitement. Veuillez ne pas paniquer si cette procédure prend un peu de temps. Votre description passe par une validation automatique par l\'IA.",
-      { autoClose: 5000, position: "top-center" }
+      { autoClose: 45000, position: "top-center" }
     );
     const {
       _id,

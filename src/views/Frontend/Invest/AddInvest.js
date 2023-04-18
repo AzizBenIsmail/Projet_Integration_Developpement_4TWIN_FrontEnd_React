@@ -61,7 +61,7 @@ export default function AddInvest() {
     const res = await addInvest(Invest, param.idUser,param.idProject,config)
       if(res.status === 200)
       {
-        toast.success("Successfully applied for this job, you will receive an e-mail sooner !", { autoClose: 2000, position: "top-center" });      }
+        toast.success("Nous sommes heureux de vous informer que votre investissement a été traité avec succès. !", { autoClose: 2000, position: "top-center" });      }
         delayFunction() 
 
       }
@@ -159,7 +159,7 @@ export default function AddInvest() {
                           type="button"
                           onClick={(e) => add(e)}
                         >
-                          Create account
+                          Invest
                         </Button>
                       </div>
                     </Form>
