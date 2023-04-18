@@ -38,35 +38,27 @@ import { getUsers, deleteUser } from "../../../services/apiUser.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
 const Tables = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [evaluation, setEvaluation] = useState([]);
 
-
   useEffect(() => {
-
     getAllUser();
     const interval = setInterval(() => {
       getAllUser(); // appel répété toutes les 10 secondes
     }, 10000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
-    }, []);
+  }, []);
 
   const getAllUser = async () => {
-    try{
-    const res = await getUsers()
-        console.log(res.data);
-        setUsers(res.data.users);  
-
-  
-
-      } catch (error) {
-        console.log(error);
-      };
-
-
+    try {
+      const res = await getUsers();
+      console.log(res.data);
+      setUsers(res.data.users);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteAUser = async (user) => {
@@ -124,14 +116,8 @@ const Tables = () => {
     return users.length;
   };
 
-
-
-
-
-
   return (
     <>
-   
       <Header />
       {/* Page content */}
       <Container fluid>
@@ -168,8 +154,9 @@ const Tables = () => {
                     <th scope="col">gender</th>
                     <th scope="col">First Name- Last Name</th>
                     <th scope="col">address</th>
-                    <th scope="col"> <center>LEVEL   ➖ , ➕ XP% </center> </th>
+              
                     <th scope="col">AccountCompletionPercentage</th>
+
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -207,7 +194,6 @@ const Tables = () => {
                           {genderIcon(user.gender)}
                         </span>
                       </td>
-
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
@@ -216,21 +202,8 @@ const Tables = () => {
                       </td>
                       <td>
                         <div className="avatar-group">{user.address}</div>
-                      </td>                      <td>
-  <div className="d-flex align-items-center">
-
-    <button> ➖ </button> <button> ➕ </button>
-                          <span className="mr-2">
-                           
-                          </span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value={calculateCompletionPercentage(user)}
-                              barClassName="bg-warning"
-                            />
-                          </div>
-                        </div>                      </td>
+                      </td>{" "}
+                 
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">
