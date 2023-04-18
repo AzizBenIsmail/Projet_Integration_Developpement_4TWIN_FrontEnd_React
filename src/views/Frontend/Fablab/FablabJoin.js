@@ -27,6 +27,7 @@ import { Button, Container, Form ,FormControl,Feedback} from "react-bootstrap";
 // core components
 
 import axios from "axios";
+import LoginNavbar from "components/Navbars/LoginNavbar";
 
 export default function FablabJoin() {
   // const [image, setImage] = useState();
@@ -178,7 +179,7 @@ export default function FablabJoin() {
   };
   return (
     <>
-      <DemoNavbar />
+      <LoginNavbar />
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default"></div>
         <Container className="pt-lg-7">

@@ -176,22 +176,6 @@ export default function NavbarF() {
                 
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto " navbar>
-                <NavItem className="d-none d-lg-block ml-lg-4 ">
-                  <Button
-                    color="default"
-                    //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
-                    target="_blank"
-                  >
-                    <Link to="/FablabJoin">
-                      <span className="btn-inner--icon">
-                        <i className="fa fa-user-plus mr-2" />
-                      </span>
-                      <span className="nav-link-inner--text ml-1">
-                        Join Us as Fablab
-                      </span>
-                    </Link>
-                  </Button>
-                </NavItem>
                 <Nav className="align-items-center d-none d-md-flex" navbar>
                   <UncontrolledDropdown nav>
                     <DropdownToggle className="pr-0" nav>
