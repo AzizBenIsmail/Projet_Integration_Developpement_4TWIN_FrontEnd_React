@@ -191,20 +191,17 @@ const Tables = () => {
                           {genderIcon(user.gender)}
                         </span>
                       </td>
+
                       <td>
                         <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           {user.first_Name} - {user.last_Name}
                         </Badge>
-                      </td>{" "}
-                      <td>
-                        <Badge color="" className="badge-dot mr-4">
-                          <i className="bg-warning" />
-                         harada habyby
-                        </Badge>
                       </td>
                       <td>
                         <div className="avatar-group">{user.address}</div>
+                      </td>                      <td>
+                        <div className="avatar-group">acharada damerli hayety</div>
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
