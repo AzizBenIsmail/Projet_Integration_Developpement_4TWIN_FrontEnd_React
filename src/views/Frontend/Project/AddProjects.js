@@ -61,7 +61,7 @@ export default function Landing() {
   const add = async (e) => {
     toast.success(
       "Votre ajout est en cours de traitement. Veuillez ne pas paniquer si cette procédure prend un peu de temps. Votre description passe par une validation automatique par l\'IA.",
-      { autoClose: 5000, position: "top-center" }
+      { autoClose: 45000, position: "top-center" }
     );
     formData.append("title", Project.title);
     formData.append("description", Project.description);
@@ -86,7 +86,7 @@ export default function Landing() {
   function delayFunction() {
     setTimeout(function() {
       navigate(`/landing-page`)
-        }, 5000); // 3000 ms = 3 secondes
+        }, 2000); // 3000 ms = 3 secondes
   }
   return (
     <>
