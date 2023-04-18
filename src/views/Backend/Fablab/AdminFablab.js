@@ -1,14 +1,14 @@
-import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  DropdownItem,    UncontrolledDropdown,    DropdownToggle,    Media,
-    Pagination,    PaginationItem,    PaginationLink,    Progress,   Table,    Container,    Row,    UncontrolledTooltip,    Button  } from "reactstrap";
+import {    Card,    CardHeader,    CardFooter,      Media,
+    Pagination,    PaginationItem,    PaginationLink,  Table,    Container,    Row,      Button  } from "reactstrap";
   // core components
-  import { useNavigate, useParams } from "react-router-dom";
+
   import axios from 'axios';
   import { useEffect, useState ,React } from 'react';
 import AdminEvent from "./AdminEvent";
 
 
   const AdminFablab = () => {
-    const navigate = useNavigate();
+    
     const [fablabs, setFablabs] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [showEvent, setShowEvent] = useState(false);
@@ -135,7 +135,7 @@ import AdminEvent from "./AdminEvent";
                     {selectedRow === rowIndex && (
                                 <tr>
                                   <td colSpan="6">
-                                    <AdminEvent key={rowIndex} onClose={handleClose} url={`http://localhost:5000/events/creator?id=${fablab._id}&recent=true`} />
+                                    <AdminEvent key={rowIndex} fablab={true} onClose={handleClose} url={`http://localhost:5000/events/creator?id=${fablab._id}&recent=true`} />
                                   </td>
                                 </tr>
                     )}

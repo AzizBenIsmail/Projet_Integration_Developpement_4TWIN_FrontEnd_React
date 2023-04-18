@@ -1,25 +1,20 @@
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import Countdown from "./countDown";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {
-    Badge,
-    Button,
+  
     Card,
-    CardBody,
+  
     CardImg,
-    FormGroup,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    UncontrolledTooltip,
+  
     Container,
     Row,
     Col
   } from "reactstrap";
+import Event from "./event";
 export default function EventDetails() {
 
     const param = useParams();
@@ -232,7 +227,35 @@ export default function EventDetails() {
               </Row>
             </Container>)}
            
+            
           </section>
+          {event &&  <>
+          
+          <section className="section bg-gradient-default">
+          <Container ><h5 className="display-4 font-weight-bold text-white">Related Events : </h5></Container>
+          <Container>
+            <Row className="justify-content-center">
+              <Col>
+                <Row className="row-grid">
+                  <Event creatorId={event.creator} eventId={event._id}/>  </Row>
+              </Col>
+            </Row>
+          
+          </Container>
+          {/* SVG separator */}
+          <div className="separator separator-bottom separator-skew zindex-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+              version="1.1"
+              viewBox="0 0 2560 100"
+              x="0"
+              y="0"
+            >
+              <polygon className="fill-white" points="2560 0 2560 100 0 100" />
+            </svg>
+          </div>
+        </section></>}
         </main>
         </>
 

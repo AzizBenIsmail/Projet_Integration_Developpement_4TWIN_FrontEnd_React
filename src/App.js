@@ -7,6 +7,8 @@ import "./style.css";
 import SpinnerExample from "components/spinner/Spinner";
 import MapPage from "MapPage/MapPage";
 import SimpleFooter from "components/Footers/SimpleFooter";
+import Event from "views/Frontend/Event/event";
+
 
 //Template Lazy Loading
 const Info = lazy(() => import("./views/Frontend/Template/Info"));
@@ -61,6 +63,9 @@ const FablabRequestDetails = lazy(() =>
 const EventsFablab = lazy(() => import("./views/Frontend/Event/eventsFablab"));
 const AddEvent = lazy(() => import("./views/Frontend/Event/addEvent"));
 const EventDetails = lazy(() => import("./views/Frontend/Event/eventDetails"));
+//const AddImage = lazy(() => import("./views/Frontend/Event/addImage"));
+const AdminEvent = lazy(() => import("views/Backend/Fablab/AdminEvent"));
+
 //Backend Lazy Loading
 const Index = lazy(() => import("./views/Backend/Template/Index.js"));
 const Profile = lazy(() => import("./views/Backend/User/Profile.js"));
@@ -124,6 +129,7 @@ function App() {
 
           <Route path="/FablabJoin" element={<FablabJoin />} />
           <Route path="/AdminFablabJoin" element={<AdminFablabJoin />} />
+
           <Route
             path="/FablabRequestDetails/:id"
             element={<FablabRequestDetails />}
@@ -132,8 +138,15 @@ function App() {
           {/* Events */}
           <Route path="/eventsFablab/" element={<EventsFablab />} />
           <Route path="/eventsFablab/:id" element={<EventsFablab fablabEvent={true}/>} />
+          <Route path="/event/" element={<Event fablabEvent={true} creatorId={"643216cd888293912452e8eb"}/>} />
+
           <Route path="/eventDetails/:id" element={<EventDetails />} ></Route>
           <Route path="/addEvent" element={<AddEvent />} />
+          <Route path="/AdminEvent" element={<AdminEvent url="http://localhost:5000/events" fablab={false} />} />
+
+
+          {/*<Route path="/addImage" element={<AddImage />} />*/}
+
 
           {/* chat and map*/}
           <Route path="/map" element={<MapPage />} />
