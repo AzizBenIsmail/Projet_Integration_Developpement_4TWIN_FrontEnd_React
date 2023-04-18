@@ -3,6 +3,7 @@ import SingleMessage from "./SingleMessage";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { addChatMessage } from "Messenger/messengerSlice";
 const Messages = ({ socketId,username }) => {
   const userid = JSON.parse(Cookies.get("user")).user._id;
 
@@ -60,23 +61,25 @@ console.log(res.data.chat[0].messages[res.data.chat[0].messages.length-1]._id )
 useEffect(scrollToBottom, [messages])
 
 
+// {mes?.map((m) => (
+    
+
+//   console.log(m),
+//         <SingleMessage
+//         key={m._id}
+//         content={m.content}
+//         myMessage={userid==m.sender? true:false}
+//       />
+  
+//       ))}
+
 
 
 
   return (
     <div className="chatbox_messages_container">
 
-{mes?.map((m) => (
-    
 
-console.log(m),
-      <SingleMessage
-      key={m._id}
-      content={m.content}
-      myMessage={userid==m.sender? true:false}
-    />
-
-    ))}
 
       {messages?.map((message) => (
 
