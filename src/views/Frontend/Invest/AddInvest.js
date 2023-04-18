@@ -159,7 +159,7 @@ export default function AddInvest() {
                           type="button"
                           onClick={(e) => add(e)}
                         >
-                          Create account
+                          Invest
                         </Button>
                       </div>
                     </Form>
