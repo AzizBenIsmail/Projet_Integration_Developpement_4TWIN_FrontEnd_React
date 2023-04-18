@@ -152,7 +152,6 @@ const Tables = () => {
                     <th scope="col">gender</th>
                     <th scope="col">First Name- Last Name</th>
                     <th scope="col">address</th>
-                    <th scope="col">charada haybby</th>
                     <th scope="col">AccountCompletionPercentage</th>
                     <th scope="col" />
                   </tr>
@@ -200,8 +199,6 @@ const Tables = () => {
                       </td>
                       <td>
                         <div className="avatar-group">{user.address}</div>
-                      </td>                      <td>
-                        <div className="avatar-group">acharada damerli hayety</div>
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
