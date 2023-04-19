@@ -8,7 +8,9 @@ import {      Card,    CardHeader,      Media,
   import "../../../assets/plugins/nucleo/css/nucleo.css"
 import Header from "components/Headers/Header";
 import WarningModal from "views/Frontend/Models/warningModel";
-
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles } from '@material-ui/core/styles';
 
 function AdminEvent(props) {
     const navigate = useNavigate();
@@ -17,7 +19,65 @@ function AdminEvent(props) {
     const [creators, setCreators] = useState([]);
     const [warningModal, setWarningModal] = useState(false);
     const [selectedE, setSelectedE] = useState(false);
+    const [myOptions, setMyOptions] = useState([])
+ 
+    const useStyles = makeStyles({
+      inputRoot: {
+        backgroundColor: 'white',
+        '&:hover': {
+          backgroundColor: 'white',
+        },
+        '&.Mui-focused': {
+          backgroundColor: 'white',
+        },
+        borderRadius: 25,
+      },
+      inputInput: {
+        color: 'green',
+        '&::placeholder': {
+          color: 'green',
+          opacity: 1,
+        },
+      },
+      inputLabel: {
+        color: 'green',
+        backgroundColor:'white',
+        '&.Mui-focused': {
+          color: 'green',
+        },
+      },
+    });
+
+    const classes = useStyles();
+
+    async function getFilteredResults(query) {
+      setMyOptions([]);
+      const res = await axios.get(props.url)
+        .then(res => {
+          const filter = res.data.events.filter(result => result.title.toLowerCase().includes(query.toLowerCase()))
+          console.log(filter)
+          setEvents(filter);
+        /*  let options = [];
+          for (var i = 0; i < filter.length; i++) {
+            options.push(filter[i].title)
+          }
+          setMyOptions(options)
+          console.log(myOptions)*/
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      
+    }
+
+    function handleInputChange(event) {
+      setQuery(event.target.value);
+      console.log(query)
+      getFilteredResults(event.target.value);
+
+    }
     
+    const [query, setQuery] = useState('');
       const handleButtonClick = () => {
         setShowEvent(true);
       }; 
@@ -53,6 +113,7 @@ function AdminEvent(props) {
         try {
           const res = await axios.get(props.url);
           const events = res.data.events;
+          //events.push(res.data.nearestEvent);
           const creators = [];
       
           const promises = events.map(async (event) => {
@@ -93,14 +154,47 @@ function AdminEvent(props) {
         <Row>
           <div className="col">
             <Card className="shadow" >
-              {events.length ? (
-              <>
+            
+              
               <CardHeader style={{padding: '0.5rem', fontSize: '0.8rem'}} className="border-0">
                 {props.fablab ? (<><h4 style={{display:'inline-block'}}  className="mb-0" >Recent Events</h4>
-                <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i></>):(<h4 style={{display:'inline-block'}}  className="mb-0" >Events</h4>
+                <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i></>):(<>
+                <h4 style={{display:'inline-block'}}  className="mb-3" >Events</h4>
+                 <div className="btn-wrapper" style={{ marginLeft: '70%' ,marginTop:"-40px",marginBottom:"5px"}}>
+                    <Autocomplete
+                      style={{ width: 400,height: 30 }}
+                      freeSolo
+                      autoComplete
+                      autoHighlight
+                      options={myOptions}
+                      value={query}
+                      renderInput={(params) => (
+                        <TextField {...params}
+                
+                          onChange={handleInputChange}
+                          variant="outlined"
+                          label="Search Box"
+                          InputProps={{
+                            ...params.InputProps,
+                            classes: {
+                              root: classes.inputRoot,
+                              input: classes.inputInput,
+                            },
+                            style: { height: 40 } // Set the height to 20px
+                          }}
+                          InputLabelProps={{
+                            classes: {
+                              root: classes.inputLabel,
+                            },
+                          }}
+                        />
+                      )}
+                    />
+                  </div></>
                 )}
                 
               </CardHeader>
+            {events.length ? (
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
@@ -116,14 +210,16 @@ function AdminEvent(props) {
                 <tbody>
                 {creators.map((c , index) => (
                   <tr key={c._id}>
-                    <th scope="row">
+                    {events[index] && (<>
+                      <th scope="row">
                       <Media className="align-items-center">
-                          <img
+                         <img
                            className="img-fluid rounded shadow-lg"
                            style={{height:"100%",width:"80px",marginRight:"8px"}}
                             alt="..."
                             src={`http://localhost:5000/images/${events[index].event_img}`}
                           />
+                         
                       
                         <Media>
                           <span className="mb-0 text-sm">
@@ -181,7 +277,8 @@ function AdminEvent(props) {
                                        <p>Delete</p></td></>)}
                                  
                    {/* {creators[index] && <td>{creators[index].username}</td>}
-                    creators && (<td>{creators[index].username}</td>)}*/}
+                    creators && (<td>{creators[index].username}</td>)}*/}</>)}
+                    
                   </tr>
                    
                  ))}
@@ -193,13 +290,14 @@ function AdminEvent(props) {
                 
                 </tbody>
               </Table>
-              </>) : (
+              ) : (
 
-                <CardHeader style={{padding: '0.5rem', fontSize: '0.8rem'}} className="border-0">
-
+              <Table className="align-items-center table-flush" responsive> 
+              <tbody>
                   {props.fablab ? (<h4 style={{display:'inline-block'}}  className="mb-0" >   No Recent Events</h4>):(<h4 style={{display:'inline-block'}}  className="mb-0" > No Events</h4>)}
                 <i style={{display:'inline-block',float:'right',color:'#32325D',cursor:'pointer'}} onClick={props.onClose} class="fa fa-times fa-lg"></i>
-                </CardHeader>
+                </tbody>
+                </Table>
               )}
               
               
