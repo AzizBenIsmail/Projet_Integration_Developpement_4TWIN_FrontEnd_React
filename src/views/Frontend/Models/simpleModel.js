@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -7,8 +8,27 @@ import {
  
 } from "reactstrap";
 
-const SimpleModal = ({isOpen, toggle}) => {
-  
+import axios from 'axios';
+
+
+const SimpleModal = ({isOpen, toggle, title, body, button, fablab, onAccept}) => {
+  const navigate= useNavigate()
+  const handleAction = async () => {
+      if(fablab){
+        const res = await axios.post(`http://localhost:5000/fablabs/${fablab}`)
+        .then(res => {
+         console.log(res.data);
+         onAccept(res.data.fablab)
+         navigate(`/FablabRequestDetails/${fablab}`);
+         })
+         
+      .catch(err => {
+           console.log(err);
+       });
+      }
+      toggle(); // close the modal
+  };
+     
   return (
     <>
       {/* Button trigger modal */}
@@ -20,7 +40,7 @@ const SimpleModal = ({isOpen, toggle}) => {
       >
         <div className="modal-header">
           <h5 className="modal-title" id="exampleModalLabel"  toggle={toggle}>
-            Modal title
+          {title}
           </h5>
           <button
             aria-label="Close"
@@ -32,18 +52,18 @@ const SimpleModal = ({isOpen, toggle}) => {
             <span aria-hidden={true} >×</span>
           </button>
         </div>
-        <div className="modal-body">...</div>
+        <div className="modal-body">{body}</div>
         <div className="modal-footer">
           <Button
             color="secondary"
             data-dismiss="modal"
             type="button"
-            onClick={toggle}
+            onClick={() => {toggle()}}
           >
             Close
           </Button>
-          <Button color="primary" type="button">
-            Save changes
+          <Button color="primary" type="button" onClick={handleAction}>
+            {button}
           </Button>
         </div>
       </Modal>

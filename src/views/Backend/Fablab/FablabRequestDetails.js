@@ -5,6 +5,8 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
   import axios from 'axios';
   import { useEffect, useState } from 'react';
   import Header from "components/Headers/Header";
+import WarningModal from "views/Frontend/Models/warningModel";
+import SimpleModal from "views/Frontend/Models/simpleModel";
 
 
   const FablabRequestDetails = () => {
@@ -13,7 +15,20 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
     const [fablab, setFablab] = useState(null);
     const [is_treated, setIs_treated] = useState(null);
     const [is_accepted, setIs_accepted] = useState(null);
+    const [warningModal, setWarningModal] = useState(false);
+    const [simpleModal, setSimpleModal] = useState(false);
+    const [selectedE, setSelectedE] = useState(false);
 
+    const selectedEvent = (event_id) => {
+      setSelectedE(event_id)
+    };
+
+    const toggleModal = () => {
+      setWarningModal(!warningModal);
+    };
+    const simpletoggleModal = () => {
+      setSimpleModal(!simpleModal);
+    };
     const getFablab=async()=>{
         const res = await axios.get(`http://localhost:5000/fablabs/requests/${param.id}`)
           .then(res => {
@@ -27,8 +42,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
           });
       }
       const acceptFablab=async()=>{
-        const result = window.confirm("Are you sure to accept this request ?");
-              if (result) {
+        
                 //console.log(user);
                const res = await axios.post(`http://localhost:5000/fablabs/${param.id}`)
               .then(res => {
@@ -39,13 +53,12 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
                  console.log(err);
           });
 
-            }
+            
         
       }
       const declineFablab=async()=>{
-        const result = window.confirm("Are you sure to decline this request ?");
-              if (result) {
-                const res = await axios.put(`http://localhost:5000/fablabs/${param.id}`)
+        
+          const res = await axios.put(`http://localhost:5000/fablabs/${param.id}`)
           .then(res => {
             navigate(`/FablabRequestDetails/${param.id}`);
             console.log(res.data);
@@ -56,7 +69,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
           .catch(err => {
             console.log(err);
           });
-              }
+              
         
       }
       useEffect(() => {
@@ -93,9 +106,9 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
         
       </div>
         {/* Page content */}
-        <Container className="mt--7" fluid>
+        <Container className="mt--7" fluid style={{marginLeft:"20%"}}>
           <Row>
-            <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+            <Col className="order-xl-2 mb-5 mb-xl-0" xl="3">
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
@@ -175,7 +188,7 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
                 </CardBody>
               </Card>
             </Col>
-            <Col className="order-xl-1" xl="8">
+            <Col className="order-xl-1" xl="6">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -184,19 +197,44 @@ import {    Button,    Card,    CardHeader,    CardBody,    FormGroup,    Form, 
                     </Col>
                     {!is_treated ?(
                     <Col className="text-right" xs="4">
+
                     <Button 
                     color="success"
                      type="button" 
                     style={{ borderRadius: '80%', backgroundColor: '#2DCE89',width: '40px', height: '40px' }}
-                    onClick={(e) => acceptFablab()} >
+                    onClick={()=>{simpletoggleModal() ; selectedEvent(fablab._id)}}>
+                       <SimpleModal isOpen={simpleModal}
+                                      fablab={selectedE}
+                                      toggle={simpletoggleModal}
+                                      title={"Accept fablab request"}
+                                      body={"You'll accept this fablab request and send an email with login credentials details"}
+                                      button={"Accept"}
+                                      onDelete={(fablab) => {
+                                        setFablab(fablab);
+                                        setIs_treated(is_treated);
+                                        setIs_accepted(is_accepted);
+                                      }}/>
                      <span className="btn-inner--icon">
                      <i class="fa fa-check " style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}></i>
                      </span>
                      </Button>
+                   
                      <Button color="danger"
                       type="button"
                        style={{ borderRadius: '80%', backgroundColor: 'red',width: '40px', height: '40px' }}
-                       onClick={(e) => declineFablab()}>
+                       onClick={()=>{toggleModal() ; selectedEvent(fablab._id)}}
+                      >
+                        <WarningModal isOpen={warningModal}
+                                      fablab={selectedE}
+                                      toggle={toggleModal}
+                                      title={"Decline fablab request"}
+                                      body={"You'll decline this fablab request please fill this form to justify"}
+                                      button={"Decline"}
+                                      onDelete={(fablab) => {
+                                        setFablab(fablab);
+                                        setIs_treated(is_treated);
+                                        setIs_accepted(is_accepted);
+                                      }}/>
                      <span className="btn-inner--icon">
                      <i class="fa fa-times" style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}></i>
                      </span>

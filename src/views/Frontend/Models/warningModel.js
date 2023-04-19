@@ -7,14 +7,27 @@ import {
 
 } from "reactstrap";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-const  WarningModal= ({isOpen, toggle, title, body, button, event, onDelete}) => {
-   
+const  WarningModal= ({isOpen, toggle, title, body, button, event,fablab, onDelete}) => {
+  const navigate= useNavigate()
+
   const handleAction = async () => {
     try {
       if (event) {
         const res = await axios.delete(`http://localhost:5000/events/${event}`);
         onDelete(event); // call the callback function with the id of the deleted event
+      }
+      if(fablab){
+        const res = await axios.put(`http://localhost:5000/fablabs/${fablab}`)
+        .then(res => {
+          navigate(`/FablabRequestDetails/${fablab}`);
+          console.log(res.data);
+          onDelete(res.data.fablab)
+        })
+        .catch(err => {
+          console.log(err);
+        });
       }
       toggle(); // close the modal
     } catch (error) {

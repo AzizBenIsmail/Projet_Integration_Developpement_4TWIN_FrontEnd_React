@@ -58,7 +58,8 @@ export default function Login() {
       const u = JSON.parse(Cookies.get('user')).token;
     //const result = u.token;
       console.log(u);
-      if(user.email === "Admin@esprit.tn")
+      console.log(res.data.user.userType)
+      if(res.data.user.userType === "admin")
       {
         window.location.replace(`/Backend_Users/`);
       }else{
