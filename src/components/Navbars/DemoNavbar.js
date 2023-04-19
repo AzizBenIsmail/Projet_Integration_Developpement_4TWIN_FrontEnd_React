@@ -152,6 +152,17 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
+                  <DropdownToggle nav to="/LandingPage" tag={Link}>
+                    <i className="ni ni-collection d-lg-none mr-1" />
+                    <span
+                      className="nav-link-inner--text"
+                      style={{ color: "#ffff" }}
+                    >
+                      Jobs
+                    </span>
+                  </DropdownToggle>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/Invest" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
                     <span
@@ -216,6 +227,13 @@ export default function NavbarF() {
                       <DropdownItem onClick={(e) => navigate(`/InvestUser`)}>
                         <i className="ni ni-calendar-grid-58" />
                         <span>Activity Invest</span>
+                      </DropdownItem>
+                      <DropdownItem
+                        to="/OffersCreated"
+                        tag={Link}
+                      >
+                        <i className="ni ni-briefcase-24" />
+                        <span>Created Jobs</span>
                       </DropdownItem>
                       <DropdownItem to="/admin/user-profile" tag={Link}>
                         <i className="ni ni-support-16" />
