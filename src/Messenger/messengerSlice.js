@@ -12,7 +12,7 @@ export const messengerSlice = createSlice({
     addChatbox: (state, action) => {
       if (
         !state.chatboxes.find(
-          (chatbox) => chatbox.socketId === action.payload.socketId.socketId
+          (chatbox) => chatbox.socketId === action.payload.socketId
         )
       ) {
         state.chatboxes.push(action.payload);
