@@ -31,14 +31,16 @@ const ListOfJobs = () => {
   const [jobOffers, setJobOffers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [showApplicationForm, setShowApplicationForm] = useState(false);
-  //const [currentId, setCurrentId] = useState("123");
-  const [resume, setResume] = useState(null);
-  const [availability, setAvailability] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [adresse, setAdresse] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [jobId, setJobId] = useState(null);
+  const [formData, setFormData] = useState({
+    resume: "",
+    availability: "",
+    firstName: "",
+    lastName: "",
+    adresse: "",
+    email: "",
+    phone: "",
+  });
 
   /////cookies
   if (!Cookies.get("user")) {
@@ -52,6 +54,7 @@ const ListOfJobs = () => {
     },
   };
   ////////
+  
   useEffect(() => {
     const getJobOffers = async () => {
       try {
@@ -69,41 +72,19 @@ const ListOfJobs = () => {
     getJobOffers();
   }, []);
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const navigate=useNavigate();
   const handleApply = async (event, jobOffer, candidate) => {
     event.preventDefault();
-    // console.log("data", event.target);
-    //console.log("data", event.target["availability"].value);
-    const datas = {
-      jobOfferId: localStorage.getItem("id"),
-      candidateId: localStorage.getItem("userid"),
-      resume: "resume",
-      availability: event.target["availability"].value,
-      firstName: event.target["firstName"].value,
-      lastName: event.target["lastName"].value,
-      adresse: event.target["adresse"].value,
-      email: event.target["email"].value,
-      phone: event.target["phone"].value,
-    };
-    console.log("data", datas);
-    // const formData = new FormData();
-
-    // formData.append("jobOfferId", localStorage.getItem("id"));
-
-    // //formData.append("candidateId", candidate.id);
-    // formData.append("candidateId", "64398dc36852045a473bdbba");
-
-    // formData.append("resume", resume);
-    // formData.append("availability", availability);
-    // formData.append("firstName", firstName);
-    // formData.append("lastName", lastName);
-    // formData.append("location", location);
-    // formData.append("email", email);
-    // formData.append("phone", phone);
-    // console.log(formData);
+    console.log("data", formData);
     try {
       const response = await axios.post(
-        "http://localhost:5000/recruit/apply",
-        datas,
+        `http://localhost:5000/recruit/apply/${jobId}`, // apply hedhy heya submit lakhreneya
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -114,7 +95,7 @@ const ListOfJobs = () => {
       );
 
       const data = response.data;
-
+      navigate('/LandingPage');
       console.log(data.message); // success message from the backend
     } catch (err) {
       console.error(err);
@@ -175,9 +156,9 @@ const ListOfJobs = () => {
     }
   };
 
-  const handleResumeChange = (event) => {
-    setResume(event.target.files[0]);
-  };
+  // const handleResumeChange = (event) => {
+  //   setResume(event.target.files[0]);
+  // };
 
   if (showApplicationForm) {
     return (
@@ -206,9 +187,9 @@ const ListOfJobs = () => {
                   <Card className="bg-secondary shadow border-0">
                     <CardBody className="px-lg-5 py-lg-5">
                       <Form
-                        onSubmit={handleApply}
+                        //onSubmit={handleApply}
                         role="form"
-                        enctype="multipart/form-data"
+                        encType="multipart/form-data"
                       >
                         <Form.Group>
                           <Form.Label>First Name</Form.Label>
@@ -220,11 +201,9 @@ const ListOfJobs = () => {
                             </InputGroupAddon>
                             <Form.Control
                               type="text"
-                              id="firstName"
-                              value={firstName}
-                              onChange={(event) =>
-                                setFirstName(event.target.value)
-                              }
+                              name="firstName"
+                              value={formData.firstName}
+                              onChange={handleChange}
                             />
                           </InputGroup>
                         </Form.Group>
@@ -238,11 +217,9 @@ const ListOfJobs = () => {
                             </InputGroupAddon>
                             <Form.Control
                               type="text"
-                              id="lastName"
-                              value={lastName}
-                              onChange={(event) =>
-                                setLastName(event.target.value)
-                              }
+                              name="lastName"
+                              value={formData.lastName}
+                              onChange={handleChange}
                             />
                           </InputGroup>
                         </Form.Group>
@@ -256,11 +233,9 @@ const ListOfJobs = () => {
                             </InputGroupAddon>
                             <Form.Control
                               type="text"
-                              id="adresse"
-                              value={adresse}
-                              onChange={(event) =>
-                                setAdresse(event.target.value)
-                              }
+                              name="adresse"
+                              value={formData.adresse}
+                              onChange={handleChange}
                             />
                           </InputGroup>
                         </Form.Group>
@@ -274,9 +249,9 @@ const ListOfJobs = () => {
                             </InputGroupAddon>
                             <Form.Control
                               type="text"
-                              id="email"
-                              value={email}
-                              onChange={(event) => setEmail(event.target.value)}
+                              name="email"
+                              value={formData.email}
+                              onChange={handleChange}
                             />
                           </InputGroup>
                         </Form.Group>
@@ -290,16 +265,30 @@ const ListOfJobs = () => {
                             </InputGroupAddon>
                             <Form.Control
                               type="text"
-                              id="phone"
-                              value={phone}
-                              onChange={(event) => setPhone(event.target.value)}
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleChange}
                             />
                           </InputGroup>
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>Availability</Form.Label>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-briefcase-24" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Form.Control
+                              type="text"
+                              name="availability"
+                              value={formData.availability}
+                              onChange={handleChange}
+                              
+                            />
+                          </InputGroup>
 
-                          <Input
+                          {/* <Input
                             id="availability"
                             value={availability}
                             onChange={(event) =>
@@ -310,7 +299,7 @@ const ListOfJobs = () => {
                           >
                             <option value="Part-Time">Part-Time</option>
                             <option value="Full-Time">Full-Time</option>
-                          </Input>
+                          </Input> */}
                         </Form.Group>
 
                         {/* <Form.Group> */}
@@ -318,8 +307,10 @@ const ListOfJobs = () => {
                         {/* <InputGroup className="input-group-alternative mb-3"> */}
                         {/* <InputGroupAddon addonType="prepend"> */}
                         <CustomFileInput
-                          id="resume"
-                          onChange={handleResumeChange}
+                          type="file"
+                          name="resume"
+                          value={formData.resume}
+                          onChange={handleChange}
                         >
                           {/* <Form.Control
                              type ="file"  id="resume" 
@@ -414,7 +405,7 @@ const ListOfJobs = () => {
                     <JobOffer jobOffer={jobOffer} />
                     <Button
                       onClick={() => {
-                        localStorage.setItem("id", jobOffer._id);
+                        setJobId(jobOffer._id);
                         setShowApplicationForm(true);
                       }}
                     >
@@ -434,6 +425,22 @@ const ListOfJobs = () => {
 export default ListOfJobs;
 
 {
+
+  // const formData = new FormData();
+
+    // formData.append("jobOfferId", localStorage.getItem("id"));
+
+    // //formData.append("candidateId", candidate.id);
+    // formData.append("candidateId", "64398dc36852045a473bdbba");
+
+    // formData.append("resume", resume);
+    // formData.append("availability", availability);
+    // formData.append("firstName", firstName);
+    // formData.append("lastName", lastName);
+    // formData.append("location", location);
+    // formData.append("email", email);
+    // formData.append("phone", phone);
+    // console.log(formData);
   /* 
                 //////////////////////// search mteei //////////
   <div>

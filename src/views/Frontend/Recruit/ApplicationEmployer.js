@@ -46,7 +46,7 @@ const ApplicationEmployer = () => {
     setFormData({ ...formData, [name]: value });
   };
  
-   const navigate=useNavigate();
+  const navigate=useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {

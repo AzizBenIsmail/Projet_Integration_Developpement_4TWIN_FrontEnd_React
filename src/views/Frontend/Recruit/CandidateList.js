@@ -41,13 +41,12 @@ const CandidateList = () => {
     const getCandidates = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/recruit/list-job-offers/${jobId}`,
+          `http://localhost:5000/recruit/listApplications/${jobId}`,
           config
         );
         const data = response.data;
         console.log(data);
-        // console.log("heey");
-        setCandidates(data);
+        setCandidates(data.applications);
       } catch (error) {
         console.log(error);
       }
