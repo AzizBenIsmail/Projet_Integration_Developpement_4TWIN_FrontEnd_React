@@ -5,7 +5,23 @@ const apiURL = "http://localhost:5000/badges";
 
 export async function getBadge(username,config) {
   return await axios.get(`${apiURL}/${username}`,config);
-}/*
+}
+
+
+export async function addBadge(badgeData, config) {
+  try {
+    const response = await axios.post(`${apiURL}/badges/add`, badgeData, config);
+    return response.data.badge;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
+
+
+/*
 export async function getBadges(config) {
   return await axios.get(apiURL,config);
 }
