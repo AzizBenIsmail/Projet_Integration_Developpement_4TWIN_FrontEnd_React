@@ -144,8 +144,10 @@ const handleDelete = async (id) => {
 };
 
 
-
-
+const handleDetailsClick = (id) => {
+  window.history.pushState({}, '', `/evaluation/${id}`);
+  window.location.reload();
+};
   //---
   return (
     <>
@@ -226,7 +228,8 @@ const handleDelete = async (id) => {
                             <i className="fas fa-ellipsis-v" />
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem href="">Details</DropdownItem>
+                       
+                            <DropdownItem    onClick={() => handleDetailsClick(evaluation.usernameE)}  >  Details</DropdownItem>
                           </DropdownMenu>
                         </UncontrolledDropdown>
                       </td>

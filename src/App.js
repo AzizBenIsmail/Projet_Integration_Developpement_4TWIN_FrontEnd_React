@@ -66,6 +66,9 @@ const Backend_invests = lazy(() =>
 const AdminEvaluation = lazy(() =>
   import("./views/Backend/Evaluation/AdminEvaluation")
 );
+const AdminEvaluationDetails = lazy(() =>
+  import("./views/Backend/Evaluation/AdminEvaluationDetails")
+);
 
 //Fablab Lazy Loading
 const FablabJoin = lazy(() => import("./views/Frontend/Fablab/FablabJoin"));
@@ -154,6 +157,7 @@ function App() {
           <Route path="/InvestUser/" element={<InvestUser />} />
           <Route path="/Backend_invests/" element={<Backend_invests />} />
           <Route path="/AdminEvaluation/" element={<AdminEvaluation />} />
+          <Route path="/evaluation/:id" element={<AdminEvaluationDetails/>} />
 
           {/* FablabJoin */}
 
