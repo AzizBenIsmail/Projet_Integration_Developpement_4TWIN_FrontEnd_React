@@ -37,7 +37,7 @@ import Cookies from "js-cookie";
 import { getEvaluations } from "../../../services/apiEvaluation";
 
 import { getBtype,addBType } from "../../../services/apiBtype";
-import { getFBadges,updateBadge } from "services/apiBadges";
+import { getFBadges,updateBadge } from "../../../services/apiBadges";
 
 
 
@@ -351,6 +351,8 @@ async function handleUpdateBadge(id,xp,username, config) {
               <h3>Name: {badge.badgeName}</h3>
 
               <p>Description: {badge.badgeDescription}</p>
+              <p>Details: {badge.details}</p>
+
               <p>Date: {badge.date}</p>
               <p>img: {badge.usernameB}</p>
               <button onClick={() => handleUpdateBadge(badge._id,document.getElementById("xp").value,badge.usernameB, config)}>accept +</button>

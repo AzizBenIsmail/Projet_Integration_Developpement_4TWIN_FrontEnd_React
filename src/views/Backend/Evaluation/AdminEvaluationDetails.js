@@ -196,7 +196,9 @@ const handleDelete = async (id) => {
 
 <div>
         <label htmlFor="my-select">Select an option:</label>
+        
         <select id="my-select" onChange={(e) => setBadgeImg(e.target.value)}>
+        <option value="">--Slect Badge--</option>
           {btype &&
             btype.map((type) => (
               <option key={type.id} value={type.badgeImg}>
