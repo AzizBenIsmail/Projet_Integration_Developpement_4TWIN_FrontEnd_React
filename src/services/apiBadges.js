@@ -18,6 +18,16 @@ export async function addBadge(badgeData, config) {
   }
 }
 
+export async function deleteBadge(id, config) {
+  try {
+    const response = await axios.delete(`${apiURL}/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 
 
 

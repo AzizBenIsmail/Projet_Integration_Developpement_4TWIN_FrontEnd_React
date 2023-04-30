@@ -101,14 +101,14 @@ const [usernameB, setUsernameB] = useState("");
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
-  const newBType = {
+  const newB = {
     usernameB:id,
     badgeName: badgeName,
     badgeDescription: badgeDescription,
     badgeImg: badgeImg
   };
 
-  axios.post("http://localhost:5000/badges/add", newBType)
+  axios.post("http://localhost:5000/badges/add", newB)
   .then((res) => {
     console.log(res.data);
     setBadgeName("");
@@ -117,9 +117,22 @@ const handleFormSubmit = (event) => {
   
   })
   .catch((err) => console.log(err));
+
+
+
+  
   getD();
 
 };
+
+
+
+const handleDelete = async (id) => {
+  await axios.delete(`http://localhost:5000/badges/${id}`);
+  getD();
+
+};
+
 
 
   return (
@@ -139,6 +152,8 @@ const handleFormSubmit = (event) => {
               <p>Description: {badge.badgeDescription}</p>
               <p>Date: {badge.date}</p>
               <p>img: {badge.badgeImg}</p>
+              <button  onClick={() => handleDelete(badge._id)}   >Delete</button>
+
 
               <Col className="order-lg-2">
                 <div className="card-profile-image">
@@ -159,7 +174,7 @@ const handleFormSubmit = (event) => {
       </div>
 
 
-      <form onSubmit={handleFormSubmit}>
+ <form onSubmit={handleFormSubmit}>
   <label htmlFor="badgeName">Badge Name</label>
   <input
     type="text"
@@ -177,7 +192,18 @@ const handleFormSubmit = (event) => {
   />
 
 
-
+<div>
+        <label htmlFor="my-select">Select an option:</label>
+        <select id="my-select" onChange={(e) => setBadgeImg(e.target.value)}>
+          {btype &&
+            btype.map((type) => (
+              <option key={type.id} value={type.badgeImg}>
+                {type.badgeName}
+              </option>
+            ))}
+        </select>
+      </div>
+    
   <button type="button" onClick={handleFormSubmit}>Add BType</button>
 </form>
 
@@ -187,12 +213,15 @@ const handleFormSubmit = (event) => {
         <div key={type._id}>
           <h3>{type.badgeName}  </h3>
           <p>{type.badgeDescription}</p>
-          <img width="100" height="50" src={type.badgeImg} alt={type.badgeName} />
+          <img width="100" height="50"     src={require(`../../../assets/img/badges/${type.badgeImg}`)}
+ alt={type.badgeName} />
 
         </div>
         
       ))}
     </div>
+
+  
     </>
   );
 };

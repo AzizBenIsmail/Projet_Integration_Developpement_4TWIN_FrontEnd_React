@@ -58,8 +58,11 @@ const Tables = () => {
     },
   };
   useEffect(() => {
+
+
     getAllEvaluations();
     getAllBtype();
+    
 
   }, [1000]);
 
@@ -267,7 +270,7 @@ const handleDetailsClick = (id) => {
   <input
     type="file"
     id="badgeImg"
-    onChange={(e) => setBadgeImg(URL.createObjectURL(e.target.files[0]))}
+    onChange={(e) => setBadgeImg(e.target.files[0].name)}
   />
 
   <button type="button" onClick={handleFormSubmit}>Add BType</button>
@@ -279,7 +282,8 @@ const handleDetailsClick = (id) => {
         <div key={type._id}>
           <h3>{type.badgeName}  </h3>
           <p>{type.badgeDescription}</p>
-          <img width="100" height="50" src={type.badgeImg} alt={type.badgeName} />
+          <img width="100" height="50"         src={require(`../../../assets/img/badges/${type.badgeImg}`)}
+ alt={type.badgeName} />
 
           <button  onClick={() => handleDelete(type._id)}   >Delete</button>
         </div>
