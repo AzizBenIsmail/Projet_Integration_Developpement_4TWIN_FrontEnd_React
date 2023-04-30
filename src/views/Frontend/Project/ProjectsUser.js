@@ -22,6 +22,7 @@ import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProjectuser, deleteProject } from "../../../services/apiProject";
+import { dark } from "@material-ui/core/styles/createPalette";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -68,6 +69,24 @@ export default function Landing() {
     const words = str.replace(/[^\w\s]|_/g, "").split(/\s+/);
     // Retourner les 10 premiers mots
     return words.slice(0, 10).join(" ");
+  }
+  function isMontantActuelGreaterOrEqual(project) {
+    return (
+      project.montant_actuel >= project.montant_Final ||
+      project.numberOfPeople <= project.numberOfPeople_actuel 
+    );
+  }
+  function isUpdated(project) {
+    if(project.montant_actuel >= project.montant_Final ||
+      project.numberOfPeople <= project.numberOfPeople_actuel )
+    return "dark" 
+    else return "success"
+  }
+  function isDeleted(project) {
+    if(project.montant_actuel >= project.montant_Final ||
+      project.numberOfPeople <= project.numberOfPeople_actuel )
+    return "dark" 
+    else return "danger"
   }
   return (
     <>
@@ -127,20 +146,20 @@ export default function Landing() {
                           </span>
                         ) : (
                           <span
-                          style={{
-                            position: "absolute",
-                            top: "5%",
-                            left: "86%",
-                            transform: "translate(-50%, -50%)",
-                            fontSize: "16px",
-                            color: "white",
-                            background: "green",
-                            padding: "8px 8px",
-                            borderRadius: "8px",
-                          }}
-                        >
-                          ecological
-                        </span>
+                            style={{
+                              position: "absolute",
+                              top: "5%",
+                              left: "86%",
+                              transform: "translate(-50%, -50%)",
+                              fontSize: "16px",
+                              color: "white",
+                              background: "green",
+                              padding: "8px 8px",
+                              borderRadius: "8px",
+                            }}
+                          >
+                            ecological
+                          </span>
                         )}
                         {project.verified ? (
                           <span
@@ -151,7 +170,7 @@ export default function Landing() {
                               transform: "translate(-50%, -50%) ",
                               fontSize: "16px",
                               color: "white",
-                              background: "grey",
+                              background: "#3c3c3c  ",
                               padding: "8px 8px",
                               borderRadius: "8px",
                             }}
@@ -160,24 +179,24 @@ export default function Landing() {
                           </span>
                         ) : (
                           <span
-                          style={{
-                            position: "absolute",
-                            top: "5%",
-                            left: "10%",
-                            transform: "translate(-50%, -50%)",
-                            fontSize: "16px",
-                            color: "white",
-                            background: "green",
-                            padding: "8px 8px",
-                            borderRadius: "8px",
-                          }}
-                        >
-                           {moyenne(
-                                    project.montant_actuel,
-                                    project.montant_Final
-                                  )}
-                                  %
-                        </span>
+                            style={{
+                              position: "absolute",
+                              top: "5%",
+                              left: "10%",
+                              transform: "translate(-50%, -50%)",
+                              fontSize: "16px",
+                              color: "white",
+                              background: "green",
+                              padding: "8px 8px",
+                              borderRadius: "8px",
+                            }}
+                          >
+                            {moyenne(
+                              project.montant_actuel,
+                              project.montant_Final
+                            )}
+                            %
+                          </span>
                         )}
                         <CardBody className="py-5">
                           {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
@@ -279,8 +298,9 @@ export default function Landing() {
                             More Details
                           </Button> */}
                           <Button
+                            disabled={isMontantActuelGreaterOrEqual(project)}
                             className="btn-1 ml-1 mt-4"
-                            color="success"
+                            color={ isUpdated(project) }
                             outline
                             type="button"
                             onClick={(e) =>
@@ -291,8 +311,9 @@ export default function Landing() {
                             updateProject
                           </Button>
                           <Button
+                             disabled={isMontantActuelGreaterOrEqual(project)}
                             className="btn-1 ml-1 mt-4"
-                            color="danger"
+                            color={isDeleted(project) }
                             outline
                             type="button"
                             onClick={(e) => deleteProject(project._id, config)}

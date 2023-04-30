@@ -266,7 +266,7 @@ export default function Landing() {
                           <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
                             {project.title}
                           </h6>
-                          <p className="heading mt-2 ml-4 ">
+                          <p className="heading mt-2 ml-4 text-dark">
                             {getFirstTenWords(project.description)}
                             {project.description.length >= 10 ? (
                               <botton
@@ -286,7 +286,7 @@ export default function Landing() {
                               ""
                             )}
                           </p>
-                          <div className="font-weight-bold">
+                          <div className="font-weight-bold text-dark">
                             Domain :
                             <Badge color="success" pill className="mr-5 ml-2">
                               {project.domaine}
@@ -298,7 +298,7 @@ export default function Landing() {
                           </div>
                           <div className="progress-wrapper">
                             <div className="progress-info">
-                              <div className="progress-label">
+                              <div className="progress-label  " >
                                 <span>
                                   Task completed : |
                                   {moyenne(
@@ -308,7 +308,7 @@ export default function Landing() {
                                   %
                                 </span>
                               </div>
-                              <div className="progress-percentage">
+                              <div className="progress-percentage " >
                                 <span>
                                   {project.montant_actuel}/
                                   {project.montant_Final}

@@ -115,6 +115,7 @@ export default function ProfileUserProject() {
       differenceEnMinutes % 60
     } Minutes et ${differenceEnSecondes % 60} Seconds `;
   }
+
   return (
     <>
       <DemoNavbar />
