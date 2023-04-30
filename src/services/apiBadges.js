@@ -7,10 +7,23 @@ export async function getBadge(username,config) {
   return await axios.get(`${apiURL}/${username}`,config);
 }
 
+export async function getTBadge(username,config) {
+  return await axios.get(`${apiURL}/${username}/t`,config);
+}
+
+export async function getFBadge(username,config) {
+  return await axios.get(`${apiURL}/${username}/f`,config);
+}
+
+
+export async function getFBadges(config) {
+  return await axios.get(`${apiURL}/find/false`,config);
+}
+
 
 export async function addBadge(badgeData, config) {
   try {
-    const response = await axios.post(`${apiURL}/badges/add`, badgeData, config);
+    const response = await axios.post(`${apiURL}/add`, badgeData, config);
     return response.data.badge;
   } catch (error) {
     console.error(error);
@@ -28,6 +41,10 @@ export async function deleteBadge(id, config) {
   }
 }
 
+
+export async function updateBadge(id,config) {
+  return await axios.put(`${apiURL}/${id}/update`, config);
+}
 
 
 
@@ -50,9 +67,7 @@ export async function addUser(formData, config) {
   });
 }
 
-export async function updateUser(id, User) {
-  return await axios.put(`${apiURL}/${id}`, User);
-}
+
 
 export async function deleteUser(id,config) {
   return await axios.delete(`${apiURL}/${id}`,config);

@@ -19,6 +19,7 @@ import {
   Nav,
   Row,
   UncontrolledTooltip,
+  Col,
 } from "reactstrap";
 import { differenceInYears } from "date-fns";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
@@ -36,6 +37,7 @@ import Cookies from "js-cookie";
 import { getEvaluations } from "../../../services/apiEvaluation";
 
 import { getBtype,addBType } from "../../../services/apiBtype";
+import { getFBadges,updateBadge } from "services/apiBadges";
 
 
 
@@ -62,6 +64,9 @@ const Tables = () => {
 
     getAllEvaluations();
     getAllBtype();
+    
+
+    getD();
     
 
   }, [1000]);
@@ -143,6 +148,7 @@ const handleFormSubmit = (event) => {
 const handleDelete = async (id) => {
   await axios.delete(`http://localhost:5000/btype/${id}`);
   getAllBtype();
+  
 
 };
 
@@ -151,6 +157,47 @@ const handleDetailsClick = (id) => {
   window.history.pushState({}, '', `/evaluation/${id}`);
   window.location.reload();
 };
+
+
+
+const [fbadges, setFbadges] = useState("");
+const getD = async () => {
+  try {
+
+
+    const response2 = await getFBadges(config); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+    setFbadges(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+    //------------
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+const handleDeleteB = async (id,xp,username) => {
+  const response = await reduceXP(username, xp, config);
+
+  await axios.delete(`http://localhost:5000/badges/${id}`);
+  getD();
+  getAllEvaluations();
+
+
+};
+
+
+async function handleUpdateBadge(id,xp,username, config) {
+  try {
+    const response = await addXP(username, xp, config);
+
+    const updatedBadge = await updateBadge(id, { etat: true }); // Call the updateBadge function with the new etat value
+    console.log(updatedBadge.data); // Log the updated badge data to the console
+  } catch (error) {
+    console.error(error);
+  }
+  getD();
+  getAllEvaluations();
+
+}
   //---
   return (
     <>
@@ -290,6 +337,49 @@ const handleDetailsClick = (id) => {
         
       ))}
     </div>
+
+
+<h1>waaaa</h1>
+
+
+
+<div>
+        <h1> Badges request</h1>
+        {fbadges.length > 0 ? (
+          fbadges.map((badge) => (
+            <div key={badge._id}>
+              <h3>Name: {badge.badgeName}</h3>
+
+              <p>Description: {badge.badgeDescription}</p>
+              <p>Date: {badge.date}</p>
+              <p>img: {badge.usernameB}</p>
+              <button onClick={() => handleUpdateBadge(badge._id,document.getElementById("xp").value,badge.usernameB, config)}>accept +</button>
+              <input type="number" id="xp" name="xp" size="1" />
+              <button  onClick={() => handleDeleteB(badge._id,document.getElementById("xp").value,badge.usernameB)}   >Delete - </button>
+             
+
+
+              <Col className="order-lg-2">
+                <div className="card-profile-image">
+                  <br />
+                  <br />
+                  <div className="mt-2 border-top ">
+                  
+                  </div>
+                </div>
+                <br />
+                <br />
+              </Col>
+            </div>
+          ))
+        ) : (
+          <p>Aucun badge trouvé pour </p>
+        )}
+      </div>
+
+
+
+
     </>
   );
 };

@@ -39,7 +39,7 @@ import { getEvaluations } from "../../../services/apiEvaluation";
 
 import { getBtype, addBType } from "../../../services/apiBtype";
 import { getEvaluation } from "../../../services/apiEvaluation";
-import { getBadge } from "../../../services/apiBadges";
+import { getTBadge } from "../../../services/apiBadges";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
 const Details = () => {
@@ -81,7 +81,7 @@ const Details = () => {
 
       setEvaluation(firstEvaluation);
 
-      const response2 = await getBadge(id); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      const response2 = await getTBadge(id); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
       setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
       //------------
     } catch (error) {
@@ -97,6 +97,7 @@ const [badgeName, setBadgeName] = useState("");
 const [badgeDescription, setBadgeDescription] = useState("");
 const [badgeImg, setBadgeImg] = useState("");
 const [usernameB, setUsernameB] = useState("");
+const [etat, setEtat] = useState("");
 
 const handleFormSubmit = (event) => {
   event.preventDefault();
@@ -105,7 +106,8 @@ const handleFormSubmit = (event) => {
     usernameB:id,
     badgeName: badgeName,
     badgeDescription: badgeDescription,
-    badgeImg: badgeImg
+    badgeImg: badgeImg,
+    etat:true,
   };
 
   axios.post("http://localhost:5000/badges/add", newB)

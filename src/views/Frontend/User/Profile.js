@@ -21,7 +21,7 @@ import ChatBox from "./profile/chat";
 
 import { getEvaluation } from "../../../services/apiEvaluation";
 
-import { getBadge } from "../../../services/apiBadges";
+import { getTBadge } from "../../../services/apiBadges";
 
 export default function Profile() {
   /////cookies
@@ -97,7 +97,7 @@ export default function Profile() {
       const firstEvaluation = response1.data.evaluations[0]; // Accéder à la première évaluation
       setEvaluation(firstEvaluation);
 
-      const response2 = await getBadge(userL); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      const response2 = await getTBadge(userL); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
       setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
 
       //------------
