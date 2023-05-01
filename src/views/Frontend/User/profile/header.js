@@ -3,7 +3,6 @@ import { Button } from "reactstrap";
 import { Row, Col, Progress } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { getTopEvaluations } from "../../../../services/apiEvaluation";
-
 const ProfileHeader = (props) => {
   const navigate = useNavigate();
 
