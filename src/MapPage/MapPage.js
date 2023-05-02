@@ -18,7 +18,7 @@ const MapPage = () => {
       lat: myLocation.lat,
       lng: myLocation.log,
     },
-    zoom: 11,
+    zoom: 8,
   };
   return (
     <div className="map_page_container">

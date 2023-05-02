@@ -4,11 +4,13 @@
     bottom: 0;
     left: 0;
     display: flex;
+    margin-left: 400px;
 }
 
 .chatbox_container {
     height: 400px;
     width: 300px;
+    left: 400px;
     background-color: white;
     margin-left: 15px;
     border-top-left-radius: 8px;

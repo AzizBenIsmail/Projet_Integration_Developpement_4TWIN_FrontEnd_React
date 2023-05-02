@@ -18,35 +18,7 @@ const Messages = ({ socketId,username }) => {
   };
 
 
-  const [mes, setMes] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await load(username);
-        console.log(mes);
-        console.log("///////////////////////////");
-        console.log(mes);
-        console.log("///////////////////////////");
-        console.log(res);
-        if(res.data.chat[0].messages.length != 0){
-          if(res.data.chat[0].messages[res.data.chat[0].messages.length-1]._id !==mes[res.data.chat[0].messages.length -1]?._id){
-console.log(res.data.chat[0].messages[res.data.chat[0].messages.length-1]._id )
-          console.log(mes[res.data.chat[0].messages.length -1]?._id)
-          setMes(res.data.chat[0].messages);
-        }
-        else{
-          setMes()
-        }
-      }else{
-        setMes()
-      }
-        
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [username, setMes]); 
+
 
 
   const messages = useSelector(

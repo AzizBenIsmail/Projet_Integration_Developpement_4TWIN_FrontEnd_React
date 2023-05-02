@@ -22,7 +22,6 @@ export const connectionWithSocketIOServer = () => {
     chatMessageHandler(messageData);
   });
   socket.on("video-rooms", (videoRooms) => {
-    console.log('bla vbla la bla recieved')
     videoRoomsListHandler(videoRooms);
   });
 
