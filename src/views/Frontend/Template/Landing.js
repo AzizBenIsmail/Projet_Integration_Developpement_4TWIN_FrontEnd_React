@@ -10,6 +10,8 @@ import {
   Progress,
   Media,
 } from "reactstrap";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { getProjects, getProjectsValider } from "../../../services/apiProject";
 import Cookies from "js-cookie";
@@ -29,7 +31,6 @@ export default function Landing() {
     },
   };
   ////////
-  const [infos, setInfos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 3;
 
@@ -57,6 +58,7 @@ export default function Landing() {
     const res = await getProjects(config)
       .then((res) => {
         setProjects(res.data.projects);
+        currentProjects(res.data.projects);
       })
       .catch((err) => {
         console.log(err);
@@ -108,11 +110,20 @@ export default function Landing() {
   };
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = infos.slice(indexOfFirstProject, indexOfLastProject);
-  const totalPages = Math.ceil(infos.length / projectsPerPage);
+  const currentProjects = projects.slice(
+    indexOfFirstProject,
+    indexOfLastProject
+  );
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+  const next = () => {
+    setCurrentPage(currentPage+1);
+  };
+  const back = () => {
+    setCurrentPage(currentPage-1);
   };
   return (
     <>
@@ -130,11 +141,11 @@ export default function Landing() {
                       <br></br>
                       <br></br>
                       <h1 className="display-3 text-white">
-                      <img
-                style={{ width: "150px", height: "100px" }}
-                alt="..."
-                src={require("assets/planete-terre.png")}
-              />
+                        <img
+                          style={{ width: "150px", height: "100px" }}
+                          alt="..."
+                          src={require("assets/planete-terre.png")}
+                        />
                         Support the Ecological Project in Africa
                         <span>
                           "Empower Your Dreams: Join Our Crowdfunding Community
@@ -203,186 +214,277 @@ export default function Landing() {
             <Row className="justify-content-center">
               <Col lg="12">
                 <Row className="row-grid">
-                
-
-                  { projects.length > 0 ? (
-                    projects.map((project) => (
-                    <Col lg="4" className="py-4">
-                      <Card
-                        className="card-lift--hover shadow border-0"
-                        key={project._id}
-                      >
-                        {project.verified ? (
-                          <span
-                            style={{
-                              position: "absolute",
-                              top: "5%",
-                              left: "86%",
-                              transform: "translate(-50%, -50%) ",
-                              fontSize: "16px",
-                              color: "white",
-                              background: "grey",
-                              padding: "8px 8px",
-                              borderRadius: "8px",
-                            }}
-                          >
-                            finish
-                          </span>
-                        ) : (
-                          <span
-                          style={{
-                            position: "absolute",
-                            top: "5%",
-                            left: "86%",
-                            transform: "translate(-50%, -50%)",
-                            fontSize: "16px",
-                            color: "white",
-                            background: "green",
-                            padding: "8px 8px",
-                            borderRadius: "8px",
-                          }}
+                  {projects.length > 0 ? (
+                    currentProjects.map((project) => (
+                      <Col lg="4" className="py-4">
+                        <Card
+                          className="card-lift--hover shadow border-0"
+                          key={project._id}
                         >
-                           {moyenne(
-                                    project.montant_actuel,
-                                    project.montant_Final
-                                  )}
-                                  %
-                        </span>
-                        )}
-                        <CardBody className={isGreaterOrEqual(project)}>
-                          {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
-                          <div className=" icon-shape rounded-circle mb-4">
-                            {/* <i className="ni ni-check-bold" /> */}
-                            <Media className="align-items-center justify-content-end">
-                              <a className="avatar ml-9">
-                                <img
-                                  alt="..."
-                                  src={`http://localhost:5000/images/${project.image_project}`}
-                                  style={{
-                                    width: "250%",
-                                    height: "auto",
-                                    display: "block",
-                                    margin: "10 auto",
-                                  }}
-                                />
-                              </a>
-                              <Media>
-                                <span className="mb-0 text-sm"></span>
+                          {project.verified ? (
+                            <span
+                              style={{
+                                position: "absolute",
+                                top: "5%",
+                                left: "86%",
+                                transform: "translate(-50%, -50%) ",
+                                fontSize: "16px",
+                                color: "white",
+                                background: "grey",
+                                padding: "8px 8px",
+                                borderRadius: "8px",
+                              }}
+                            >
+                              finish
+                            </span>
+                          ) : (
+                            <span
+                              style={{
+                                position: "absolute",
+                                top: "5%",
+                                left: "86%",
+                                transform: "translate(-50%, -50%)",
+                                fontSize: "16px",
+                                color: "white",
+                                background: "green",
+                                padding: "8px 8px",
+                                borderRadius: "8px",
+                              }}
+                            >
+                              {moyenne(
+                                project.montant_actuel,
+                                project.montant_Final
+                              )}
+                              %
+                            </span>
+                          )}
+                          <CardBody className={isGreaterOrEqual(project)}>
+                            {/* <div className="icon icon-shape icon-shape-danger rounded-circle mb-4"> */}
+                            <div className=" icon-shape rounded-circle mb-4">
+                              {/* <i className="ni ni-check-bold" /> */}
+                              <Media className="align-items-center justify-content-end">
+                                <a className="avatar ml-9">
+                                  <img
+                                    alt="..."
+                                    src={`http://localhost:5000/images/${project.image_project}`}
+                                    style={{
+                                      width: "250%",
+                                      height: "auto",
+                                      display: "block",
+                                      margin: "10 auto",
+                                    }}
+                                  />
+                                </a>
+                                <Media>
+                                  <span className="mb-0 text-sm"></span>
+                                </Media>
                               </Media>
-                            </Media>
-                          </div>
-                          <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
-                            {project.title}
-                          </h6>
-                          <p className="heading mt-2 ml-4 text-dark">
-                            {getFirstTenWords(project.description)}
-                            {project.description.length >= 10 ? (
-                              <botton
-                                onClick={(e) =>
-                                  navigate(
-                                    `/Projects_details/${project._id}/${project.creator}`
-                                  )
-                                }
-                              >
-                                ...
-                                <i
-                                  class="fa fa-sort-desc"
-                                  aria-hidden="true"
-                                ></i>
-                              </botton>
-                            ) : (
-                              ""
-                            )}
-                          </p>
-                          <div className="font-weight-bold text-dark">
-                            Domain :
-                            <Badge color="success" pill className="mr-5 ml-2">
-                              {project.domaine}
-                            </Badge>
-                            Goal :
-                            <Badge color="warning" pill className="ml-2">
-                              {project.goal}
-                            </Badge>
-                          </div>
-                          <div className="progress-wrapper">
-                            <div className="progress-info">
-                              <div className="progress-label  " >
-                                <span>
-                                  Task completed : |
-                                  {moyenne(
-                                    project.montant_actuel,
-                                    project.montant_Final
-                                  )}
-                                  %
-                                </span>
-                              </div>
-                              <div className="progress-percentage " >
-                                <span>
-                                  {project.montant_actuel}/
-                                  {project.montant_Final}
-                                  <i className="fa fa-usd mr-2 ml-2" />
-                                </span>
-                              </div>
                             </div>
-                            <Progress
-                              max={project.montant_Final}
-                              value={project.montant_actuel}
-                              color="default"
-                            />
-                            {project.numberOfPeople_actuel}/
-                            {project.numberOfPeople}
-                            <i className="fa fa-users mr-2 ml-2" />
-                          </div>
-                          <Button
-                            className="btn-1 mt-4"
-                            color="primary"
-                            outline
-                            type="button"
-                            onClick={(e) =>
-                              navigate(
-                                `/Projects_details/${project._id}/${project.creator}`
-                              )
-                            }
-                          >
-                            <i class="fa fa-eye mr-2" aria-hidden="true"></i>
-                            More Details
-                          </Button>
-                          <Button
-                            disabled={isMontantActuelGreaterOrEqual(project)}
-                            className="btn-1 ml-1 mt-4"
-                            color="success"
-                            outline
-                            type="button"
-                            onClick={(e) =>
-                              navigate(`/AddInvest/${project._id}`)
-                            }
-                          >
-                            <i class="fa fa-cubes mr-2" aria-hidden="true"></i>
-                            Invest
-                          </Button>
-                        </CardBody>
-                      </Card>
-                    </Col>
+                            <h6 className=" display-2 text-dark text-capitalize font-weight-bold ">
+                              {project.title}
+                            </h6>
+                            <p className="heading mt-2 ml-4 text-dark">
+                              {getFirstTenWords(project.description)}
+                              {project.description.length >= 10 ? (
+                                <botton
+                                  onClick={(e) =>
+                                    navigate(
+                                      `/Projects_details/${project._id}/${project.creator}`
+                                    )
+                                  }
+                                >
+                                  ...
+                                  <i
+                                    class="fa fa-sort-desc"
+                                    aria-hidden="true"
+                                  ></i>
+                                </botton>
+                              ) : (
+                                ""
+                              )}
+                            </p>
+                            <div className="font-weight-bold text-dark">
+                              Domain :
+                              <Badge color="success" pill className="mr-5 ml-2">
+                                {project.domaine}
+                              </Badge>
+                              Goal :
+                              <Badge color="warning" pill className="ml-2">
+                                {project.goal}
+                              </Badge>
+                            </div>
+                            <div className="progress-wrapper">
+                              <div className="progress-info">
+                                <div className="progress-label  ">
+                                  <span>
+                                    Task completed : |
+                                    {moyenne(
+                                      project.montant_actuel,
+                                      project.montant_Final
+                                    )}
+                                    %
+                                  </span>
+                                </div>
+                                <div className="progress-percentage ">
+                                  <span>
+                                    {project.montant_actuel}/
+                                    {project.montant_Final}
+                                    <i className="fa fa-usd mr-2 ml-2" />
+                                  </span>
+                                </div>
+                              </div>
+                              <Progress
+                                max={project.montant_Final}
+                                value={project.montant_actuel}
+                                color="default"
+                              />
+                              {project.numberOfPeople_actuel}/
+                              {project.numberOfPeople}
+                              <i className="fa fa-users mr-2 ml-2" />
+                            </div>
+                            <Button
+                              className="btn-1 mt-4"
+                              color="primary"
+                              outline
+                              type="button"
+                              onClick={(e) =>
+                                navigate(
+                                  `/Projects_details/${project._id}/${project.creator}`
+                                )
+                              }
+                            >
+                              <i class="fa fa-eye mr-2" aria-hidden="true"></i>
+                              More Details
+                            </Button>
+                            <Button
+                              disabled={isMontantActuelGreaterOrEqual(project)}
+                              className="btn-1 ml-1 mt-4"
+                              color="success"
+                              outline
+                              type="button"
+                              onClick={(e) =>
+                                navigate(`/AddInvest/${project._id}`)
+                              }
+                            >
+                              <i
+                                class="fa fa-cubes mr-2"
+                                aria-hidden="true"
+                              ></i>
+                              Invest
+                            </Button>
+                          </CardBody>
+                        </Card>
+                      </Col>
                     ))
-                    ) : (
-                      <h1 className="display-3 text-white " style={{color: "black"}}>
-                          "No projects found Sorry!"
-                      </h1>
-                    )}
-              
-                    {totalPages > 1 && (
-                      <ul className="pagination">
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  ) : (
+                    <h1
+                      className="display-3 text-white "
+                      style={{ color: "black" }}
+                    >
+                      "No projects found Sorry!"
+                    </h1>
+                  )}
+
+                  {totalPages > 1 && (
+                    <ul className="pagination ">
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => back()}
+                        >
+                          <i className="fa fa-angle-left" />
+                        </PaginationLink>
+                      </PaginationItem>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (page) => (
                           <li
                             key={page}
-                            className={page === currentPage ? "active" : ""}
+                            className={page == currentPage ? "active" : ""}
                             onClick={() => handlePageChange(page)}
                           >
-                            {page}
+                            <Pagination>
+                              <PaginationItem
+                              className={page == currentPage ? "active" : ""}
+                              >
+                                <PaginationLink
+                                  href="#pablo"
+                                  onClick={(e) => handlePageChange(page)}
+                                >
+                                  {page}
+                                </PaginationLink>
+                              </PaginationItem>
+                            </Pagination>
                           </li>
-                        ))}
-                      </ul>
-                    )}
+                        )
+                      )}
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => next()}
+                        >
+                          <i className="fa fa-angle-right" />
+                        </PaginationLink>
+                      </PaginationItem>
+                    </ul>
+                  )}
+                    {/* <Pagination>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <i className="fa fa-angle-left" />
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          1
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem className="active">
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          2
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          3
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          4
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          5
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <i className="fa fa-angle-right" />
+                        </PaginationLink>
+                      </PaginationItem>
+                    </Pagination> */}
                 </Row>
               </Col>
             </Row>
@@ -435,10 +537,11 @@ export default function Landing() {
                           </div>
                         </div>
                         <div className="pl-4">
-                          <h5 className="display-4 text-success">
+                          <h5 className="display-4 text-success ">
                             {ProjectValider.title}
                           </h5>
-                          <p>{getFirstTenWords(ProjectValider.description)}
+                          <h4 className="text-dark">
+                            {getFirstTenWords(ProjectValider.description)}
                             {ProjectValider.description.length >= 10 ? (
                               <botton
                                 onClick={(e) =>
@@ -455,7 +558,8 @@ export default function Landing() {
                               </botton>
                             ) : (
                               ""
-                            )}</p>
+                            )}
+                          </h4>
                           <div className="font-weight-bold">
                             Domain :
                             <Badge color="success" pill className="mr-5 ml-2">
