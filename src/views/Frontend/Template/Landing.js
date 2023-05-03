@@ -15,7 +15,6 @@ import { getProjects, getProjectsValider } from "../../../services/apiProject";
 import Cookies from "js-cookie";
 import { getUserAuth } from "../../../services/apiUser.js";
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
-import "../../../assets/css.css";
 
 export default function Landing() {
   /////cookies
@@ -30,6 +29,10 @@ export default function Landing() {
     },
   };
   ////////
+  const [infos, setInfos] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 3;
+
   const navigate = useNavigate();
   const [user, setuser] = useState([]);
   const [ProjectValiders, setProjectValider] = useState([]);
@@ -102,6 +105,14 @@ export default function Landing() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = infos.slice(indexOfFirstProject, indexOfLastProject);
+  const totalPages = Math.ceil(infos.length / projectsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
   return (
     <>
@@ -192,7 +203,10 @@ export default function Landing() {
             <Row className="justify-content-center">
               <Col lg="12">
                 <Row className="row-grid">
-                  {projects.map((project) => (
+                
+
+                  { projects.length > 0 ? (
+                    projects.map((project) => (
                     <Col lg="4" className="py-4">
                       <Card
                         className="card-lift--hover shadow border-0"
@@ -349,7 +363,26 @@ export default function Landing() {
                         </CardBody>
                       </Card>
                     </Col>
-                  ))}
+                    ))
+                    ) : (
+                      <h1 className="display-3 text-white " style={{color: "black"}}>
+                          "No projects found Sorry!"
+                      </h1>
+                    )}
+              
+                    {totalPages > 1 && (
+                      <ul className="pagination">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                          <li
+                            key={page}
+                            className={page === currentPage ? "active" : ""}
+                            onClick={() => handlePageChange(page)}
+                          >
+                            {page}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                 </Row>
               </Col>
             </Row>

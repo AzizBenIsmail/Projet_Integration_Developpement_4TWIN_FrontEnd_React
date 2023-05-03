@@ -141,17 +141,6 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
-                  <DropdownToggle nav to="/landing-page" tag={Link}>
-                    <i className="ni ni-collection d-lg-none mr-1" />
-                    <span
-                      className="nav-link-inner--text"
-                      style={{ color: "#ffff" }}
-                    >
-                      Fablab
-                    </span>
-                  </DropdownToggle>
-                </UncontrolledDropdown>
-                <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/LandingPage" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
                     <span
