@@ -4,12 +4,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Container,
   Row,
   Col,
@@ -52,7 +46,7 @@ export default function Landing() {
       getAllProject(config); // appel répété toutes les 10 secondes
       getUserFunction(config);
       getAllProjectValider(config);
-    }, 2000);
+    }, 20000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
 

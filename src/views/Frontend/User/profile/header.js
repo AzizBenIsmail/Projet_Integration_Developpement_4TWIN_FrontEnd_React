@@ -1,11 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, CardHeader } from "reactstrap";
-import { Card, Container, Row, Col, Progress } from "reactstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "reactstrap";
+import { Row, Col, Progress } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 import { getTopEvaluations } from "../../../../services/apiEvaluation";
-import { MDBCard, MDBCardHeader, MDBCol, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
-
 const ProfileHeader = (props) => {
   const navigate = useNavigate();
 

@@ -1,16 +1,10 @@
 import { useState, useEffect } from "react";
-import classnames from "classnames";
+// import classnames from "classnames";
 import {
   Badge,
   Button,
   Card,
   CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Container,
   Row,
   Col,
@@ -22,7 +16,6 @@ import Cookies from "js-cookie";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 import { getProjectuser, deleteProject } from "../../../services/apiProject";
-import { dark } from "@material-ui/core/styles/createPalette";
 
 export default function Landing() {
   const navigate = useNavigate();
