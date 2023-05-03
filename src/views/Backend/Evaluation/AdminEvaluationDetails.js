@@ -152,9 +152,13 @@ const handleDelete = async (id) => {
               <h3>Name: {badge.badgeName}</h3>
 
               <p>Description: {badge.badgeDescription}</p>
-              <p>Date: {badge.date}</p>
-              <p>img: {badge.badgeImg}</p>
-              <button  onClick={() => handleDelete(badge._id)}   >Delete</button>
+              <p>Date: {badge.date.split("T")[0]}</p>
+              <img
+                width="100"
+                height="50"
+                src={require(`../../../assets/img/badges/${badge.badgeImg}`)}
+                alt={badge.badgeName}
+              />              <button  onClick={() => handleDelete(badge._id)}   >Delete</button>
 
 
               <Col className="order-lg-2">
@@ -208,7 +212,7 @@ const handleDelete = async (id) => {
         </select>
       </div>
     
-  <button type="button" onClick={handleFormSubmit}>Add BType</button>
+  <button type="button" onClick={handleFormSubmit}>Add Badge</button>
 </form>
 
 <div>
