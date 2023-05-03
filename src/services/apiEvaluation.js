@@ -7,7 +7,7 @@ export async function getEvaluations(config) {
 }
 
 export async function getTopEvaluations(config) {
-  return await axios.get(`${apiURL}/find/top5`,config);
+  return await axios.get(`${apiURL}/find/top3`,config);
 }
 export async function getEvaluation(username,config) {
   return await axios.get(`${apiURL}/${username}`,config);

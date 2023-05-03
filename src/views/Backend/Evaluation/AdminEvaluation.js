@@ -354,7 +354,7 @@ async function handleUpdateBadge(id,xp,username, config) {
               <p>Details: {badge.details}</p>
 
               <p>Date: {badge.date}</p>
-              <p>img: {badge.usernameB}</p>
+              <p>username: {badge.usernameB}</p>
               <button onClick={() => handleUpdateBadge(badge._id,document.getElementById("xp").value,badge.usernameB, config)}>accept +</button>
               <input type="number" id="xp" name="xp" size="1" />
               <button  onClick={() => handleDeleteB(badge._id,document.getElementById("xp").value,badge.usernameB)}   >Delete - </button>

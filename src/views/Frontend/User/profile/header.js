@@ -103,8 +103,33 @@ const ProfileHeader = (props) => {
             </a>
           </div>
         </Col>
+        <div >
+          <br/>
+      <h2>👑TOP 3 USERS👑</h2>
+        
+        {evaluations && evaluations.map((type) => (
+          <div key={type._id}>
+            <div className="progress-wrapper">
+              <div className="progress-info">
+                <div className="progress-label">
+                <text>⚡ {type.usernameE} </text>
+                    <span>LEVEL: {type.lvl} </span>
+                    
+
+                </div>
+             
+              </div>
+            </div>
+
+          </div>
+          
+        ))}
+
+
+      </div>
         
         <Col className="order-lg-3 text-lg-right align-self-lg-center" lg="4">
+          
           <div className="card-profile-actions py-4 mt-lg-0">
             <Button
               className="mr-4"
@@ -155,21 +180,11 @@ const ProfileHeader = (props) => {
             </div>
           </div>
         </Col>
+      
+
       </Row>
-      <h2>👑TOP 5 users👑</h2>
-      <div>
-     
-        
-        {evaluations && evaluations.map((type) => (
-          <div key={type._id}>
-            <text>LVL ({type.lvl}) ⚡{type.usernameE} </text>
-  
-          </div>
-          
-        ))}
-
-
-      </div>
+      
+    
 
      
     </>
