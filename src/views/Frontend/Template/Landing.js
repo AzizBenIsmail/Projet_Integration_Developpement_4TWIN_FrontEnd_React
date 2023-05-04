@@ -385,48 +385,7 @@ export default function Landing() {
                     </h1>
                   )}
 
-                  {totalPages > 1 && (
-                    <ul className="pagination ">
-                      <PaginationItem>
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => back()}
-                        >
-                          <i className="fa fa-angle-left" />
-                        </PaginationLink>
-                      </PaginationItem>
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                        (page) => (
-                          <li
-                            key={page}
-                            className={page == currentPage ? "active" : ""}
-                            onClick={() => handlePageChange(page)}
-                          >
-                            <Pagination>
-                              <PaginationItem
-                              className={page == currentPage ? "active" : ""}
-                              >
-                                <PaginationLink
-                                  href="#pablo"
-                                  onClick={(e) => handlePageChange(page)}
-                                >
-                                  {page}
-                                </PaginationLink>
-                              </PaginationItem>
-                            </Pagination>
-                          </li>
-                        )
-                      )}
-                      <PaginationItem>
-                        <PaginationLink
-                          href="#pablo"
-                          onClick={(e) => next()}
-                        >
-                          <i className="fa fa-angle-right" />
-                        </PaginationLink>
-                      </PaginationItem>
-                    </ul>
-                  )}
+                 
                     {/* <Pagination>
                       <PaginationItem>
                         <PaginationLink
@@ -488,6 +447,48 @@ export default function Landing() {
                 </Row>
               </Col>
             </Row>
+            {totalPages > 1 && (
+                    <ul className="pagination ">
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => back()}
+                        >
+                          <i className="fa fa-angle-left" />
+                        </PaginationLink>
+                      </PaginationItem>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (page) => (
+                          <li
+                            key={page}
+                            className={page == currentPage ? "active" : ""}
+                            onClick={() => handlePageChange(page)}
+                          >
+                            <Pagination>
+                              <PaginationItem
+                              className={page == currentPage ? "active" : ""}
+                              >
+                                <PaginationLink
+                                  href="#pablo"
+                                  onClick={(e) => handlePageChange(page)}
+                                >
+                                  {page}
+                                </PaginationLink>
+                              </PaginationItem>
+                            </Pagination>
+                          </li>
+                        )
+                      )}
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => next()}
+                        >
+                          <i className="fa fa-angle-right" />
+                        </PaginationLink>
+                      </PaginationItem>
+                    </ul>
+                  )}
           </Container>
         </section>
         <section className="section section-lg bg-gradient-default">
