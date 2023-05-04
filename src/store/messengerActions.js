@@ -22,7 +22,7 @@ export const sendChatMessage = (receiverSocketId, content ,username) => {
 
 
   //////badwords
-  const badWords = ['badword1', 'badword2', 'badword3'];
+  const badWords = ['badword1', 'badword2', 'badword3','aziz'];
   let newContent = content;
 
 // Replace bad words with asterisks
