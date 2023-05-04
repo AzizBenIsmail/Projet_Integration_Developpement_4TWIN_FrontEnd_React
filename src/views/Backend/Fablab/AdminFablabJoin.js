@@ -1,8 +1,8 @@
-import {    Badge,    Card,    CardHeader,    CardFooter,    DropdownMenu,  DropdownItem,    UncontrolledDropdown,    DropdownToggle,    Media,
-    Pagination,    PaginationItem,    PaginationLink,    Progress,   Table,    Container,    Row,    UncontrolledTooltip,    Button, CardBody  } from "reactstrap";
+import {      Card,    CardHeader,    CardFooter,      Media,
+    Pagination,    PaginationItem,    PaginationLink,     Table,    Container,    Row,    UncontrolledTooltip,    Button } from "reactstrap";
   // core components
   import Header from "components/Headers/Header";
-  import { useNavigate, useParams } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
   import axios from 'axios';
   import { useEffect, useState } from 'react';
 
@@ -17,24 +17,28 @@ import AdminFablab from "./AdminFablab";
     const [disable, setDisable] = useState(true);
     const [accepted, setAccepted] = useState(false);
     const [nonAccepted, setNonAccepted] = useState(false);
+    const[is_accepted , setIsAccepted]= useState(null);
+    const[is_treated,setIsTreated]=useState(null);
+    const[message,setMessage]=useState(null)
+    const getAllFablabs=async(url)=>{
 
-    const getAllFablabs=async(page)=>{
-        const res = await axios.get(`http://localhost:5000/fablabs/requests?page=${page}`)
-          .then(res => {
+        console.log(url);
+        
+       const res = await axios.get(url).then(res => {
             console.log(res.data);
-            setFablabs(res.data.fablabs);
-            setTotalPages(res.data.totalPages);
+              setFablabs(res.data.fablabs);
+              setTotalPages(res.data.totalPages);  
+              setMessage(null);
           })
           .catch(err => {
             console.log(err);
+            setMessage(err);
           });
       }
+
       useEffect(() => {
-        getAllFablabs(currentPage); 
-        const interval = setInterval(() => {
-            getAllFablabs(currentPage); // appel répété toutes les 10 secondes
-          }, 10000);
-          return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant   
+        getAllFablabs(`http://localhost:5000/fablabs/requests?page=${currentPage}`); 
+       
       }, [currentPage]);
 
       const handlePageClick = (e, page) => {
@@ -57,25 +61,45 @@ import AdminFablab from "./AdminFablab";
       };
 
       const treatedFunction=()=>{
+        getAllFablabs(`http://localhost:5000/fablabs/requests?is_treated=true`); 
         setDisable(false);
-        
-       
+        setIsTreated(true);
       };
 
       const nonTreatedFunction=()=>{
+        getAllFablabs(`http://localhost:5000/fablabs/requests?is_treated=false`); 
         setDisable(true);
+        setIsTreated(false);
         setAccepted(false);
         setNonAccepted(false);
+
+        
+        
+      };
+      const allFunction=()=>{
+        getAllFablabs(`http://localhost:5000/fablabs/requests?page=${currentPage}`)
+        setDisable(true);
+        setIsTreated(false);
+        setAccepted(false);
+        setNonAccepted(false);
+      
       };
       
       const handleAcceptedChange = (e) => {
+        getAllFablabs(`http://localhost:5000/fablabs/requests?is_treated=true&is_accepted=true`); 
         setAccepted(e.target.checked);
         setNonAccepted(false);
+        setIsAccepted(true);
+       
+        
       };
       
       const handleNonAcceptedChange = (e) => {
+        getAllFablabs(`http://localhost:5000/fablabs/requests?is_treated=true&is_accepted=false`); 
         setNonAccepted(e.target.checked);
         setAccepted(false);
+        setIsAccepted(false);
+      
       };
     return (
       <>
@@ -93,6 +117,23 @@ import AdminFablab from "./AdminFablab";
                   </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <th scope="row">
+                        <div className="custom-control custom-radio mb-3">
+                          <input
+                            className="custom-control-input"
+                            id="All"
+                            type="radio"
+                            name="custom-radio-2"
+                            onClick={allFunction}
+                          />
+                          <label className="custom-control-label" htmlFor="All">
+                              All
+                          </label>
+                        </div>
+                    </th>
+                    
+                  </tr>
                   <tr>
                     <th scope="row">
                         <div className="custom-control custom-radio mb-3">
@@ -187,8 +228,7 @@ import AdminFablab from "./AdminFablab";
                       <th scope="col" />
                     </tr>
                   </thead>
-                  <tbody>
-                  {fablabs.map(fablab => (
+                  <tbody>{!message ? (<> {fablabs.map(fablab => (
                     <tr key={fablab._id}>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -301,7 +341,8 @@ import AdminFablab from "./AdminFablab";
                       </Button>
                       </td>
                     </tr>
-                   ))}
+                   ))}</>) :(<><h4>No records found </h4></>)}
+                 
                   </tbody>
                 </Table>
                 <CardFooter className="py-4">

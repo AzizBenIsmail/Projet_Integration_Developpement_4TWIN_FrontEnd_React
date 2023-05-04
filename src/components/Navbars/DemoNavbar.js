@@ -141,13 +141,13 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav>
-                  <DropdownToggle nav to="/landing-page" tag={Link}>
+                  <DropdownToggle nav to="/LandingPage" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
                     <span
                       className="nav-link-inner--text"
                       style={{ color: "#ffff" }}
                     >
-                      Fablab
+                      Jobs
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
@@ -173,93 +173,9 @@ export default function NavbarF() {
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
-                <UncontrolledDropdown nav>
-                  <DropdownToggle nav>
-                    <i className="ni ni-collection d-lg-none mr-1" />
-                    <span
-                      className="nav-link-inner--text"
-                      style={{ color: "#ffff" }}
-                    >
-                      Example
-                    </span>
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem
-                      to="/landing-page"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Landing
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/profile-page/"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/login-page"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Login
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/register-page"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Register
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/Backend_Users"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Backend Users
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/Index"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Backend
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/Profile"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      Profile
-                    </DropdownItem>
-                    <DropdownItem
-                      to="/IndexDefault"
-                      tag={Link}
-                      style={{ color: "#172b4d" }}
-                    >
-                      IndexDefault
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto " navbar>
-                <NavItem className="d-none d-lg-block ml-lg-4 ">
-                  <Button
-                    color="default"
-                    //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
-                    target="_blank"
-                  >
-                    <Link to="/FablabJoin">
-                      <span className="btn-inner--icon">
-                        <i className="fa fa-user-plus mr-2" />
-                      </span>
-                      <span className="nav-link-inner--text ml-1">
-                        Join Us as Fablab
-                      </span>
-                    </Link>
-                  </Button>
-                </NavItem>
                 <Nav className="align-items-center d-none d-md-flex" navbar>
                   <UncontrolledDropdown nav>
                     <DropdownToggle className="pr-0" nav>
@@ -291,13 +207,22 @@ export default function NavbarF() {
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage you Project</span>
                       </DropdownItem>
-                      <DropdownItem to="/eventsFablab/643216cd888293912452e8eb" tag={Link}>
+                      {user.userType === "fablab" && (
+                      <DropdownItem to={`/eventsFablab/${user._id}`} tag={Link}>
                         <i className="ni ni-settings-gear-65" />
                         <span>Manage your Event</span>
-                      </DropdownItem>
+                      </DropdownItem>)}
+                      
                       <DropdownItem onClick={(e) => navigate(`/InvestUser`)}>
                         <i className="ni ni-calendar-grid-58" />
                         <span>Activity Invest</span>
+                      </DropdownItem>
+                      <DropdownItem
+                        to="/OffersCreated"
+                        tag={Link}
+                      >
+                        <i className="ni ni-briefcase-24" />
+                        <span>Created Jobs</span>
                       </DropdownItem>
                       <DropdownItem to="/admin/user-profile" tag={Link}>
                         <i className="ni ni-support-16" />

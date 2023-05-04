@@ -128,6 +128,22 @@ export default function LoginNavbar() {
                     </Link>
                   </Button>
                 </NavItem>
+                <NavItem className="d-none d-lg-block ml-lg-4 ">
+                  <Button
+                    color="default"
+                    //href="https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-navbar"
+                    target="_blank"
+                  >
+                    <Link to="/FablabJoin">
+                      <span className="btn-inner--icon">
+                        <i className="fa fa-user-plus mr-2" />
+                      </span>
+                      <span className="nav-link-inner--text ml-1">
+                        Join Us as Fablab
+                      </span>
+                    </Link>
+                  </Button>
+                </NavItem>
               </Nav>
             </UncontrolledCollapse>
           </Container>

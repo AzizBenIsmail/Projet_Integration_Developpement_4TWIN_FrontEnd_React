@@ -1,17 +1,18 @@
 // reactstrap components
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ReactDatetime from "react-datetime";
-import IntlTelInput from "react-intl-tel-input";
 import "react-intl-tel-input/dist/main.css";
 //import "../../../assetsFrontOffice/css/fablab.css";
 import DemoNavbar from "components/Navbars/DemoNavbar";
-
+import {
+  getUserAuth,
+} from "../../../services/apiUser";
+import Cookies from 'js-cookie';
 // reactstrap components
 
 import {
   Card,
-  CardHeader,
   CardBody,
   FormGroup,
   InputGroupAddon,
@@ -25,18 +26,49 @@ import { Button, Container, Form } from "react-bootstrap";
 // core components
 
 import axios from "axios";
-
+import AddImage from "./addImage";
+import Map from "./Map/mapPage";
+import MapPage from "MapPage/MapPage";
+import moment from "moment";
 export default function AddEvent() {
   // const [image, setImage] = useState();
 
   const navigate = useNavigate();
-  const [image, setImage] = useState();
+  const location= useLocation();
+  
+  const exist = location.state ? location.state.e : null;
 
+  
+ // const [image, setImage] = useState();
+  const [currentUser, setCurrentUser] = useState([]);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [image, setImage] = useState(null);
+  const[eventErrors,setEventErrors]= useState("")
+
+  const handleEvent = (croppedImageUrl,croppedImageBlob) => {
+    setCroppedImage(croppedImageUrl);
+    setImage(croppedImageBlob);
+    console.log(croppedImageUrl);
+    console.log(croppedImageBlob);
+  };
+ 
+ /////cookies
+ if (!Cookies.get("user")) {
+  window.location.replace("/login-page");
+}
+
+const token = JSON.parse(Cookies.get("user")).token;
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+////////
   const [event, setEvent] = useState({
-    title: "",
-    description: "",
-    start_date: "",
-    end_date:"",
+    title: exist?.title || "",
+    description:exist?.description || "",
+    start_date:exist?.start_date || "",
+    end_date:exist?.end_date ||"",
 
   });
   const handlechange = async (e) => {
@@ -44,37 +76,95 @@ export default function AddEvent() {
   };
 
   const handleStartDateChange = (date) => {
-    setEvent({ ...event, start_date: date.format("YYYY-MM-DD") });
+    setEvent({ ...event, start_date:date.format("YYYY-MM-DD")});
   };
 
   const handleEndDateChange = (date) => {
-    setEvent({ ...event, end_date: date.format("YYYY-MM-DD") });
+    setEvent({ ...event, end_date: date.format("YYYY-MM-DD")});
   };
+
+  const isValidDate = (current) => {
+    if (event.start_date && event.end_date) {
+      return current.isSameOrAfter(event.start_date) && current.isSameOrBefore(event.end_date);
+    }
+    return true;
+  };
+
+ 
 
   const handlechangeFile = (e) => {
     setImage(e.target.files[0]);
   };
 
   useEffect(() => {
-    
-  }, [event]);
+    getUserFunction(config)
+    console.log(exist);
+    console.log(event);
+
+  }, [exist,event]);
+  const getUserFunction = async (config) => {
+    const res = await getUserAuth("", config)
+      .then((res) => {
+        setCurrentUser(res.data.user);
+        console.log(currentUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   
-  
+
   const add = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("event_img", image);
+    let titleError = "";
+    let descError = "";
+    let sdError = "";
+    let edError = "";
+    let imgError = "";
+   
+
+    // Check required fields
+    if (!event.title) {
+      titleError = "event name is required.";
+    }
+    if (!event.start_date) {
+      sdError = "start date is required.";
+    }
+    if (!event.description) {
+      descError = "description is required.";
+    }
+    if (!event.end_date) {
+      edError = "end date is required.";
+    }
+   
+    if (!image) {
+      imgError = "image is required.";
+    }
+
+  
+    setEventErrors({ title: titleError, startDate: sdError , endDate: edError, description: descError, img : imgError});
+  
+    if (titleError || sdError || edError || descError || imgError) {
+      return;
+    }
+
+    if(image){
+      formData.append("event_img", image ,`${event.title}+cropped.jpg`);
+    }
+  
     formData.append("title", event.title);
     formData.append("description", event.description);
     formData.append("start_date", event.start_date);
     formData.append("end_date", event.end_date);
-    formData.append("creator","643216cd888293912452e8eb")
+    formData.append("creator",currentUser._id)
     console.log(formData);
     try {
-      const res = await axios.post("http://localhost:5000/events", formData);
+      
+      const res = exist ? await axios.put(`http://localhost:5000/events/${exist._id}`, formData) : axios.post("http://localhost:5000/events", formData) ;
       console.log(res.data);
-      console.log(res.data.message);
-      navigate("/eventsFablab");
+      //console.log(res.data.message);
+      navigate(`/eventsFablab/${currentUser._id}`);
     } catch (error) {
       console.error(error);
     }
@@ -90,11 +180,12 @@ export default function AddEvent() {
               {" "}
               {/*largeur du login */}
               <Card className="bg-secondary shadow border-0">
-                <CardBody className="px-lg-5 py-lg-5">
+                <CardBody className="px-lg-5 py-lg-8">
                   <div className="text-center text-muted mb-4">
                     <p>
                       <big>
                         Please make sure to fill out the form attentively
+                       
                       </big>
                     </p>
                     <small>
@@ -107,6 +198,9 @@ export default function AddEvent() {
                     enctype="multipart/form-data" /*method="HTTP_METHOD" */
                   >
                     <Form.Group>
+                    <div type="invalid" style={{ color: "red", marginTop:"0px" }}>
+                        {eventErrors.title}
+                      </div>
                       <InputGroup className="input-group-alternative mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -115,13 +209,20 @@ export default function AddEvent() {
                         </InputGroupAddon>
                         <Form.Control
                           placeholder="Event Name"
+                          
+                          value={exist ? event.title : null}
                           type="text"
                           name="title"
                           onChange={(e) => handlechange(e)}
                         />
+                        
                       </InputGroup>
+                    
                     </Form.Group>
                     <Form.Group>
+                    <div type="invalid" style={{ color: "red", marginTop:"0px" }}>
+                        {eventErrors.description}
+                      </div>
                       <InputGroup className="input-group-alternative mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -131,6 +232,7 @@ export default function AddEvent() {
                         <Form.Control
                           className="form-control-alternative"
                           placeholder="Tell us more about your event"
+                          value={exist ? event.description : null}
                           rows="5"
                           type="textarea"
                           name="description"
@@ -138,84 +240,107 @@ export default function AddEvent() {
                         />
                       </InputGroup>
                     </Form.Group>
-
+                    
+                    <Row>
+                    <Col xs={6}>
                     <FormGroup>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-calendar-grid-58" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-
-                        <ReactDatetime
-                          inputProps={{
-                            placeholder: "Starting date",
-                          }}
-                          timeFormat={true}
-                          onChange={(date) => handleStartDateChange(date)}
-                        />
-                      </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-calendar-grid-58" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-
-                        <ReactDatetime
-                          inputProps={{
-                            placeholder: "Ending date",
-                          }}
-                          timeFormat={true}
-                          onChange={(date) => handleEndDateChange(date)}
-                        />
-                      </InputGroup>
-                    </FormGroup>
-
-                    <Form.Group>
+                    <div type="invalid" style={{ color: "red", marginTop:"0px" }}>
+                        {eventErrors.startDate}
+                      </div>
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="ni ni-image" />
+                            <i className="ni ni-calendar-grid-58" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Form.Control
-                          placeholder="Event Image"
-                          name="event_img"
-                          type="file"
-                          onChange={(e) => handlechangeFile(e)}
-                        />
+                        {exist ? (<ReactDatetime
+                          inputProps={{
+                            placeholder: "Starting date",
+                            value: `${new Date(event.start_date).getFullYear()}-${
+                                  new Date(event.start_date).getMonth() + 1
+                                }-${new Date(event.start_date).getDate()} at ${new Date(
+                                  event.start_date
+                                ).toLocaleString("en-US", {
+                                  hour: "numeric",
+                                  minute: "numeric",
+                                  hour12: true,
+                                })}`
+                              
+                          }}
+                          timeFormat={true}
+                          onChange={(date) => handleStartDateChange(date)}
+                          isValidDate={(current) => {
+                            return current.isSameOrAfter(moment(), "day");
+                          }}
+                        />):(<ReactDatetime
+                          inputProps={{
+                            placeholder: "Starting date",
+                            
+                          }}
+                          timeFormat={true}
+                          onChange={(date) => handleStartDateChange(date)}
+                          isValidDate={(current) => {
+                            return current.isSameOrAfter(moment(), "day");
+                          }}
+                          
+                        
+                        />)}
+                        
                       </InputGroup>
-                    </Form.Group>
+                    </FormGroup>
+                    </Col>
+                    <Col xs={6}>
+                    <FormGroup>
+                    <div type="invalid" style={{ color: "red", marginTop:"0px" }}>
+                        {eventErrors.endDate}
+                      </div>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-calendar-grid-58" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        {exist ? (<ReactDatetime
+                          inputProps={{
+                            placeholder: "Ending date",
+                            value:`${new Date(event.end_date).getFullYear()}-${new Date(event.end_date).getMonth() + 1}-${new Date(event.end_date).getDate()} at ${new Date(event.end_date).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}` ,
 
-                    {/* <Row className="my-4">
-                                            <Col xs="12">
-                                                <div className="custom-control custom-control-alternative custom-checkbox">
-                                                    <input
-                                                        className="custom-control-input"
-                                                        id="customCheckRegister"
-                                                        type="checkbox"
-                                                    />
-                                                    <label
-                                                        className="custom-control-label"
-                                                        htmlFor="customCheckRegister"
-                                                    >
-                                                        <span>
-                                                            I agree with the{" "}
-                                                            <a
-                                                                href="#pablo"
-                                                                onClick={(e) => e.preventDefault()}
-                                                            >
-                                                                Privacy Policy
-                                                            </a>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </Col>
-                                        </Row>*/}
+                          }}
+                          timeFormat={true}
+                          onChange={(date) => handleEndDateChange(date)}
+                          isValidDate={(current) => {
+                            return current.isSameOrAfter(event.start_date, "day");
+                          }}
+                        />):(<ReactDatetime
+                          inputProps={{
+                            placeholder: "Ending date",
+
+                          }}
+                          timeFormat={true}
+                          onChange={(date) => handleEndDateChange(date)}
+                          isValidDate={(current) => {
+                            return current.isSameOrAfter(event.start_date, "day");
+                          }}
+                        />) }
+                        
+                      </InputGroup>
+                        </FormGroup>
+                      </Col>
+                      </Row>
+
+
+                    <Form.Group>
+                      
+                    </Form.Group>
+                    <Form.Group>
+                    <div type="invalid" style={{ color: "red", marginTop:"0px" }}>
+                        {eventErrors.img}
+                      </div>
+                      <AddImage className="input-group-alternative" onEvent={handleEvent} aspect={3/2} holder={"add Event cover Image"} />
+
+                    </Form.Group>
+                    <Form.Group> {croppedImage ? (<img src={croppedImage} alt="Cropped Image" style={{width:"50%",height:"30%"}} />):(<>{exist && <img src={`http://localhost:5000/images/${exist.event_img}`} alt="" style={{width:"50%",height:"30%"}} />}</>)}</Form.Group>
+                  
                     <div className="text-center">
                       <Button
                         className="mt-4"
@@ -227,9 +352,7 @@ export default function AddEvent() {
                         Add Event{" "}
                       </Button>
                     </div>
-                    {/* <div className="text-center">
-                                            <Button className="mt-4" color="primary" type="button" onClick={(e)=>add(e)} > Create account </Button>
-                    </div> */}
+                  
                   </Form>
                 </CardBody>
               </Card>

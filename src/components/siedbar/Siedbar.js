@@ -59,7 +59,14 @@ function Siedbar() {
           >
             Fablabs
           </a>
+         
+         
           <a
+            className={classnames("py-2 px-3", {
+              active: activeNav === 1,
+            })}
+            onClick={(e) => navigate(`/AdminEvent`)}>Events</a>
+              <a
             className={classnames("py-2 px-3", {
               active: activeNav === 1,
             })}
