@@ -451,7 +451,6 @@ export default function Landing() {
                     <ul className="pagination ">
                       <PaginationItem>
                         <PaginationLink
-                          href="#pablo"
                           onClick={(e) => back()}
                         >
                           <i className="fa fa-angle-left" />

@@ -117,7 +117,7 @@
 }
 
 
-
+/* 
 .pagination {
   display: flex;
   list-style: none;
@@ -149,7 +149,7 @@
 .pagination li:last-child {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
-}
+} */
 
 .map_page_card_container:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
