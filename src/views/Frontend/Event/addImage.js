@@ -113,12 +113,11 @@ export default function AddImage (props) {
             }`}
         </style>
        
-  <div class="input-group">
-    <div class="custom-file">
-      <input type="file" class="custom-file-input" id="eventImage" name="event_img" onchange="handleImageChange(event)" onChange={onFileChange} accept="image/*"/>
-      <label class="custom-file-label" for="eventImage"><i className="ni ni-image" />  {props.holder}</label>
-    </div>
-
+    <div className="input-group">
+        <div className="custom-file">
+          <input type="file" className="custom-file-input" id="eventImage" name="event_img"  onChange={onFileChange} accept="image/*"/>
+          <label className="custom-file-label" htmlFor="eventImage"><i className="ni ni-image" />  {props.holder}</label>
+        </div>
     </div>
         
         <Modal open={showModal} onClose={handleCloseModal} className="modal-dialog-centered">

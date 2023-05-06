@@ -85,6 +85,7 @@
     "react-datetime": "3.1.1",
     "react-dom": ">=16.0.0",
     "react-easy-crop": "^4.7.4",
+    "react-elastic-carousel": "^0.11.5",
     "react-intl-tel-input": "^8.2.0",
     "react-leaflet": "^4.2.1",
     "react-material-toast": "^16.1.7",
