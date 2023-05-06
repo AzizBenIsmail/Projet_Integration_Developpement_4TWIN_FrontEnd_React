@@ -36,11 +36,8 @@ import Cookies from "js-cookie";
 
 import { getEvaluations } from "../../../services/apiEvaluation";
 
-import { getBtype,addBType } from "../../../services/apiBtype";
-import { getFBadges,updateBadge } from "../../../services/apiBadges";
-
-
-
+import { getBtype, addBType } from "../../../services/apiBtype";
+import { getFBadges, updateBadge } from "../../../services/apiBadges";
 
 const Tables = () => {
   const navigate = useNavigate();
@@ -60,15 +57,10 @@ const Tables = () => {
     },
   };
   useEffect(() => {
-
-
     getAllEvaluations();
     getAllBtype();
-    
 
     getD();
-    
-
   }, [1000]);
 
   const getAllEvaluations = async (config) => {
@@ -82,27 +74,17 @@ const Tables = () => {
       });
   };
 
-
-
-
-
-
-
-
   const handleAddXP = async (username, xp) => {
     const response = await addXP(username, xp, config);
     setAddedXP({ ...addedXP, [username]: xp });
     getAllEvaluations();
-
   };
 
   const handleReduceXP = async (username, xp) => {
     const response = await reduceXP(username, xp, config);
     setReducedXP({ ...reducedXP, [username]: xp });
     getAllEvaluations();
-
   };
-
 
   const [btype, setBtype] = useState();
 
@@ -117,94 +99,79 @@ const Tables = () => {
       });
   };
 
-//admin
-const [badgeName, setBadgeName] = useState("");
-const [badgeDescription, setBadgeDescription] = useState("");
-const [badgeImg, setBadgeImg] = useState("");
+  //admin
+  const [badgeName, setBadgeName] = useState("");
+  const [badgeDescription, setBadgeDescription] = useState("");
+  const [badgeImg, setBadgeImg] = useState("");
 
-const handleFormSubmit = (event) => {
-  event.preventDefault();
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
 
-  const newBType = {
-    badgeName: badgeName,
-    badgeDescription: badgeDescription,
-    badgeImg: badgeImg
+    const newBType = {
+      badgeName: badgeName,
+      badgeDescription: badgeDescription,
+      badgeImg: badgeImg,
+    };
+
+    axios
+      .post("http://localhost:5000/btype/add", newBType)
+      .then((res) => {
+        console.log(res.data);
+        setBadgeName("");
+        setBadgeDescription("");
+        setBadgeImg("");
+        getAllBtype();
+      })
+      .catch((err) => console.log(err));
   };
 
-  axios.post("http://localhost:5000/btype/add", newBType)
-  .then((res) => {
-    console.log(res.data);
-    setBadgeName("");
-    setBadgeDescription("");
-    setBadgeImg("");
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:5000/btype/${id}`);
     getAllBtype();
-  })
-  .catch((err) => console.log(err));
+  };
 
-};
+  const handleDetailsClick = (id) => {
+    window.history.pushState({}, "", `/evaluation/${id}`);
+    window.location.reload();
+  };
 
+  const [fbadges, setFbadges] = useState("");
+  const getD = async () => {
+    try {
+      const response2 = await getFBadges(config); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      setFbadges(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+      //------------
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const handleDeleteB = async (id, xp, username) => {
+    const response = await reduceXP(username, xp, config);
 
-const handleDelete = async (id) => {
-  await axios.delete(`http://localhost:5000/btype/${id}`);
-  getAllBtype();
-  
+    await axios.delete(`http://localhost:5000/badges/${id}`);
+    getD();
+    getAllEvaluations();
+  };
 
-};
+  async function handleUpdateBadge(id, xp, username, config) {
+    try {
+      const response = await addXP(username, xp, config);
 
-
-const handleDetailsClick = (id) => {
-  window.history.pushState({}, '', `/evaluation/${id}`);
-  window.location.reload();
-};
-
-
-
-const [fbadges, setFbadges] = useState("");
-const getD = async () => {
-  try {
-
-
-    const response2 = await getFBadges(config); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
-    setFbadges(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
-    //------------
-  } catch (error) {
-    console.log(error);
+      const updatedBadge = await updateBadge(id, { etat: true }); // Call the updateBadge function with the new etat value
+      console.log(updatedBadge.data); // Log the updated badge data to the console
+    } catch (error) {
+      console.error(error);
+    }
+    getD();
+    getAllEvaluations();
   }
-};
-
-
-const handleDeleteB = async (id,xp,username) => {
-  const response = await reduceXP(username, xp, config);
-
-  await axios.delete(`http://localhost:5000/badges/${id}`);
-  getD();
-  getAllEvaluations();
-
-
-};
-
-
-async function handleUpdateBadge(id,xp,username, config) {
-  try {
-    const response = await addXP(username, xp, config);
-
-    const updatedBadge = await updateBadge(id, { etat: true }); // Call the updateBadge function with the new etat value
-    console.log(updatedBadge.data); // Log the updated badge data to the console
-  } catch (error) {
-    console.error(error);
-  }
-  getD();
-  getAllEvaluations();
-
-}
   //---
   return (
     <>
       <Header />
       {/* Page content */}
-      <CardHeader className="bg-transparent border-0">
-</CardHeader>
+      <CardHeader className="bg-transparent border-0"></CardHeader>
       <Container fluid>
         {/* Dark table */}
         <Row className="mt-0">
@@ -222,9 +189,14 @@ async function handleUpdateBadge(id,xp,username, config) {
                     <th scope="col">Username</th>
                     <th scope="col">Level</th>
                     <th scope="col">
-                      Add ➕ or Reduce ➖  <input type="text" id="xp-input" name="xp-input" size="1" /> XP%   
-                      
-
+                      Add ➕ or Reduce ➖{" "}
+                      <input
+                        type="text"
+                        id="xp-input"
+                        name="xp-input"
+                        size="1"
+                      />{" "}
+                      XP%
                     </th>
                     <th scope="col" />
                   </tr>
@@ -239,23 +211,25 @@ async function handleUpdateBadge(id,xp,username, config) {
                         <div className="d-flex align-items-center">
                           <button
                             onClick={() =>
-                              handleReduceXP(evaluation.usernameE, document.getElementById("xp-input").value)
-                              
+                              handleReduceXP(
+                                evaluation.usernameE,
+                                document.getElementById("xp-input").value
+                              )
                             }
                           >
                             ➖
                           </button>
                           <button
                             onClick={() =>
-                              handleAddXP(evaluation.usernameE, document.getElementById("xp-input").value)
+                              handleAddXP(
+                                evaluation.usernameE,
+                                document.getElementById("xp-input").value
+                              )
                             }
                           >
                             ➕
                           </button>
-                          <span className="mr-2">
-                            {evaluation.xp}
-                            %
-                          </span>
+                          <span className="mr-2">{evaluation.xp}%</span>
                           <div>
                             <Progress
                               max="100"
@@ -278,8 +252,14 @@ async function handleUpdateBadge(id,xp,username, config) {
                             <i className="fas fa-ellipsis-v" />
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
-                       
-                            <DropdownItem    onClick={() => handleDetailsClick(evaluation.usernameE)}  >  Details</DropdownItem>
+                            <DropdownItem
+                              onClick={() =>
+                                handleDetailsClick(evaluation.usernameE)
+                              }
+                            >
+                              {" "}
+                              Details
+                            </DropdownItem>
                           </DropdownMenu>
                         </UncontrolledDropdown>
                       </td>
@@ -292,58 +272,60 @@ async function handleUpdateBadge(id,xp,username, config) {
         </Row>
       </Container>
 
-   
-      <br/><br/>
+      <br />
+      <br />
       <h2>ADD NEW BADGE TYPE</h2>
-      <br/>
-    <form onSubmit={handleFormSubmit}>
-  <label htmlFor="badgeName">Badge Name</label>
-  <input
-    type="text"
-    id="badgeName"
-    value={badgeName}
-    onChange={(e) => setBadgeName(e.target.value)}
-  />
+      <br />
+      <form onSubmit={handleFormSubmit}>
+        <label htmlFor="badgeName">Badge Name</label>
+        <input
+          type="text"
+          id="badgeName"
+          value={badgeName}
+          onChange={(e) => setBadgeName(e.target.value)}
+        />
 
-  <label htmlFor="badgeDescription">Badge Description</label>
-  <input
-    type="text"
-    id="badgeDescription"
-    value={badgeDescription}
-    onChange={(e) => setBadgeDescription(e.target.value)}
-  />
+        <label htmlFor="badgeDescription">Badge Description</label>
+        <input
+          type="text"
+          id="badgeDescription"
+          value={badgeDescription}
+          onChange={(e) => setBadgeDescription(e.target.value)}
+        />
 
-  <label htmlFor="badgeImg">Badge Image</label>
-  <input
-    type="file"
-    id="badgeImg"
-    onChange={(e) => setBadgeImg(e.target.files[0].name)}
-  />
+        <label htmlFor="badgeImg">Badge Image</label>
+        <input
+          type="file"
+          id="badgeImg"
+          onChange={(e) => setBadgeImg(e.target.files[0].name)}
+        />
 
-  <button type="button" onClick={handleFormSubmit}>Add BType</button>
-</form>
-<br/>
-<div>
-        
-      {btype && btype.map((type) => (
-        <div key={type._id}>
-          <h3>{type.badgeName}  </h3>
-          <p>{type.badgeDescription}</p>
-          <img width="100" height="50"         src={require(`../../../assets/img/badges/${type.badgeImg}`)}
- alt={type.badgeName} />
+        <button type="button" onClick={handleFormSubmit}>
+          Add BType
+        </button>
+      </form>
+      <br />
+      <div>
+        {btype &&
+          btype.map((type) => (
+            <div key={type._id}>
+              <h3>{type.badgeName} </h3>
+              <p>{type.badgeDescription}</p>
+              <img
+                width="100"
+                height="50"
+                src={require(`../../../assets/img/badges/${type.badgeImg}`)}
+                alt={type.badgeName}
+              />
 
-          <button  onClick={() => handleDelete(type._id)}   >Delete</button>
-        </div>
-        
-      ))}
-    </div>
+              <button onClick={() => handleDelete(type._id)}>Delete</button>
+            </div>
+          ))}
+      </div>
 
+      <h1>waaaa</h1>
 
-<h1>waaaa</h1>
-
-
-
-<div>
+      <div>
         <h1> Badges request</h1>
         {fbadges.length > 0 ? (
           fbadges.map((badge) => (
@@ -355,19 +337,36 @@ async function handleUpdateBadge(id,xp,username, config) {
 
               <p>Date: {badge.date}</p>
               <p>username: {badge.usernameB}</p>
-              <button onClick={() => handleUpdateBadge(badge._id,document.getElementById("xp").value,badge.usernameB, config)}>accept +</button>
+              <button
+                onClick={() =>
+                  handleUpdateBadge(
+                    badge._id,
+                    document.getElementById("xp").value,
+                    badge.usernameB,
+                    config
+                  )
+                }
+              >
+                accept +
+              </button>
               <input type="number" id="xp" name="xp" size="1" />
-              <button  onClick={() => handleDeleteB(badge._id,document.getElementById("xp").value,badge.usernameB)}   >Delete - </button>
-             
-
+              <button
+                onClick={() =>
+                  handleDeleteB(
+                    badge._id,
+                    document.getElementById("xp").value,
+                    badge.usernameB
+                  )
+                }
+              >
+                Delete -{" "}
+              </button>
 
               <Col className="order-lg-2">
                 <div className="card-profile-image">
                   <br />
                   <br />
-                  <div className="mt-2 border-top ">
-                  
-                  </div>
+                  <div className="mt-2 border-top "></div>
                 </div>
                 <br />
                 <br />
@@ -378,10 +377,6 @@ async function handleUpdateBadge(id,xp,username, config) {
           <p>Aucun badge trouvé pour </p>
         )}
       </div>
-
-
-
-
     </>
   );
 };
