@@ -77,7 +77,7 @@ const Details = () => {
       const firstEvaluation = response1.data.evaluations[0]; // Accéder à la première évaluation
 
       setEvaluation(firstEvaluation);
-
+//username !
       const response2 = await getTBadge(id); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
       setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
       //------------
@@ -133,7 +133,7 @@ const Details = () => {
       <span style={{ background:"#e9ecef",opacity: 5,borderRadius: "70px",padding: "0.25rem 1rem"}}>LEVEL: {evaluation.lvl}</span> 
                             </div>
       <h1>
-       
+       {id}
       </h1>
       <h1>Badges</h1>
       <div class="table-responsive">
