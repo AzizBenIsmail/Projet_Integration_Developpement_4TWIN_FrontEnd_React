@@ -3,6 +3,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import "./style.css";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Footer Spinner
 import SpinnerExample from "components/spinner/Spinner";
 import MapPage from "MapPage/MapPage";
@@ -97,6 +100,11 @@ const ProfileAdd = lazy(() => import("./views/Backend/User/Profile-Add"));
 function App() {
   return (
     <>
+    <div>
+      <ToastContainer />
+      {/* ... */}
+    </div>
+
       <Suspense fallback={<SpinnerExample />}>
         {/* <DemoNavbar /> */}
         <Routes>

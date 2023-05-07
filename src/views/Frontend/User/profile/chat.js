@@ -130,7 +130,6 @@ if(myLocation){
         <Button
         className="mr-4"
         color="info"
-        href="#pablo"
         onClick={openMap}
         size="sm"
       >
