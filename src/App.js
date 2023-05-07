@@ -23,6 +23,7 @@ import DisplayedJobs from "views/Frontend/Recruit/DisplayedJobs";
 import FillApplication from "views/Frontend/Recruit/FillApplication";
 import LandingPage from "views/Frontend/Recruit/LandingPage";
 import VoiceSearch from "views/Frontend/Recruit/VoiceSearch";
+import ChatBackOffice from "./views/Backend/Chat/Chat";
 
 //Template Lazy Loading
 const Info = lazy(() => import("./views/Frontend/Template/Info"));
@@ -60,6 +61,7 @@ const Backend_Projects = lazy(() =>
 
 
 //Invest Lazy Loading
+const ChatBack = lazy(() => import("./views/Backend/Chat/Chat"));
 const Invest = lazy(() => import("./views/Frontend/Invest/Invest.js"));
 const AddInvest = lazy(() => import("./views/Frontend/Invest/AddInvest"));
 const InvestUser = lazy(() => import("./views/Frontend/Invest/InvestUser"));
@@ -177,6 +179,8 @@ function App() {
             element={<FablabRequestDetails />}
           />
 
+          {/* ChatBackoffice */}
+<Route path="/Chat/" element={<ChatBackOffice />} />
           {/* Events */}
           <Route path="/eventsFablab/" element={<EventsFablab />} />
           <Route

@@ -34,7 +34,7 @@ const config = {
       getAllUser(); // appel répété toutes les 10 secondes
       getAllProject(config);
       getAllInvest(config);
-    }, 10000);
+    }, 50000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   
   }, []);

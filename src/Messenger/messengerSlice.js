@@ -101,7 +101,6 @@ export const messengerSlice = createSlice({
         })
       );
     
-      console.log(state.chatHistory[action.payload.socketId]);
 
       console.log(state.chatHistory[action.payload.socketId][0].content);
     }}

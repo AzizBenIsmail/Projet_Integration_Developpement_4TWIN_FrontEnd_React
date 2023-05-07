@@ -32,9 +32,7 @@ export const connectionWithSocketIOServer = () => {
   socket.on("video-call-disconnect", () => {
     disconnect();
   });
-  socket.on("ban", () => {
-   alert("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-  });
+
   socket.on("user-disconnected", (disconnectedUserSocketId) => {
     userDisconnectedHandler(disconnectedUserSocketId);
   });

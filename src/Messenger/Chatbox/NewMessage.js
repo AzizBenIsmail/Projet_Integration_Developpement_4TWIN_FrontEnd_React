@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { sendChatMessage } from "../../store/messengerActions";
+import Cookies from "js-cookie";
 const perspective = require('perspective-api-client');
 
 const NewMessage = ({ socketId,username }) => {
@@ -22,11 +23,15 @@ const NewMessage = ({ socketId,username }) => {
 
   const proceedChatMessage = () => {
 
+    
+
     const client = new perspective({
       apiKey: 'AIzaSyD8EsP6LrDD5wsHHLPaN6SP_22cvKXTNE0',
     });
     
     const text = message;
+        
+
     
     client.analyze({
       comment: { text },
@@ -37,9 +42,18 @@ const NewMessage = ({ socketId,username }) => {
     })
     .then((response) => {
       const toxicityScore = response.attributeScores.TOXICITY.summaryScore.value;
-      if (toxicityScore > 0.5) {
-        alert('Harassment detected!')
-        console.log('Harassment detected!');
+      if (toxicityScore > 0.2) {
+        const userData = JSON.parse(Cookies.get("user"));
+        const newCount = userData.user.inappropriateBehaviorCount + 1;
+        const updatedUserData = { ...userData, user: { ...userData.user, inappropriateBehaviorCount: newCount } };
+        Cookies.set("user", JSON.stringify(updatedUserData));
+        
+        if (updatedUserData.user.inappropriateBehaviorCount > 4) {
+          Cookies.remove("user");
+          window.location.href = "/login-page";
+        }
+        
+       alert('Harassment detected! be careful or your account might be disabled ');
       } else {
         console.log('No harassment detected.');
       }
