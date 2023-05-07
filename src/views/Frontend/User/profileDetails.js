@@ -6,6 +6,7 @@ import { differenceInYears } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 import ChatBox from "./profile/chat";
 import SimpleModal from "../Models/simpleModel";
+import { getEvaluation ,getTopEvaluations } from "../../../services/apiEvaluation";
 
 const ProfileDetails = (props) => {
   const [simpleModal, setSimpleModal] = useState(false);
@@ -21,6 +22,7 @@ const ProfileDetails = (props) => {
   const user= props.user
   const badge =props.badge
   function calculateCompletionPercentage(user) {
+    
     let percentage = 100;
 
     if (!user.first_Name) {
@@ -43,15 +45,63 @@ const ProfileDetails = (props) => {
 
   const Modifier = async (id) => {
   
-  
+    setUsername(props.user.username);
+
       navigate(`/profile/${id}`);
   
   };
 
+
+  useEffect(() => {
+    setUsername(props.user.username);
+    getTEvaluations();
+   
+
+    
+
+  }, []);
+
+
+  const [evaluations, setEvaluations] = useState([]);
+  const [med, setMed] = useState([]);
+
+  const [username, setUsername] = useState([]);
+
+
+  useEffect(() => {
+    setUsername(props.user.username);
+
+    const isUserEvaluated = evaluations.some(
+      (evaluation) => evaluation.usernameE ===username
+    );
+
+    if (isUserEvaluated) {
+      // User is evaluated
+      setMed("🏆");
+    } else {
+      // User is not evaluated
+      setMed("");
+    }
+  }, [evaluations]);
+
+  const getTEvaluations = async () => {
+    try {
+      setUsername(props.user.username);
+
+      const res = await getTopEvaluations({});
+      setEvaluations(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-    
+          <h1>{med}</h1>
+
       <div className="px-4">
+
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">

@@ -52,7 +52,6 @@ const Details = () => {
 
   const [badge, setBadge] = useState("");
 
-
   const [btype, setBtype] = useState();
 
   const getAllBtype = async (config) => {
@@ -66,11 +65,9 @@ const Details = () => {
       });
   };
 
-
   useEffect(() => {
     getD();
     getAllBtype();
-
   }, [1000]);
 
   const getD = async () => {
@@ -89,147 +86,190 @@ const Details = () => {
     }
   };
 
+  //admin
 
+  const [badgeName, setBadgeName] = useState("");
+  const [badgeDescription, setBadgeDescription] = useState("");
+  const [badgeImg, setBadgeImg] = useState("");
+  const [usernameB, setUsernameB] = useState("");
+  const [etat, setEtat] = useState("");
 
-//admin
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
 
-const [badgeName, setBadgeName] = useState("");
-const [badgeDescription, setBadgeDescription] = useState("");
-const [badgeImg, setBadgeImg] = useState("");
-const [usernameB, setUsernameB] = useState("");
-const [etat, setEtat] = useState("");
+    const newB = {
+      usernameB: id,
+      badgeName: badgeName,
+      badgeDescription: badgeDescription,
+      badgeImg: badgeImg,
+      etat: true,
+    };
 
-const handleFormSubmit = (event) => {
-  event.preventDefault();
+    axios
+      .post("http://localhost:5000/badges/add", newB)
+      .then((res) => {
+        console.log(res.data);
+        setBadgeName("");
+        setBadgeDescription("");
+        setBadgeImg("");
+      })
+      .catch((err) => console.log(err));
 
-  const newB = {
-    usernameB:id,
-    badgeName: badgeName,
-    badgeDescription: badgeDescription,
-    badgeImg: badgeImg,
-    etat:true,
+    getD();
   };
 
-  axios.post("http://localhost:5000/badges/add", newB)
-  .then((res) => {
-    console.log(res.data);
-    setBadgeName("");
-    setBadgeDescription("");
-    setBadgeImg("");
-  
-  })
-  .catch((err) => console.log(err));
-
-
-
-  
-  getD();
-
-};
-
-
-
-const handleDelete = async (id) => {
-  await axios.delete(`http://localhost:5000/badges/${id}`);
-  getD();
-
-};
-
-
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:5000/badges/${id}`);
+    getD();
+  };
 
   return (
     <>
       <Header />
       {/* Page content */}
       <CardHeader className="bg-transparent border-0"></CardHeader>
-      <h1>{evaluation.usernameE}</h1>
-      <h1>{evaluation.lvl}</h1>
-      <div>
-        <h1> Badges</h1>
-        {badge.length > 0 ? (
-          badge.map((badge) => (
-            <div key={badge._id}>
-              <h3>Name: {badge.badgeName}</h3>
-
-              <p>Description: {badge.badgeDescription}</p>
-              <p>Date: {badge.date.split("T")[0]}</p>
-              <img
-                width="100"
-                height="50"
-                src={require(`../../../assets/img/badges/${badge.badgeImg}`)}
-                alt={badge.badgeName}
-              />              <button  onClick={() => handleDelete(badge._id)}   >Delete</button>
-
-
-              <Col className="order-lg-2">
-                <div className="card-profile-image">
-                  <br />
-                  <br />
-                  <div className="mt-2 border-top ">
-                  
-                  </div>
-                </div>
-                <br />
-                <br />
-              </Col>
-            </div>
-          ))
-        ) : (
-          <p>Aucun badge trouvé pour </p>
-        )}
+      <div className="progress-label"  align="center">
+     <h1>{evaluation.usernameE}</h1>
+      <span style={{ background:"#e9ecef",opacity: 5,borderRadius: "70px",padding: "0.25rem 1rem"}}>LEVEL: {evaluation.lvl}</span> 
+                            </div>
+      <h1>
+       
+      </h1>
+      <h1>Badges</h1>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {badge.length > 0 ? (
+              badge.map((badge) => (
+                <tr key={badge._id}>
+                  <td>{badge.badgeName}</td>
+                  <td>{badge.badgeDescription}</td>
+                  <td>{badge.date.split("T")[0]}</td>
+                  <td>
+                    <img
+                      width="100"
+                      height="50"
+                      src={require(`../../../assets/img/badges/${badge.badgeImg}`)}
+                      alt={badge.badgeName}
+                    />
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-danger"
+                      onClick={() => handleDelete(badge._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colspan="5">Aucun badge trouvé pour</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
+      <br/><br/>
+      <h1>ADD NEW BADGE </h1>
 
 
- <form onSubmit={handleFormSubmit}>
-  <label htmlFor="badgeName">Badge Name</label>
-  <input
-    type="text"
-    id="badgeName"
-    value={badgeName}
-    onChange={(e) => setBadgeName(e.target.value)}
-  />
-
-  <label htmlFor="badgeDescription">Badge Description</label>
-  <input
-    type="text"
-    id="badgeDescription"
-    value={badgeDescription}
-    onChange={(e) => setBadgeDescription(e.target.value)}
-  />
-
-
-<div>
-        <label htmlFor="my-select">Select an option:</label>
-        
-        <select id="my-select" onChange={(e) => setBadgeImg(e.target.value)}>
-        <option value="">--Slect Badge--</option>
-          {btype &&
-            btype.map((type) => (
-              <option key={type.id} value={type.badgeImg}>
-                {type.badgeName}
-              </option>
-            ))}
-        </select>
-      </div>
-    
-  <button type="button" onClick={handleFormSubmit}>Add Badge</button>
-</form>
-
-<div>
-        
-      {btype && btype.map((type) => (
-        <div key={type._id}>
-          <h3>{type.badgeName}  </h3>
-          <p>{type.badgeDescription}</p>
-          <img width="100" height="50"     src={require(`../../../assets/img/badges/${type.badgeImg}`)}
- alt={type.badgeName} />
-
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Badge Name</th>
+      <th scope="col">Badge Description</th>
+      <th scope="col">Select a Badge</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="form-group">
+          <label for="badgeName">Badge Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="badgeName"
+            value={badgeName}
+            onChange={(e) => setBadgeName(e.target.value)}
+          />
         </div>
-        
-      ))}
-    </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="badgeDescription">Badge Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="badgeDescription"
+            value={badgeDescription}
+            onChange={(e) => setBadgeDescription(e.target.value)}
+          />
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="my-select">Select an option:</label>
+          <select class="form-control" id="my-select" onChange={(e) => setBadgeImg(e.target.value)}>
+            <option value="">--Select Badge--</option>
+            {btype &&
+              btype.map((type) => (
+                <option key={type.id} value={type.badgeImg}>
+                  {type.badgeName}
+                </option>
+              ))}
+          </select>
+        </div>
+      </td>
+      <td>
+        <button type="button" class="btn btn-primary" onClick={handleFormSubmit}>
+          Add Badge
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  
+
+<table className="table">
+  <thead>
+    <tr>
+      <th>Badge Name</th>
+      <th>Badge Description</th>
+      <th>Badge Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    {btype &&
+      btype.map((type) => (
+        <tr key={type._id}>
+          <td>{type.badgeName}</td>
+          <td>{type.badgeDescription}</td>
+          <td>
+            <img
+              width="100"
+              height="50"
+              src={require(`../../../assets/img/badges/${type.badgeImg}`)}
+              alt={type.badgeName}
+            />
+          </td>
+        </tr>
+      ))}
+  </tbody>
+</table>
+
     </>
   );
 };

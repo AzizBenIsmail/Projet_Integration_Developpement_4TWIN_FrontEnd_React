@@ -106,6 +106,8 @@ const Profile = () => {
         });
     };
 
+
+
     const getUserFunction = async () => {
       try {
         /////cookies
@@ -125,12 +127,15 @@ const Profile = () => {
         const response2 = await getTBadge(userL); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
         console.log(response2.data.badges)
         setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
-  
+
+
         //------------
       } catch (error) {
         console.log(error);
       }
     };
+
+    
   useEffect(() => {
     //fetchEvaluation();
     //fetchBadges();
@@ -142,17 +147,34 @@ const Profile = () => {
   }, []);
 
   const [evaluations, setEvaluations] = useState([]);
+  const [med, setMed] = useState([]);
+
+
+
+
 
   const getTEvaluations = async () => {
     try {
-      const res = await getTopEvaluations({})
+
+      const res = await getTopEvaluations({});
       setEvaluations(res.data);
       console.log(res.data);
+
+      const isUserEvaluated = evaluations.some(
+        (evaluation) => evaluation.usernameE ===username
+      );
+  
+      if (isUserEvaluated) {
+        // User is evaluated
+        setMed("🏆");
+      } else {
+        // User is not evaluated
+        setMed("");
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
   //evaluation
   /*
   const fetchEvaluation = async () => {
@@ -196,16 +218,20 @@ const Profile = () => {
             </svg>
           </div>
         </section>
+        
         <section className="section">
+          
           <Container style={{display: "flex",flexWrap: "wrap"}}>
           
             <Card className="card-profile shadow mt--300 col ml--9" style={{flex: 1 ,maxWidth:"100%" }} >
+              
               {profileVisible && <ProfileDetails user={user} evaluation={evaluation} badge={badge} nbI={nbI} nbP={nbP} />}
+              
               {projects && (<>
                   {projectVisible && <ProjectProfile  paragraph="These are the projects that Oumayma Touil create" projects={projects}  user={user}/>}
                   {InvestVisible && <ProjectProfile paragraph="These are the projects that Oumayma Touil invests in" projects={projects} user={user} />}
                   </>)}
-              
+                  
             </Card>
           
             <Card style={{ maxWidth:"30%" ,height:"520px",flex: 1,marginRight:"-250px"}} className="card-profile shadow mt--300 col-2 ml-2 ">
