@@ -20,11 +20,16 @@ import {
   Row,
   UncontrolledTooltip,
   Col,
+  CustomFileInput,
+  InputGroupText,
+  InputGroupAddon,
+  InputGroup,
+  CardBody,
 } from "reactstrap";
 import { differenceInYears } from "date-fns";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 
 import { addXP, reduceXP } from "../../../services/apiEvaluation";
 import axios from "axios";
@@ -172,6 +177,75 @@ const Tables = () => {
       <Header />
       {/* Page content */}
       <CardHeader className="bg-transparent border-0"></CardHeader>
+      <br /> <br />
+      <h2 className="my-4">BADGE REQUESTS</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Details</th>
+            <th>Date</th>
+            <th>Username</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fbadges.length > 0 ? (
+            fbadges.map((badge) => (
+              <tr key={badge._id}>
+                <td>{badge.badgeName}</td>
+                <td>{badge.badgeDescription}</td>
+                <td>{badge.details}</td>
+                <td>{badge.date.split("T")[0]}</td>
+                <td>{badge.usernameB}</td>
+                <td>
+                  <div className="d-flex">
+                    <button
+                      className="btn btn-success mr-3"
+                      onClick={() =>
+                        handleUpdateBadge(
+                          badge._id,
+                          document.getElementById("xp").value,
+                          badge.usernameB,
+                          config
+                        )
+                      }
+                    >
+                      Accept (xp)+
+                    </button>
+                    <input
+                      type="number"
+                      className="form-control mr-3"
+                      id="xp"
+                      name="xp"
+                      size="1"
+                    />
+                    <button
+                      className="btn btn-danger"
+                      onClick={() =>
+                        handleDeleteB(
+                          badge._id,
+                          document.getElementById("xp").value,
+                          badge.usernameB
+                        )
+                      }
+                    >
+                      Delete(xp) -
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6">No badge requests found.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <br />
+      <hr className="my-4" />
       <Container fluid>
         {/* Dark table */}
         <Row className="mt-0">
@@ -271,112 +345,93 @@ const Tables = () => {
           </div>
         </Row>
       </Container>
-
       <br />
+      <div></div>
       <br />
-      <h2>ADD NEW BADGE TYPE</h2>
+      <hr className="my-4" />
       <br />
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="badgeName">Badge Name</label>
-        <input
-          type="text"
-          id="badgeName"
-          value={badgeName}
-          onChange={(e) => setBadgeName(e.target.value)}
-        />
-
-        <label htmlFor="badgeDescription">Badge Description</label>
-        <input
-          type="text"
-          id="badgeDescription"
-          value={badgeDescription}
-          onChange={(e) => setBadgeDescription(e.target.value)}
-        />
-
-        <label htmlFor="badgeImg">Badge Image</label>
-        <input
-          type="file"
-          id="badgeImg"
-          onChange={(e) => setBadgeImg(e.target.files[0].name)}
-        />
-
-        <button type="button" onClick={handleFormSubmit}>
-          Add BType
-        </button>
-      </form>
-      <br />
-      <div>
-        {btype &&
-          btype.map((type) => (
-            <div key={type._id}>
-              <h3>{type.badgeName} </h3>
-              <p>{type.badgeDescription}</p>
-              <img
-                width="100"
-                height="50"
-                src={require(`../../../assets/img/badges/${type.badgeImg}`)}
-                alt={type.badgeName}
-              />
-
-              <button onClick={() => handleDelete(type._id)}>Delete</button>
-            </div>
-          ))}
-      </div>
-
-      <h1>waaaa</h1>
-
-      <div>
-        <h1> Badges request</h1>
-        {fbadges.length > 0 ? (
-          fbadges.map((badge) => (
-            <div key={badge._id}>
-              <h3>Name: {badge.badgeName}</h3>
-
-              <p>Description: {badge.badgeDescription}</p>
-              <p>Details: {badge.details}</p>
-
-              <p>Date: {badge.date}</p>
-              <p>username: {badge.usernameB}</p>
-              <button
-                onClick={() =>
-                  handleUpdateBadge(
-                    badge._id,
-                    document.getElementById("xp").value,
-                    badge.usernameB,
-                    config
-                  )
-                }
-              >
-                accept +
-              </button>
-              <input type="number" id="xp" name="xp" size="1" />
-              <button
-                onClick={() =>
-                  handleDeleteB(
-                    badge._id,
-                    document.getElementById("xp").value,
-                    badge.usernameB
-                  )
-                }
-              >
-                Delete -{" "}
-              </button>
-
-              <Col className="order-lg-2">
-                <div className="card-profile-image">
-                  <br />
-                  <br />
-                  <div className="mt-2 border-top "></div>
+      <h2 className="my-4">ADD NEW BADGE TYPE</h2>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="4">
+              <form onSubmit={handleFormSubmit}>
+                <div className="form-group">
+                  <label htmlFor="badgeName">Badge Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="badgeName"
+                    value={badgeName}
+                    onChange={(e) => setBadgeName(e.target.value)}
+                  />
                 </div>
-                <br />
-                <br />
-              </Col>
-            </div>
-          ))
-        ) : (
-          <p>Aucun badge trouvé pour </p>
-        )}
-      </div>
+
+                <div className="form-group">
+                  <label htmlFor="badgeDescription">Badge Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="badgeDescription"
+                    value={badgeDescription}
+                    onChange={(e) => setBadgeDescription(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="badgeImg">Badge Image</label>
+                  <input
+                    type="file"
+                    className="form-control-file"
+                    id="badgeImg"
+                    onChange={(e) => setBadgeImg(e.target.files[0].name)}
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleFormSubmit}
+                >
+                  Add Badge Type
+                </button>
+              </form>
+            </th>
+          </tr>
+          <tr>
+            <th>Badge Name</th>
+            <th>Badge Description</th>
+            <th>Badge Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {btype &&
+            btype.map((type) => (
+              <tr key={type._id}>
+                <td>{type.badgeName}</td>
+                <td>{type.badgeDescription}</td>
+                <td>
+                  <img
+                    width="100"
+                    height="50"
+                    src={require(`../../../assets/img/badges/${type.badgeImg}`)}
+                    alt={type.badgeName}
+                  />
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(type._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+      <hr className="my-4" />
     </>
   );
 };

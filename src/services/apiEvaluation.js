@@ -22,6 +22,17 @@ export async function addXP(username, xp, config) {
 export async function reduceXP(username, xp, config) {
   return await axios.post(`${apiURL}/${username}/reducexp/${xp}`, config);
 }
+
+export async function deleteEvaluation(username, config) {
+  try {
+    const response = await axios.delete(`${apiURL}/del/${username}`, config);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 /*
 export async function getUserAuth(id,config) {
   return await axios.get(`${apiURL}/getUser`,config);
