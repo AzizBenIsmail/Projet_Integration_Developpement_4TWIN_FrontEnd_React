@@ -10,7 +10,7 @@ import {
   getEvaluation,
   getTopEvaluations,
 } from "../../../services/apiEvaluation";
-import Particles from "particles.js";
+//import Particles from "particles.js";
 
 const ProfileDetails = (props) => {
   const [simpleModal, setSimpleModal] = useState(false);
@@ -95,7 +95,7 @@ const ProfileDetails = (props) => {
     
       <div className="px-4">
         <Row className="justify-content-center">
-          <Col className="order-lg-2" lg="3">
+          <Col className="order-lg-3" lg="3">
             <div className="card-profile-image">
               <a href="#pablo" onClick={(e) => e.preventDefault()}>
                 <img
@@ -106,7 +106,7 @@ const ProfileDetails = (props) => {
               </a>
             </div>
           </Col>
-          <Col className="order-lg-3 text-lg-right align-self-lg-center" lg="4">
+          <Col className="order-lg-4 text-lg-right align-self-lg-center" lg="4">
             <div className="card-profile-actions py-4 mt-lg-0">
               <div className="mr-6 mt-1">
                 <ChatBox user={user} />
@@ -123,11 +123,17 @@ const ProfileDetails = (props) => {
               </Button>
             </div>
           </Col>
-          <Col className="order-lg-1" lg="4">
+          <Col className="order-lg-1" lg="0" style={{marginLeft:"-40px",marginTop:"3%"}}>
+          <h1>{med}</h1>
+          </Col>
+          
+
+          <Col className="order-lg-2" lg="4">
             <div className="card-profile-stats d-flex justify-content-center">
               <div>
                 <span className="heading">{props.nbP}</span>
-                <span className="description">Projects</span>
+              
+                {user.userType === "fablab" ? (<><span className="description">Events</span></>):(<><span className="description">Projects</span></>)}
               </div>
               <div>
                 <span className="heading">{props.nbI}</span>
@@ -144,7 +150,7 @@ const ProfileDetails = (props) => {
           <h3>
             {user.first_Name} {user.last_Name}{" "}
             <span className="font-weight-light">
-              , {differenceInYears(new Date(), new Date(user.dateOfBirth))}
+              , {differenceInYears(new Date(), new Date(user.dateOfBirth))} ans
             </span>
           </h3>
           <div className="h6 font-weight-300">
@@ -286,7 +292,7 @@ const ProfileDetails = (props) => {
                   <p>Aucun badge trouvé pour {user.username}</p>
                 )}
               </div>
-              <h1>{med}</h1>
+              
             </Col>
           </Row>
         </div>
