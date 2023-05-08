@@ -62,6 +62,7 @@ const MapPage = () => {
   const userCookie = Cookies.get('user');
   const u = JSON.parse(Cookies.get('user'));
   const email= u.user.email;
+  const im=u.user.im;
 
   const defaultMapProps = {
     center: {
@@ -76,7 +77,7 @@ const MapPage = () => {
 <div className="left_chat">
 
 <div className="circle-container">
-  <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="Your Image" className="circle-image"/>
+  <img src={`http://localhost:5000/images/${im}`} alt="Your Image" className="circle-image"/>
 
 </div>
 
