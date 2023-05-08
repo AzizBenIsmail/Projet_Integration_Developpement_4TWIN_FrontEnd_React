@@ -214,13 +214,15 @@ const Tables = () => {
                     >
                       Accept(xp)+
                     </button>
-                    <input
-                      type="number"
-                      className="form-control mr-3"
-                      id="xp"
-                      name="xp"
-                      size="1"
-                    />
+                    <div style={{ width: '100px', overflow: 'hidden' }}>
+  <input
+    type="number"
+    className="form-control mr-3"
+    id="xp"
+    name="xp"
+  />
+</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                     <button
                       className="btn btn-danger"
                       onClick={() =>
