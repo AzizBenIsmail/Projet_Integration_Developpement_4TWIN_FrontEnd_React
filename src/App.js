@@ -84,6 +84,12 @@ const FablabRequestDetails = lazy(() =>
   import("./views/Backend/Fablab/FablabRequestDetails")
 );
 
+const FablabList = lazy(() =>
+  import("views/Frontend/Fablab/FablabList")
+);
+
+
+
 //event Lazy Loading
 const EventsFablab = lazy(() => import("./views/Frontend/Event/eventsFablab"));
 const AddEvent = lazy(() => import("./views/Frontend/Event/addEvent"));
@@ -173,6 +179,7 @@ function App() {
 
           <Route path="/FablabJoin" element={<FablabJoin />} />
           <Route path="/AdminFablabJoin" element={<AdminFablabJoin />} />
+          <Route path="/fablabs" element={<FablabList />} />
 
           <Route
             path="/FablabRequestDetails/:id"
