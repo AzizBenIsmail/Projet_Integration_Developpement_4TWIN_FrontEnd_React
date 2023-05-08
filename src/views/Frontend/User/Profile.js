@@ -152,7 +152,6 @@ const Profile = () => {
   }, []);
 
   const [evaluations, setEvaluations] = useState([]);
-  const [med, setMed] = useState([]);
 
 
 
@@ -165,6 +164,7 @@ const Profile = () => {
       setEvaluations(res.data);
       console.log(res.data);
 
+<<<<<<< Updated upstream
       const isUserEvaluated = evaluations.some(
         (evaluation) => evaluation.usernameE === username
       );
@@ -176,6 +176,8 @@ const Profile = () => {
         // User is not evaluated
         setMed("");
       }
+=======
+>>>>>>> Stashed changes
     } catch (error) {
       console.log(error);
     }
@@ -244,19 +246,19 @@ const Profile = () => {
                 <div >
                   <br/>
                     <h3>👑TOP 3 USERS👑</h3>
-                    {evaluations && evaluations.map((type) => (
+                    {evaluations && evaluations.map((type,index) => (
                         <div>
                           <div className="progress-wrapper">
                             <div className="progress-info">
                               <div className="progress-label">
                               <text>⚡ {type.usernameE}  </text>
-                                {type.lvl === 1 && (     
+                                {index === 0 && (     
                                 <span style={{ background:"#1A3A46",opacity:1,borderRadius: "30px",padding: "0.25rem 1rem",color:"white"}} >  LEVEL: {type.lvl} </span>
                                 )}
-                                {type.lvl === 2 && (     
+                                {index === 1&& (     
                                 <span style={{ background:"#386857",opacity:1,borderRadius: "30px",padding: "0.25rem 1rem",color:"white"}} >  LEVEL: {type.lvl} </span>
                                 )}
-                                {type.lvl === 3 && (     
+                                {index === 2 && (     
                                 <span style={{ background:"#738564",opacity:1,borderRadius: "30px",padding: "0.25rem 1rem",color:"white"}} >  LEVEL: {type.lvl} </span>
                                 )}
                               </div>

@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
 import Cookies from "js-cookie";
-import {
-  getUserAuth,
-} from "../../services/apiUser";
+import { getUserAuth } from "../../services/apiUser";
 
 import {
   Button,
@@ -23,8 +21,15 @@ import {
   Row,
   Col,
   UncontrolledTooltip,
+  Dropdown,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { getTBadge } from "../../services/apiBadges";
+import axios from "axios";
+import { updateBadgeV } from "../../services/apiBadges";
 
 export default function NavbarF() {
   const param = useParams();
@@ -61,6 +66,14 @@ export default function NavbarF() {
     }, 15000);
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
+
+  useEffect(() => {
+    getT();
+  }, [user.username]);
+  useEffect(() => {
+    getTVU();
+  }, [user.username]);
+
   const getUserFunction = async (config) => {
     const res = await getUserAuth(param.id, config)
       .then((res) => {
@@ -71,6 +84,44 @@ export default function NavbarF() {
         console.log(err);
       });
   };
+
+  //tst
+
+  const [badge, setBadge] = useState("");
+
+  const getT = async () => {
+    try {
+      const response2 = await getTBadge(user.username); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      setBadge(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+      //------------
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [nb, setNb] = useState("");
+
+  const getTVU = async () => {
+    try {
+      const response2 = await axios.get(
+        `http://localhost:5000/badges/tv/${user.username}`
+      );
+      setNb(response2.data.count);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async function handleUpdateBadge() {
+    try {
+      const updatedBadge = await updateBadgeV(user.username, { vu: true }); // Call the updateBadge function with the new etat value
+      console.log(updatedBadge.data); // Log the updated badge data to the console
+      getTVU();
+      getT();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -117,7 +168,10 @@ export default function NavbarF() {
                   </Col>
                 </Row>
               </div>
-              <Nav className="navbar-nav-hover align-items-lg-center  bg-gradient-default" navbar>
+              <Nav
+                className="navbar-nav-hover align-items-lg-center  bg-gradient-default"
+                navbar
+              >
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/landing-page" tag={Link}>
                     <i className="ni ni-ui-04 d-lg-none mr-1" />
@@ -173,6 +227,7 @@ export default function NavbarF() {
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
+<<<<<<< Updated upstream
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/fablabs" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
@@ -185,6 +240,8 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 
+=======
+>>>>>>> Stashed changes
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto " navbar>
                 <Nav className="align-items-center d-none d-md-flex" navbar>
@@ -219,19 +276,20 @@ export default function NavbarF() {
                         <span>Manage you Project</span>
                       </DropdownItem>
                       {user.userType === "fablab" && (
-                      <DropdownItem to={`/eventsFablab/${user._id}`} tag={Link}>
-                        <i className="ni ni-settings-gear-65" />
-                        <span>Manage your Event</span>
-                      </DropdownItem>)}
-                      
+                        <DropdownItem
+                          to={`/eventsFablab/${user._id}`}
+                          tag={Link}
+                        >
+                          <i className="ni ni-settings-gear-65" />
+                          <span>Manage your Event</span>
+                        </DropdownItem>
+                      )}
+
                       <DropdownItem onClick={(e) => navigate(`/InvestUser`)}>
                         <i className="ni ni-calendar-grid-58" />
                         <span>Activity Invest</span>
                       </DropdownItem>
-                      <DropdownItem
-                        to="/OffersCreated"
-                        tag={Link}
-                      >
+                      <DropdownItem to="/OffersCreated" tag={Link}>
                         <i className="ni ni-briefcase-24" />
                         <span>Created Jobs</span>
                       </DropdownItem>
@@ -240,9 +298,12 @@ export default function NavbarF() {
                         <span>Support</span>
                       </DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem onClick={(e) => {navigate(`/login-page`)
-                      Cookies.remove('user')
-                      }}>
+                      <DropdownItem
+                        onClick={(e) => {
+                          navigate(`/login-page`);
+                          Cookies.remove("user");
+                        }}
+                      >
                         <i className="ni ni-user-run" />
                         <span>Logout</span>
                       </DropdownItem>
@@ -251,6 +312,36 @@ export default function NavbarF() {
                 </Nav>
               </Nav>
             </UncontrolledCollapse>
+            <UncontrolledDropdown onClick={() => handleUpdateBadge()}>
+              <DropdownToggle className="pr-0" nav>
+                <Media className="align-items-center ">
+                  <div className="d-flex align-items-center">
+                    <FontAwesomeIcon icon={faBell} />
+                    <span className="badge badge-pill badge-danger ml-1">
+                      {nb}
+                    </span>
+                  </div>
+                </Media>
+              </DropdownToggle>
+              <DropdownMenu>
+  <DropdownItem className="noti-title" header tag="div">
+    <h6 className="text-overflow m-0">Notifications !</h6>
+  </DropdownItem>
+  <div style={{ maxHeight: "200px", overflowY: "scroll" }}>
+    {badge.length > 0 &&
+      badge.map((item, index) => (
+        <DropdownItem key={index} to="/profile-page" tag={Link}>
+          <i className="ni ni-bell-55" />
+          <span>{item.badgeName} 🎁</span>
+          <h6>Badge : {item.date.split("T")[0]}</h6>
+
+          <DropdownItem divider />
+        </DropdownItem>
+      ))}
+  </div>
+</DropdownMenu>
+
+            </UncontrolledDropdown>
           </Container>
         </Navbar>
       </header>

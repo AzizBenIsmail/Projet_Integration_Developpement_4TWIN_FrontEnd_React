@@ -8,7 +8,7 @@ import ChatBox from "./profile/chat";
 import SimpleModal from "../Models/simpleModel";
 import {
   getEvaluation,
-  getTopEvaluations,
+  getTopEvaluations,getIstop3
 } from "../../../services/apiEvaluation";
 //import Particles from "particles.js";
 
@@ -47,40 +47,38 @@ const ProfileDetails = (props) => {
   const navigate = useNavigate();
 
   const Modifier = async (id) => {
-    setUsername(props.user.username);
 
     navigate(`/profile/${id}`);
   };
 
   useEffect(() => {
-    setUsername(props.user.username);
     getTEvaluations();
   }, []);
 
   const [evaluations, setEvaluations] = useState([]);
   const [med, setMed] = useState([]);
 
-  const [username, setUsername] = useState([]);
 
   useEffect(() => {
-    setUsername(props.user.username);
-
-    const isUserEvaluated = evaluations.some(
-      (evaluation) => evaluation.usernameE === username
-    );
-
-    if (isUserEvaluated) {
-      // User is evaluated
-      setMed("🏆");
-    } else {
-      // User is not evaluated
+    getIstop3(props.user.username).then((data) => {
+      if (data) {
+        // User is evaluated
+        setMed("🏆");
+      } else {
+        // User is not evaluated
+        setMed("");
+      }
+    }).catch((error) => {
+      console.error(error);
       setMed("");
-    }
-  }, [evaluations]);
+    });
+  }, [props.user.username]);
+
+
+  
 
   const getTEvaluations = async () => {
     try {
-      setUsername(props.user.username);
 
       const res = await getTopEvaluations({});
       setEvaluations(res.data);
@@ -92,7 +90,7 @@ const ProfileDetails = (props) => {
 
   return (
     <>
-    
+    <h1>{med}</h1>
       <div className="px-4">
         <Row className="justify-content-center">
           <Col className="order-lg-3" lg="3">
@@ -292,7 +290,10 @@ const ProfileDetails = (props) => {
                   <p>Aucun badge trouvé pour {user.username}</p>
                 )}
               </div>
+<<<<<<< Updated upstream
               
+=======
+>>>>>>> Stashed changes
             </Col>
           </Row>
         </div>

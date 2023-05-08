@@ -13,6 +13,16 @@ export async function getEvaluation(username,config) {
   return await axios.get(`${apiURL}/${username}`,config);
 }
 
+export async function getIstop3(username, config) {
+  try {
+    const response = await axios.get(`${apiURL}/istop3/${username}`, config);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 // Ajoute de l'expérience pour un utilisateur spécifié
 export async function addXP(username, xp, config) {
   return await axios.post(`${apiURL}/${username}/addxp/${xp}`,config);

@@ -46,6 +46,18 @@ export async function updateBadge(id,config) {
   return await axios.put(`${apiURL}/${id}/update`, config);
 }
 
+export async function updateBadgeV(username,config) {
+  return await axios.put(`${apiURL}/${username}/setv/`, config);
+}
+
+export async function getTV(username, config) {
+  try {
+    const response = await axios.get(`${apiURL}/tv/${username}`, config);
+    return response.data.count;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 
 /*
