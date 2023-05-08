@@ -6,6 +6,55 @@ import { addChatbox } from "Messenger/messengerSlice";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+
+
+export const sendChatMessage2 = (receiverSocketId, content ,username) => {
+  const userid = JSON.parse(Cookies.get("user")).user._id;
+  const message = {
+    userid,
+    username,
+    content,
+    receiverSocketId,
+    id: uuid(),
+  };
+
+
+    store.dispatch(
+      addChatMessage({
+        socketId: receiverSocketId,
+        content: content,
+        myMessage: false,
+        id: message.id,
+      })
+    );
+  
+};
+
+export const sendChatMessage3 = (receiverSocketId, content ,username) => {
+  const userid = JSON.parse(Cookies.get("user")).user._id;
+  const message = {
+    userid,
+    username,
+    content,
+    receiverSocketId,
+    id: uuid(),
+  };
+
+
+    store.dispatch(
+      addChatMessage({
+        socketId: receiverSocketId,
+        content: content,
+        myMessage: true,
+        id: message.id,
+      })
+    );
+  
+};
+
+
+
+
 export const sendChatMessage = (receiverSocketId, content ,username) => {
   const userid = JSON.parse(Cookies.get("user")).user._id;
   const message = {
@@ -19,35 +68,55 @@ export const sendChatMessage = (receiverSocketId, content ,username) => {
   // socketConnection - to send the message to other user
   socketConn.sendChatMessage(message);
 
-
-
-  //////badwords
-  const badWords = ['badword1', 'badword2', 'badword3','aziz'];
-  let newContent = content;
-
-// Replace bad words with asterisks
-for (let i = 0; i < badWords.length; i++) {
-const regex = new RegExp(badWords[i], 'gi');
-newContent = newContent.replace(regex, '*'.repeat(badWords[i].length));
-}
-
-  store.dispatch(
-    addChatMessage({
-      socketId: receiverSocketId,
-      content: newContent,
-      myMessage: true,
-      id: message.id,
+  // Get bad words from database
+  fetch("http://localhost:5000/chat/badwords/")
+    .then((response) => response.json())
+    .then((data) => {
+      const wordsArray = data.map((obj) => obj.word);
+      censorMessage(wordsArray, content);
     })
-  );
+    .catch((error) => console.error(error));
+
+  const censorMessage = (badWords, content) => {
+    let newContent = content;
+
+    // Check for bad words in the message
+    for (let i = 0; i < badWords?.length; i++) {
+      const regex = new RegExp(badWords[i], 'gi');
+      if (content.match(regex)) {
+        const userData = JSON.parse(Cookies.get("user"));
+        const newCount = userData.user.inappropriateBehaviorCount + 1;
+        const updatedUserData = { ...userData, user: { ...userData.user, inappropriateBehaviorCount: newCount } };
+        Cookies.set("user", JSON.stringify(updatedUserData));
+
+        if (updatedUserData.user.inappropriateBehaviorCount > 4) {
+          Cookies.remove("user");
+          window.location.href = "/login-page";
+        }
+      }
+    }
+
+    // Replace bad words with asterisks
+    for (let i = 0; i < badWords.length; i++) {
+      const regex = new RegExp(badWords[i], 'gi');
+      newContent = newContent.replace(regex, '*'.repeat(badWords[i].length));
+    }
+
+    store.dispatch(
+      addChatMessage({
+        socketId: receiverSocketId,
+        content: newContent,
+        myMessage: true,
+        id: message.id,
+      })
+    );
+  };
 };
 
+
 export const chatMessageHandler = (messageData) => {
-  openChatBoxIfClosed(messageData.senderSocketId)
 
 
-
-  console.log(messageData.content)
-  console.log(messageData)
 
   
   store.dispatch(
@@ -58,6 +127,7 @@ export const chatMessageHandler = (messageData) => {
       id: messageData.id,
     })
   );
+  openChatBoxIfClosed(messageData.senderSocketId)
 
 };
 
@@ -67,9 +137,6 @@ const openChatBoxIfClosed = (socketId) => {
     .messenger.chatboxes.find((c) => c.socketId === socketId);
     const username=store.getState().map.onlineUsers.find(user=>user.socketId===socketId)?.username
   if (!chatbox) {
-
-
-
 
     if (!Cookies.get("user")) {
       window.location.replace("/login-page");
@@ -102,7 +169,6 @@ const openChatBoxIfClosed = (socketId) => {
         .then((res) => {
           if(res.data.chat[0]){
           res.data.chat[0].messages.forEach((msg) => {
-            console.log(msg.content);
             m.push({
               content: msg.content,
               myMessage: msg.sender==id?true:false,
@@ -120,8 +186,6 @@ const openChatBoxIfClosed = (socketId) => {
     
     Login()
     .then((m) => {
-    
-    
       store.dispatch(addChatbox({
         username,
         socketId,

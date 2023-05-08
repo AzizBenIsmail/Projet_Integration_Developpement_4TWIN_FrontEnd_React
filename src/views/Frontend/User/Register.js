@@ -20,6 +20,7 @@ import {
 import { Button, Container, Form } from "react-bootstrap";
 
 import LoginNavbar from "../../../components/Navbars/LoginNavbar";
+import AddImage from "../Event/addImage";
 
 export default function Register() {
 
@@ -27,7 +28,16 @@ export default function Register() {
   let formData = new FormData();
   const navigate = useNavigate();
   const [message, setmessage] = useState();
-  const [image, setImage] = useState();
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const handleEvent = (croppedImageUrl,croppedImageBlob) => {
+    setCroppedImage(croppedImageUrl);
+    setImage(croppedImageBlob);
+    console.log(croppedImageUrl);
+    console.log(croppedImageBlob);
+  };
+
   const [user, setUsers] = useState({
     username: "",
     email: "",
@@ -54,12 +64,14 @@ export default function Register() {
     formData.append("dateOfBirth", user.dateOfBirth);
     formData.append("gender", user.gender);
 
-
+   
+     
+   
     console.log(user.username)
     console.log(user.password)
     console.log(user.gender)
-
-    formData.append("image_user", image);
+      if(image){    formData.append("image_user", image ,`${user.username}+cropped.jpg`);
+      }
     const res = await axios.post(
       "http://localhost:5000/users/register",
       formData,
@@ -312,6 +324,12 @@ export default function Register() {
                       )}
                     </Form.Group>
                     <Form.Group>
+                    
+                   
+
+                  </Form.Group>
+                  <Form.Group> {croppedImage && (<img src={croppedImage} alt="Cropped Image" style={{width:"50%",height:"30%"}} />)}</Form.Group>
+                    <Form.Group>
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -322,19 +340,11 @@ export default function Register() {
                                 style={{ color: "red" }}
                               />
                             ) : (
-                              <i
-                                className="ni ni-image"
-                                style={{ color: "#0000FF" }}
-                              />
+                              <></>
                             )}
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Form.Control
-                          placeholder="image_user"
-                          name="image_user"
-                          type="file"
-                          onChange={(e) => handleChangeFile(e)}
-                        />
+                        <AddImage className="input-group-alternative" onEvent={handleEvent} aspect={1/1} holder={"add Profile Image"} />
                       </InputGroup>
                       {message ===
                       "Please fill in all the fields of the form" ? (
@@ -346,6 +356,8 @@ export default function Register() {
                         ""
                       )}
                     </Form.Group>
+                   
+
                     <div className="text-muted font-italic">
                       <small>
                         password strength:

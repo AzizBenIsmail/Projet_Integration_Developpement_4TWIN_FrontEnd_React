@@ -23,7 +23,9 @@ import Cookies from 'js-cookie';
 import LoginNavbar from "../../../components/Navbars/LoginNavbar";
 
 import ConnectVia from "./ConnectVia";
-
+import React from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Login() {
   const navigate = useNavigate();
 
@@ -65,7 +67,8 @@ export default function Login() {
       }else{
       window.location.replace(`/landing-page/`);}
     } catch (error) {
-  //    console.log(error.response.data.message);
+      toast(error.response?.data?.message||'Error', { autoClose: 5000 });
+    console.log(error.response?.data?.message||'error');
     }
   };
 

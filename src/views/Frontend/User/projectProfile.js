@@ -16,6 +16,7 @@ import {
     CardTitle
   } from "reactstrap";
 import ProjectCard from "./projectCard";
+import EventCard from "./eventCard";
 
 
 const ProjectProfile = (props) => {
@@ -49,8 +50,8 @@ const ProjectProfile = (props) => {
                       
                         <Col>
                         <Row className="row-grid">
-                      
-                            <ProjectCard project={project} user={props.user}/>
+                          {props.events ? (<><EventCard event= {project} user={props.user}></EventCard></>):(<> <ProjectCard project={project} user={props.user}/></>)}
+                           
                         
                         </Row>
                       

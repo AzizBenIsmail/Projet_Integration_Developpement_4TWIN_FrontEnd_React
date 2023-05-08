@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { useSelector } from "react-redux";
 import Marker from "./Marker";
@@ -13,10 +13,56 @@ const MapPage = () => {
   const myLocation = useSelector((state) => state.map.myLocation);
   const onlineUsers = useSelector((state) => state.map.onlineUsers);
   const cardChosenOption = useSelector((state) => state.map.cardChosenOption);
+  const [message, setMessage] = useState('');
+  const [answer, setAnswer] = useState('');
+
+  useEffect(() => {
+    const userId = JSON.parse(Cookies.get('user')).user._id;
+
+    fetch(`http://localhost:5000/chat/PA/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const latestPA = data[data.length - 1];
+        if (latestPA) {
+          setMessage(latestPA.message);
+          setAnswer(latestPA.answer);
+        }
+      })
+      .catch((error) => {
+        console.error('Error retrieving PAs:', error);
+      });
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const userId = JSON.parse(Cookies.get('user')).user._id;
+
+    fetch('http://localhost:5000/chat/pa', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        message,
+        answer,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('PA created:', data);
+        // do something with the new PA data
+      })
+      .catch((error) => {
+        console.error('Error creating PA:', error);
+      });
+  };
 
   const userCookie = Cookies.get('user');
   const u = JSON.parse(Cookies.get('user'));
   const email= u.user.email;
+  const im=u.user.im;
 
   const defaultMapProps = {
     center: {
@@ -31,7 +77,7 @@ const MapPage = () => {
 <div className="left_chat">
 
 <div className="circle-container">
-  <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="Your Image" className="circle-image"/>
+  <img src={`http://localhost:5000/images/${im}`} alt="Your Image" className="circle-image"/>
 
 </div>
 
@@ -45,18 +91,26 @@ const MapPage = () => {
   </a>
 </div>
 
-<div className="collapse-label">
-  <input type="checkbox" id="toggle-1" className="collapse-input"/>
-  <label for="toggle-1" className="collapse-trigger">Preanswered question</label>
-  <div className="collapse-content">
-    <p>your question :</p>
-    <input type="text" placeholder="write your question here"/>
-    <p>your answer :</p>
-    <input type="text" placeholder="write your answer here"/>
+<form onSubmit={handleSubmit}>
+      <div className="collapse-content">
+        <p>Your question:</p>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Write your question here"
+        />
+        <p>Your answer:</p>
+        <input
+          type="text"
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          placeholder="Write your answer here"
+        />
 
-  <input type="submit" value="save" />
-  </div>
-</div>
+        <input type="submit" value="Save" />
+      </div>
+    </form>
 
 <div className="collapse-label">
   <input type="checkbox" id="toggle-3" className="collapse-input"/>

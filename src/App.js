@@ -3,6 +3,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import "./style.css";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Footer Spinner
 import SpinnerExample from "components/spinner/Spinner";
 import MapPage from "MapPage/MapPage";
@@ -20,6 +23,7 @@ import DisplayedJobs from "views/Frontend/Recruit/DisplayedJobs";
 import FillApplication from "views/Frontend/Recruit/FillApplication";
 import LandingPage from "views/Frontend/Recruit/LandingPage";
 import VoiceSearch from "views/Frontend/Recruit/VoiceSearch";
+import ChatBackOffice from "./views/Backend/Chat/Chat";
 
 //Template Lazy Loading
 const Info = lazy(() => import("./views/Frontend/Template/Info"));
@@ -57,6 +61,7 @@ const Backend_Projects = lazy(() =>
 
 
 //Invest Lazy Loading
+const ChatBack = lazy(() => import("./views/Backend/Chat/Chat"));
 const Invest = lazy(() => import("./views/Frontend/Invest/Invest.js"));
 const AddInvest = lazy(() => import("./views/Frontend/Invest/AddInvest"));
 const InvestUser = lazy(() => import("./views/Frontend/Invest/InvestUser"));
@@ -79,6 +84,12 @@ const FablabRequestDetails = lazy(() =>
   import("./views/Backend/Fablab/FablabRequestDetails")
 );
 
+const FablabList = lazy(() =>
+  import("views/Frontend/Fablab/FablabList")
+);
+
+
+
 //event Lazy Loading
 const EventsFablab = lazy(() => import("./views/Frontend/Event/eventsFablab"));
 const AddEvent = lazy(() => import("./views/Frontend/Event/addEvent"));
@@ -97,6 +108,11 @@ const ProfileAdd = lazy(() => import("./views/Backend/User/Profile-Add"));
 function App() {
   return (
     <>
+    <div>
+      <ToastContainer />
+      {/* ... */}
+    </div>
+
       <Suspense fallback={<SpinnerExample />}>
         {/* <DemoNavbar /> */}
         <Routes>
@@ -163,12 +179,15 @@ function App() {
 
           <Route path="/FablabJoin" element={<FablabJoin />} />
           <Route path="/AdminFablabJoin" element={<AdminFablabJoin />} />
+          <Route path="/fablabs" element={<FablabList />} />
 
           <Route
             path="/FablabRequestDetails/:id"
             element={<FablabRequestDetails />}
           />
 
+          {/* ChatBackoffice */}
+<Route path="/Chat/" element={<ChatBackOffice />} />
           {/* Events */}
           <Route path="/eventsFablab/" element={<EventsFablab />} />
           <Route
