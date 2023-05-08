@@ -90,7 +90,7 @@ const ProfileDetails = (props) => {
 
   return (
     <>
-    <span><h1>{med}</h1></span>
+   
       <div className="px-4">
         <Row className="justify-content-center">
           <Col className="order-lg-3" lg="3">
@@ -104,13 +104,13 @@ const ProfileDetails = (props) => {
               </a>
             </div>
           </Col>
-          <Col className="order-lg-4 text-lg-right align-self-lg-center" lg="4">
-            <div className="card-profile-actions py-4 mt-lg-0">
-              <div className="mr-6 mt-1">
-                <ChatBox user={user} />
-              </div>
-              <Button
-                style={{ marginTop: "-3.4rem" }}
+          <Col className="order-lg-4 text-lg-right align-self-lg-center mr--4" lg="4">
+            <div className="card-profile-actions py-4 mt-lg-0 ">
+              
+              {!props.isConnected && <div ><ChatBox user={user} />  </div>}
+             
+              {props.isConnected &&  <Button
+               
                 color="default"
                 href="#pablo"
                 onClick={(e) => Modifier(user._id)}
@@ -118,10 +118,12 @@ const ProfileDetails = (props) => {
               >
                 <span>Modify</span>
                 <i className="ni ni-settings-gear-65"></i>
-              </Button>
+              </Button> }
+             
             </div>
           </Col>
           <Col className="order-lg-1" lg="0" style={{marginLeft:"-40px",marginTop:"3%"}}>
+          <span><h1>{med}</h1></span>
           </Col>
           
 
@@ -145,7 +147,7 @@ const ProfileDetails = (props) => {
         </Row>
         <div className="text-center mt-5">
           <h3>
-            {user.first_Name} {user.last_Name}{" "}
+            {user.username}{" "}
             <span className="font-weight-light">
               , {differenceInYears(new Date(), new Date(user.dateOfBirth))} ans
             </span>
@@ -160,7 +162,8 @@ const ProfileDetails = (props) => {
           </div>
           <div>
             <i className="ni ni-mobile-button " />
-            <span style={{ marginLeft: "0.5%" }}>{user.phoneNumber}</span>
+            <span style={{ marginLeft: "0.5%" }}>
+            {user.userType === "fablab" ? (<>{user.phoneNumber1}</>):(<>{user.phoneNumber}</>)}</span>
           </div>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
