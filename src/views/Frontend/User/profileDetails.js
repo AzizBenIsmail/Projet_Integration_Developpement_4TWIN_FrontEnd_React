@@ -90,7 +90,7 @@ const ProfileDetails = (props) => {
 
   return (
     <>
-    <h1>{med}</h1>
+    <span><h1>{med}</h1></span>
       <div className="px-4">
         <Row className="justify-content-center">
           <Col className="order-lg-3" lg="3">
@@ -122,7 +122,6 @@ const ProfileDetails = (props) => {
             </div>
           </Col>
           <Col className="order-lg-1" lg="0" style={{marginLeft:"-40px",marginTop:"3%"}}>
-          <h1>{med}</h1>
           </Col>
           
 
@@ -290,10 +289,6 @@ const ProfileDetails = (props) => {
                   <p>Aucun badge trouvé pour {user.username}</p>
                 )}
               </div>
-<<<<<<< Updated upstream
-              
-=======
->>>>>>> Stashed changes
             </Col>
           </Row>
         </div>

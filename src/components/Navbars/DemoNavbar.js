@@ -227,7 +227,6 @@ export default function NavbarF() {
                     </span>
                   </DropdownToggle>
                 </UncontrolledDropdown>
-<<<<<<< Updated upstream
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav to="/fablabs" tag={Link}>
                     <i className="ni ni-collection d-lg-none mr-1" />
@@ -240,8 +239,6 @@ export default function NavbarF() {
                   </DropdownToggle>
                 </UncontrolledDropdown>
                 
-=======
->>>>>>> Stashed changes
               </Nav>
               <Nav className="align-items-lg-center ml-lg-auto " navbar>
                 <Nav className="align-items-center d-none d-md-flex" navbar>

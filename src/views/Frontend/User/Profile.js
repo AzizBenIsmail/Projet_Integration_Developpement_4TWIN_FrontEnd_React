@@ -164,20 +164,6 @@ const Profile = () => {
       setEvaluations(res.data);
       console.log(res.data);
 
-<<<<<<< Updated upstream
-      const isUserEvaluated = evaluations.some(
-        (evaluation) => evaluation.usernameE === username
-      );
-  
-      if (isUserEvaluated) {
-        // User is evaluated
-        setMed("🏆");
-      } else {
-        // User is not evaluated
-        setMed("");
-      }
-=======
->>>>>>> Stashed changes
     } catch (error) {
       console.log(error);
     }
