@@ -6,6 +6,55 @@ import { addChatbox } from "Messenger/messengerSlice";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+
+
+export const sendChatMessage2 = (receiverSocketId, content ,username) => {
+  const userid = JSON.parse(Cookies.get("user")).user._id;
+  const message = {
+    userid,
+    username,
+    content,
+    receiverSocketId,
+    id: uuid(),
+  };
+
+
+    store.dispatch(
+      addChatMessage({
+        socketId: receiverSocketId,
+        content: content,
+        myMessage: false,
+        id: message.id,
+      })
+    );
+  
+};
+
+export const sendChatMessage3 = (receiverSocketId, content ,username) => {
+  const userid = JSON.parse(Cookies.get("user")).user._id;
+  const message = {
+    userid,
+    username,
+    content,
+    receiverSocketId,
+    id: uuid(),
+  };
+
+
+    store.dispatch(
+      addChatMessage({
+        socketId: receiverSocketId,
+        content: content,
+        myMessage: true,
+        id: message.id,
+      })
+    );
+  
+};
+
+
+
+
 export const sendChatMessage = (receiverSocketId, content ,username) => {
   const userid = JSON.parse(Cookies.get("user")).user._id;
   const message = {

@@ -7,6 +7,20 @@
     margin-left: 400px;
 }
 
+.chatbox_nav_bar_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* other styles */
+  }
+  
+  .chatbox_arrow_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px; /* adjust as needed */
+  }
+
 .chatbox_container {
     height: 400px;
     width: 300px;
@@ -93,7 +107,10 @@
     padding: 10px;
     margin: 5px 5px;
     border-radius: 25px;
-    background: rgba(39, 220, 197, 0.9);
+    background:#0084FF;
+    color:white;
     font-size: 14px;
     max-width: 80%;
 }
+
+/* rgba(39, 220, 197, 0.9);*/
