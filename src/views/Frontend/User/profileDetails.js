@@ -107,7 +107,7 @@ const ProfileDetails = (props) => {
           <Col className="order-lg-4 text-lg-right align-self-lg-center mr--4" lg="4">
             <div className="card-profile-actions py-4 mt-lg-0 ">
               
-              <div ><ChatBox user={user} /> 
+              <div ><ChatBox user={user} />  </div>
              
               {props.isConnected &&  <Button
                
