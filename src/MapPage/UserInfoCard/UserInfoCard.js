@@ -116,9 +116,6 @@ const UserInfoCard = ({ username, userLocaion, socketId }) => {
         </div>
       )}
 
-      {console.log(
-        infos.find((info) => info.id === hoveredProject)?.image_project
-      )}
 
       <div className="map_page_card_container">
         <Label text={username} fontSize="16px"></Label>
@@ -188,14 +185,14 @@ const UserInfoCard = ({ username, userLocaion, socketId }) => {
 
         {jobOffers.length > 0 ? (
           jobOffers.map(({ title, id, businessOwner }, index) => (
-            <div className="job-offer-item" key={index}>
-              <span className="job-offer-title">{title}</span>
+            <div className="project-item" key={index}>
+              <span className="project-title">{title}</span>
               <a
-                className="job-offer-link"
+                class="invest-button"
                 key={index}
-                href={`/Job_details/${id}/${businessOwner._id}`}
+                href={`/ListOfJobs`}
               >
-                <i className="material-icons">account_circle</i>
+                Consult
               </a>
             </div>
           ))

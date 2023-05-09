@@ -33,6 +33,19 @@ const Messages = ({ socketId,username }) => {
 useEffect(scrollToBottom, [messages])
 
 
+const [favoriteColor, setFavoriteColor] = useState("");
+useEffect(() => {
+  const userid = JSON.parse(Cookies.get("user")).user._id;
+  const fetchColor = async () => {
+    const response = await fetch(
+      `http://localhost:5000/chat/color/${userid}`
+    );
+    const data = await response.json();
+    setFavoriteColor(data.favoriteColor);
+  };
+  fetchColor();
+}, [username]);
+
 // {mes?.map((m) => (
     
 
@@ -60,6 +73,7 @@ useEffect(scrollToBottom, [messages])
           key={message.id}
           content={message.content}
           myMessage={message.myMessage}
+          favoriteColor={favoriteColor}
         />
       ))}
       <div ref={scrollRef}></div>
