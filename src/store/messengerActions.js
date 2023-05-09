@@ -117,7 +117,7 @@ export const sendChatMessage = (receiverSocketId, content ,username) => {
 export const chatMessageHandler = (messageData) => {
 
 
-
+  openChatBoxIfClosed(messageData.senderSocketId)
   
   store.dispatch(
     addChatMessage({
@@ -127,7 +127,7 @@ export const chatMessageHandler = (messageData) => {
       id: messageData.id,
     })
   );
-  openChatBoxIfClosed(messageData.senderSocketId)
+
 
 };
 
