@@ -103,6 +103,7 @@ const Details = () => {
       badgeDescription: badgeDescription,
       badgeImg: badgeImg,
       etat: true,
+      vu:false,
     };
 
     axios
@@ -132,9 +133,7 @@ const Details = () => {
      <h1>{evaluation.usernameE}</h1>
       <span style={{ background:"#e9ecef",opacity: 5,borderRadius: "70px",padding: "0.25rem 1rem"}}>LEVEL: {evaluation.lvl}</span> 
                             </div>
-      <h1>
-       {id}
-      </h1>
+  
       <h1>Badges</h1>
       <div class="table-responsive">
         <table class="table">
@@ -255,8 +254,18 @@ const Details = () => {
     {btype &&
       btype.map((type) => (
         <tr key={type._id}>
-          <td>{type.badgeName}</td>
-          <td>{type.badgeDescription}</td>
+          <td>
+            {type.badgeName}
+            <div className="d-flex justify-content-end">
+              <button type="button" className="btn" onClick={() => {navigator.clipboard.writeText(type.badgeName)}}>Copy</button>
+            </div>
+          </td>
+          <td>
+            {type.badgeDescription}
+            <div className="d-flex justify-content-end">
+              <button type="button" className="btn" onClick={() => {navigator.clipboard.writeText(type.badgeDescription)}}>Copy</button>
+            </div>
+          </td>
           <td>
             <img
               width="100"
@@ -269,6 +278,8 @@ const Details = () => {
       ))}
   </tbody>
 </table>
+
+
 
     </>
   );

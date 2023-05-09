@@ -212,15 +212,17 @@ const Tables = () => {
                         )
                       }
                     >
-                      Accept (xp)+
+                      Accept(xp)+
                     </button>
-                    <input
-                      type="number"
-                      className="form-control mr-3"
-                      id="xp"
-                      name="xp"
-                      size="1"
-                    />
+                    <div style={{ width: '100px', overflow: 'hidden' }}>
+  <input
+    type="number"
+    className="form-control mr-3"
+    id="xp"
+    name="xp"
+  />
+</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                     <button
                       className="btn btn-danger"
                       onClick={() =>
@@ -284,6 +286,8 @@ const Tables = () => {
                         {" "}
                         <div className="d-flex align-items-center">
                           <button
+                            type="button"
+                            className="btn"
                             onClick={() =>
                               handleReduceXP(
                                 evaluation.usernameE,
@@ -293,7 +297,18 @@ const Tables = () => {
                           >
                             ➖
                           </button>
+                      
+                          <span className="mr-2">{evaluation.xp}%</span>
+                          <div>
+                            <Progress
+                              max="100"
+                              value={evaluation.xp}
+                              barClassName="bg-warning"
+                            />
+                          </div>
                           <button
+                            type="button"
+                            className="btn"
                             onClick={() =>
                               handleAddXP(
                                 evaluation.usernameE,
@@ -303,14 +318,6 @@ const Tables = () => {
                           >
                             ➕
                           </button>
-                          <span className="mr-2">{evaluation.xp}%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value={evaluation.xp}
-                              barClassName="bg-warning"
-                            />
-                          </div>
                         </div>{" "}
                       </td>
 
@@ -399,9 +406,9 @@ const Tables = () => {
             </th>
           </tr>
           <tr>
-            <th>Badge Name</th>
-            <th>Badge Description</th>
-            <th>Badge Image</th>
+            <th> Name|</th>
+            <th> Description|</th>
+            <th>Image</th>
             <th>Action</th>
           </tr>
         </thead>
