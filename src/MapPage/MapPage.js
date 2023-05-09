@@ -148,7 +148,7 @@ const MapPage = () => {
                 <input type="submit"
                  style={{
                     width: "100%",
-                    backgroundColor: "#BDEA09",
+                    backgroundColor: "#5E72E4",
                     color: "#fff",
                     fontSize: "16px",
                     height: "40px",
@@ -191,7 +191,7 @@ const MapPage = () => {
                   type="submit"
                   style={{
                     width: "100%",
-                    backgroundColor: "#BDEA09",
+                    backgroundColor: "#5E72E4",
                     color: "#fff",
                     fontSize: "16px",
                     height: "40px",

@@ -5,6 +5,7 @@
 
 
 
+
 .black-box {
   position: absolute;
   display: flex;
@@ -189,7 +190,11 @@ background-color: #3CDFCB;
   display: flex;
   flex-direction: column;
   margin-left: 400px;
+  overflow: auto !important; /* Add a scrollbar when content overflows */
+  overflow-x: hidden !important; /* Hide horizontal scrollbar */
+  overflow-y: auto !important;
 }
+
 
 
 /* 

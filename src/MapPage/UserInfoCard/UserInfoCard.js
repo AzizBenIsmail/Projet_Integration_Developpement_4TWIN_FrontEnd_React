@@ -57,6 +57,7 @@ const UserInfoCard = ({ username, userLocaion, socketId }) => {
     getInfo(username);
   }, [username]);
 
+
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   const currentProjects = infos.slice(indexOfFirstProject, indexOfLastProject);
@@ -72,6 +73,24 @@ const UserInfoCard = ({ username, userLocaion, socketId }) => {
   const back = () => {
     setCurrentPage(currentPage - 1);
   };
+
+  const [currentJobPage, setCurrentJobPage] = useState(1);
+const jobOffersPerPage = 3;
+const indexOfLastJobOffer = currentJobPage * jobOffersPerPage;
+const indexOfFirstJobOffer = indexOfLastJobOffer - jobOffersPerPage;
+const currentJobOffers = jobOffers.slice(indexOfFirstJobOffer, indexOfLastJobOffer);
+const totalJobPages = Math.ceil(jobOffers.length / jobOffersPerPage);
+
+const handleJobPageChange = (pageNumber) => {
+  setCurrentJobPage(pageNumber);
+};
+
+const jobNext = () => {
+  setCurrentJobPage(currentJobPage + 1);
+};
+const jobBack = () => {
+  setCurrentJobPage(currentJobPage - 1);
+};
 
   return (
     <>
@@ -180,25 +199,58 @@ const UserInfoCard = ({ username, userLocaion, socketId }) => {
             </ul>
           )}
         </div>
+        <div className="project-section">
+      {/* Code for displaying projects and project pagination */}
+    </div>
 
-        <h3>Job Offers</h3>
-
-        {jobOffers.length > 0 ? (
-          jobOffers.map(({ title, id, businessOwner }, index) => (
-            <div className="project-item" key={index}>
-              <span className="project-title">{title}</span>
-              <a
-                class="invest-button"
-                key={index}
-                href={`/ListOfJobs`}
+    <div className="job-offers-section">
+      <h3>Job Offers</h3>
+      {jobOffers.length > 0 ? (
+        currentJobOffers.map(({ title, id, businessOwner }, index) => (
+          <div className="project-item" key={index}>
+            <span className="project-title">{title}</span>
+            <a class="invest-button" href={`/ListOfJobs`}  target="_blank" rel="noreferrer">
+              Consult
+            </a>
+          </div>
+        ))
+      ) : (
+        <Label text="No job offers found for this user" />
+      )}
+      {totalJobPages > 1 && (
+        <ul className="pagination">
+          <PaginationItem>
+            <PaginationLink onClick={(e) => jobBack()}>
+              <i className="fa fa-angle-left" />
+            </PaginationLink>
+          </PaginationItem>
+          {Array.from({ length: totalJobPages }, (_, i) => i + 1).map(
+            (page) => (
+              <li
+                key={page}
+                className={page === currentJobPage ? "active" : ""}
+                onClick={() => handleJobPageChange(page)}
               >
-                Consult
-              </a>
-            </div>
-          ))
-        ) : (
-          <Label text="No job offers found for this user" />
-        )}
+                <Pagination>
+                  <PaginationItem
+                    className={page == currentJobPage ? "active" : ""}
+                  >
+                    <PaginationLink onClick={(e) => handleJobPageChange(page)}>
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                </Pagination>{" "}
+              </li>
+            )
+          )}
+          <PaginationItem>
+            <PaginationLink onClick={(e) => jobNext()}>
+              <i className="fa fa-angle-right" />
+            </PaginationLink>
+          </PaginationItem>
+        </ul>
+      )}
+    </div>
 
         <ActionButtons socketId={socketId} username={username} />
       </div>

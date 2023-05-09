@@ -40,6 +40,12 @@ const ChatButton=({socketId,username})=>{
                   ...config
               })
               .then((res) => {
+                console.log(params.user)
+                console.log(params.user)
+                console.log(params.user)
+                console.log(params.to)
+                console.log(params.to)
+                console.log(params.to)
                 if(res.data.chat[0]){
                 res.data.chat[0].messages.forEach((msg) => {
                   console.log(msg.content);

@@ -167,6 +167,8 @@ const openChatBoxIfClosed = (socketId) => {
             ...config
         })
         .then((res) => {
+          console.log(res)
+          console.log(res)
           if(res.data.chat[0]){
           res.data.chat[0].messages.forEach((msg) => {
             m.push({
