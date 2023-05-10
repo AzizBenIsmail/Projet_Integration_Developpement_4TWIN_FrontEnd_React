@@ -105,30 +105,29 @@ const OffersCreated = () => {
           <div className="position-relative bg-primary "></div>
           <section className="section section-lg bg-gradient-default">
             <h1
-              className="d-flex pb-4 justify-content-center align-items-start  text-success font-weight-bold"
+              className="d-flex justify-content-center align-items-start   font-weight-bold"
               style={{
-                fontSize: "30px",
+                fontSize: "40px",
                 fontWeight: 600,
-                color: "#4a4a4a",
-                textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+                color: "white",
               }}
             >
               Job Offers Created
             </h1>
+            <br></br>
 
             <div
-              className="ml-1 mr-1 justify-content-center"
+              className="justify-content-center"
               style={{ display: "flex", flexWrap: "wrap" }}
             >
               {jobOffers.map((jobOffer) => (
                 <div key={jobOffer._id} style={{ margin: "10px" }}>
-                  <Card style={{ width: "18rem" }}>
+                  <Card style={{ height:"30rem",width: "30rem"}}>
                     <CardBody>
                       {/* <CardTitle>{jobOffer.title}</CardTitle> */}
                       <JobOffer jobOffer={jobOffer} />
-                      <Button
-                        //block
-                        color="primary"
+                      <Button style={{ width: '100%' , backgroundColor:'#1560BD', color:'white'}}
+                        
                         type="button"
                         onClick={(event) => {
                           //this.toggleModal("notificationModal");
@@ -138,7 +137,7 @@ const OffersCreated = () => {
                         View Candidates
                       </Button>
           
-                      <Button
+                      <Button style={{ width: '100%', marginTop: '15px', marginLeft:'0px' }}
                         color="danger"
                         href="#pablo"
                         onClick={(event) => {

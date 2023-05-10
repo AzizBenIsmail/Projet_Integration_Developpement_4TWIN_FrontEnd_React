@@ -84,7 +84,8 @@ const Candidate = ({ candidate  }) => {
  
  
   
-  <Button onClick={handleQuickReview}>Quick Review</Button>
+  <Button style={{ width: '100%' , marginTop: '15px' , backgroundColor:'#1560BD', color:'white'}} 
+onClick={handleQuickReview}>Quick Preview</Button>
 </>
       {/* {showDetails && (
         <>
@@ -94,7 +95,7 @@ const Candidate = ({ candidate  }) => {
         
       )} */}
       {resume && <iframe src={resume} width="100%" height="500px" />}
-      <ResumeModal url = {`http://localhost:5000/resumes/${candidate.resume}`}></ResumeModal>
+      <ResumeModal  url = {`http://localhost:5000/resumes/${candidate.resume}`}></ResumeModal>
     </div>
     </>
   );

@@ -16,6 +16,7 @@ import {
   Row,
 } from "reactstrap";
 import CandidateReview from "./CandidateReview";
+ 
 
 const CandidateList = () => {
   const [candidates, setCandidates] = useState([]);
@@ -188,26 +189,26 @@ const CandidateList = () => {
           <div className="position-relative bg-primary "></div>
           <section className="section section-lg bg-gradient-default">
             <h1
-              className="d-flex justify-content-center align-items-start  text-success font-weight-bold"
+              className="d-flex justify-content-center align-items-start   font-weight-bold"
               style={{
-                fontSize: "30px",
+                fontSize: "40px",
                 fontWeight: 600,
-                color: "#4a4a4a",
-                textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+                color: "white",
+              
               }}
             >
               Candidates
             </h1>
-
+            <br></br>
             <div
               className="justify-content-center"
               style={{ display: "flex", flexWrap: "wrap" }}
             >
               {candidates.map((candidate) => (
-                <div key={candidate._id}>
+                <div key={candidate._id} style={{ margin: "10px" }}>
                   {/* <h2>{candidate.firstName} {candidate.lastName}</h2> */}
-                  <Card style={{ width: "18rem" }}>
-                    <CardBody>
+                  <Card style={{ height:"30rem",width: "30rem"}}>
+                    <CardBody  >
                     <Candidate
                       candidate={candidate}
                       
@@ -215,7 +216,7 @@ const CandidateList = () => {
                     
 
                     {/* <Button onClick={handleQuickReview}>Quick Review</Button> */}
-                      <Button
+                      <Button style={{ width: '100%' }}
                         color="danger"
                         href="#pablo"
                         onClick={(event) => {
@@ -243,12 +244,13 @@ const CandidateList = () => {
         <div className="position-relative bg-primary "></div>
         <section className="section section-lg bg-gradient-default">
           <h1
-            className="d-flex justify-content-center align-items-start  text-success font-weight-bold"
+            className="d-flex justify-content-center align-items-start   font-weight-bold"
             style={{
-              fontSize: "30px",
+              fontSize: "40px",
               fontWeight: 600,
-              color: "#4a4a4a",
-              textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+              color: "white",
+            
+            
             }}
           >
             No Candidates Yet.

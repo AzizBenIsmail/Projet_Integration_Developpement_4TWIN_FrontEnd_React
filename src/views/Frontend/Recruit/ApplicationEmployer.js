@@ -81,11 +81,14 @@ const ApplicationEmployer = () => {
           <Container className="pt-lg-7">
             <Row className="justify-content-center">
               <Col lg="10">
-              <div className="ml-9 pl-9 pb-5 text-success font-weight-bold" 
-              style={{ fontSize: "30px", fontWeight: 600, color: "#4a4a4a", textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)" }}>
+              <div className="d-flex justify-content-center align-items-start   font-weight-bold"
+            style={{
+              fontSize: "40px",
+              fontWeight: 600,
+              color: "white" }}>
                 Create Your Job Offer
               </div>
-              
+              <br></br>
 
 
                 <Card className="bg-secondary shadow border-0">
@@ -256,7 +259,7 @@ const ApplicationEmployer = () => {
                       </InputGroup>
                       
                       <div className="text-center mt-5">
-                        <Button  onClick = {handleSubmit} type="submit">Submit</Button>
+                        <Button style={{ width: '100%' , backgroundColor:'#1560BD', color:'white'}} onClick = {handleSubmit} type="submit">Submit</Button>
                       </div>
                     </Form>
                   </CardBody>

@@ -13,6 +13,7 @@ import SimpleFooter from "components/Footers/SimpleFooter";
 import Event from "views/Frontend/Event/event";
 
 //Recruit
+import ChatBackOffice from "./views/Backend/Chat/Chat";
 import VoiceSearch from "views/Frontend/Recruit/VoiceSearch";
 const AddJobOffer = lazy(() => import("views/Frontend/Recruit/ApplicationEmployer"));
 const ListOfJobs = lazy(() =>  import("views/Frontend/Recruit/ListOfJobs"));
@@ -21,7 +22,6 @@ const OffersCreated = lazy(() =>  import("views/Frontend/Recruit/OffersCreated")
 const CandidateList = lazy(() =>  import( "views/Frontend/Recruit/CandidateList"));
 const DisplayedJobs = lazy(() =>  import( "views/Frontend/Recruit/DisplayedJobs"));
 const LandingPage = lazy(() =>  import( "views/Frontend/Recruit/LandingPage"));
-import ChatBackOffice from "./views/Backend/Chat/Chat";
 
 //Template Lazy Loading
 const Info = lazy(() => import("./views/Frontend/Template/Info"));

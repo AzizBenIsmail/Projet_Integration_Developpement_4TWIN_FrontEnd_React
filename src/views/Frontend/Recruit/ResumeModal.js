@@ -46,7 +46,7 @@ class ResumeModal extends React.Component {
       <>
         <Row>
           <Col md="4">
-            <Button type="button" onClick={() => this.toggleModal("defaultModal")}>
+            <Button style={{ width: '350%' , marginBottom: '15px', marginTop: '15px' }}  onClick={() => this.toggleModal("defaultModal")}>
               View Resume
             </Button>
             <Modal 

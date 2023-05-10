@@ -20,15 +20,16 @@ class Modals extends React.Component {
       <>
         <Row>
           <Col md="4">
-            <Button type="button" onClick={() => this.toggleModal("defaultModal")}>
+            <Button style={{ width: '345%' , marginTop: '15px', marginLeft:'2px' }} onClick={() => this.toggleModal("defaultModal")}>
               Details
             </Button>
-            <Modal
+            <Modal 
+            
               className="modal-dialog-centered"
               isOpen={this.state.defaultModal}
               toggle={() => this.toggleModal("defaultModal")}
             >
-              <div className="modal-header">
+              <div className="modal-header" >
                 {/* <h6 className="modal-title" id="modal-title-default">
                   {jobOffer.title}
                 </h6> */}
@@ -42,10 +43,11 @@ class Modals extends React.Component {
                   <span aria-hidden={true}>×</span>
                 </button>
               </div>
-              <div className="modal-body">
-                <JobOffer jobOffer={jobOffer} showDetails={true} />
+              <div className="modal-body">   
+              {/* style={{ width:'400rem'}} */}
+                <JobOffer  jobOffer={jobOffer} showDetails={true} />
               </div>
-              <div className="modal-footer">
+              <div className="modal-footer" >
                 {/* <Button color="primary" type="button">
                   Save changes
                 </Button> */}

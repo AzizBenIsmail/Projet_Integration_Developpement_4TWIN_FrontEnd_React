@@ -124,7 +124,7 @@ const ListOfJobs = () => {
       );
       console.log("data", form);
       const data = response.data;
-      //navigate('/LandingPage');
+      navigate('/LandingPage');
       console.log(data.message); // success message from the backend
     } catch (err) {
       console.error(err);
@@ -240,17 +240,16 @@ const ListOfJobs = () => {
               <Row className="justify-content-center">
                 <Col lg="7">
                   <div
-                    className="ml-9 pb-5 text-success font-weight-bold"
+                    className="d-flex justify-content-center align-items-start   font-weight-bold"
                     style={{
-                      fontSize: "30px",
+                      fontSize: "40px",
                       fontWeight: 600,
-                      color: "#4a4a4a",
-                      textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+                      color: "white",
                     }}
                   >
                     Apply to the job offer
                   </div>
-
+                    <br></br>
                   <Card className="bg-secondary shadow border-0">
                     <CardBody className="px-lg-5 py-lg-5">
                       <Form
@@ -394,7 +393,7 @@ const ListOfJobs = () => {
                         </Form.Group>
 
                         <div className="text-center mt-5">
-                          <Button onClick={handleApply} type="submit">
+                          <Button style={{ width: '100%' , backgroundColor:'#1560BD', color:'white'}} onClick={handleApply} type="submit">
                             Submit
                           </Button>
                         </div>
@@ -416,13 +415,13 @@ const ListOfJobs = () => {
       <main>
         <div className="position-relative bg-primary "></div>
         <section className="section section-lg bg-gradient-default">
+          <br></br>
           <h1
-            className="d-flex justify-content-center align-items-start  text-success font-weight-bold"
+            className="d-flex justify-content-center align-items-start   font-weight-bold"
             style={{
-              fontSize: "30px",
+              fontSize: "40px",
               fontWeight: 600,
-              color: "#4a4a4a",
-              textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+              color: "white",
             }}
           >
             Jobs Offers
@@ -468,12 +467,12 @@ const ListOfJobs = () => {
                style={{ display: "flex", flexWrap: "wrap" }}>
             {jobOffers.map((jobOffer) => (
               <div key={jobOffer._id} style={{ margin: "10px" }}>
-                <Card style={{ width: "18rem" }}>
+                <Card style={{ height:"30rem",width: "30rem"}}>
                   <CardBody>
                     {/* <CardTitle>{jobOffer.title}</CardTitle> */}
                     <JobOffer jobOffer={jobOffer} />
                     <Button
-                      color="primary"
+                       style={{ width: '100%' , backgroundColor:'#1560BD', color:'white'}}
                       onClick={() => {
                         setJobId(jobOffer._id);
                         setShowApplicationForm(true);
