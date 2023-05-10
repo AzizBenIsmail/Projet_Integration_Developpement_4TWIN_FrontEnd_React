@@ -1,16 +1,27 @@
-import React from "react";
+import Cookies from "js-cookie";
+import React, { useState, useEffect } from "react";
 
 const RightMessage = ({ content, favoriteColor }) => {
   return <p className="chatbox_message_right" style={{ backgroundColor: favoriteColor }}>{content}</p>;
 };
 
-
 const LeftMessage = ({ content }) => {
   return <p className="chatbox_message_left">{content}</p>;
 };
 
-const SingleMessage = ({ content, myMessage, favoriteColor}) => {
+const SingleMessage = ({ content, myMessage, favoriteColor }) => {
+  const [color, setColor] = useState('');
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const ff = JSON.parse(Cookies.get("user")).user.favColor;
+      setColor(ff);
+    }, 500);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [favoriteColor]);
 
   return (
     <div
@@ -22,7 +33,7 @@ const SingleMessage = ({ content, myMessage, favoriteColor}) => {
       }
     >
       {myMessage ? (
-        <RightMessage content={content} favoriteColor={favoriteColor} />
+        <RightMessage content={content} favoriteColor={color} />
       ) : (
         <LeftMessage content={content} />
       )}

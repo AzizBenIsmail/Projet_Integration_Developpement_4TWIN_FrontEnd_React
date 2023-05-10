@@ -17,6 +17,34 @@ const MapPage = () => {
   const [message, setMessage] = useState("");
   const [answer, setAnswer] = useState("");
 
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const response = await axios.get("http://localhost:5000/chat/messages/");
+        const data = response.data;
+        const username = JSON.parse(Cookies.get("user")).user.username;
+        const users = Object.keys(data.messages).filter((user) => user !== username);
+        setUsers(users);
+      } catch (error) {
+        if (error.response) {
+          console.error("Error response:", error.response.data);
+        } else if (error.request) {
+          console.error("No response:", error.request);
+        } else {
+          console.error("Error:", error.message);
+        }
+        setUsers([]);
+      }
+    }
+    
+    fetchUsers();
+    const timer = setInterval(fetchUsers, 3000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   useEffect(() => {
     const userId = JSON.parse(Cookies.get("user")).user._id;
 
@@ -63,11 +91,16 @@ const MapPage = () => {
   const [color, setColor] = useState("");
 
   const handleColorChange = (newColor) => {
+
+
     setColor(newColor);
   };
 
   const handleColor = (event) => {
     const userId = JSON.parse(Cookies.get("user")).user._id;
+    const userData = JSON.parse(Cookies.get("user"));
+    const updatedUserData = { ...userData, user: { ...userData.user, favColor: color } };
+    Cookies.set("user", JSON.stringify(updatedUserData));
     event.preventDefault();
     axios
       .post("http://localhost:5000/chat/color/", {
@@ -145,15 +178,18 @@ const MapPage = () => {
                   placeholder="Write your answer here"
                 />
 
-                <input type="submit"
-                 style={{
+                <input
+                  type="submit"
+                  style={{
                     width: "100%",
                     backgroundColor: "#5E72E4",
                     color: "#fff",
                     fontSize: "16px",
                     height: "40px",
-                    marginTop: "20px" 
-                  }} value="Save" />
+                    marginTop: "20px",
+                  }}
+                  value="Save"
+                />
               </form>
             </div>
           </div>
@@ -195,13 +231,41 @@ const MapPage = () => {
                     color: "#fff",
                     fontSize: "16px",
                     height: "40px",
-                    marginTop: "20px" 
+                    marginTop: "20px",
                   }}
                 >
                   Save
                 </button>
               </form>
             </div>
+          </div>
+
+          <div className="blackbox">
+            {" "}
+            <div class="user-list">
+  <h2>User Sentiment Analysis Rankings</h2>
+  <p>
+    Ranking users based on their positive sentiment scores can influence
+    their behavior, making them more likely to invest or recruit.
+  </p>
+  {users && users.length > 0 ? (
+    <div>
+      <h3>User List:</h3>
+      <ol>
+        {users.map((user, index) => (
+          <li key={user}>
+            {user}
+          </li>
+        ))}
+      </ol>
+    </div>
+  ) : (
+    <p>
+      <strong>There are no users yet.</strong>
+    </p>
+  )}
+</div>
+
           </div>
         </div>
 

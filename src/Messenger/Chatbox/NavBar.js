@@ -38,6 +38,8 @@ const NavBar = ({ username, socketId }) => {
       setFavoriteColor(data.favoriteColor);
     };
     fetchColor();
+    const interval = setInterval(fetchColor, 2000); 
+    return () => clearInterval(interval); 
   }, [username]);
 
   const navBarStyle = {
