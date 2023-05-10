@@ -178,74 +178,88 @@ const Tables = () => {
       {/* Page content */}
       <CardHeader className="bg-transparent border-0"></CardHeader>
       <br /> <br />
-      <h2 className="my-4">BADGE REQUESTS</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Details</th>
-            <th>Date</th>
-            <th>Username</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fbadges.length > 0 ? (
-            fbadges.map((badge) => (
-              <tr key={badge._id}>
-                <td>{badge.badgeName}</td>
-                <td>{badge.badgeDescription}</td>
-                <td>{badge.details}</td>
-                <td>{badge.date.split("T")[0]}</td>
-                <td>{badge.usernameB}</td>
-                <td>
-                  <div className="d-flex">
-                    <button
-                      className="btn btn-success mr-3"
-                      onClick={() =>
-                        handleUpdateBadge(
-                          badge._id,
-                          document.getElementById("xp").value,
-                          badge.usernameB,
-                          config
-                        )
-                      }
-                    >
-                      Accept(xp)+
-                    </button>
-                    <div style={{ width: '100px', overflow: 'hidden' }}>
-  <input
-    type="number"
-    className="form-control mr-3"
-    id="xp"
-    name="xp"
-  />
-</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <button
-                      className="btn btn-danger"
-                      onClick={() =>
-                        handleDeleteB(
-                          badge._id,
-                          document.getElementById("xp").value,
-                          badge.usernameB
-                        )
-                      }
-                    >
-                      Delete(xp) -
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6">No badge requests found.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <Container fluid>
+        {/* Dark table */}
+        <Row className="mt-0">
+          <div className="col">
+            <Card className=" shadow">
+              <CardHeader className="bg-transparent border-0">
+                <h3 className="text-bleu mb-0">BADGE REQUESTS</h3>
+              </CardHeader>
+              <Table
+                className="align-items-center table-flush"
+                responsive
+              >
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {fbadges.length > 0 ? (
+                    fbadges.map((badge) => (
+                      <tr key={badge._id}>
+                        <td>{badge.badgeName}</td>
+                        <td>{badge.badgeDescription}</td>
+                        <td>{badge.details}</td>
+                        <td>{badge.date.split("T")[0]}</td>
+                        <td>{badge.usernameB}</td>
+                        <td>
+                          <div className="d-flex">
+                            <button
+                              className="btn btn-success mr-3"
+                              onClick={() =>
+                                handleUpdateBadge(
+                                  badge._id,
+                                  document.getElementById("xp").value,
+                                  badge.usernameB,
+                                  config
+                                )
+                              }
+                            >
+                              Accept(xp)+
+                            </button>
+                            <div style={{ width: "100px", overflow: "hidden" }}>
+                              <input
+                                type="number"
+                                className="form-control mr-3"
+                                id="xp"
+                                name="xp"
+                              />
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button
+                              className="btn btn-danger"
+                              onClick={() =>
+                                handleDeleteB(
+                                  badge._id,
+                                  document.getElementById("xp").value,
+                                  badge.usernameB
+                                )
+                              }
+                            >
+                              Delete(xp) -
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6">No badge requests found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Card>
+          </div>
+        </Row>
+      </Container>
       <br />
       <hr className="my-4" />
       <Container fluid>
@@ -297,7 +311,7 @@ const Tables = () => {
                           >
                             ➖
                           </button>
-                      
+
                           <span className="mr-2">{evaluation.xp}%</span>
                           <div>
                             <Progress

@@ -235,7 +235,7 @@ export default function Landing() {
                         {user.username}
                       </a>
                     </h2>
-                    <img
+                    <img className="avatar avatar-sm rounded-circle "
                       src={`http://localhost:5000/images/${user.image_user}`}
                       style={{
                         width: "100px",
