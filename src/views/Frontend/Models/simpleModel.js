@@ -62,9 +62,9 @@ const SimpleModal = ({isOpen, toggle, title, body, button, fablab, onAccept}) =>
           >
             Close
           </Button>
-          <Button color="primary" type="button" onClick={handleAction}>
+         {button && <Button color="primary" type="button" onClick={handleAction}>
             {button}
-          </Button>
+          </Button>} 
         </div>
       </Modal>
     </>

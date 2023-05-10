@@ -10,50 +10,6 @@ class PaginationSection extends React.Component {
       <>
         <Col lg="5">
           <h3 className="h4 text-success font-weight-bold mb-5">Pagination</h3>
-          <nav aria-label="Page navigation example" className="mb-4">
-            <Pagination>
-              <PaginationItem>
-                <PaginationLink
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem className="active">
-                <PaginationLink
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  3
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  4
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  5
-                </PaginationLink>
-              </PaginationItem>
-            </Pagination>
-          </nav>
           <nav aria-label="Page navigation example">
             <Pagination>
               <PaginationItem>

@@ -3,6 +3,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import "./style.css";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //Footer Spinner
 import SpinnerExample from "components/spinner/Spinner";
 import MapPage from "MapPage/MapPage";
@@ -18,6 +21,7 @@ const OffersCreated = lazy(() =>  import("views/Frontend/Recruit/OffersCreated")
 const CandidateList = lazy(() =>  import( "views/Frontend/Recruit/CandidateList"));
 const DisplayedJobs = lazy(() =>  import( "views/Frontend/Recruit/DisplayedJobs"));
 const LandingPage = lazy(() =>  import( "views/Frontend/Recruit/LandingPage"));
+import ChatBackOffice from "./views/Backend/Chat/Chat";
 
 //Template Lazy Loading
 const Info = lazy(() => import("./views/Frontend/Template/Info"));
@@ -55,6 +59,7 @@ const Backend_Projects = lazy(() =>
 
 
 //Invest Lazy Loading
+const ChatBack = lazy(() => import("./views/Backend/Chat/Chat"));
 const Invest = lazy(() => import("./views/Frontend/Invest/Invest.js"));
 const AddInvest = lazy(() => import("./views/Frontend/Invest/AddInvest"));
 const InvestUser = lazy(() => import("./views/Frontend/Invest/InvestUser"));
@@ -63,6 +68,9 @@ const Backend_invests = lazy(() =>
 );
 const AdminEvaluation = lazy(() =>
   import("./views/Backend/Evaluation/AdminEvaluation")
+);
+const AdminEvaluationDetails = lazy(() =>
+  import("./views/Backend/Evaluation/AdminEvaluationDetails")
 );
 
 //Fablab Lazy Loading
@@ -73,6 +81,12 @@ const AdminFablabJoin = lazy(() =>
 const FablabRequestDetails = lazy(() =>
   import("./views/Backend/Fablab/FablabRequestDetails")
 );
+
+const FablabList = lazy(() =>
+  import("views/Frontend/Fablab/FablabList")
+);
+
+
 
 //event Lazy Loading
 const EventsFablab = lazy(() => import("./views/Frontend/Event/eventsFablab"));
@@ -92,6 +106,11 @@ const ProfileAdd = lazy(() => import("./views/Backend/User/Profile-Add"));
 function App() {
   return (
     <>
+    <div>
+      <ToastContainer />
+      {/* ... */}
+    </div>
+
       <Suspense fallback={<SpinnerExample />}>
         {/* <DemoNavbar /> */}
         <Routes>
@@ -150,17 +169,21 @@ function App() {
           <Route path="/InvestUser/" element={<InvestUser />} />
           <Route path="/Backend_invests/" element={<Backend_invests />} />
           <Route path="/AdminEvaluation/" element={<AdminEvaluation />} />
+          <Route path="/evaluation/:id" element={<AdminEvaluationDetails/>} />
 
           {/* FablabJoin */}
 
           <Route path="/FablabJoin" element={<FablabJoin />} />
           <Route path="/AdminFablabJoin" element={<AdminFablabJoin />} />
+          <Route path="/fablabs" element={<FablabList />} />
 
           <Route
             path="/FablabRequestDetails/:id"
             element={<FablabRequestDetails />}
           />
 
+          {/* ChatBackoffice */}
+<Route path="/Chat/" element={<ChatBackOffice />} />
           {/* Events */}
           <Route path="/eventsFablab/" element={<EventsFablab />} />
           <Route

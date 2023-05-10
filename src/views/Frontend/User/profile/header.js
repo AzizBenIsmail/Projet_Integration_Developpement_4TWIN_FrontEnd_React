@@ -1,9 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, CardHeader } from "reactstrap";
-import { Card, Container, Row, Col, Progress } from "reactstrap";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { Button } from "reactstrap";
+import { Row, Col, Progress } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+import { getTopEvaluations } from "../../../../services/apiEvaluation";
 const ProfileHeader = (props) => {
   const navigate = useNavigate();
 
@@ -36,8 +35,26 @@ const ProfileHeader = (props) => {
     return percentage;
   }
 
+  useEffect(() => {
+    getTEvaluations();
+
+  }, []);
+
+  const [evaluations, setEvaluations] = useState([]);
+
+  const getTEvaluations = async () => {
+    try {
+      const res = await getTopEvaluations({})
+      setEvaluations(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
+    
       <section className="section-profile-cover section-shaped my-0">
         <div className="shape shape-style-1 shape-default alpha-4"></div>
         <div className="separator separator-bottom separator-skew">
@@ -68,8 +85,10 @@ const ProfileHeader = (props) => {
           <span className="mask bg-gradient-default opacity-8" />
         </div>
       </section>
+      
 
       <Row className="justify-content-center">
+        
         <Col className="order-lg-2" lg="3">
           <div className="card-profile-image">
             <a href="#pablo" onClick={(e) => e.preventDefault()}>
@@ -81,7 +100,33 @@ const ProfileHeader = (props) => {
             </a>
           </div>
         </Col>
+        <div >
+          <br/>
+      <h2>👑TOP 3 USERS👑</h2>
+        
+        {evaluations && evaluations.map((type) => (
+          <div key={type._id}>
+            <div className="progress-wrapper">
+              <div className="progress-info">
+                <div className="progress-label">
+                <text>⚡ {type.usernameE} </text>
+                    <span>LEVEL: {type.lvl} </span>
+                    
+
+                </div>
+             
+              </div>
+            </div>
+
+          </div>
+          
+        ))}
+
+
+      </div>
+        
         <Col className="order-lg-3 text-lg-right align-self-lg-center" lg="4">
+          
           <div className="card-profile-actions py-4 mt-lg-0">
             <Button
               className="mr-4"
@@ -132,8 +177,13 @@ const ProfileHeader = (props) => {
             </div>
           </div>
         </Col>
+      
+
       </Row>
       
+    
+
+     
     </>
   );
 };

@@ -3,18 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./Messenger.css";
 import Chatbox from "./Chatbox/Chatbox";
-const DUMMY_CHATBOXES = [
-  {
-    username: "martin",
-    socketId: 3213123,
-    messages: [],
-  },
-  {
-    username: "test",
-    socketId: 3213123,
-    messages: [],
-  },
-];
+
 
 const Messenger = () => {
   const chatboxes=useSelector((state)=>state.messenger.chatboxes);

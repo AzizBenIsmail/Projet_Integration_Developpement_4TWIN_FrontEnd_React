@@ -19,11 +19,17 @@ import {
   Nav,
   Row,
   UncontrolledTooltip,
+  Col,
+  CustomFileInput,
+  InputGroupText,
+  InputGroupAddon,
+  InputGroup,
+  CardBody,
 } from "reactstrap";
 import { differenceInYears } from "date-fns";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 
 import { addXP, reduceXP } from "../../../services/apiEvaluation";
 import axios from "axios";
@@ -35,10 +41,8 @@ import Cookies from "js-cookie";
 
 import { getEvaluations } from "../../../services/apiEvaluation";
 
-import { getBtype,addBType } from "../../../services/apiBtype";
-
-
-
+import { getBtype, addBType } from "../../../services/apiBtype";
+import { getFBadges, updateBadge } from "../../../services/apiBadges";
 
 const Tables = () => {
   const navigate = useNavigate();
@@ -61,6 +65,7 @@ const Tables = () => {
     getAllEvaluations();
     getAllBtype();
 
+    getD();
   }, [1000]);
 
   const getAllEvaluations = async (config) => {
@@ -74,27 +79,17 @@ const Tables = () => {
       });
   };
 
-
-
-
-
-
-
-
   const handleAddXP = async (username, xp) => {
     const response = await addXP(username, xp, config);
     setAddedXP({ ...addedXP, [username]: xp });
     getAllEvaluations();
-
   };
 
   const handleReduceXP = async (username, xp) => {
     const response = await reduceXP(username, xp, config);
     setReducedXP({ ...reducedXP, [username]: xp });
     getAllEvaluations();
-
   };
-
 
   const [btype, setBtype] = useState();
 
@@ -109,50 +104,164 @@ const Tables = () => {
       });
   };
 
-//admin
-const [badgeName, setBadgeName] = useState("");
-const [badgeDescription, setBadgeDescription] = useState("");
-const [badgeImg, setBadgeImg] = useState("");
+  //admin
+  const [badgeName, setBadgeName] = useState("");
+  const [badgeDescription, setBadgeDescription] = useState("");
+  const [badgeImg, setBadgeImg] = useState("");
 
-const handleFormSubmit = (event) => {
-  event.preventDefault();
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
 
-  const newBType = {
-    badgeName: badgeName,
-    badgeDescription: badgeDescription,
-    badgeImg: badgeImg
+    const newBType = {
+      badgeName: badgeName,
+      badgeDescription: badgeDescription,
+      badgeImg: badgeImg,
+    };
+
+    axios
+      .post("http://localhost:5000/btype/add", newBType)
+      .then((res) => {
+        console.log(res.data);
+        setBadgeName("");
+        setBadgeDescription("");
+        setBadgeImg("");
+        getAllBtype();
+      })
+      .catch((err) => console.log(err));
   };
 
-  axios.post("http://localhost:5000/btype/add", newBType)
-  .then((res) => {
-    console.log(res.data);
-    setBadgeName("");
-    setBadgeDescription("");
-    setBadgeImg("");
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:5000/btype/${id}`);
     getAllBtype();
-  })
-  .catch((err) => console.log(err));
+  };
 
-};
+  const handleDetailsClick = (id) => {
+    window.history.pushState({}, "", `/evaluation/${id}`);
+    window.location.reload();
+  };
 
+  const [fbadges, setFbadges] = useState("");
+  const getD = async () => {
+    try {
+      const response2 = await getFBadges(config); // Appeler votre fonction de service pour obtenir les badges d'un utilisateur en fonction de son nom d'utilisateur
+      setFbadges(response2.data.badges); // Supposons que la réponse contient un champ 'badges' avec un tableau d'objets de badges
+      //------------
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const handleDeleteB = async (id, xp, username) => {
+    const response = await reduceXP(username, xp, config);
 
-const handleDelete = async (id) => {
-  await axios.delete(`http://localhost:5000/btype/${id}`);
-  getAllBtype();
+    await axios.delete(`http://localhost:5000/badges/${id}`);
+    getD();
+    getAllEvaluations();
+  };
 
-};
+  async function handleUpdateBadge(id, xp, username, config) {
+    try {
+      const response = await addXP(username, xp, config);
 
-
-
-
+      const updatedBadge = await updateBadge(id, { etat: true }); // Call the updateBadge function with the new etat value
+      console.log(updatedBadge.data); // Log the updated badge data to the console
+    } catch (error) {
+      console.error(error);
+    }
+    getD();
+    getAllEvaluations();
+  }
   //---
   return (
     <>
       <Header />
       {/* Page content */}
-      <CardHeader className="bg-transparent border-0">
-</CardHeader>
+      <CardHeader className="bg-transparent border-0"></CardHeader>
+      <br /> <br />
+      <Container fluid>
+        {/* Dark table */}
+        <Row className="mt-0">
+          <div className="col">
+            <Card className=" shadow">
+              <CardHeader className="bg-transparent border-0">
+                <h3 className="text-bleu mb-0">BADGE REQUESTS</h3>
+              </CardHeader>
+              <Table
+                className="align-items-center table-flush"
+                responsive
+              >
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {fbadges.length > 0 ? (
+                    fbadges.map((badge) => (
+                      <tr key={badge._id}>
+                        <td>{badge.badgeName}</td>
+                        <td>{badge.badgeDescription}</td>
+                        <td>{badge.details}</td>
+                        <td>{badge.date.split("T")[0]}</td>
+                        <td>{badge.usernameB}</td>
+                        <td>
+                          <div className="d-flex">
+                            <button
+                              className="btn btn-success mr-3"
+                              onClick={() =>
+                                handleUpdateBadge(
+                                  badge._id,
+                                  document.getElementById("xp").value,
+                                  badge.usernameB,
+                                  config
+                                )
+                              }
+                            >
+                              Accept(xp)+
+                            </button>
+                            <div style={{ width: "100px", overflow: "hidden" }}>
+                              <input
+                                type="number"
+                                className="form-control mr-3"
+                                id="xp"
+                                name="xp"
+                              />
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button
+                              className="btn btn-danger"
+                              onClick={() =>
+                                handleDeleteB(
+                                  badge._id,
+                                  document.getElementById("xp").value,
+                                  badge.usernameB
+                                )
+                              }
+                            >
+                              Delete(xp) -
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6">No badge requests found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Card>
+          </div>
+        </Row>
+      </Container>
+      <br />
+      <hr className="my-4" />
       <Container fluid>
         {/* Dark table */}
         <Row className="mt-0">
@@ -170,9 +279,14 @@ const handleDelete = async (id) => {
                     <th scope="col">Username</th>
                     <th scope="col">Level</th>
                     <th scope="col">
-                      Add ➕ or Reduce ➖  <input type="text" id="xp-input" name="xp-input" size="1" /> XP%   
-                      
-
+                      Add ➕ or Reduce ➖{" "}
+                      <input
+                        type="text"
+                        id="xp-input"
+                        name="xp-input"
+                        size="1"
+                      />{" "}
+                      XP%
                     </th>
                     <th scope="col" />
                   </tr>
@@ -186,24 +300,19 @@ const handleDelete = async (id) => {
                         {" "}
                         <div className="d-flex align-items-center">
                           <button
+                            type="button"
+                            className="btn"
                             onClick={() =>
-                              handleReduceXP(evaluation.usernameE, document.getElementById("xp-input").value)
-                              
+                              handleReduceXP(
+                                evaluation.usernameE,
+                                document.getElementById("xp-input").value
+                              )
                             }
                           >
                             ➖
                           </button>
-                          <button
-                            onClick={() =>
-                              handleAddXP(evaluation.usernameE, document.getElementById("xp-input").value)
-                            }
-                          >
-                            ➕
-                          </button>
-                          <span className="mr-2">
-                            {evaluation.xp}
-                            %
-                          </span>
+
+                          <span className="mr-2">{evaluation.xp}%</span>
                           <div>
                             <Progress
                               max="100"
@@ -211,6 +320,18 @@ const handleDelete = async (id) => {
                               barClassName="bg-warning"
                             />
                           </div>
+                          <button
+                            type="button"
+                            className="btn"
+                            onClick={() =>
+                              handleAddXP(
+                                evaluation.usernameE,
+                                document.getElementById("xp-input").value
+                              )
+                            }
+                          >
+                            ➕
+                          </button>
                         </div>{" "}
                       </td>
 
@@ -226,7 +347,14 @@ const handleDelete = async (id) => {
                             <i className="fas fa-ellipsis-v" />
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem href="">Details</DropdownItem>
+                            <DropdownItem
+                              onClick={() =>
+                                handleDetailsClick(evaluation.usernameE)
+                              }
+                            >
+                              {" "}
+                              Details
+                            </DropdownItem>
                           </DropdownMenu>
                         </UncontrolledDropdown>
                       </td>
@@ -238,51 +366,93 @@ const handleDelete = async (id) => {
           </div>
         </Row>
       </Container>
+      <br />
+      <div></div>
+      <br />
+      <hr className="my-4" />
+      <br />
+      <h2 className="my-4">ADD NEW BADGE TYPE</h2>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="4">
+              <form onSubmit={handleFormSubmit}>
+                <div className="form-group">
+                  <label htmlFor="badgeName">Badge Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="badgeName"
+                    value={badgeName}
+                    onChange={(e) => setBadgeName(e.target.value)}
+                  />
+                </div>
 
-   
-      <br/><br/>
-      <h2>ADD NEW BADGE TYPE</h2>
-      <br/>
-    <form onSubmit={handleFormSubmit}>
-  <label htmlFor="badgeName">Badge Name</label>
-  <input
-    type="text"
-    id="badgeName"
-    value={badgeName}
-    onChange={(e) => setBadgeName(e.target.value)}
-  />
+                <div className="form-group">
+                  <label htmlFor="badgeDescription">Badge Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="badgeDescription"
+                    value={badgeDescription}
+                    onChange={(e) => setBadgeDescription(e.target.value)}
+                  />
+                </div>
 
-  <label htmlFor="badgeDescription">Badge Description</label>
-  <input
-    type="text"
-    id="badgeDescription"
-    value={badgeDescription}
-    onChange={(e) => setBadgeDescription(e.target.value)}
-  />
+                <div className="form-group">
+                  <label htmlFor="badgeImg">Badge Image</label>
+                  <input
+                    type="file"
+                    className="form-control-file"
+                    id="badgeImg"
+                    onChange={(e) => setBadgeImg(e.target.files[0].name)}
+                  />
+                </div>
 
-  <label htmlFor="badgeImg">Badge Image</label>
-  <input
-    type="file"
-    id="badgeImg"
-    onChange={(e) => setBadgeImg(URL.createObjectURL(e.target.files[0]))}
-  />
-
-  <button type="button" onClick={handleFormSubmit}>Add BType</button>
-</form>
-<br/>
-<div>
-        
-      {btype && btype.map((type) => (
-        <div key={type._id}>
-          <h3>{type.badgeName}  </h3>
-          <p>{type.badgeDescription}</p>
-          <img width="100" height="50" src={type.badgeImg} alt={type.badgeName} />
-
-          <button  onClick={() => handleDelete(type._id)}   >Delete</button>
-        </div>
-        
-      ))}
-    </div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleFormSubmit}
+                >
+                  Add Badge Type
+                </button>
+              </form>
+            </th>
+          </tr>
+          <tr>
+            <th> Name|</th>
+            <th> Description|</th>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {btype &&
+            btype.map((type) => (
+              <tr key={type._id}>
+                <td>{type.badgeName}</td>
+                <td>{type.badgeDescription}</td>
+                <td>
+                  <img
+                    width="100"
+                    height="50"
+                    src={require(`../../../assets/img/badges/${type.badgeImg}`)}
+                    alt={type.badgeName}
+                  />
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(type._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+      <hr className="my-4" />
     </>
   );
 };

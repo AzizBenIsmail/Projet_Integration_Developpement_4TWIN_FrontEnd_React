@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Card, Container, Row, Col ,Progress, Badge} from "reactstrap";
 import { useState, useEffect } from "react";
 import { useDispatch , useSelector} from "react-redux";
 import {setMyLocation} from "../../../../MapPage/mapSlice"
@@ -126,7 +127,16 @@ if(myLocation){
   return (
     <div>
       {isVisible && (
-        <MDBContainer className="py-5 chatFlow">
+        <Button
+        className="mr-4"
+        color="info"
+        onClick={openMap}
+        size="sm"
+      >
+        <span> Map Messager </span>
+        <i className="ni ni-chat-round"></i>
+      </Button>
+       /*{<MDBContainer className="py-5 chatFlow">
           <MDBRow className="d-flex justify-content-center">
             <MDBCol md="8" lg="6" xl="4">
               <MDBCard
@@ -151,7 +161,7 @@ if(myLocation){
               </MDBCard>
             </MDBCol>
           </MDBRow>
-        </MDBContainer>
+        </MDBContainer>} */
       )}
     </div>
   );
