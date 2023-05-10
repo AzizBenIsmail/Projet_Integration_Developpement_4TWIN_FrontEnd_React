@@ -10,16 +10,14 @@ import SimpleFooter from "components/Footers/SimpleFooter";
 import Event from "views/Frontend/Event/event";
 
 //Recruit
-import AddJobOffer from "views/Frontend/Recruit/ApplicationEmployer";
-import ListOfJobs from "views/Frontend/Recruit/ListOfJobs";
-import JobOfferCard from "views/Frontend/Recruit/JobOfferCard";
-import OffersCreated from "views/Frontend/Recruit/OffersCreated";
-import CandidateList from "views/Frontend/Recruit/CandidateList";
-import Candi from "views/Frontend/Recruit/Candi";
-import DisplayedJobs from "views/Frontend/Recruit/DisplayedJobs";
-import FillApplication from "views/Frontend/Recruit/FillApplication";
-import LandingPage from "views/Frontend/Recruit/LandingPage";
 import VoiceSearch from "views/Frontend/Recruit/VoiceSearch";
+const AddJobOffer = lazy(() => import("views/Frontend/Recruit/ApplicationEmployer"));
+const ListOfJobs = lazy(() =>  import("views/Frontend/Recruit/ListOfJobs"));
+const JobOfferCard = lazy(() =>  import( "views/Frontend/Recruit/JobOfferCard"));
+const OffersCreated = lazy(() =>  import("views/Frontend/Recruit/OffersCreated"));
+const CandidateList = lazy(() =>  import( "views/Frontend/Recruit/CandidateList"));
+const DisplayedJobs = lazy(() =>  import( "views/Frontend/Recruit/DisplayedJobs"));
+const LandingPage = lazy(() =>  import( "views/Frontend/Recruit/LandingPage"));
 
 //Template Lazy Loading
 const Info = lazy(() => import("./views/Frontend/Template/Info"));
@@ -142,9 +140,7 @@ function App() {
           <Route path="/JobOfferCard" element={<JobOfferCard />} />
           <Route path="/OffersCreated/" element={<OffersCreated />} />
           <Route path="/CandidateList/:jobId" element={<CandidateList />} />
-          <Route path="/Candi/" element={<Candi />} />
           <Route path="/DisplayedJobs/" element={<DisplayedJobs />} />
-          <Route path="/FillApplication/" element={<FillApplication />} />
           <Route path="/LandingPage" element={<LandingPage />} />
           <Route path="/VoiceSearch" element={<VoiceSearch />} />
 

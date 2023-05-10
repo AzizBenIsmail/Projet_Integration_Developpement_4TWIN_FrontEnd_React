@@ -1,94 +1,105 @@
 import React from 'react';
+///import JobOffer from "./JobOffer";
+import Modals from "./Modals";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Button,
+  Row
+} from "reactstrap";
+import ResumeModal from './ResumeModal';
+import ReactStoreIndicator from 'react-score-indicator';
 
-const Candidate = ({ candidate }) => {
-    return (
+const Candidate = ({ candidate  }) => {
+  const [resume, setResume] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const handleQuickReview = () => {
+    setShowDetails(true);
+  };
+  
+  
+  return (
+    <>
+    {/* <style>
+      {`.score {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    background-color: ${(Math.round(candidate.score * 100)) < 25 ? "red" : (Math.round(candidate.score * 100)) < 50 ? "yellow" : (Math.round(candidate.score * 100)) < 75 ? "blue" : "green"};
+  }
+
+  .sentiment {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    background-color: ${(Math.abs(Math.round(candidate.sentimentScore * 100)) < 25) ? "red" : (Math.abs(Math.round(candidate.sentimentScore * 100)) < 50) ? "yellow" : (Math.abs(Math.round(candidate.sentimentScore * 100)) < 75) ? "blue" : "green"};
+  }
+`}
+    </style> */}
+    <div >
+      
+      <h2>First name: {candidate.firstName}</h2>
+      <h2>Last name :{candidate.lastName}</h2>
+      <h2>Address: {candidate.adresse}</h2>
+      <h2>Email: {candidate.email}</h2>
+      <h2>Phone: {candidate.phone}</h2>
+      <>
+      {showDetails && (
+    
       <div>
-        <h2>firstName: {candidate.firstName}</h2>
-        <p>lastName :{candidate.lastName}</p>
-        <p>adresse: {candidate.adresse}</p>
-        <p>email: {candidate.email}</p>
-      </div>
-    );
+        <h2>Score: {(Math.round(candidate.score * 100)).toFixed(2)} %</h2>
+      
+       
+        <h2>Sentiment Score: {(candidate.sentimentScore < 0)
+          ? Math.abs(-candidate.sentimentScore * 1000).toFixed(2) 
+          : Math.abs(candidate.sentimentScore * 1000).toFixed(2)} %  </h2> 
+      
+        {/* <p>score: <span style={{ display: 'inline-block', width: '50px',  
+        height: '20px', textAlign: 'center',
+        lineHeight: '20px',
+        border: '1px solid black',
+        borderRadius: '5px',
+        fontWeight: 'bold',
+        color: 'white', backgroundColor: (Math.round(candidate.score * 100).toFixed(2) < 50) ? 'red' : 'green' }}>{(Math.round(candidate.score * 100)).toFixed(2)} </span>%</p>
+      
+       
+        <p>sentimentScore:<span style={{ display: 'inline-block', marginLeft: '10px', padding: '5px', borderRadius: '5px', backgroundColor: (Math.abs(candidate.sentimentScore * 1000).toFixed(2) < 50) ? 'red' : 'green' }}>{(candidate.sentimentScore < 0)
+          ? Math.abs(-candidate.sentimentScore * 1000).toFixed(2) 
+          : Math.abs(candidate.sentimentScore * 1000).toFixed(2)} % </span> </p> */}
+      
+    </div>
+  )}
+ 
+ 
+  
+  <Button onClick={handleQuickReview}>Quick Review</Button>
+</>
+      {/* {showDetails && (
+        <>
+          <p>score: {candidate.score}</p>
+          <p>sentimentScore: {candidate.sentimentScore}</p>
+        </>
+        
+      )} */}
+      {resume && <iframe src={resume} width="100%" height="500px" />}
+      <ResumeModal url = {`http://localhost:5000/resumes/${candidate.resume}`}></ResumeModal>
+    </div>
+    </>
+  );
+  
   };
 
   export default Candidate;
-
-//   import React, { useState } from "react";
-// import {
-//   Button,
-//   Col,
-//   Modal,
-// } from "reactstrap";
-
-// const Modals = () => {
-//   const [notificationModal, setNotificationModal] = useState(false);
-
-//   const toggleModal = () => {
-//     setNotificationModal(!notificationModal);
-//   };
-
-//   return (
-//     <>
-//       <Col md="4">
-//         <Button
-//           block
-//           className="mb-3"
-//           color="warning"
-//           type="button"
-//           onClick={toggleModal}
-//         >
-//           Notification
-//         </Button>
-//         <Modal
-//           className="modal-dialog-centered modal-danger"
-//           contentClassName="bg-gradient-danger"
-//           isOpen={notificationModal}
-//           toggle={toggleModal}
-//         >
-//           <div className="modal-header">
-//             <h6 className="modal-title" id="modal-title-notification">
-//               Your attention is required
-//             </h6>
-//             <button
-//               aria-label="Close"
-//               className="close"
-//               data-dismiss="modal"
-//               type="button"
-//               onClick={toggleModal}
-//             >
-//               <span aria-hidden={true}>×</span>
-//             </button>
-//           </div>
-//           <div className="modal-body">
-//             <div className="py-3 text-center">
-//               <i className="ni ni-bell-55 ni-3x" />
-//               <h4 className="heading mt-4">You should read this!</h4>
-//               <p>
-//                 A small river named Duden flows by their place and
-//                 supplies it with the necessary regelialia.
-//               </p>
-//             </div>
-//           </div>
-//           <div className="modal-footer">
-//             <Button className="btn-white" color="default" type="button">
-//               Ok, Got it
-//             </Button>
-//             <Button
-//               className="text-white ml-auto"
-//               color="link"
-//               data-dismiss="modal"
-//               type="button"
-//               onClick={toggleModal}
-//             >
-//               Close
-//             </Button>
-//           </div>
-//         </Modal>
-//       </Col>
-//     </>
-//   );
-// };
-
-
-
   

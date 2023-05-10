@@ -15,13 +15,13 @@ import {
   Col,
   Row,
 } from "reactstrap";
+import CandidateReview from "./CandidateReview";
 
 const CandidateList = () => {
   const [candidates, setCandidates] = useState([]);
-  // const [joId, setJoId] = useState("");
-  // const joId = localStorage.getItem("joId");
-  //setJoId(localStorage.getItem("joId"));
-  const {jobId}  = useParams();
+  
+  
+  const { jobId } = useParams();
   const [caId, setCaId] = useState("");
   /////cookies
   if (!Cookies.get("user")) {
@@ -47,6 +47,7 @@ const CandidateList = () => {
         const data = response.data;
         console.log(data);
         setCandidates(data.applications);
+        
       } catch (error) {
         console.log(error);
       }
@@ -54,6 +55,18 @@ const CandidateList = () => {
     getCandidates();
   }, []); //candidates
   console.log(candidates);
+ 
+
+  // const candidateData = candidates ? candidates.map((candidate, index) => ({
+  //   name: candidate.firstName,
+  //   email: candidate.email,
+  //   score: totalScores[index],
+  //   result: results[index],
+  // })) : [];
+  // console.log(candidateData);
+  
+  
+  const [visible, setVisible] = useState(false);
 
   const handleDelete = async (event) => {
     event.preventDefault();
@@ -62,15 +75,167 @@ const CandidateList = () => {
       await axios.delete(
         `http://localhost:5000/recruit/deleteCandidate/${caId}`,
         config
-      ); 
+      );
       window.location.replace(`/CandidateList/${jobId}`);
     } catch (err) {
       console.log(err);
     }
   };
 
+  // const handleCandidateClick = ()=>{
+  //   const url_cv = axios.get(`http://localhost:5000/public/resumes`)
+  // }
 
-  if(candidates.length > 0) {
+  //   const handleCandidateClick = (candidateId) => {
+  //     // make a request to the server to get the resume file path for the candidate
+  //     axios.get(`http://localhost:5000/recruit/apply/${jobId}`)
+  //     .then(response => {
+  //       // set the resume file path in the state
+  //       setCandidates(prevCandidates => {
+  //         const updatedCandidates = prevCandidates.map(candidate => {
+  //           if (candidate._id === candidateId) {
+  //             return {
+  //               ...candidate,
+  //               resume: response.data.resume
+  //             };
+  //           } else {
+  //             return candidate;
+  //           }
+  //         });
+  //         return updatedCandidates;
+  //       });
+  //     })
+  //     .catch(error => console.log(error));
+  // };
+
+  // function handleViewResume() {
+  //   axios
+  //     .get("/api/resume") // Replace this with the actual API route to retrieve the resume
+  //     .then((response) => {
+  //       setResume(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
+  // function handleDownloadResume() {
+  //   const downloadUrl = URL.createObjectURL(new Blob([resume]));
+  //   const link = document.createElement("a");
+  //   link.href = downloadUrl;
+  //   link.setAttribute("download", "resume.pdf"); // Replace this with the actual file name and extension
+  //   document.body.appendChild(link);
+  //   link.click();
+  // }
+
+  if (candidates.length > 0) {
+    // return (
+    //   <>
+    //     <DemoNavbar />
+    //     <main>
+    //       <div className="position-relative bg-primary "></div>
+    //       <section className="section section-lg bg-gradient-default">
+    //         <h1
+    //           className="d-flex justify-content-center align-items-start  text-success font-weight-bold"
+    //           style={{
+    //             fontSize: "30px",
+    //             fontWeight: 600,
+    //             color: "#4a4a4a",
+    //             textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+    //           }}
+    //         >
+    //           Candidates
+    //         </h1>
+
+    //         <div
+    //           className="justify-content-center"
+    //           style={{ display: "flex", flexWrap: "wrap" }}
+    //         >
+    //           {candidates.map((candidate) => (
+    //             <div key={candidate._id}>
+    //               {/* <h2>{candidate.firstName} {candidate.lastName}</h2> */}
+    //               <Card style={{ width: "18rem" }}>
+    //                 <CardBody>
+    //                 <Candidate candidate={candidate} />
+                      
+    //                 <Button onClick={() => setShowReview(!showReview)}>
+    //                   Quick Review
+    //                 </Button>
+    //                   <Button
+    //                     color="danger"
+    //                     href="#pablo"
+    //                     onClick={(event) => {
+    //                       setCaId(candidate._id);
+    //                       handleDelete(event);
+    //                     }}
+    //                   >
+    //                     Delete
+    //                   </Button>
+                      
+    //                 </CardBody>
+    //               </Card>
+    //             </div>
+    //           ))}
+    //         </div>
+    //       </section>
+    //     </main>
+    //   </>
+    // );
+    return (
+      <>
+        <DemoNavbar />
+        <main>
+          <div className="position-relative bg-primary "></div>
+          <section className="section section-lg bg-gradient-default">
+            <h1
+              className="d-flex justify-content-center align-items-start  text-success font-weight-bold"
+              style={{
+                fontSize: "30px",
+                fontWeight: 600,
+                color: "#4a4a4a",
+                textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              Candidates
+            </h1>
+
+            <div
+              className="justify-content-center"
+              style={{ display: "flex", flexWrap: "wrap" }}
+            >
+              {candidates.map((candidate) => (
+                <div key={candidate._id}>
+                  {/* <h2>{candidate.firstName} {candidate.lastName}</h2> */}
+                  <Card style={{ width: "18rem" }}>
+                    <CardBody>
+                    <Candidate
+                      candidate={candidate}
+                      
+                    />
+                    
+
+                    {/* <Button onClick={handleQuickReview}>Quick Review</Button> */}
+                      <Button
+                        color="danger"
+                        href="#pablo"
+                        onClick={(event) => {
+                          setCaId(candidate._id);
+                          handleDelete(event);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                      
+                    </CardBody>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </section>
+        </main>
+      </>
+    );
+  }
   return (
     <>
       <DemoNavbar />
@@ -86,61 +251,12 @@ const CandidateList = () => {
               textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
             }}
           >
-            Candidates
+            No Candidates Yet.
           </h1>
-
-          <div
-            className="justify-content-center"
-            style={{ display: "flex", flexWrap: "wrap" }}
-          >
-            {candidates.map((candidate) => (
-              <div key={candidate._id}>
-                <Card style={{ width: "18rem" }}>
-                  <CardBody>
-                    <Candidate candidate={candidate} />
-                    <Button
-                        color="danger"
-                        href="#pablo"
-                        onClick={(event) => {
-                          setCaId(candidate._id);
-                          handleDelete(event); // kenet , joId
-                        }}
-                      >
-                        Delete
-                      </Button>
-                  </CardBody>
-                </Card>
-              </div>
-            ))}
-          </div>
         </section>
       </main>
     </>
   );
-             }
-            return (
-              <>
-              <DemoNavbar />
-              <main>
-                <div className="position-relative bg-primary "></div>
-                <section className="section section-lg bg-gradient-default">
-                  <h1
-                    className="d-flex justify-content-center align-items-start  text-success font-weight-bold"
-                    style={{
-                      fontSize: "30px",
-                      fontWeight: 600,
-                      color: "#4a4a4a",
-                      textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    No Candidates Yet.
-                  </h1>
-        
-                  
-                </section>
-              </main>
-            </>
-             )
 };
 
 export default CandidateList;

@@ -58,7 +58,7 @@ export default function NavbarF() {
     headroom.init();
     const interval = setInterval(() => {
       getUserFunction(config);
-    }, 15000);
+    }, 15000);//15000
     return () => clearInterval(interval); // nettoyage à la fin du cycle de vie du composant
   }, []);
   const getUserFunction = async (config) => {

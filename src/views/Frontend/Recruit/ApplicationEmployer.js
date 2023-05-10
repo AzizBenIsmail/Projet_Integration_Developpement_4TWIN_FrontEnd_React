@@ -6,6 +6,8 @@ import {
   Card,
   CardBody,
   FormGroup,
+  Label,
+  Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
@@ -23,10 +25,14 @@ import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 const ApplicationEmployer = () => {
   const [formData, setFormData] = useState({
     title: "",
-    description: "",
     company: "",
-    salary: "",
     location: "",
+    aboutCompany: "",
+    aboutJob: "",
+    responsibilities: "",
+    requirements: "",
+    experienceNeeded: "",
+    salary: "",
   });
 
    /////cookies
@@ -74,8 +80,8 @@ const ApplicationEmployer = () => {
         <section className="section section-lg bg-gradient-default">
           <Container className="pt-lg-7">
             <Row className="justify-content-center">
-              <Col lg="5">
-              <div className="ml-6 pb-4 text-success font-weight-bold" 
+              <Col lg="10">
+              <div className="ml-9 pl-9 pb-5 text-success font-weight-bold" 
               style={{ fontSize: "30px", fontWeight: 600, color: "#4a4a4a", textShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)" }}>
                 Create Your Job Offer
               </div>
@@ -103,21 +109,7 @@ const ApplicationEmployer = () => {
                           />
                         </InputGroup>
                       </Form.Group>
-                      <Form.Group>
-                        <Form.Label>Description :</Form.Label>
-                        <InputGroup className="input-group-alternative mb-3">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="ni ni-book-bookmark" />
-                            </InputGroupText> 
-                          </InputGroupAddon>
-                          <Form.Control
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                          />
-                        </InputGroup>
-                      </Form.Group>
+
                       <Form.Group>
                         <Form.Label>Company :</Form.Label>
                         <InputGroup className="input-group-alternative mb-3">
@@ -135,20 +127,6 @@ const ApplicationEmployer = () => {
                         </InputGroup>
                       </Form.Group>
 
-                      <Form.Label>Salary :</Form.Label>
-                      <InputGroup className="input-group-alternative mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-money-coins" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <input
-                          type="number"
-                          name="salary"
-                          value={formData.salary}
-                          onChange={handleChange}
-                        />
-                      </InputGroup>
                       <Form.Group>
                         <Form.Label>Location :</Form.Label>
                         <InputGroup className="input-group-alternative">
@@ -158,13 +136,125 @@ const ApplicationEmployer = () => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Form.Control
-                            type="text"
+                          type="text"
                             name="location"
                             value={formData.location}
                             onChange={handleChange}
                           />
                         </InputGroup>
                       </Form.Group>
+                      <br></br>
+                      <Form.Group>
+                        <Form.Label>About Company :</Form.Label>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-building " />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Form.Control
+                            type="text"                    
+                            name="aboutCompany"
+                            value={formData.aboutCompany}
+                            onChange={handleChange}
+                          />
+                        </InputGroup>
+                      </Form.Group>
+                      {/* <Form.Group>
+                        <Form.Label>About Company :</Form.Label>
+                        <Input type="textarea" className="input-group-alternative mb-3" >     
+                                    
+                          <Form.Control     
+                          type="text"                    
+                            name="aboutCompany"
+                            value={formData.aboutCompany}
+                            onChange={handleChange}
+                          />
+                        </Input>
+                      </Form.Group> */}
+                      <Form.Group>
+                        <Form.Label>About Job :</Form.Label>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-building " />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Form.Control
+                            type="text"
+                            name="aboutJob"
+                            value={formData.aboutJob}
+                            onChange={handleChange}
+                          />
+                        </InputGroup>
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Responsibilities :</Form.Label>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-building " />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Form.Control
+                            type="text"
+                            name="responsibilities"
+                            value={formData.responsibilities}
+                            onChange={handleChange}
+                          />
+                        </InputGroup>
+                      </Form.Group>
+                      
+                      <Form.Group>
+                        <Form.Label>Requirements :</Form.Label>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-building " />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Form.Control
+                            type="text"
+                            name="requirements"
+                            value={formData.requirements}
+                            onChange={handleChange}
+                          />
+                        </InputGroup>
+                      </Form.Group>
+
+                      <Form.Group>
+                        <Form.Label>Experience Needed :</Form.Label>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-book-bookmark" />
+                            </InputGroupText> 
+                          </InputGroupAddon>
+                          <Form.Control
+                            type="text"
+                            name="experienceNeeded"
+                            value={formData.experienceNeeded}
+                            onChange={handleChange}
+                          />
+                        </InputGroup>
+                      </Form.Group>
+
+                      <Form.Label>Salary :</Form.Label>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-money-coins" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          type="text"
+                          placeholder="1000 DT"
+                          name="salary"
+                          value={formData.salary}
+                          onChange={handleChange}
+                        />
+                      </InputGroup>
+                      
                       <div className="text-center mt-5">
                         <Button  onClick = {handleSubmit} type="submit">Submit</Button>
                       </div>

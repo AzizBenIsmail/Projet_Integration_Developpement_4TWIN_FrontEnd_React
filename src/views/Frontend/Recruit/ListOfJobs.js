@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import JobOffer from "./JobOffer";
 import { FormSelect } from "react-bootstrap";
+import Modals from "./Modals";
 import {
   CustomFileInput,
   DropdownItem,
@@ -20,6 +21,7 @@ import {
   Input,
   Row,
   Col,
+  Modal,
   Button,
 } from "reactstrap";
 import { Container, Form } from "react-bootstrap";
@@ -27,13 +29,16 @@ import { useNavigate } from "react-router-dom";
 
 import DemoNavbar from "../../../components/Navbars/DemoNavbar";
 
+
 const ListOfJobs = () => {
   const [jobOffers, setJobOffers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [jobId, setJobId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [resume, setResume]= useState(null);
   const [formData, setFormData] = useState({
-    resume: "",
+    resumeFile: "",
     availability: "",
     firstName: "",
     lastName: "",
@@ -62,13 +67,11 @@ const ListOfJobs = () => {
           "http://localhost:5000/recruit/job-offers",
           config
         );
-        console.log("before");
         setJobOffers(data);
       } catch (err) {
         console.error(err);
       }
     };
-    console.log("after");
     getJobOffers();
   }, []);
 
@@ -76,15 +79,41 @@ const ListOfJobs = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+  // const handleChange = (event) => {
+  //   const { name, value, type } = event.target;
+  //   if (type === "file") {
+  //     setFormData({
+  //       ...formData,
+  //       [name]: event.target.files[0], // use the `files` property for file inputs
+  //     });
+  //   } else {
+  //     setFormData({
+  //       ...formData,
+  //       [name]: value, // use the `value` property for text inputs
+  //     });
+  //   }
+  // };
+  
 
   const navigate=useNavigate();
   const handleApply = async (event, jobOffer, candidate) => {
     event.preventDefault();
-    console.log("data", formData);
-    try {
+    
+    
+      const form = new FormData();
+      form.append("firstName", formData.firstName);
+      form.append("lastName", formData.lastName);
+      form.append("email", formData.email);
+      form.append("phone", formData.phone);
+      form.append("availability", formData.availability);
+      form.append("adresse", formData.adresse);
+      form.append("resume", formData.resumeFile);
+      console.log("data :", form);
+
+      try {
       const response = await axios.post(
-        `http://localhost:5000/recruit/apply/${jobId}`, // apply hedhy heya submit lakhreneya
-        formData,
+        `http://localhost:5000/recruit/apply/${jobId}`,
+        form,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -93,14 +122,34 @@ const ListOfJobs = () => {
           ...config,
         }
       );
-
+      console.log("data", form);
       const data = response.data;
-      navigate('/LandingPage');
+      //navigate('/LandingPage');
       console.log(data.message); // success message from the backend
     } catch (err) {
       console.error(err);
     }
   };
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:5000/recruit/apply/${jobId}`, // apply hedhy heya submit lakhreneya
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           foo: "bar",
+  //         },
+  //         ...config,
+  //       }
+  //     );
+
+  //     const data = response.data;
+  //     navigate('/LandingPage');
+  //     console.log(data.message); // success message from the backend
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   // const handleVoiceSearch = () => {
   //   const recognition = new window.webkitSpeechRecognition();
@@ -155,11 +204,29 @@ const ListOfJobs = () => {
       console.log(err);
     }
   };
-
-  // const handleResumeChange = (event) => {
-  //   setResume(event.target.files[0]);
+  const handleResumeChange = (event) => {
+    console.log(event.target.files[0]);
+    setFormData({ ...formData, resumeFile: event.target.files[0]});
+    console.log(formData.resumeFile);
+  }
+  
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData({ ...formData, [name]: value });
   // };
 
+  // const handleResumeUpload = async (event) => {
+  //   const file = event.target.files[0];
+  //   setFormData({ ...formData, resume: file });
+  // };
+  
+  // const handleResumeUpload = async (event) => {
+  //   const { name, value } = event.target.files[0];
+  //   setFormData({ ...formData, [name]: value});
+  // };
+  // const handleResumeUpload = (event) => {
+  //   setFormData({ ...formData, resume: event.target.files[0] });
+  // };
   if (showApplicationForm) {
     return (
       <>
@@ -173,7 +240,7 @@ const ListOfJobs = () => {
               <Row className="justify-content-center">
                 <Col lg="7">
                   <div
-                    className="ml-9 pb-4 text-success font-weight-bold"
+                    className="ml-9 pb-5 text-success font-weight-bold"
                     style={{
                       fontSize: "30px",
                       fontWeight: 600,
@@ -224,7 +291,7 @@ const ListOfJobs = () => {
                           </InputGroup>
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>Adresse</Form.Label>
+                          <Form.Label>Address</Form.Label>
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
@@ -302,15 +369,19 @@ const ListOfJobs = () => {
                           </Input> */}
                         </Form.Group>
 
-                        {/* <Form.Group> */}
-                        <Form.Label>Resume</Form.Label>
+                        <Form.Group controlId="resume">
+                        <Form.Label >Resume</Form.Label>
                         {/* <InputGroup className="input-group-alternative mb-3"> */}
                         {/* <InputGroupAddon addonType="prepend"> */}
                         <CustomFileInput
+                          // type="file"
+                          // name="resume"
+                          // value={formData.resume}
+                          // onChange={handleChange}
                           type="file"
-                          name="resume"
-                          value={formData.resume}
-                          onChange={handleChange}
+                          name="resumeFile"
+                          //value={formData.resume}
+                          onChange={(e) => handleResumeChange(e)}
                         >
                           {/* <Form.Control
                              type ="file"  id="resume" 
@@ -320,7 +391,7 @@ const ListOfJobs = () => {
                         {/* </InputGroupAddon> */}
 
                         {/* </InputGroup> */}
-                        {/* </Form.Group> */}
+                        </Form.Group>
 
                         <div className="text-center mt-5">
                           <Button onClick={handleApply} type="submit">
@@ -393,10 +464,8 @@ const ListOfJobs = () => {
           </h1>
 
           <br></br>
-          <div
-            className="justify-content-center"
-            style={{ display: "flex", flexWrap: "wrap" }}
-          >
+          <div className="justify-content-center"
+               style={{ display: "flex", flexWrap: "wrap" }}>
             {jobOffers.map((jobOffer) => (
               <div key={jobOffer._id} style={{ margin: "10px" }}>
                 <Card style={{ width: "18rem" }}>
@@ -404,6 +473,7 @@ const ListOfJobs = () => {
                     {/* <CardTitle>{jobOffer.title}</CardTitle> */}
                     <JobOffer jobOffer={jobOffer} />
                     <Button
+                      color="primary"
                       onClick={() => {
                         setJobId(jobOffer._id);
                         setShowApplicationForm(true);
@@ -411,6 +481,7 @@ const ListOfJobs = () => {
                     >
                       Apply
                     </Button>
+                    <Modals jobOffer={jobOffer} />
                   </CardBody>
                 </Card>
               </div>
@@ -424,7 +495,7 @@ const ListOfJobs = () => {
 
 export default ListOfJobs;
 
-{
+
 
   // const formData = new FormData();
 
@@ -509,7 +580,7 @@ export default ListOfJobs;
       </form>
     );
   } */
-}
+
 // return (
 //   <div>
 //     {jobOffers.map((jobOffer) => (
@@ -533,4 +604,3 @@ export default ListOfJobs;
 //   </div>
 // );
 
-//
