@@ -1,3 +1,16 @@
+
+# Projet de crowdfunding pour des projets 100% écologiques avec vérification par un modèle d'apprentissage automatique :
+![GitHub repo size](https://img.shields.io/github/repo-size/AzizBenIsmail/Projet_Integration_Developpement_4TWIN_FrontEnd_React)
+
+Notre projet vise à créer une plateforme de crowdfunding dédiée exclusivement aux projets ayant un impact environnemental positif. Nous souhaitons soutenir des initiatives innovantes et durables qui contribuent à la préservation de l'environnement et à la transition vers une économie verte.
+
+Sur notre plateforme, les porteurs de projets pourront présenter leurs idées et solliciter des financements pour concrétiser leurs initiatives écologiques. Cela pourrait inclure des projets de développement de sources d'énergie renouvelable, de protection de la biodiversité, de gestion durable des ressources naturelles, de solutions de transport écologique, ou encore de recyclage et de réduction des déchets.
+
+Ce qui distingue notre plateforme, c'est l'utilisation d'un modèle d'apprentissage automatique pour vérifier la conformité des descriptions de projet. Ce modèle sera formé à partir de données et de critères spécifiques liés aux projets écologiques. Il permettra d'évaluer la pertinence et la crédibilité des descriptions, en s'assurant que les projets proposés répondent réellement aux normes écologiques et contribuent à la durabilité environnementale.
+
+Grâce à cette vérification automatisée, nous visons à garantir la transparence et la confiance dans la sélection des projets soutenus par notre plateforme. Les donateurs auront ainsi l'assurance que leur contribution financière est destinée à des initiatives réellement écologiques, ce qui les encouragera à participer activement à la transition vers un avenir plus durable.
+
+En résumé, notre projet de crowdfunding pour des projets 100% écologiques avec vérification par un modèle d'apprentissage automatique vise à créer une plateforme transparente et fiable pour soutenir les initiatives écologiques et encourager l'engagement de la communauté dans la protection de notre environnement.
 # npm install axios
 
 # npm install date-fns
