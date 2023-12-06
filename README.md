@@ -14,7 +14,6 @@ En résumé, notre projet de crowdfunding pour des projets 100% écologiques ave
 # npm install axios
 
 # npm install date-fns
-
 # npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
 
 # npm install @fortawesome/fontawesome-svg-core
