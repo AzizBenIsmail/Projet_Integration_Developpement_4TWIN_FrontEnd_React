@@ -1,5 +1,5 @@
 
-# Projet de crowdfunding pour des projets 100% écologiques avec vérification par un modèle d'apprentissage automatique :
+# Projet de crowdfunding pour des projets 100% écologiques avec vérification par un modèle d'apprentissage automatique 
 ![GitHub repo size](https://img.shields.io/github/repo-size/AzizBenIsmail/Projet_Integration_Developpement_4TWIN_FrontEnd_React)
 
 Notre projet vise à créer une plateforme de crowdfunding dédiée exclusivement aux projets ayant un impact environnemental positif. Nous souhaitons soutenir des initiatives innovantes et durables qui contribuent à la préservation de l'environnement et à la transition vers une économie verte.
